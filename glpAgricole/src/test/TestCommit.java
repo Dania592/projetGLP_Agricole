@@ -2,8 +2,14 @@ package test;
 
 public class TestCommit {
 
-	/**
+<<<<<<< Updated upstream
+	/** 
+	 * jhghjg
 	 *  fhd
+=======
+	/**
+	 *  fhd hjhjhj 
+>>>>>>> Stashed changes
 	 * @param args
 	 */
 	public static void main(String[] args) {
