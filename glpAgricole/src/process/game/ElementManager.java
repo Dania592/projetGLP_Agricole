@@ -16,19 +16,12 @@ public class ElementManager {
 		this.mapManager = mapManager;
 	}
 
-	/**
-	 * ajoute un élément à la map 
-	 * @param element
-	 */
 	
 	public void add(Element element) {	
 		mapManager.addElement(element);
 	}
 
-	/**
-	 * verifie si l'element peut avancer vers la droite et modifie sa position 
-	 * @param element : l'element à deplacer 
-	 */
+
 	public void moveRight(Element element) {
 		if (!element.isOnRight()) {
 			Case new_case = mapManager.getMap().getCase(element.getPosition().getLigne_init(),
