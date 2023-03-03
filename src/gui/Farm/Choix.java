@@ -1,5 +1,6 @@
 package gui.Farm;
 
+
 import java.util.HashMap;
 
 import data.stucture_base.Element;
@@ -11,6 +12,8 @@ public class Choix {
 		composants = new HashMap<>();
 	}
 	
+	// reste à developper pour ajouter l'element si un element du meme type 
+	// n'exist pas et sinon incrementer le nombre 
 	public void addElement(Element element) {
 		if(!composants.containsKey(element.getReference())) {
 			composants.put(element.getReference(), element);

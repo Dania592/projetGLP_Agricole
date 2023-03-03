@@ -20,30 +20,31 @@ public class KeyControls implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			char code = e.getKeyChar();
-			switch(code) {
-			case 'z':
-				// ajouter un gestionnaire de mouvement des element dans le element manager 
-				manager.moveUp(selected);
-				
-				break;
-			
-			case 's':
-				manager.moveDown(selected);
-				
-				break;
-				
-			case 'q':
-				manager.moveLeft(selected);
-				break;
-		
-			case 'd':
-				manager.moveRight(selected);
-				break;
-			
-			default:
-				
-				break;
-				
+			if(!selected.isStatique()) {
+				switch(code) {
+				case 'z':
+					// ajouter un gestionnaire de mouvement des element dans le element manager 
+					manager.moveUp(selected);
+					break;
+					
+				case 's':
+					manager.moveDown(selected);
+					
+					break;
+					
+				case 'q':
+					manager.moveLeft(selected);
+					break;
+					
+				case 'd':
+					manager.moveRight(selected);
+					break;
+					
+				default:
+					
+					break;
+					
+				}		
 			}
 				
 		}

@@ -6,19 +6,20 @@
 	import java.awt.event.MouseListener;
 	import javax.swing.JFrame;
 	import data.configuration.GameConfiguration;
-	import data.gestion.GestionnaireStructures;
+
 	import data.stucture_base.Element;
+	import data.stucture_base.Farm;
 	import gui.gestionnaire.Gestionnaire;
-	import process.game.ElementManager;
+
 	import process.game.GameBuilder;
 
 
-	public class MainGuiTest  extends JFrame implements Runnable{
+		public class MainGuiTest  extends JFrame implements Runnable{
 	
 		private static final long serialVersionUID = 1L;
 		
-		private ElementManager manager ;
-		private GestionnaireStructures gestionnaire = GestionnaireStructures.getInstance() ;
+		private Farm farm ;
+		
 		private Board dashboard ;
 		private Element selected ;
 		private int x ;
@@ -36,16 +37,11 @@
 			Container contentPane= getContentPane();
 			contentPane.setLayout(null);
 			
-			manager=GameBuilder.buildinElement();
+			farm=GameBuilder.buildinFarm();
 			
-			selected= manager.getMapManager().get("fermier");	
-				
-			gestionnaire.initializeGestionnaire(manager.getMapManager().getMap());
-//			Game game = new Game();
-//			game.acheter(manager.getMapManager().getMap());
-			
-			
-			dashboard = new Board(manager , selected ,gestionnaire);
+			selected= farm.getManager().getMapManager().get("fermier");	
+					
+			dashboard = new Board(farm, selected );
 			
 			contentPane.add(dashboard);
 			
@@ -79,8 +75,7 @@
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
-				Element element = manager.search(x, y);
-				
+				Element element = farm.getManager().search(x, y);
 				if(element!=null) {
 					selected = element ;
 				}
@@ -102,21 +97,20 @@
 			public void mousePressed(MouseEvent e) {
 				x = e.getX() ;
 				y = e.getY() ;
-					
+				//System.out.println(x+" "+y);
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				int dx = e.getX() ;
 				int dy = e.getY() ;
-				
-				manager.getMapManager().movingMap(dx - x, dy - y );
+				farm.getManager().getMapManager().movingMap(dx - x, dy - y );
 				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				//System.out.println(x+" "+y);
 				
 			}
 

@@ -18,7 +18,7 @@ public abstract class EtreVivant extends Element implements Mortel,Saleable,Buya
 
 	public EtreVivant( int nbCase, int ligne_init, int colonne_init, Milieu milieu, int dureeVie,
 			float prixAchat, float niveauEau , String reference , Map map) {
-		super(reference ,true, nbCase, ligne_init, colonne_init , map );
+		super(reference ,false, nbCase, ligne_init, colonne_init , map );
 		this.milieu = milieu;
 		this.dureeVie = dureeVie;
 		this.prixAchat = prixAchat;

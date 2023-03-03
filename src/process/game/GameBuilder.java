@@ -4,15 +4,23 @@ import java.util.Date;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
+import data.espece.faune.Mouton;
+import data.espece.faune.Vache;
+import data.flore.Legume;
+import data.gestion.RessourcesManager;
 import data.map.Map;
+import data.structure.Entrepot;
 import data.structure.Etable;
 import data.structure.Maison;
+import data.structure.Poulallier;
+import data.structure.Structure;
+import data.stucture_base.Farm;
 import data.travail.Planning;
 
 
-
-
 public class GameBuilder {
+	
+	// a revoir pour positionner la maison et le fermier 
 	
 	
 	/**
@@ -25,36 +33,74 @@ public class GameBuilder {
 		return manager ;
 	}
 	
-	public static ElementManager buildinElement() {
+	
+	
+	public static Farm buildinFarm() {
+		
+		// instanciation de l'element manager ferme et fermier 
 		ElementManager elementManager = new ElementManager(MapBuilder());
+		Fermier farmer = new Fermier("pierre",new Planning(),20,15,new Date(),"fermier",elementManager.getMapManager().getMap());
+		Farm farm = new Farm( elementManager , farmer);
 		
-		// initialiser le jeu ici 
-		initialize(elementManager);
-
-		return elementManager ;
+		// instanciation et initialisation du stock de depart 
+		initialize( farm.getRessourcesManager() , elementManager.getMapManager().getMap());
+		
+		// positionnement du fermier et de la maison sur la map 
+		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison"));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison").setStatique();
+		initisaliseFarmerPosition(farm, farmer);
+		
+		
+		// ajout de la maison et du fermier sur la map 
+		farm.getManager().add(farmer); 
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison"));
+		
+		return farm ;
 	}
 	
-
+	
 	/**
-	 * positionner des elements initiaux dans des endroits fixe pour le test 
-	 * @param manager
+	 * initialization of the stock with the initial state of the farm
+	 * @param stock : the ressources manager of the farm 
+	 * @param map : the map of the farm 
 	 */
-	private static void initialize(ElementManager manager ) {
-		Planning planning = new Planning();
+	private static void initialize( RessourcesManager stock , Map map) {
 		
+		Vache vacheInitial = new Vache(0, 0, new Date(),"violette", "F", null, "v0", map);
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vacheInitial.getReference(), vacheInitial);
 		
-		  Fermier fermier = new Fermier ("albert", planning, 12, 10, new Date(20),"fermier" , manager.getMapManager().getMap());
-		  manager.add(fermier);
-		  
-		  
-		  Etable etable = new Etable(15, 15,"etable" , manager.getMapManager().getMap());
-		  manager.add(etable);
-		  
-		  Maison grange = new Maison(18, 20,"grange" , manager.getMapManager().getMap());
-		  manager.add(grange);
-		 
+		//Mouton moutonInitial = new Mouton(0, 0, new Date(), "margueritte", "M", null, "ch0", map);
+		//stock.getGestionnaireStocks().getGestionnaireAnimaux().put(moutonInitial.getReference(), moutonInitial);
+		
+		// sera remplacer par une instance de terrain 
+		Legume terrainInitial = new Legume(0, 0, null, "t0", map);
+		stock.getGestionnaireStocks().getGestionnaireCulture().put(terrainInitial.getReference(), terrainInitial);
+		
+		Maison maison = new Maison(0,0,"maison",map);
+		Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
+		Entrepot entrepotSecond = new Entrepot(0, 0, "en1", map);
+		Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
+		
+		stock.getGestionnaireStructure().getStructures().put(maison.getReference(), maison);
+		stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
+		stock.getGestionnaireStructure().getStructures().put(poulallierInitial.getReference(), poulallierInitial);
+		stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
 		 
 	}
 	
-
+	
+	private static void sethousePosition(Farm farm , Structure maison ) {
+		int colonne = farm.getColonne()+1 + (farm.getDimension()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2 ;
+		int ligne = farm.getLigne()+1;
+		maison.setPosition(ligne, colonne);
+				
+	}
+	
+	private static void initisaliseFarmerPosition(Farm farm , Fermier farmer) {
+		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
+		int colonne = farm.getColonne()-1 + farm.getDimension()/2;
+		farmer.setPosition(ligne, colonne);
+	}
+	
+	
 }

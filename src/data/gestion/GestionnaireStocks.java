@@ -34,14 +34,7 @@ public class GestionnaireStocks {
 	public HashMap<String, Produit> getGestionnaireProduits() {
 		return gestionnaireProduits;
 	}
-//	public void add(Produit product) {
-//		gestionnaireProduits.put(product.getClass().getSimpleName(), product);
-//	}
-//	
-//	public void add(EtreVivant etre) {
-//		gestionnaireEtres.put(etre.getClass().getSimpleName(), etre);
-//	}
-	
+
 	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());

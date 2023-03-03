@@ -1,5 +1,8 @@
 package data.stucture_base;
 
+
+import javax.swing.ImageIcon;
+
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;
@@ -13,7 +16,7 @@ public  abstract class Element {
 	 * la reference d'un objet une fois instancier est unique 
 	 */
 	private String reference;
-	
+	private ImageIcon image ;
 	
 	
 	public Element(String reference ,boolean statique, int nbCase , int ligne_init , int colonne_init , Map map ) {
@@ -47,6 +50,7 @@ public  abstract class Element {
 	public Position getPosition() {
 		return position ;
 	}
+	
 	public void setPosition(int new_ligne , int new_colonne) {
 		
 		position.setTabCase(new_ligne, new_colonne);
@@ -83,7 +87,15 @@ public  abstract class Element {
 	}
 
 	
-	  public void freePosition() { Case[][] cases = position.getTabCase(); 
+	  public ImageIcon getImage() {
+		return image;
+	}
+
+	public void setImage(ImageIcon image) {
+		this.image = image;
+	}
+
+	public void freePosition() { Case[][] cases = position.getTabCase(); 
 	  for(int indexligne =0 ;indexligne < position.getNbLigne() ;indexligne++) { 
 		  for(int indexColone=0 ; indexColone < position.getNbColonne(); indexColone++ ) {
 			  cases[indexligne][indexColone].setLibre(true); 

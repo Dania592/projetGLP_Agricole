@@ -4,10 +4,6 @@ import java.util.HashMap;
 
 import data.acteur.Employee;
 
-
-
-
-
 public class GestionnaireRH {
 	private HashMap<String, Employee> employees = new HashMap<>();
 

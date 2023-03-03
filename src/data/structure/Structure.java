@@ -14,7 +14,7 @@ public  abstract class Structure extends Element implements Buyable,Stockage {
 	private EvolutionStructure etat ;
 	private Charge[] charges ;
 	
-	private final static int  NB_CASE = 9 ;
+	private final static int  NB_CASE = 16;
 	
 	// accessible ?? utilité 
 	public Structure( int ligne_init, int colonne_init, float prixAchat , String reference , Map map  ) {
@@ -51,7 +51,7 @@ public  abstract class Structure extends Element implements Buyable,Stockage {
 	}
 	
 	public void setStatique() {
-		super.setStatique(false);
+		super.setStatique(true);
 	}
 
 

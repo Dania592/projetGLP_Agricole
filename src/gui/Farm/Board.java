@@ -1,3 +1,4 @@
+
 package gui.Farm;
 
 
@@ -9,33 +10,33 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollPane;
 
 import data.configuration.GameConfiguration;
-import data.gestion.GestionnaireStructures;
-import process.game.ElementManager;
-
 import process.game.MapManager;
 import data.stucture_base.Element;
+import data.stucture_base.Farm;
 
 public class Board  extends JLayeredPane {
-	private JLayeredPane choix;
+	
 	private static final long serialVersionUID = 1L;
-	private  ElementManager manager ;
 	private FarmPaintStrategy paintStrategy = new FarmPaintStrategy();
-	private KeyControls keys ;
-	private Element selected ;
-	private GestionnaireStructures gestionnaire ;
+	private KeyControls keys;
+	private Element selected;
+	
+	private Farm farm;
+	
 	// Jlabel   
 	private JLabel adding = new JLabel();
 	private JLabel home = new JLabel();
+	private JScrollPane choixScroll;
 	
 	
 	
-	public Board(ElementManager manager , Element selected ,GestionnaireStructures gestionnaire ) {
-		this.manager = manager ;
+	public Board(Farm farm  , Element selected  ) {
+		this.farm = farm;
 		this.selected=selected;
-		this.gestionnaire=gestionnaire;
-		keys = new KeyControls(manager , selected); 
+		keys = new KeyControls(farm.getManager() , selected); 
 		init();
 	}
 		
@@ -63,7 +64,7 @@ public class Board  extends JLayeredPane {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		MapManager mapManager = manager.getMapManager();
+		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);
 		
 		for(Element element : mapManager.getElements().values()) {
@@ -71,7 +72,8 @@ public class Board  extends JLayeredPane {
 		}	
 		
 		// les bords de la ferme 
-		paintStrategy.paint(mapManager.getMap(),  20 , g);
+		paintStrategy.paint(farm, g);
+		
 		
 	}
 
@@ -85,17 +87,23 @@ public class Board  extends JLayeredPane {
 	}
 	
 	public void addingChoix() {
-		choix = new ChoixPanel(gestionnaire , manager);	
-		add(choix, JLayeredPane.DRAG_LAYER);
+		choixScroll = new JScrollPane();
+		ChoixPanel choix = new ChoixPanel( farm , selected);
+		
+		
+		choixScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		choixScroll.setBounds(50, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-170, 160);
+		add(choixScroll, JLayeredPane.DRAG_LAYER);
+		choixScroll.setViewportView(choix);
 		
 	}
 	
 	public void removeChoix() {
-		remove(choix);	
+		remove(choixScroll);	
 	}
 	
 	public void changeState() {
-		if (Arrays.asList(this.getComponents()).contains(choix)) {
+		if (Arrays.asList(this.getComponents()).contains(choixScroll)) {
 			removeChoix();
 		} else {
 			addingChoix();

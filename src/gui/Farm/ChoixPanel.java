@@ -1,157 +1,188 @@
 package gui.Farm;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JLayeredPane;
 
-import data.configuration.GameConfiguration;
-import data.gestion.GestionnaireStructures;
-import data.map.Case;
+import data.espece.faune.Animal;
+import data.flore.Culture;
+
 import data.structure.Structure;
 import data.stucture_base.Element;
-import gui.gestionnaire.Gestionnaire;
-import process.game.ElementManager;
+import data.stucture_base.Farm;
+
 
 
 public class ChoixPanel extends JLayeredPane {
 	
 	private static final long serialVersionUID = 1L;
-	private GestionnaireStructures gestionnaire ;
-	private ElementManager manager ;
+	private Farm farm ;
 	private Element selected ;
-	public ChoixPanel(GestionnaireStructures gestionnaire , ElementManager manager) {
+	
+	// la clé de hashMap et le simple name de la classe 
+	private HashMap<String, ElementCard> cards = new HashMap<>();
+	
+	public ChoixPanel(Farm farm ,Element selected  ) {
 		super();
-		this.gestionnaire = gestionnaire;
-		this.manager = manager;
+		this.selected = selected;
+		this.farm=farm;
 		init();
 	}
 	
 	
 	public void init() {
+		//setLayout(new GridLayout(1, 0, 0, 1));
 		setOpaque(true);
-		setBackground( Gestionnaire.LIGHT_BROWN);
-		setBounds(50, GameConfiguration.WINDOW_HEIGHT-150, GameConfiguration.WINDOW_WIDTH-170, 100);
-		addMouseListener(new MouseControls());
-				
-		int x = 100 ; 
-		int y = 10;
+		setLayout(null);
+		setBackground( Color.gray);
 		
-		for(Structure structure : gestionnaire.getStructures().values()) {
-			JLabel struct = new JLabel();
-			struct.setBounds(x , y ,100,100);
-			ImageIcon icon = getMiniIcon(structure);
-			struct.setIcon(icon);
-			add(struct, JLayeredPane.DRAG_LAYER);
-			x += 150 ;		
-		}	
-	}
-	
-	
-	public ImageIcon getMiniIcon(Element element) {
-		switch (element.getReference()) {
-		case "ma0":
-			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minitracteur.png");
-		case "et0":
-			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minietable.png");
-		case "po0" :
-			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minicamion.png");
-		case "en0" :
-			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
-			
-		case "ma1" :
-			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimaison.png");
-			
-		default :
-				return null ;
-		}
-		
+		addChoixPanel();
 		
 	}
-	
-	private class MouseControls implements MouseListener{
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int x = e.getX();
-			if(x>100 && x<200) {
-				selected = gestionnaire.getStructures().get("ma0");
-				
+	/**
+	 * fait un appel à l'initialisation des cartes et les ajoute au panel 
+	 */
+	public void addChoixPanel() {
+		initialisingPanel();
+		int x = 10 ;
+		for(ElementCard card : cards.values()) {
+			card.setBounds(x,5, card.getWidth(), card.getHeight());
+			add(card);
+			x+= card.getWidth()+10;
+		}
+	}
+	
+	/**
+	 * parcours tous les gestionnaires ( pour l'instanc structure et stock ) et cree autant de carte que necessaire
+	 */
+	public void initialisingPanel() {
+		for(Structure structure : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
+			if(cards.containsKey(structure.getClass().getSimpleName())) {
+				cards.get(structure.getClass().getSimpleName()).addElement(structure);
 			}
 			else {
-				if(x>250 && x<350) {
-					selected = gestionnaire.getStructures().get("et0");
-					
-				}
-				else {
-					if(x>400 && x<500) {
-						selected = gestionnaire.getStructures().get("po0");	
-						
-					}
-					else {
-						if(x>550 && x< 650) {
-							selected = gestionnaire.getStructures().get("en0");
-						
-						}
-						else {
-							if(x>700) {
-								selected = gestionnaire.getStructures().get("ma1");
-							
-							}
-						}
-					}
-				}
+				ArrayList<Element> cardliste = new ArrayList<>();
+				cardliste.add(structure);
+				ElementCard newCard = new ElementCard(cardliste , farm , selected);
+				cards.put(structure.getClass().getSimpleName(), newCard);
 			}
-			randomPosition();
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			
-				
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 		
+		for( Culture structure : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireCulture().values()) {
+			if(cards.containsKey(structure.getClass().getSimpleName())) {
+				cards.get(structure.getClass().getSimpleName()).addElement(structure);
+			}
+			else {
+				ArrayList<Element> cardliste = new ArrayList<>();
+				cardliste.add(structure);
+				ElementCard newCard = new ElementCard(cardliste , farm , selected);
+				cards.put(structure.getClass().getSimpleName(), newCard);
+			}
+		}
+		
+		for( Animal structure : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireAnimaux().values()) {
+			if(cards.containsKey(structure.getClass().getSimpleName())) {
+				cards.get(structure.getClass().getSimpleName()).addElement(structure);
+			}
+			else {
+				ArrayList<Element> cardliste = new ArrayList<>();
+				cardliste.add(structure);
+				ElementCard newCard = new ElementCard(cardliste , farm , selected);
+				cards.put(structure.getClass().getSimpleName(), newCard);
+			}
+		}
 	}
 	
-	public void randomPosition() {
-		Case block = new Case(true , 0 , 0);
-		Boolean libre = false ;
-		while( !libre) {	
-			int ligneAleatoire = 7 + (int)(Math.random() * (20));
-			int colonneAleatoire = 7 + (int)(Math.random() * (20));
-			block = new Case(true, ligneAleatoire, colonneAleatoire);
-		   libre = manager.getMapManager().verificationLiberte(selected, block);
-		}
-		selected.freePosition();
-		if(!manager.getMapManager().getElements().containsKey(selected.getReference())) {
-			manager.add(selected);
-			selected.setPosition(block.getLigne(), block.getColonne());			
-		}
 	
-	}
 	
+//	public ImageIcon getMiniIcon(Element element) {
+//		switch (element.getReference()) {
+//		case "ma0":
+//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minitracteur.png");
+//		case "et0":
+//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minietable.png");
+//		case "po0" :
+//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minicamion.png");
+//		case "en0" :
+//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
+//			
+//		case "ma1" :
+//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimaison.png");
+//			
+//		default :
+//				return null ;
+//		}
+//		
+//		
+//	}
+//	
+//	private class MouseControls implements MouseListener{
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			int x = e.getX();
+//			if(x>100 && x<200) {
+//				selected = gestionnaire.getStructures().get("ma0");
+//				
+//			}
+//			else {
+//				if(x>250 && x<350) {
+//					selected = gestionnaire.getStructures().get("et0");
+//					
+//				}
+//				else {
+//					if(x>400 && x<500) {
+//						selected = gestionnaire.getStructures().get("po0");	
+//						
+//					}
+//					else {
+//						if(x>550 && x< 650) {
+//							selected = gestionnaire.getStructures().get("en0");
+//						
+//						}
+//						else {
+//							if(x>700) {
+//								selected = gestionnaire.getStructures().get("ma1");
+//							
+//							}
+//						}
+//					}
+//				}
+//			}
+//			randomPosition();
+//			
+//		}
+//
+//		@Override
+//		public void mousePressed(MouseEvent e) {
+//			
+//				
+//		}
+//
+//		@Override
+//		public void mouseReleased(MouseEvent e) {
+//		
+//			
+//		}
+//
+//		@Override
+//		public void mouseEntered(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//
+//		@Override
+//		public void mouseExited(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//		
+//	}
+//	
+
 	
 	
 	

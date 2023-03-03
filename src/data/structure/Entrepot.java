@@ -1,6 +1,9 @@
 package data.structure;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 
 import data.map.Map;
 import data.production.Produit;
@@ -15,6 +18,7 @@ public class Entrepot extends Structure{
 	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map);
 		this.produits = new ArrayList<>();
+		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minigrange.png"));
 	}
 
 	public ArrayList<Produit> getProduits() {

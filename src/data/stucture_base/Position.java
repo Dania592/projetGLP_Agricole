@@ -15,7 +15,7 @@ public class Position {
 
 	private Case[][] tabCase;
 	private int nbCase;
-	public final static int NB_CASE_MAX = 16;
+	public final static int NB_CASE_MAX = 25;
 	private int ligne_init;
 	private int colonne_init;
 	private int nbColonne ;
@@ -64,8 +64,6 @@ public class Position {
 				Case block = tabCase[indexligne][indexColone];
 				
 				tabCase[indexligne][indexColone]= map.getCase(block.getLigne() + dligne, block.getColonne()+ dcolonne);
-			
-				map.getCase(block.getLigne() +dligne , block.getColonne()+dcolonne).setLibre(false);
 				
 			}
 		}

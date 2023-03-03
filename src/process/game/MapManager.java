@@ -39,6 +39,9 @@ public class MapManager {
 			composants.put(element.getReference(), element );
 			reserve(element);			
 		}
+		else {
+			System.out.println("case non dispo");
+		}
 	}
 	
 	/**
@@ -64,14 +67,14 @@ public class MapManager {
 		try {
 		
 			Element el = get(element.getReference());
-			el.freePosition();
 			
+			el.freePosition();
 			if(verificationLiberte(element, new_case)) {	
 				el.setPosition(new_case.getLigne(), new_case.getColonne());		
 			}
-			else {
-				reserve(element);
-			}
+			reserve(element);
+			
+			
 		}catch(NoSuchElementException e){
 			System.err.println(e.getMessage());	
 		}			

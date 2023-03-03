@@ -1,5 +1,9 @@
 package data.structure;
 
+import java.io.File;
+
+import javax.swing.ImageIcon;
+
 import data.map.Map;
 
 public class Poulallier  extends Refuge{
@@ -8,6 +12,7 @@ public class Poulallier  extends Refuge{
 	
 	public Poulallier(int ligne_init, int colonne_init,String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT, reference , map );
+		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimoulin.png"));
 	}
 
 }
