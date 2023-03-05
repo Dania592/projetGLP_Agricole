@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -45,8 +46,8 @@ public class ElementCard extends JPanel{
 		setSize(new Dimension(150, 145));
 		setLayout(null);
 		
-		ImageIcon imageElement = elements.get(0).getImage();
-		imageLabel= new JLabel(imageElement);
+		BufferedImage imageElement = elements.get(0).getImage();
+		imageLabel= new JLabel(new ImageIcon(imageElement));
 		imageLabel.setBounds(40, 5 , 70, 70);
 		add(imageLabel);
 		
@@ -121,8 +122,6 @@ public class ElementCard extends JPanel{
 			}
 			remove(position);
 			validationposition();
-			
-			
 		}
 
 		@Override
@@ -190,9 +189,6 @@ public class ElementCard extends JPanel{
 		}
 		
 	}
-	
-	
-	
 	
 	public Case randomPosition(Element element ) {
 		Case block = new Case(true , 0 , 0);

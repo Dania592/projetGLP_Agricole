@@ -1,8 +1,10 @@
 package data.structure;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import data.map.Map;
@@ -18,7 +20,11 @@ public class Entrepot extends Structure{
 	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map);
 		this.produits = new ArrayList<>();
-		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minigrange.png"));
+		try {
+			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minigrange.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<Produit> getProduits() {

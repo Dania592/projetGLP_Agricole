@@ -1,9 +1,10 @@
 package data.espece.faune;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 import data.espece.Milieu;
 import data.map.Map;
@@ -24,7 +25,11 @@ public class Chevre extends AnimalProducteur{
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Lait(), reference , map);
 		
-		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minichevre.png"));
+		try {
+			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minichevre.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

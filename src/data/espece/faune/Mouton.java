@@ -1,8 +1,10 @@
 package data.espece.faune;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
@@ -23,7 +25,11 @@ public class Mouton extends AnimalProducteur {
 			
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Laine() , reference , map);
-		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimouton.png"));
+		try {
+			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minimouton.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

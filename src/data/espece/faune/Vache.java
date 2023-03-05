@@ -1,8 +1,10 @@
 package data.espece.faune;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
@@ -24,7 +26,11 @@ public class Vache extends AnimalProducteur{
 		
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE,new Lait() , reference , map);
-		setImage(new ImageIcon("src"+File.separator+"ressources"+File.separator+"minivache.png"));
+		try {
+			setImage(ImageIO.read( new File("src"+File.separator+"ressources"+File.separator+"minivache.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 

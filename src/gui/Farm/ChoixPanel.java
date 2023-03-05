@@ -8,7 +8,7 @@ import javax.swing.JLayeredPane;
 
 import data.espece.faune.Animal;
 import data.flore.Culture;
-
+import data.flore.terrains.Terrain;
 import data.structure.Structure;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -56,7 +56,7 @@ public class ChoixPanel extends JLayeredPane {
 	}
 	
 	/**
-	 * parcours tous les gestionnaires ( pour l'instanc structure et stock ) et cree autant de carte que necessaire
+	 * parcours tous les gestionnaires ( pour l'instant structure et stock ) et cree autant de carte que necessaire
 	 */
 	public void initialisingPanel() {
 		for(Structure structure : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
@@ -71,27 +71,27 @@ public class ChoixPanel extends JLayeredPane {
 			}
 		}
 		
-		for( Culture structure : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireCulture().values()) {
-			if(cards.containsKey(structure.getClass().getSimpleName())) {
-				cards.get(structure.getClass().getSimpleName()).addElement(structure);
+		for( Terrain terrain : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
+			if(cards.containsKey(terrain.getClass().getSimpleName())) {
+				cards.get(terrain.getClass().getSimpleName()).addElement(terrain);
 			}
 			else {
 				ArrayList<Element> cardliste = new ArrayList<>();
-				cardliste.add(structure);
+				cardliste.add(terrain);
 				ElementCard newCard = new ElementCard(cardliste , farm , selected);
-				cards.put(structure.getClass().getSimpleName(), newCard);
+				cards.put(terrain.getClass().getSimpleName(), newCard);
 			}
 		}
 		
-		for( Animal structure : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireAnimaux().values()) {
-			if(cards.containsKey(structure.getClass().getSimpleName())) {
-				cards.get(structure.getClass().getSimpleName()).addElement(structure);
+		for( Animal animal : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireAnimaux().values()) {
+			if(cards.containsKey(animal.getClass().getSimpleName())) {
+				cards.get(animal.getClass().getSimpleName()).addElement(animal);
 			}
 			else {
 				ArrayList<Element> cardliste = new ArrayList<>();
-				cardliste.add(structure);
+				cardliste.add(animal);
 				ElementCard newCard = new ElementCard(cardliste , farm , selected);
-				cards.put(structure.getClass().getSimpleName(), newCard);
+				cards.put(animal.getClass().getSimpleName(), newCard);
 			}
 		}
 	}

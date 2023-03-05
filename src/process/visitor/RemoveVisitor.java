@@ -3,10 +3,12 @@ package process.visitor;
 import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.flore.Culture;
+import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
+import data.gestion.GestionnaireTerrains;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.production.Produit;
@@ -53,6 +55,12 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	@Override
 	public Void visit(Produit product) {
 		GestionnaireStocks.getInstance().getGestionnaireProduits().remove(product.getReference(),product);
+		return null;
+	}
+	
+	@Override
+	public Void visit(Terrain terrain) {
+		GestionnaireTerrains.getInstance().getTerrains().remove(terrain.getReference(),terrain);
 		return null;
 	}
 	

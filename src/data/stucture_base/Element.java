@@ -1,6 +1,8 @@
 package data.stucture_base;
 
 
+import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
 
 import data.configuration.GameConfiguration;
@@ -16,7 +18,7 @@ public  abstract class Element {
 	 * la reference d'un objet une fois instancier est unique 
 	 */
 	private String reference;
-	private ImageIcon image ;
+	private BufferedImage image ;
 	
 	
 	public Element(String reference ,boolean statique, int nbCase , int ligne_init , int colonne_init , Map map ) {
@@ -87,11 +89,11 @@ public  abstract class Element {
 	}
 
 	
-	  public ImageIcon getImage() {
+	public BufferedImage getImage() {
 		return image;
 	}
 
-	public void setImage(ImageIcon image) {
+	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
 

@@ -4,13 +4,12 @@ import java.util.Date;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
-import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
-import data.flore.Legume;
+import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeTerrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Entrepot;
-import data.structure.Etable;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
@@ -22,7 +21,6 @@ public class GameBuilder {
 	
 	// a revoir pour positionner la maison et le fermier 
 	
-	
 	/**
 	 * initialiser la map et son manager 
 	 * @return
@@ -32,8 +30,6 @@ public class GameBuilder {
 		MapManager manager = new MapManager(map);
 		return manager ;
 	}
-	
-	
 	
 	public static Farm buildinFarm() {
 		
@@ -73,8 +69,10 @@ public class GameBuilder {
 		//stock.getGestionnaireStocks().getGestionnaireAnimaux().put(moutonInitial.getReference(), moutonInitial);
 		
 		// sera remplacer par une instance de terrain 
-		Legume terrainInitial = new Legume(0, 0, null, "t0", map);
-		stock.getGestionnaireStocks().getGestionnaireCulture().put(terrainInitial.getReference(), terrainInitial);
+		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeTerrain.Pommier);
+		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, TypeTerrain.Poivron);
+		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial.getReference(), terrainInitial);
+		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial2.getReference(), terrainInitial2);
 		
 		Maison maison = new Maison(0,0,"maison",map);
 		Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
@@ -88,7 +86,6 @@ public class GameBuilder {
 		 
 	}
 	
-	
 	private static void sethousePosition(Farm farm , Structure maison ) {
 		int colonne = farm.getColonne()+1 + (farm.getDimension()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2 ;
 		int ligne = farm.getLigne()+1;
@@ -101,6 +98,5 @@ public class GameBuilder {
 		int colonne = farm.getColonne()-1 + farm.getDimension()/2;
 		farmer.setPosition(ligne, colonne);
 	}
-	
 	
 }

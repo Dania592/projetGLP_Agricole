@@ -1,18 +1,23 @@
 package gui.Farm;
 
 import java.awt.Color;
-
 import java.awt.Graphics;
 import java.io.File;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
+import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import data.stucture_base.Position;
+import gui.gestionnaire.Gestionnaire;
+import gui.gestionnaire.RoundedPanel;
 
 
 /**
@@ -48,14 +53,30 @@ public class FarmPaintStrategy {
 	
 	
 	public void paint( Element element , Graphics graphics) {
-		ImageIcon icone = element.getImage();
 		Position position = element.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX();
 		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY();
-		graphics.drawImage(icone.getImage(), x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
+		graphics.drawImage(element.getImage(), x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
 	}
 	
-	
+	public JPanel paint(Terrain terrain, HashMap<String, JLabel> actions, Map map) {
+		Position position = terrain.getPosition();
+		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX() + 50;
+		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY() + 50;
+		RoundedPanel panelChoixTerrain = new RoundedPanel(x,y, 100, 100,20, Gestionnaire.LIGHT_BROWN);
+		//panelChoixTerrain.setOpaque(false);
+		x = 10;
+		y = 10;
+		for(String titre : actions.keySet()) {
+			actions.get(titre).setBounds(x, y, 80, 20);
+			actions.get(titre).setForeground(Gestionnaire.DARK_GREEN);
+			panelChoixTerrain.setBackground(Gestionnaire.LIGHT_BROWN);
+			panelChoixTerrain.add(titre, actions.get(titre));
+			y += 30;
+		}
+		return panelChoixTerrain;
+	}
+		
 //	public ImageIcon getImage(String reference) {
 //		switch(reference) {
 //		case "fermier":
@@ -112,6 +133,5 @@ public class FarmPaintStrategy {
 	public Boolean borderFarm(int ligne , int colonne , Farm farm ) {
 		return ( ligne == farm.getLigne()) || (colonne == farm.getColonne()) || ( ligne == (farm.getLigne()+farm.getDimension()-1)) || (colonne == (farm.getColonne()+farm.getDimension()-1)) ;
 	}
-	
 	
 }
