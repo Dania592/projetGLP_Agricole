@@ -41,6 +41,7 @@ public class Board  extends JLayeredPane {
 	// Jlabel   
 	private JLabel adding = new JLabel();
 	private JLabel home = new JLabel();
+	private JLabel farmer = new JLabel();
 	private JScrollPane choixScroll;
 	
 	public Board(Farm farm  , Element selected  ) {

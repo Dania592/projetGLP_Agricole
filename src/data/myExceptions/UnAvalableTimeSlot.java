@@ -1,17 +1,15 @@
 package data.myExceptions;
 
-import data.planning.Task;
+import data.planning.Activity;
 import data.planning.TimeSlot;
 
 public class UnAvalableTimeSlot extends Exception {
     
-    private static final long serialVersionUID = 1L;
-    
-	public UnAvalableTimeSlot(TimeSlot timeSlot){
-        super(timeSlot + " is unavalable!");
+    public UnAvalableTimeSlot(TimeSlot timeSlot){
+        super("Time slot" +timeSlot.getStartHour() +"H - "+timeSlot.getEndHour()  + "H is unavalable!");
     }
-    public UnAvalableTimeSlot(Task task){
-        super("is Unavalable for "+ task);
+    public UnAvalableTimeSlot(Activity activity){
+        super("is Unavalable for "+ activity);
     }
 
 }

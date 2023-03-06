@@ -26,8 +26,7 @@ public class WeeklyPlanner {
     public HashMap<DayOfWeek, DailyPlanner> getWeek() {
         return week;
     }
-
-
+    
     public String toString(){
         String weekText = "Week";
         for(DayOfWeek day:days){

@@ -1,41 +1,42 @@
 package data.planning;
 
 public class Hour{
-    public enum Activity {
-        TO_MILK(2),
-        TO_SHAVE(2),
-        TO_HARVEST(4),
-        TO_REST(1);
-
-        private int numberOfHourNeeded; 
-        private Activity(int numberOfHourNeeded){
-            this.numberOfHourNeeded = numberOfHourNeeded;
-        }
-        public int getNumberOfHourNeeded() {
-            return numberOfHourNeeded;
-        }   
-    }
-
     private int hour;
     private Activity activity;
 
-    public Hour(int hour, Activity activity) {
+    public Hour(int hour) {
+        this(hour, Activity.TO_REST);
+    }
+
+    public Hour(int hour, Activity activity){
         this.hour = hour;
-        setActivity(activity);
+        this.activity = activity; 
     }
 
     public int getHour() {
         return hour;
     }
 
-    public Activity getActivity() {
-        return activity;
+
+    public String toString(){
+        return "Hour : "+hour+ "Activity"+ activity;
     }
 
+    public void setToCorrectHour(){
+        if(getHour()== -1){
+            hour = 23;
+        }else if(hour ==  24){
+            hour = 0;
+        }
+    }
+
+
+        
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
+    
     public void setFree() {
         setActivity(Activity.TO_REST);        
     }
@@ -44,7 +45,9 @@ public class Hour{
         return activity == Activity.TO_REST;        
     }
 
-    public String toString(){
-        return "Hour : "+ hour + " | Activity : "+ activity;
+    public Activity getActivity() {
+        return activity;
     }
+
+
 }
