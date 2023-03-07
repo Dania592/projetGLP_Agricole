@@ -1,7 +1,6 @@
 package data.planning;
 
 import data.myExceptions.AskingToWorkAtIllegalHourException;
-import data.planning.Hour.Activity;
 
 public class DailyPlanner {
     public static int FIRST_HOUR_OF_WORK = 6;
@@ -9,7 +8,6 @@ public class DailyPlanner {
 
     private Hour[] planner;
     private int freeHours;
-
 
     
     public int getFreeHours() {
@@ -21,24 +19,30 @@ public class DailyPlanner {
     }
 
     public DailyPlanner(int maxHourOfWork) {
+        setFreeHours(maxHourOfWork);
         planner = new Hour[getNumberOfPossibleHour()];
-        for (int hour = FIRST_HOUR_OF_WORK, plannerIndex = 0; hour <= LAST_HOUR_OF_WORK; hour++) {
-            planner[plannerIndex] = new Hour(hour, Activity.TO_REST);
-            plannerIndex++;
+        int indexPlanner = 0;
+        for(int hour=FIRST_HOUR_OF_WORK; hour <=(LAST_HOUR_OF_WORK); hour++){
+            planner[indexPlanner]= new Hour(hour);
+            indexPlanner++;
         }
-        freeHours = maxHourOfWork;
+
     }
 
-    public boolean haveEnoughFreeTimeToPerformTask(Task taskToAdd) {
+    public boolean haveEnoughFreeTimeToPerformTask(Activity taskToAdd) {
         return freeHours >= taskToAdd.getDuration();
     }
 
-    public int getMatchingHourIndexInPlanner(int hour) {
+    public int getMatchingHourIndexInPlanner(int hour){
         return hour - FIRST_HOUR_OF_WORK;
     }
 
     public static int getNumberOfPossibleHour() {
-        return (LAST_HOUR_OF_WORK - FIRST_HOUR_OF_WORK) + 1;
+        return (LAST_HOUR_OF_WORK - FIRST_HOUR_OF_WORK)+1;
+    }
+
+    public Hour[] getPlanner() {
+        return planner;
     }
 
     public void setSpecificHourFree(int hourToFree){
@@ -46,14 +50,18 @@ public class DailyPlanner {
     }
 
     public Hour getMatchingHourInPlanner(int hour) throws AskingToWorkAtIllegalHourException {
+        Hour hourToReturn;
+        int indexHour;
         if (hour >= FIRST_HOUR_OF_WORK && hour <= LAST_HOUR_OF_WORK) {
-            return planner[getMatchingHourIndexInPlanner(hour)];
+            indexHour = getMatchingHourIndexInPlanner(hour);
+            hourToReturn = planner[indexHour];
+            return hourToReturn;
         }
         throw new AskingToWorkAtIllegalHourException(hour);
     }
 
-    public boolean areLegalHourToWork(int hourToStart, Task task) {
-        return hourToStart >= FIRST_HOUR_OF_WORK && hourToStart + task.getDuration() <= LAST_HOUR_OF_WORK;
+    public boolean areLegalHourToWork(int hourToStart, Activity task) {
+        return hourToStart>= FIRST_HOUR_OF_WORK && hourToStart <=LAST_HOUR_OF_WORK;
     }
 
     public boolean isHourAvalable(int hour) throws AskingToWorkAtIllegalHourException {
@@ -70,5 +78,6 @@ public class DailyPlanner {
         plannerText.append("\nHours free of work left : " + freeHours);
         return plannerText.toString();
     }
+
 
 }

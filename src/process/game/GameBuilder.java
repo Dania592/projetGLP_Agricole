@@ -35,7 +35,7 @@ public class GameBuilder {
 		
 		// instanciation de l'element manager ferme et fermier 
 		ElementManager elementManager = new ElementManager(MapBuilder());
-		Fermier farmer = new Fermier("pierre",new Planning(),20,15,new Date(),"fermier",elementManager.getMapManager().getMap());
+		Fermier farmer = new Fermier("pierre",20,15,new Date(),"fermier",elementManager.getMapManager().getMap());
 		Farm farm = new Farm( elementManager , farmer);
 		
 		// instanciation et initialisation du stock de depart 

@@ -17,8 +17,8 @@ public class Fermier extends Personne{
 
 	private Date dateNaissance ;
 	
-	public Fermier(String nom, Planning planning, int ligne, int colonne , Date dateNaissance ,String reference , Map map ) {
-		super(nom, planning, ligne, colonne , reference , map);
+	public Fermier(String nom, int ligne, int colonne , Date dateNaissance ,String reference , Map map ) {
+		super(nom, ligne, colonne , reference , map);
 		this.dateNaissance=dateNaissance;
 		try {
 			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"stand.png")));
@@ -37,6 +37,11 @@ public class Fermier extends Personne{
 	
 	public void setFarmerImage(Image farmerImage) {
 		this.farmerImage = farmerImage;
+	}
+
+	@Override
+	public int getMaxHourOfWork() {
+		return Personne.MAX_HOUR_OF_WORK_FARMER;
 	}
 	
 
