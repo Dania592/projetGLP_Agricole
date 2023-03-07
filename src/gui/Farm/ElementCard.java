@@ -22,19 +22,18 @@ public class ElementCard extends JPanel{
 	private ArrayList<Element> elements ;
 	private int nbElement ;
 	private int nbElementPresent ;
-	private Element selected ;
 	private Farm farm ;
-
+	private Board component ; 
+	
 	private JLabel imageLabel;
 	private JLabel position;
-	private JLabel validation ;
 	private JTextPane nbElementPane;
 	
 	private static final long serialVersionUID = 1L;
 
-	public ElementCard(ArrayList<Element> elements , Farm farm , Element selected) {
+	public ElementCard(ArrayList<Element> elements , Farm farm , Board component ) {
 		this.farm = farm;
-		this.selected = selected ;
+		this.component=component;
 		this.elements = elements ;
 		nbElement = elements.size();
 		nbElementPresent = elements.size();
@@ -56,15 +55,17 @@ public class ElementCard extends JPanel{
 		nbElementPane.setText(elements.get(0).getClass().getSimpleName()+" : "+nbElementPresent+"/"+nbElement);
 		nbElementPane.setFont(new Font("Serif",Font.BOLD,13));
 		nbElementPane.setBackground(getBackground());
-		nbElementPane.setBounds(40, 80, 80, 20);
+		nbElementPane.setBounds(40, 80, 100, 20);
 		nbElementPane.setEditable(false);
 		add(nbElementPane);
 		
-		position = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"positionMap.png"));
-		position.setBounds(50,100, 45, 45);
-		position.addMouseListener(new MouseListnerLabel());
-		position.setToolTipText("Ajouter à la map");
-		add(position);
+		if(nbElementPresent > 0) {
+			position = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"positionMap.png"));
+			position.setBounds(50,100, 45, 45);
+			position.addMouseListener(new MouseListenerLabel());
+			position.setToolTipText("Ajouter à la map");
+			add(position);			
+		}
 		
 		
 	}
@@ -96,38 +97,31 @@ public class ElementCard extends JPanel{
 	}
 	
 	
-	public void validationposition() {
-		validation = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"validation.png"));
-		validation.setBounds(50,100, 45, 45);
-		validation.addMouseListener(new MouseListnerValidation());
-		validation.setToolTipText("Valider la position");
-		add(validation);
-	}
-	
-	private class MouseListnerLabel implements MouseListener{
+	private class MouseListenerLabel implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int nbE =  ElementCard.this.nbElementPresent ;
-			if(nbE>0) {
-				Case randomCase = randomPosition(ElementCard.this.elements.get(nbE -1));
-				
-				// l'image sera remplacer par l'image en format réel nom redimenssionné 
-				if(!ElementCard.this.farm.getManager().getMapManager().getElements().containsKey(ElementCard.this.elements.get(nbE -1).getReference())) {
-					ElementCard.this.elements.get(nbE -1).setPosition(randomCase.getLigne(), randomCase.getColonne());
-					ElementCard.this.farm.getManager().add(ElementCard.this.elements.get(nbE -1));
-					ElementCard.this.removeOneElement();					
+			if(e.getComponent().equals(position)) {
+				int nbE = nbElementPresent ;
+				if(nbE>0) {
+					Case randomCase = randomPosition(elements.get(nbE -1));
+					
+					if(!farm.getManager().getMapManager().getElements().containsKey(elements.get(nbE -1).getReference())) {
+						elements.get(nbE -1).setPosition(randomCase.getLigne(), randomCase.getColonne());
+						farm.getManager().add(elements.get(nbE -1));
+						removeOneElement();					
+					}
+					
 				}
-						
+				component.setSelected(elements.get(nbE -1));
+				component.getHud().removeChoix();
+				component.getHud().addValidation();
+							
 			}
-			remove(position);
-			validationposition();
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			//ElementCard.this.selected = ElementCard.this.elements.get( ElementCard.this.nbElementPresent -1);
 			
 		}
 
@@ -151,44 +145,7 @@ public class ElementCard extends JPanel{
 		
 	}
 	
-	private class MouseListnerValidation implements MouseListener{
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			String reference = ElementCard.this.elements.get(nbElementPresent).getReference();
-			ElementCard.this.farm.getManager().getMapManager().getElements().get(reference).setStatique(true);
-			//selected=ElementCard.this.farm.getManager().getMapManager().getElements().get(reference);
-			//System.out.println(ElementCard.this.farm.getManager().getMapManager().getElements().get(reference).getReference());
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			remove(validation);
-			if(ElementCard.this.nbElementPresent>0) {
-				add(position);
-			}
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 	
 	public Case randomPosition(Element element ) {
 		Case block = new Case(true , 0 , 0);
@@ -201,6 +158,12 @@ public class ElementCard extends JPanel{
 		}
 		return block;
 
+	}
+	// changer le nom de la methode 
+	public void update() {
+		if(nbElementPresent==0) {
+			remove(position);
+		}
 	}
 	
 }

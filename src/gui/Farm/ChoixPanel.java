@@ -7,7 +7,6 @@ import java.util.HashMap;
 import javax.swing.JLayeredPane;
 
 import data.espece.faune.Animal;
-import data.flore.Culture;
 import data.flore.terrains.Terrain;
 import data.structure.Structure;
 import data.stucture_base.Element;
@@ -19,14 +18,14 @@ public class ChoixPanel extends JLayeredPane {
 	
 	private static final long serialVersionUID = 1L;
 	private Farm farm ;
-	private Element selected ;
+	private Board component ; 
 	
 	// la clé de hashMap et le simple name de la classe 
 	private HashMap<String, ElementCard> cards = new HashMap<>();
 	
-	public ChoixPanel(Farm farm ,Element selected  ) {
+	public ChoixPanel(Farm farm , Board component  ) {
 		super();
-		this.selected = selected;
+		this.component=component;
 		this.farm=farm;
 		init();
 	}
@@ -48,8 +47,16 @@ public class ChoixPanel extends JLayeredPane {
 	public void addChoixPanel() {
 		initialisingPanel();
 		int x = 10 ;
+		
+		for(Element element : farm.getManager().getMapManager().getElements().values()) {
+			if(cards.containsKey(element.getClass().getSimpleName())) {
+				cards.get(element.getClass().getSimpleName()).removeOneElement();				
+			}
+		}
+		
 		for(ElementCard card : cards.values()) {
 			card.setBounds(x,5, card.getWidth(), card.getHeight());
+			card.update();
 			add(card);
 			x+= card.getWidth()+10;
 		}
@@ -60,15 +67,17 @@ public class ChoixPanel extends JLayeredPane {
 	 */
 	public void initialisingPanel() {
 		for(Structure structure : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
-			if(cards.containsKey(structure.getClass().getSimpleName())) {
-				cards.get(structure.getClass().getSimpleName()).addElement(structure);
-			}
-			else {
-				ArrayList<Element> cardliste = new ArrayList<>();
-				cardliste.add(structure);
-				ElementCard newCard = new ElementCard(cardliste , farm , selected);
-				cards.put(structure.getClass().getSimpleName(), newCard);
-			}
+			
+				if(cards.containsKey(structure.getClass().getSimpleName())) {
+					cards.get(structure.getClass().getSimpleName()).addElement(structure);
+				}
+				else {
+					ArrayList<Element> cardliste = new ArrayList<>();
+					cardliste.add(structure);
+					ElementCard newCard = new ElementCard(cardliste , farm , component);
+					cards.put(structure.getClass().getSimpleName(), newCard);
+				}			
+					
 		}
 		
 		for( Terrain terrain : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
@@ -78,7 +87,7 @@ public class ChoixPanel extends JLayeredPane {
 			else {
 				ArrayList<Element> cardliste = new ArrayList<>();
 				cardliste.add(terrain);
-				ElementCard newCard = new ElementCard(cardliste , farm , selected);
+				ElementCard newCard = new ElementCard(cardliste , farm ,component);
 				cards.put(terrain.getClass().getSimpleName(), newCard);
 			}
 		}
@@ -90,7 +99,7 @@ public class ChoixPanel extends JLayeredPane {
 			else {
 				ArrayList<Element> cardliste = new ArrayList<>();
 				cardliste.add(animal);
-				ElementCard newCard = new ElementCard(cardliste , farm , selected);
+				ElementCard newCard = new ElementCard(cardliste , farm , component);
 				cards.put(animal.getClass().getSimpleName(), newCard);
 			}
 		}

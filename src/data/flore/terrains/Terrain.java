@@ -3,22 +3,18 @@ package data.flore.terrains;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
-
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import data.map.Map;
 import data.stucture_base.Element;
-import gui.Farm.Board;
-import gui.Farm.FarmPaintStrategy;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
 public class Terrain extends Element implements Buyable{
 	
-	private static int SPEED = 1000;// vitesse d'évolution
+	private static int SPEED = 100;// vitesse d'évolution
 	private static int DIMENSION = 9; // C'est un carré donc une seule dimension
 	private static float PRIX_ACHAT = 100;
+	// temporaire 
 	private HashMap<String, JLabel> actions;
 
 	private int index = 0;

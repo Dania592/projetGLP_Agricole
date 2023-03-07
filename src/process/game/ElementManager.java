@@ -23,6 +23,12 @@ public class ElementManager {
 	public void add(Element element) {	
 		mapManager.addElement(element);
 	}
+	
+	
+	public void remove(Element element ) {
+		element.freePosition();
+		mapManager.removeElement(element);
+	}
 
 	/**
 	 * try to move the element to the right if it's not on right border 

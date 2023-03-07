@@ -4,9 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class ImagesTerrains {
 	private static HashMap<TypeTerrain, HashMap<EvolutionTerrain, BufferedImage>> images = new HashMap<>();

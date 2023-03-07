@@ -35,12 +35,12 @@ public class Gestionnaire extends JFrame {
 	private HashMap<String, JPanel> toBuy = new HashMap<>();
 	
 	private RessourcesManager ressourcesManager = new RessourcesManager();
-	private MainGuiTest test ;
+	private JFrame test ;
 	
 	private static final long serialVersionUID = 1L;
 	//private static final Color WHITE = new Color(255,255,255);
 	
-	public Gestionnaire(String title , MainGuiTest main ) {
+	public Gestionnaire(String title , JFrame main ) {
 		super(title);
 		init();
 		test=main;

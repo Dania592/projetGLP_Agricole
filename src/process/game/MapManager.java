@@ -44,6 +44,13 @@ public class MapManager {
 		}
 	}
 	
+	
+	public void removeElement(Element element) {
+		if(composants.containsKey(element.getReference())) {
+			composants.remove(element.getReference());
+		}
+	}
+	
 	/**
 	 * change l'etat libre de la case en false pour la reserver 
 	 * @param element
