@@ -1,3 +1,4 @@
+
 package gui.Farm;
 
 import java.awt.Dimension;
@@ -7,12 +8,18 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+import data.espece.faune.Animal;
 import data.map.Case;
+import data.myExceptions.FullCapaciteException;
+import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 
@@ -104,18 +111,38 @@ public class ElementCard extends JPanel{
 			if(e.getComponent().equals(position)) {
 				int nbE = nbElementPresent ;
 				if(nbE>0) {
-					Case randomCase = randomPosition(elements.get(nbE -1));
+					Boolean successPosition = true ;
+					Element element = elements.get(nbE -1);
 					
-					if(!farm.getManager().getMapManager().getElements().containsKey(elements.get(nbE -1).getReference())) {
-						elements.get(nbE -1).setPosition(randomCase.getLigne(), randomCase.getColonne());
-						farm.getManager().add(elements.get(nbE -1));
-						removeOneElement();					
+					if(element instanceof Animal) {
+						Animal animal = (Animal)element;
+						try {
+						  addElementToMap(animal);
+						} catch (FullCapaciteException e1) {
+							successPosition = false ;
+							System.err.println(e1.getLocalizedMessage());
+						}
+					}
+					else {
+						Case randomCase =randomPosition(element);
+						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
+						if(element instanceof Enclos) {
+							Enclos enclos = (Enclos) element ;
+							farm.getManager().add(enclos);
+						}
+						else {
+							farm.getManager().add(element);							
+						}
+						removeOneElement();	
+						
 					}
 					
+					if(successPosition ) {
+						component.setSelected(element);
+						component.getHud().removeChoix();
+						component.getHud().addValidation();
+					}		
 				}
-				component.setSelected(elements.get(nbE -1));
-				component.getHud().removeChoix();
-				component.getHud().addValidation();
 							
 			}
 		}
@@ -146,6 +173,15 @@ public class ElementCard extends JPanel{
 	}
 	
 
+	public void addElementToMap(Animal animal) throws FullCapaciteException {
+		Case randomCase = randomPosition(animal);
+		  if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
+			  animal.setPosition(randomCase.getLigne(), randomCase.getColonne());
+				farm.getManager().add(animal);
+				removeOneElement();	
+		  }
+	
+	}
 	
 	public Case randomPosition(Element element ) {
 		Case block = new Case(true , 0 , 0);
@@ -154,13 +190,41 @@ public class ElementCard extends JPanel{
 			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbLigne()-1));
 			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbColonne()-1));
 			block = new Case(true, ligneAleatoire, colonneAleatoire);
-		   libre = farm.getManager().getMapManager().verificationLiberte(elements.get(0), block);
+		   libre = farm.getManager().getMapManager().verificationLiberte(element, block);
 		}
 		return block;
 
 	}
-	// changer le nom de la methode 
-	public void update() {
+	
+	public Case randomPosition(Animal animal ) throws FullCapaciteException {
+		ArrayList<Enclos> enclosdisponible = farm.getManager().getMapManager().getEnclosOnMap();
+		if(enclosdisponible.size() > 0) {
+			Iterator<Enclos> it = enclosdisponible.iterator();
+			while(it.hasNext()) {
+				Enclos enclos = it.next();
+				if(enclos.getCapacite() > enclos.getAnimals().size()) {
+					Case block = new Case(true , 0 , 0);
+					Boolean libre = false ;
+					while( !libre) {	
+						int ligneAleatoire =  enclos.getPosition().getLigne_init() + (int)(Math.random() * (enclos.getDimension()-elements.get(0).getPosition().getNbLigne()-1));
+						int colonneAleatoire = enclos.getPosition().getColonne_init() + (int)(Math.random() * (enclos.getDimension()-elements.get(0).getPosition().getNbColonne()-1));
+						block = new Case(true, ligneAleatoire, colonneAleatoire);
+					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
+					}
+					
+					return block;
+					
+				}
+				
+			}
+		}
+		
+		throw new FullCapaciteException("vous ne disposez pas de la capacité nécessaire pour avoir un animal");
+		
+	
+	}
+
+	public void removePositionforEmpty() {
 		if(nbElementPresent==0) {
 			remove(position);
 		}

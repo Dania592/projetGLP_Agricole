@@ -18,13 +18,13 @@ public class Farm {
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;
-	private ElementManager ElementManager ; 
+	private ElementManager elementManager ; 
 	private int ligne ; 
 	private int colonne ; 
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
 		
-		this.ElementManager = manager;
+		elementManager = manager;
 		this.fermier=fermier;
 		ressourcesManager = new RessourcesManager();
 		nbEtoile =0;
@@ -93,7 +93,7 @@ public class Farm {
 		}
 	}
 	public ElementManager getManager() {
-		return ElementManager;
+		return elementManager;
 	}
 	
 	public RessourcesManager getRessourcesManager() {
@@ -104,5 +104,17 @@ public class Farm {
 		return fermier;
 	}
 	
+	public Boolean isOnborderFarm(int ligne , int colonne  ) {
+		return ( this.ligne ==ligne) || (this.colonne == colonne) || ( ligne == (this.ligne+dimension-1)) || (colonne == (this.colonne+dimension-1)) ;
+	}
+	public void reservePlaceToFarm() {
+		for(int ligneIndex = ligne ; ligneIndex < dimension+ligne ; ligneIndex ++) {
+			for(int colonneIndex = colonne ; colonneIndex < dimension+colonne; colonneIndex ++) {
+				if(isOnborderFarm(ligneIndex, colonneIndex )) {
+					elementManager.getMapManager().getMap().getCase(ligneIndex , colonneIndex).setLibre(false);
+				}
+			}
+		}
+	}
 	
 }

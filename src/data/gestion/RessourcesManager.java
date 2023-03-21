@@ -6,7 +6,9 @@ public class RessourcesManager {
 	private GestionnaireStocks gestionnaireStocks = GestionnaireStocks.getInstance();
 	private GestionnaireStructures gestionnaireStructure = GestionnaireStructures.getInstance();
 	private GestionnaireMateriel gestionnaireMateriel = GestionnaireMateriel.getInstance();
-	private GestionnaireTerrains gestionnaireterrains = GestionnaireTerrains.getInstance();
+	private GestionnaireTerrains gestionnaireTerrains = GestionnaireTerrains.getInstance();
+	private GestionnaireEnclos gestionnaireEnclos = GestionnaireEnclos.getInstance();
+	 
 	
 	public GestionnaireFinancier getGestionnaireFinancier() {
 		return gestionnaireFinancier;
@@ -24,11 +26,14 @@ public class RessourcesManager {
 		return gestionnaireMateriel;
 	}
 	public GestionnaireTerrains getGestionnaireTerrains() {
-		return gestionnaireterrains;
+		return gestionnaireTerrains;
+	}
+	public GestionnaireEnclos getGestionnaireEnclos() {
+		return gestionnaireEnclos;
 	}
 	
 	public String toString() {
 		return "Gestionnaire : \n" + gestionnaireStocks.toString() + "\n" + gestionnaireMateriel.toString() 
-		+"\n"+ gestionnaireStructure.toString() +"\n"+ gestionnaireFinancier.toString() +"\n"+ gestionnaireRH.toString()+"\n"+ gestionnaireterrains.toString();
+		+"\n"+ gestionnaireStructure.toString() +"\n"+ gestionnaireFinancier.toString() +"\n"+ gestionnaireRH.toString()+"\n"+ gestionnaireTerrains.toString();
 	}
 }

@@ -1,5 +1,6 @@
 package gui.Farm;
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
@@ -13,6 +14,7 @@ import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
+import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import data.stucture_base.Position;
@@ -76,62 +78,51 @@ public class FarmPaintStrategy {
 		}
 		return panelChoixTerrain;
 	}
+	
+	
+	public void paint(Enclos enclos , Graphics graphics ) {
+		  
+		Position position = enclos.getPosition();
 		
-//	public ImageIcon getImage(String reference) {
-//		switch(reference) {
-//		case "fermier":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"stand.png");
-//				
-//		case "grange":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"grange1.png");
-//			
-//		case "etable":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"maison.png");
-//			
-//		case "entrepot":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"grange.png");
-//			
-//		case "poulallier":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"moulin.png");
-//			
-//		case "ma1":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"tracteur2.png");
-//		
-//		case "ma0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"etable.png");
-//		
-//		case "et0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"camion.png");
-//		
-//		case "en0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"maison.png");
-//		
-//		case "po0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"moulin.png");
-//			
-//		default:
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"terre.png");
-//		}
-//				
-//	}
+		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {
+			for(int colonneIndex = position.getColonne_init() ; colonneIndex < enclos.getDimension()+position.getColonne_init(); colonneIndex ++) {
+				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
+					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
+					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
+					graphics.drawImage(enclos.getImages().get("bas_gauche"), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					
+				}
+				if((ligneIndex==position.getLigne_init()|| ligneIndex == position.getLigne_init()+enclos.getDimension()-1) && colonneIndex < enclos.getDimension()+position.getColonne_init()-1) {
+					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
+					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
+					graphics.drawImage(enclos.getImages().get("bas_milieu"), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					
+				}
+				if(colonneIndex== position.getColonne_init() ||  colonneIndex==enclos.getDimension()+position.getColonne_init()-1) {
+					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
+					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
+					graphics.drawImage(enclos.getImages().get("milieu"), x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
+				}
+
+			}
+		}
+		
+	}
+
 	
 	public void paint(Farm farm ,Graphics graphics) {
 		ImageIcon buisson = new ImageIcon("src"+File.separator+"ressources"+File.separator+"buisson.png");
 		
 		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getDimension()+farm.getLigne() ; ligneIndex ++) {
 			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getDimension()+farm.getColonne() ; colonneIndex ++) {
-				if(borderFarm(ligneIndex, colonneIndex, farm)) {
-					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ;
-					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
+				if(farm.isOnborderFarm(ligneIndex, colonneIndex)) {
+					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
+					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
 					graphics.drawImage(buisson.getImage(), x ,y ,GameConfiguration.CASE_DIMENSION ,GameConfiguration.CASE_DIMENSION, null);
-					map.getCase(ligneIndex , colonneIndex).setLibre(false);
 				}
 			}
 		}
 	}
 	
-	public Boolean borderFarm(int ligne , int colonne , Farm farm ) {
-		return ( ligne == farm.getLigne()) || (colonne == farm.getColonne()) || ( ligne == (farm.getLigne()+farm.getDimension()-1)) || (colonne == (farm.getColonne()+farm.getDimension()-1)) ;
-	}
 	
 }

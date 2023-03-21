@@ -2,6 +2,7 @@ package process.game;
 
 import data.configuration.GameConfiguration;
 import data.map.Case;
+import data.structure.Enclos;
 import data.stucture_base.Element;
 
 /**
@@ -22,6 +23,9 @@ public class ElementManager {
 	 */
 	public void add(Element element) {	
 		mapManager.addElement(element);
+	}
+	public void add(Enclos enclos) {
+		mapManager.addEnclos(enclos);
 	}
 	
 	

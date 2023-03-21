@@ -2,10 +2,7 @@ package data.structure;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import data.map.Map;
 
 public class Maison extends Refuge {

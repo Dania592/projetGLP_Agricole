@@ -30,7 +30,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 	public void init() {
 
-		Container contentPane= getContentPane();
+		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 
 		farm=GameBuilder.buildinFarm();
@@ -47,6 +47,8 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		setSize(GameConfiguration.WINDOW_WIDTH , GameConfiguration.WINDOW_HEIGHT);
 		setResizable(false);
 	}
@@ -72,6 +74,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			int y = e.getY();
 			Element element = farm.getManager().search(x, y);
 			if(element!=null) {
+				System.out.println(element.getReference());
 				selected = element ;
 			}
 

@@ -11,7 +11,7 @@ import process.visitor.GestionVisitor;
 
 public class Terrain extends Element implements Buyable{
 	
-	private static int SPEED = 100;// vitesse d'évolution
+	private static int SPEED = 50;// vitesse d'évolution
 	private static int DIMENSION = 9; // C'est un carré donc une seule dimension
 	private static float PRIX_ACHAT = 100;
 	// temporaire 

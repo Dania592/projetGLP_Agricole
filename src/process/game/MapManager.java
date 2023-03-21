@@ -1,5 +1,6 @@
 package process.game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.NoSuchElementException;
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;
+import data.structure.Enclos;
 import data.stucture_base.Element;
 
 
@@ -21,11 +23,13 @@ public class MapManager {
 
 	private Map map ; 
 	private HashMap<String, Element> composants ;
+	private ArrayList<Enclos> enclosOnMap ;
 	
 	
 	public MapManager(Map map ) {
 		this.map=map ;
 		composants = new HashMap<>();
+		enclosOnMap = new ArrayList<>();
 	}
 	
 	/**
@@ -44,6 +48,16 @@ public class MapManager {
 		}
 	}
 	
+	public void addEnclos(Enclos enclos ) {
+		Case case_init= new Case(false,enclos.getPosition().getLigne_init(),enclos.getPosition().getColonne_init());
+		if(verificationLiberte(enclos, case_init)) {
+			composants.put(enclos.getReference(), enclos);
+			enclosOnMap.add(enclos);
+			for(Case block : enclos.bordEnclos()) {
+				map.getCase(block.getLigne(), block.getColonne()).setLibre(false);
+			}
+		}
+	}
 	
 	public void removeElement(Element element) {
 		if(composants.containsKey(element.getReference())) {
@@ -72,21 +86,28 @@ public class MapManager {
 	 */
 	public void moveElement(Element element , Case new_case ) {
 		try {
-		
-			Element el = get(element.getReference());
 			
+			Element el = get(element.getReference());
 			el.freePosition();
 			if(verificationLiberte(element, new_case)) {	
 				el.setPosition(new_case.getLigne(), new_case.getColonne());		
 			}
-			reserve(element);
-			
-			
+			if(element instanceof Enclos) {
+				Enclos enclos =(Enclos)element ;
+				for(Case block : enclos.bordEnclos()) {
+					map.getCase(block.getLigne(), block.getColonne()).setLibre(false);
+				}
+			}
+			else {
+				reserve(element);				
+			}
+				
 		}catch(NoSuchElementException e){
 			System.err.println(e.getMessage());	
 		}			
 	}
 	
+
 	/**
 	 * verifie que la nouvelle position que l'element veut occuper libre 
 	 * @param element : l'element à placer
@@ -128,6 +149,10 @@ public class MapManager {
 	
 	public HashMap<String, Element> getElements(){
 		return composants;
+	}
+	
+	public ArrayList<Enclos> getEnclosOnMap(){
+		return enclosOnMap;
 	}
 
 	public Element getElement(Case block) {

@@ -112,6 +112,7 @@ public class Hud {
 		}
 	}
 	
+	
 	private class MouseHud implements MouseListener{
 
 		@Override

@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 
 import data.espece.faune.Animal;
 import data.flore.terrains.Terrain;
+import data.structure.Enclos;
 import data.structure.Structure;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -56,7 +57,7 @@ public class ChoixPanel extends JLayeredPane {
 		
 		for(ElementCard card : cards.values()) {
 			card.setBounds(x,5, card.getWidth(), card.getHeight());
-			card.update();
+			card.removePositionforEmpty();
 			add(card);
 			x+= card.getWidth()+10;
 		}
@@ -64,6 +65,11 @@ public class ChoixPanel extends JLayeredPane {
 	
 	/**
 	 * parcours tous les gestionnaires ( pour l'instant structure et stock ) et cree autant de carte que necessaire
+	 * 
+	 * 
+	 *    ici à modifier apres adaptation des gestionnaires pour definition de méthode avec code moins redondant 
+	 * 
+	 * 
 	 */
 	public void initialisingPanel() {
 		for(Structure structure : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
@@ -103,6 +109,20 @@ public class ChoixPanel extends JLayeredPane {
 				cards.put(animal.getClass().getSimpleName(), newCard);
 			}
 		}
+		
+		for( Enclos enclos : farm.getRessourcesManager().getGestionnaireEnclos().getEnclos().values()) {
+			if(cards.containsKey(enclos.getClass().getSimpleName())) {
+				cards.get(enclos.getClass().getSimpleName()).addElement(enclos);
+			}
+			else {
+				ArrayList<Element> cardliste = new ArrayList<>();
+				cardliste.add(enclos);
+				ElementCard newCard = new ElementCard(cardliste , farm , component);
+				cards.put(enclos.getClass().getSimpleName(), newCard);
+			}
+		}
+		
+		
 	}
 	
 	

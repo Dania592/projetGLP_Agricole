@@ -7,6 +7,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
+import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import process.game.MapManager;
@@ -48,7 +49,7 @@ public class Board  extends JLayeredPane {
 	}
 	
 	public void setClicked(Element clicked) {
-		if(clicked.isStatique()) {
+		if(clicked!=null && clicked.isStatique() ) {
 			this.clicked = clicked;			
 		}
 	}
@@ -72,7 +73,13 @@ public class Board  extends JLayeredPane {
 		paintStrategy.paint(mapManager.getMap(), g);
 		
 		for(Element element : mapManager.getElements().values()) {
-			paintStrategy.paint(element, g);
+			if(element instanceof Enclos) {
+				Enclos enclos = (Enclos)element;
+				paintStrategy.paint(enclos, g);
+			}
+			else {
+				paintStrategy.paint(element, g);				
+			}
 			
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
