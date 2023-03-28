@@ -2,6 +2,7 @@ package gui.Farm;
 
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JLayeredPane;
@@ -33,11 +34,10 @@ public class ChoixPanel extends JLayeredPane {
 	
 	
 	public void init() {
-		//setLayout(new GridLayout(1, 0, 0, 1));
+		setLayout(new GridLayout(1, 0, 0, 1));
 		setOpaque(true);
-		setLayout(null);
+		//setLayout(null);
 		setBackground( Color.gray);
-		
 		addChoixPanel();
 		
 	}
@@ -125,93 +125,6 @@ public class ChoixPanel extends JLayeredPane {
 		
 	}
 	
-	
-	
-//	public ImageIcon getMiniIcon(Element element) {
-//		switch (element.getReference()) {
-//		case "ma0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minitracteur.png");
-//		case "et0":
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minietable.png");
-//		case "po0" :
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minicamion.png");
-//		case "en0" :
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
-//			
-//		case "ma1" :
-//			return new ImageIcon("src"+File.separator+"ressources"+File.separator+"minimaison.png");
-//			
-//		default :
-//				return null ;
-//		}
-//		
-//		
-//	}
-//	
-//	private class MouseControls implements MouseListener{
-//
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-//			int x = e.getX();
-//			if(x>100 && x<200) {
-//				selected = gestionnaire.getStructures().get("ma0");
-//				
-//			}
-//			else {
-//				if(x>250 && x<350) {
-//					selected = gestionnaire.getStructures().get("et0");
-//					
-//				}
-//				else {
-//					if(x>400 && x<500) {
-//						selected = gestionnaire.getStructures().get("po0");	
-//						
-//					}
-//					else {
-//						if(x>550 && x< 650) {
-//							selected = gestionnaire.getStructures().get("en0");
-//						
-//						}
-//						else {
-//							if(x>700) {
-//								selected = gestionnaire.getStructures().get("ma1");
-//							
-//							}
-//						}
-//					}
-//				}
-//			}
-//			randomPosition();
-//			
-//		}
-//
-//		@Override
-//		public void mousePressed(MouseEvent e) {
-//			
-//				
-//		}
-//
-//		@Override
-//		public void mouseReleased(MouseEvent e) {
-//		
-//			
-//		}
-//
-//		@Override
-//		public void mouseEntered(MouseEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//
-//		@Override
-//		public void mouseExited(MouseEvent e) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//		
-//	}
-//	
-
 	
 	
 	

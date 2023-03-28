@@ -4,7 +4,9 @@ import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.flore.Saison;
 import data.gestion.RessourcesManager;
+import process.evolution.EvolutionManager;
 import process.game.ElementManager;
+import process.time.TimeManager;
 
 public class Farm {
 
@@ -18,24 +20,33 @@ public class Farm {
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;
-	private ElementManager elementManager ; 
+	private ElementManager elementManager ;
+	private TimeManager timeManager ; 
+	private EvolutionManager evolutionManager ;
 	private int ligne ; 
 	private int colonne ; 
 	
-	public Farm( ElementManager manager, Fermier fermier ) {
-		
+	public Farm( ElementManager manager, Fermier fermier , TimeManager timeManager) {
+		this.timeManager=timeManager;
 		elementManager = manager;
 		this.fermier=fermier;
 		ressourcesManager = new RessourcesManager();
 		nbEtoile =0;
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
-		
+		evolutionManager = new EvolutionManager(manager, timeManager);
 		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
 		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
 	}
 	
-
+	public EvolutionManager getEvolutionManager() {
+		return evolutionManager;
+	}
+	
+	public TimeManager getTimeManager() {
+		return timeManager;
+	}
+	
 	public int getLigne() {
 		return ligne;
 	}

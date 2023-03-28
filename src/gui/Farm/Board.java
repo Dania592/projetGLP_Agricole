@@ -90,7 +90,8 @@ public class Board  extends JLayeredPane {
 					remove(choixTerrain);
 				}
 			}
-		}	
+		}
+		hud.time();
 		
 		// les bords de la ferme 
 		paintStrategy.paint(farm, g);

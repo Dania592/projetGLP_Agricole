@@ -17,7 +17,7 @@ public class Chameau extends AnimalProducteur{
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;
 	
-	public Chameau(int ligne_init, int colonne_init, Date naissance, String nom, String sexe, RefugeChameau habitat, String reference ,Map map ) {
+	public Chameau(int ligne_init, int colonne_init, int naissance, String nom, String sexe, RefugeChameau habitat, String reference ,Map map ) {
 		
 		super(ligne_init, colonne_init, Milieu.DESERT, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Lait() , reference ,map);

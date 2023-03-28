@@ -27,6 +27,7 @@ public class WeeklyPlanner {
         return week;
     }
     
+    
     public String toString(){
         String weekText = "Week";
         for(DayOfWeek day:days){

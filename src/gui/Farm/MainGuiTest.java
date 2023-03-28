@@ -47,8 +47,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
-		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
 		setSize(GameConfiguration.WINDOW_WIDTH , GameConfiguration.WINDOW_HEIGHT);
 		setResizable(false);
 	}
@@ -61,7 +59,8 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			dashboard.setSelected(dashboard.getSelected());
+			//dashboard.setSelected(dashboard.getSelected());
+			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
 			dashboard.repaint();
 		}
 	}
@@ -74,7 +73,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			int y = e.getY();
 			Element element = farm.getManager().search(x, y);
 			if(element!=null) {
-				System.out.println(element.getReference());
+				//System.out.println(element.getReference());
 				selected = element ;
 			}
 

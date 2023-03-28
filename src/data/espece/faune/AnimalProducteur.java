@@ -16,7 +16,7 @@ public abstract class AnimalProducteur extends Animal{
 	private Produit produit ;
 	
 	
-	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, Date naissance, float poids, String nom, Alimentation alimentation, String sexe,
+	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
 			Structure habitat, int frequenceProduction, int quantiteProduction,
 			Produit produit , String reference , Map map ) {
 		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,

@@ -1,6 +1,5 @@
 package data.espece.faune;
 
-import java.util.Date;
 
 import data.espece.Milieu;
 import data.map.Map;
@@ -14,7 +13,7 @@ public class Chien extends AnimalCompagnie {
 	private final static float POIDS = 50 ;
 	
 	
-	public Chien(int ligne_init, int colonne_init, Milieu milieu, Date naissance, String nom, String sexe, Maison habitat , String reference , Map map ) {
+	public Chien(int ligne_init, int colonne_init, Milieu milieu, int naissance, String nom, String sexe, Maison habitat , String reference , Map map ) {
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.CARNIVORE, sexe, habitat , reference , map);
 	}
 

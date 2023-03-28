@@ -1,32 +1,34 @@
 package data.espece.faune;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
+import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Laine;
 import data.structure.Etable;
 
 
 public class Mouton extends AnimalProducteur {
-	
+
 	private final static int DUREE_VIE = 500 ;
 	private final static int PRIX_ACHAT = 1000 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;
 	
-	public Mouton(int ligne_init, int colonne_init, Date naissance,String nom, String sexe, Etable habitat,String reference ,Map map) {
+	public Mouton(int ligne_init, int colonne_init, int naissance,String nom, String sexe, Etable habitat,String reference ,Map map) {
 			
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Laine() , reference , map);
 		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minimouton.png")));
+			String imagePath = "src"+File.separator+"ressources"+File.separator+"Mouton"
+					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
+			BufferedImage image = ImageIO.read(new File(imagePath));
+			setImage(image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

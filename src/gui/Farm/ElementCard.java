@@ -49,7 +49,7 @@ public class ElementCard extends JPanel{
 	
 	
 	public void init() {
-		setSize(new Dimension(150, 145));
+		setSize(200, 150);
 		setLayout(null);
 		
 		BufferedImage imageElement = elements.get(0).getImage();
@@ -111,15 +111,16 @@ public class ElementCard extends JPanel{
 			if(e.getComponent().equals(position)) {
 				int nbE = nbElementPresent ;
 				if(nbE>0) {
-					Boolean successPosition = true ;
 					Element element = elements.get(nbE -1);
 					
 					if(element instanceof Animal) {
 						Animal animal = (Animal)element;
 						try {
-						  addElementToMap(animal);
+							animal.setStatique();
+							// la date de naissance == minute de naissance (à modifier)
+							animal.setNaissance(farm.getTimeManager().getClock().getMinute().getValue());
+							addElementToMap(animal);
 						} catch (FullCapaciteException e1) {
-							successPosition = false ;
 							System.err.println(e1.getLocalizedMessage());
 						}
 					}
@@ -134,14 +135,12 @@ public class ElementCard extends JPanel{
 							farm.getManager().add(element);							
 						}
 						removeOneElement();	
-						
-					}
-					
-					if(successPosition ) {
 						component.setSelected(element);
 						component.getHud().removeChoix();
 						component.getHud().addValidation();
-					}		
+						
+					}
+							
 				}
 							
 			}
@@ -211,7 +210,7 @@ public class ElementCard extends JPanel{
 						block = new Case(true, ligneAleatoire, colonneAleatoire);
 					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
-					
+					enclos.addAnimal(animal);
 					return block;
 					
 				}

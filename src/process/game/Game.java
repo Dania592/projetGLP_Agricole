@@ -48,10 +48,10 @@ public class Game {
 	public void acheter(Map map ) {
 		
 	
-		Animal vache = new Vache(0, 0, null, null, null, null, "v11" , map);
-		Animal vache2 = new Vache(0, 0, null, null, null, null, "v2", map);
+		Animal vache = new Vache(0, 0, 0, null, null, null, "v11" , map);
+		Animal vache2 = new Vache(0, 0, 0, null, null, null, "v2", map);
 		//Animal vache3 = new Vache(0, 0, null, null, null, null, "v3");
-		Animal mouton = new Mouton(0, 0, null, null, null, null, "m11",map);
+		Animal mouton = new Mouton(0, 0, 0, null, null, null, "m11",map);
 		Terrain plante1 = new Terrain("p15", false, 0,0, map, TypeTerrain.Pommier);
 		Culture arbre = new Pommier(0, 0, Milieu.PLAINE, "pm1", map);
 		Structure maison = new Maison(0, 0, "ld" , map);

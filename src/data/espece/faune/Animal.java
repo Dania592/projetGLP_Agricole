@@ -17,16 +17,17 @@ import process.visitor.GestionVisitor;
 
 public abstract class Animal extends EtreVivant implements Mortel,Stockage{
 
-	private Date naissance ;
+	private int naissance ;
 	private float poids ;
 	private String nom ;
 	private Alimentation alimentation ;
 	private String sexe ;
 	private Structure habitat ;
 	private EvolutionAnimal evolution ;
+	private int lastEvolutionHour ;
 	
 	
-	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , Date naissance, float poids, String nom, 
+	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
 			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map ) {
 		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,1 , reference , map );
 		this.naissance = naissance;
@@ -36,13 +37,24 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage{
 		this.sexe = sexe;
 		this.habitat = habitat;
 		this.evolution = EvolutionAnimal.JEUNE;
+		lastEvolutionHour = naissance;
 	}
 
+	public int getLastEvolutionHour() {
+		return lastEvolutionHour;
+	}
+	public void setLastEvolutionHour(int hour) {
+		lastEvolutionHour = hour ; 
+	}
 
-	public Date getNaissance() {
+	public int getNaissance() {
 		return naissance;
 	}
 
+	public void setNaissance(int date) {
+		naissance=date;
+		lastEvolutionHour = date ; 
+	}
 	
 	public float getPoids() {
 		return poids;
@@ -74,10 +86,9 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage{
 	}
 
 
-	public void setEvolution(EvolutionAnimal evolution) {
-		this.evolution = evolution;
+	public EvolutionAnimal getEvolution() {
+		return evolution;
 	}
-
 
 	@Override
 	public void vieillir() throws MortException{

@@ -1,5 +1,6 @@
 package gui.Farm;
 
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -11,6 +12,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 
 import data.configuration.GameConfiguration;
+import data.time.Clock;
+import data.time.CyclicCounter;
 
 public class Hud {
 	
@@ -24,6 +27,10 @@ public class Hud {
 	private JLabel farmer ; 
 	private JLabel player ;
 	private JScrollPane choixScroll;
+	
+	
+	private JLabel time = new JLabel();
+		
 	
 	public  Hud(Board component) {
 		this.component=component;
@@ -52,6 +59,7 @@ public class Hud {
 			
 			profile();
 		}
+		time();
 
 	}
 
@@ -89,6 +97,20 @@ public class Hud {
 		component.add(farmer , JLayeredPane.DRAG_LAYER);
 	}
 
+	public void time() {
+		if(!Arrays.asList(component.getComponents()).contains(time)) {
+			time.setBounds((GameConfiguration.WINDOW_WIDTH-120)/2, 10, 120, 20);
+			time.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
+			component.add(time);			
+		}
+		Clock clock = component.getFarm().getTimeManager().getClock();
+		CyclicCounter hour = clock.getHour();
+		CyclicCounter minute = clock.getMinute();
+		CyclicCounter second = clock.getSecond();
+		
+		time.setText(hour.toString()+" : "+minute.toString()+" : "+second.toString());
+		
+	}
 	
 	public void addingChoix() {
 		choixScroll = new JScrollPane();
@@ -96,8 +118,8 @@ public class Hud {
 		
 		choixScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		choixScroll.setBounds(50, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-170, 160);
-		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
 		choixScroll.setViewportView(choix);
+		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
 	}
 	
 	public void removeChoix() {

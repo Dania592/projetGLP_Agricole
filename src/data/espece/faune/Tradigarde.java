@@ -1,7 +1,5 @@
 package data.espece.faune;
 
-import java.util.Date;
-
 import data.espece.Milieu;
 import data.map.Map;
 import data.production.Lait;
@@ -19,7 +17,7 @@ public class Tradigarde extends AnimalProducteur {
 	private final static float POIDS = 500 ;
 	private final static int QUANTITE = 20 ;
 	
-	public Tradigarde(int ligne_init, int colonne_init,Date naissance,String nom, String sexe, Etable habitat , String reference ,Map map) {
+	public Tradigarde(int ligne_init, int colonne_init,int naissance,String nom, String sexe, Etable habitat , String reference ,Map map) {
 		super(ligne_init, colonne_init, Milieu.ESPACE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.OMNIVRE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE,new Lait() , reference , map);
 		

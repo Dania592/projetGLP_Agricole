@@ -1,7 +1,5 @@
 package data.espece.faune;
 
-import java.util.Date;
-
 import data.espece.Milieu;
 import data.map.Map;
 import data.production.Oeuf;
@@ -16,7 +14,7 @@ public class Poule extends AnimalProducteur {
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;
 	
-	public Poule(int ligne_init, int colonne_init,Milieu milieu , Date naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
+	public Poule(int ligne_init, int colonne_init,Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
 			 
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map);

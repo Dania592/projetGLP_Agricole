@@ -4,6 +4,7 @@ import java.util.Date;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
+import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.flore.terrains.TypeTerrain;
@@ -15,6 +16,7 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
 import data.stucture_base.Farm;
+import process.time.TimeManager;
 
 
 public class GameBuilder {
@@ -34,7 +36,9 @@ public class GameBuilder {
 		// instanciation de l'element manager ferme et fermier 
 		ElementManager elementManager = new ElementManager(MapBuilder());
 		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
-		Farm farm = new Farm( elementManager , farmer);
+		TimeManager timeManager = new TimeManager();
+		timeManager.start();
+		Farm farm = new Farm( elementManager , farmer , timeManager);
 		farm.reservePlaceToFarm();
 		
 		
@@ -64,24 +68,29 @@ public class GameBuilder {
 	private static void initialize( RessourcesManager stock , Map map) {
 			
 		// initialisation du stock pour l'etat initial 
-		Vache vacheInitial = new Vache(0, 0, new Date(),"violette", "F", null, "v0", map);
-		Vache vache1 = new Vache(0, 0, new Date(),"violette", "F", null, "v1", map);
-		Vache vache2 = new Vache(0, 0, new Date(),"violette", "F", null, "v2", map);
-		Vache vache3 = new Vache(0, 0, new Date(),"violette", "F", null, "v3", map);
-		Vache vache4 = new Vache(0, 0, new Date(),"violette", "F", null, "v4", map);
-		Vache vache5 = new Vache(0, 0, new Date(),"violette", "F", null, "v5", map);
-		Vache vache6 = new Vache(0, 0, new Date(),"violette", "F", null, "v6", map);
-		Vache vache7 = new Vache(0, 0, new Date(),"violette", "F", null, "v7", map);
-		Vache vache8 = new Vache(0, 0, new Date(),"violette", "F", null, "v8", map);
+		Vache vacheInitial = new Vache(0, 0, 0,"violette", "F", null, "v0", map);
+		Vache vache1 = new Vache(0, 0, 0,"violette", "F", null, "v1", map);
+		Vache vache2 = new Vache(0, 0, 0,"violette", "F", null, "v2", map);
+		Vache vache3 = new Vache(0, 0,0,"violette", "F", null, "v3", map);
+		Vache vache4 = new Vache(0, 0, 0,"violette", "F", null, "v4", map);
+
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vacheInitial.getReference(), vacheInitial);
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache1.getReference(), vache1);
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache2.getReference(), vache2);
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache3.getReference(), vache3);
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache4.getReference(), vache4);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache5.getReference(), vache5);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache6.getReference(), vache6);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache7.getReference(), vache7);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache8.getReference(), vache8);
+
+		
+		
+		
+		Mouton mouton = new Mouton(0, 0, 0, null, null, null, "m1", map);
+		Mouton mouton1 = new Mouton(0, 0, 0, null, null, null, "m2", map);
+		Mouton mouton2 = new Mouton(0, 0, 0, null, null, null, "m3", map);
+		
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton.getReference(), mouton);
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton1.getReference(),mouton1);
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton2.getReference(), mouton2);
+
 
 		// sera remplacer par une instance de terrain 
 		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeTerrain.Pommier);
@@ -99,7 +108,7 @@ public class GameBuilder {
 		
 		stock.getGestionnaireStructure().getStructures().put(maison.getReference(), maison);
 		stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
-		//stock.getGestionnaireStructure().getStructures().put(poulallierInitial.getReference(), poulallierInitial);
+		stock.getGestionnaireStructure().getStructures().put(poulallierInitial.getReference(), poulallierInitial);
 		stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
 		 
 		
