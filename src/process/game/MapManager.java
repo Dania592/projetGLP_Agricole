@@ -56,6 +56,9 @@ public class MapManager {
 			for(Case block : enclos.bordEnclos()) {
 				map.getCase(block.getLigne(), block.getColonne()).setLibre(false);
 			}
+//			Case b = new Case(true , enclos.getPosition().getLigne_init()+1,enclos.getPosition().getColonne_init()+enclos.getDimension()/2 );
+//			map.getCase(b.getLigne(), b.getColonne()).setLibre(false);
+//			map.getCase(b.getLigne(), b.getColonne()+1).setLibre(false);
 		}
 	}
 	

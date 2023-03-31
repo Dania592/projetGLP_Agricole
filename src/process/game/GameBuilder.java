@@ -5,6 +5,7 @@ import java.util.Date;
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.espece.faune.Mouton;
+import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.flore.terrains.TypeTerrain;
@@ -91,25 +92,43 @@ public class GameBuilder {
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton1.getReference(),mouton1);
 		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton2.getReference(), mouton2);
 
+		
+		
+		
+		Poule poule = new Poule(0, 0, null, 0, null, null, null, "p1", map);
+		Poule poule1 = new Poule(0, 0, null, 0, null, null, null, "p2", map);
+		Poule poule2 = new Poule(0, 0, null, 0, null, null, null, "p3", map);
+		
+		
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule.getReference(), poule);
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule1.getReference(),poule1);
+		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule2.getReference(), poule2);
 
 		// sera remplacer par une instance de terrain 
 		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeTerrain.Pommier);
 		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, TypeTerrain.Poivron);
+		
 		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial.getReference(), terrainInitial);
 		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial2.getReference(), terrainInitial2);
 		
+		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeTerrain.Choux);
+		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeTerrain.Fraise);
+		
+		stock.getGestionnaireTerrains().getTerrains().put(terrain3.getReference(), terrain3);
+		stock.getGestionnaireTerrains().getTerrains().put(terrain4.getReference(), terrain4);
+		
 		Maison maison = new Maison(0,0,"maison",map);
-		Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
-		Entrepot entrepotSecond = new Entrepot(0, 0, "en1", map);
+		//Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
+		//Entrepot entrepotSecond = new Entrepot(0, 0, "en1", map);
 		Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
 		
 		Enclos enclos1 = new Enclos(26, 21, "enclos1",map);
 		Enclos enclos2 = new Enclos(26, 21, "enclos2",map);
 		
 		stock.getGestionnaireStructure().getStructures().put(maison.getReference(), maison);
-		stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
+		//stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
 		stock.getGestionnaireStructure().getStructures().put(poulallierInitial.getReference(), poulallierInitial);
-		stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
+		//stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
 		 
 		
 		stock.getGestionnaireEnclos().getEnclos().put(enclos1.getReference(), enclos1);

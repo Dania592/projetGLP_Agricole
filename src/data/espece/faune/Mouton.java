@@ -13,9 +13,9 @@ import data.structure.Etable;
 
 
 public class Mouton extends AnimalProducteur {
-
-	private final static int DUREE_VIE = 500 ;
-	private final static int PRIX_ACHAT = 1000 ;
+	
+	private final static int DUREE_VIE = 50 ;
+	private final static int PRIX_ACHAT = 100 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;

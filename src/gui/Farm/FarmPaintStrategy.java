@@ -3,9 +3,12 @@ package gui.Farm;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +23,7 @@ import data.stucture_base.Farm;
 import data.stucture_base.Position;
 import gui.gestionnaire.Gestionnaire;
 import gui.gestionnaire.RoundedPanel;
+import process.game.Game;
 
 
 /**
@@ -105,6 +109,20 @@ public class FarmPaintStrategy {
 				}
 
 			}
+		}
+		
+		String imagePaths = "src"+File.separator+"ressources"+File.separator+enclos.getClass().getSimpleName()
+				+File.separator+"saut100.png";
+		Image images ;
+		try {
+			images = ImageIO.read(new File(imagePaths));
+			int x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
+			int y = (enclos.getPosition().getColonne_init()+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getY();
+			graphics.drawImage(images, y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 		
 	}

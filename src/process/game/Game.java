@@ -86,9 +86,9 @@ public class Game {
 		
 	}
 	
-//	public static void main(String[] args) {
-//		Game game = new Game();
-//		MapManager manager = GameBuilder.MapBuilder();
-//		game.acheter(manager.getMap());
-//	}
+	public static void main(String[] args) {
+		Game game = new Game();
+		MapManager manager = GameBuilder.MapBuilder();
+		game.acheter(manager.getMap());
+	}
 }

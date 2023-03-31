@@ -11,8 +11,8 @@ import process.visitor.GestionVisitor;
 
 public class Terrain extends Element implements Buyable{
 	
-	private static int SPEED = 50;// vitesse d'évolution
-	private static int DIMENSION = 9; // C'est un carré donc une seule dimension
+	private static int SPEED = 10;// vitesse d'évolution
+	private static int DIMENSION = 16; // C'est un carré donc une seule dimension
 	private static float PRIX_ACHAT = 100;
 	// temporaire 
 	private HashMap<String, JLabel> actions;
@@ -72,15 +72,10 @@ public class Terrain extends Element implements Buyable{
 		case 7 :
 			evolution = EvolutionTerrain.PLANTE_5;
 			break;
-		case 8 :
-			evolution = EvolutionTerrain.PLANTE_6;
-			break;
-		case 9 :
-			//currentImage = images.get(EvolutionTerrain.PLANTE_7);
-			count = -1;
+		default :
 			break;
 		}
-		setActions();
+		//setActions();
 		setImage(images.get(evolution));
 		count++;
 		
@@ -106,23 +101,23 @@ public class Terrain extends Element implements Buyable{
 		return actions;
 	}
 
-	public void setActions() {
-		if (evolution == EvolutionTerrain.VIERGE) {
-			actions = new HashMap<>();
-			actions.put("Labourer", new JLabel("Labourer"));
-		} else if (evolution == EvolutionTerrain.LABOURE) {
-			actions = new HashMap<>();
-			actions.put("Planter", new JLabel("Planter"));
-			actions.put("Arroser", new JLabel("Arroser"));
-		}else if (evolution == EvolutionTerrain.PLANTE_6) {
-			actions = new HashMap<>();
-			actions.put("Recolter", new JLabel("Recolter"));
-			actions.put("Arroser", new JLabel("Arroser"));
-		} else {
-			actions = new HashMap<>();
-			actions.put("Arroser", new JLabel("Arroser"));
-		}
-	}
+//	public void setActions() {
+//		if (evolution == EvolutionTerrain.VIERGE) {
+//			actions = new HashMap<>();
+//			actions.put("Labourer", new JLabel("Labourer"));
+//		} else if (evolution == EvolutionTerrain.LABOURE) {
+//			actions = new HashMap<>();
+//			actions.put("Planter", new JLabel("Planter"));
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		}else if (evolution == EvolutionTerrain.PLANTE_6) {
+//			actions = new HashMap<>();
+//			actions.put("Recolter", new JLabel("Recolter"));
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		} else {
+//			actions = new HashMap<>();
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		}
+//	}
 
 	@Override
 	public <T> T accept(GestionVisitor<T> visitor) {

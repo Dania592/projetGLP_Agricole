@@ -56,7 +56,7 @@ public class Board  extends JLayeredPane {
 		
 	public void init() {
 		addKeyListener(keys);
-		addMouseListener(mouseHandler);
+		//addMouseListener(mouseHandler);
 		
 		hud = new Hud(this);
 		hud.build();
@@ -81,15 +81,15 @@ public class Board  extends JLayeredPane {
 				paintStrategy.paint(element, g);				
 			}
 			
-			if (clicked != null && clicked instanceof Terrain ) {
-				Terrain terrain = (Terrain)clicked;
-				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
-				terrain.evoluer();	
-			} else {
-				if ( choixTerrain != null ) {
-					remove(choixTerrain);
-				}
-			}
+//			if (clicked != null && clicked instanceof Terrain ) {
+//				Terrain terrain = (Terrain)clicked;
+//				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
+//				terrain.evoluer();	
+//			} else {
+//				if ( choixTerrain != null ) {
+//					remove(choixTerrain);
+//				}
+//			}
 		}
 		hud.time();
 		

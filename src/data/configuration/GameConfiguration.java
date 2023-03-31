@@ -1,5 +1,7 @@
 package data.configuration;
 
+import java.io.File;
+
 /**
  * toutes les constantes du jeu 
  */
@@ -35,5 +37,7 @@ public class GameConfiguration {
 	public final static int WIDHT_LABEL = 60 ;
 	
 	public final static int DIMENSION_STRUCUTRE = 4; 
+	
+	public final static String IMAGE_PATH = "src"+File.separator+"ressources"+File.separator;
 	
 }

@@ -9,6 +9,5 @@ public enum EvolutionTerrain {
 	PLANTE_3,
 	PLANTE_4,
 	PLANTE_5,
-	PLANTE_6,
-	PLANTE_7;
+
 }

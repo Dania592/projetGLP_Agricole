@@ -18,6 +18,9 @@ import javax.swing.JTabbedPane;
 
 import data.gestion.RessourcesManager;
 import gui.Farm.MainGuiTest;
+import process.game.Game;
+import process.game.GameBuilder;
+import process.game.MapManager;
 import process.transaction.Achat;
 
 public class Gestionnaire extends JFrame {
@@ -127,6 +130,6 @@ public class Gestionnaire extends JFrame {
 //		game.acheter(manager.getMap());
 //		Gestionnaire.achat = game.getAchat();
 //		
-//		Gestionnaire gestionnaire = new Gestionnaire("Gestionnaire");
+//		Gestionnaire gestionnaire = new Gestionnaire("Gestionnaire" , null);
 //	}
 }

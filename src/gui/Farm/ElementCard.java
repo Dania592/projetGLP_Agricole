@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import data.espece.faune.Animal;
+import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
 import data.structure.Enclos;
@@ -127,13 +128,15 @@ public class ElementCard extends JPanel{
 					else {
 						Case randomCase =randomPosition(element);
 						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
-						if(element instanceof Enclos) {
+						if(element.getClass().getSimpleName().equals("Enclos")) {
 							Enclos enclos = (Enclos) element ;
 							farm.getManager().add(enclos);
 						}
 						else {
 							farm.getManager().add(element);							
+							
 						}
+						
 						removeOneElement();	
 						component.setSelected(element);
 						component.getHud().removeChoix();

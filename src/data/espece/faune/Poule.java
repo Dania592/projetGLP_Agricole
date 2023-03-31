@@ -1,6 +1,14 @@
 package data.espece.faune;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import data.espece.Milieu;
+import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Oeuf;
 import data.structure.Poulallier;
@@ -18,6 +26,18 @@ public class Poule extends AnimalProducteur {
 			 
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map);
+		
+		String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
+				+File.separator+EvolutionAnimal.JEUNE+File.separator+"up.png";
+		BufferedImage image ;
+		
+		try {
+			image = ImageIO.read(new File(imagePath));
+			setImage(image);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }
