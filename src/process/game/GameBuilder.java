@@ -8,7 +8,7 @@ import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
-import data.flore.terrains.TypeTerrain;
+import data.flore.terrains.TypeGraine;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
@@ -48,14 +48,14 @@ public class GameBuilder {
 		
 		
 		// positionnement du fermier et de la maison sur la map 
-		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison"));
-		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison").setStatique();
+		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0).setStatique();
 		initisaliseFarmerPosition(farm, farmer);
 		
 		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer); 
-		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("maison"));
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0));
 		
 		return farm ;
 	}
@@ -75,11 +75,11 @@ public class GameBuilder {
 		Vache vache3 = new Vache(0, 0,0,"violette", "F", null, "v3", map);
 		Vache vache4 = new Vache(0, 0, 0,"violette", "F", null, "v4", map);
 
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vacheInitial.getReference(), vacheInitial);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache1.getReference(), vache1);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache2.getReference(), vache2);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache3.getReference(), vache3);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(vache4.getReference(), vache4);
+		stock.getGestionnaireAnimaux().add(vacheInitial);
+		stock.getGestionnaireAnimaux().add(vache1);
+		stock.getGestionnaireAnimaux().add(vache2);
+		stock.getGestionnaireAnimaux().add(vache3);
+		stock.getGestionnaireAnimaux().add(vache4);
 
 		
 		
@@ -88,9 +88,9 @@ public class GameBuilder {
 		Mouton mouton1 = new Mouton(0, 0, 0, null, null, null, "m2", map);
 		Mouton mouton2 = new Mouton(0, 0, 0, null, null, null, "m3", map);
 		
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton.getReference(), mouton);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton1.getReference(),mouton1);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(mouton2.getReference(), mouton2);
+		stock.getGestionnaireAnimaux().add(mouton);
+		stock.getGestionnaireAnimaux().add(mouton1);
+		stock.getGestionnaireAnimaux().add(mouton2);
 
 		
 		
@@ -100,22 +100,22 @@ public class GameBuilder {
 		Poule poule2 = new Poule(0, 0, null, 0, null, null, null, "p3", map);
 		
 		
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule.getReference(), poule);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule1.getReference(),poule1);
-		stock.getGestionnaireStocks().getGestionnaireAnimaux().put(poule2.getReference(), poule2);
+		stock.getGestionnaireAnimaux().add(poule);
+		stock.getGestionnaireAnimaux().add(poule1);
+		stock.getGestionnaireAnimaux().add(poule2);
 
 		// sera remplacer par une instance de terrain 
-		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeTerrain.Pommier);
-		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, TypeTerrain.Poivron);
+		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeGraine.TOMATO);
+		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, TypeGraine.BROCCOLI);
 		
-		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial.getReference(), terrainInitial);
-		stock.getGestionnaireTerrains().getTerrains().put(terrainInitial2.getReference(), terrainInitial2);
+		stock.getGestionnaireTerrains().add(terrainInitial);
+		stock.getGestionnaireTerrains().add(terrainInitial2);
 		
-		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeTerrain.Choux);
-		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeTerrain.Fraise);
+		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeGraine.BROCCOLI);
+		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeGraine.CACTUS);
 		
-		stock.getGestionnaireTerrains().getTerrains().put(terrain3.getReference(), terrain3);
-		stock.getGestionnaireTerrains().getTerrains().put(terrain4.getReference(), terrain4);
+		stock.getGestionnaireTerrains().add(terrain3);
+		stock.getGestionnaireTerrains().add(terrain4);
 		
 		Maison maison = new Maison(0,0,"maison",map);
 		//Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
@@ -125,14 +125,14 @@ public class GameBuilder {
 		Enclos enclos1 = new Enclos(26, 21, "enclos1",map);
 		Enclos enclos2 = new Enclos(26, 21, "enclos2",map);
 		
-		stock.getGestionnaireStructure().getStructures().put(maison.getReference(), maison);
+		stock.getGestionnaireStructure().add(maison);
 		//stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
-		stock.getGestionnaireStructure().getStructures().put(poulallierInitial.getReference(), poulallierInitial);
+		stock.getGestionnaireStructure().add(poulallierInitial);
 		//stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
 		 
 		
-		stock.getGestionnaireEnclos().getEnclos().put(enclos1.getReference(), enclos1);
-		stock.getGestionnaireEnclos().getEnclos().put(enclos2.getReference(), enclos2);
+		stock.getGestionnaireEnclos().add(enclos1);
+		stock.getGestionnaireEnclos().add(enclos2);
 		
 	}
 	

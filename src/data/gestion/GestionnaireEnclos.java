@@ -1,12 +1,12 @@
 package data.gestion;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import data.structure.Enclos;
 
 public class GestionnaireEnclos {
 
-	private HashMap<String , Enclos > enclos = new HashMap<>();
+	private ArrayList<Enclos> enclos = new ArrayList<Enclos>();
 	
 	
 	private static GestionnaireEnclos instance = new GestionnaireEnclos();
@@ -17,8 +17,12 @@ public class GestionnaireEnclos {
 		return instance;
 	}
 	
-	public HashMap<String, Enclos > getEnclos(){
+	public ArrayList<Enclos> getEnclos(){
 		return enclos;
+	}
+	
+	public void add(Enclos enclos) {
+		this.enclos.add(enclos);
 	}
 	
 }

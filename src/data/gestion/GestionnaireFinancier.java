@@ -1,19 +1,26 @@
 package data.gestion;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-import data.finance.Finance;
-
-
-
-
+import data.finance.Amende;
+import data.finance.Charge;
+import process.transaction.Achat;
+import process.transaction.Vente;
 
 public class GestionnaireFinancier {
-	private HashMap<String, Finance> transactions = new HashMap<>();
+	
+	private ArrayList<Achat> achats = new ArrayList<Achat>();
+	private ArrayList<Vente> ventes = new ArrayList<Vente>();
+	private ArrayList<Charge> charges = new ArrayList<Charge>();
+	private ArrayList<Amende> amendes = new ArrayList<Amende>();
 	private static GestionnaireFinancier instance = new GestionnaireFinancier();
 	
-	public HashMap<String, Finance> getTransactions() {
-		return transactions;
+	public ArrayList<Achat> getAchats() {
+		return achats;
+	}
+
+	public ArrayList<Vente> getVentes() {
+		return ventes;
 	}
 
 	private GestionnaireFinancier() {}
@@ -22,15 +29,30 @@ public class GestionnaireFinancier {
 		return instance;
 	}
 	
-	public void add(Finance transaction) {
-		transactions.put(transaction.getClass().getSimpleName() + String.valueOf(transactions.size()), transaction);
+	public void add(Achat achat) {
+		achats.add(achat);
+	}
+	
+	public void add(Vente vente) {
+		ventes.add(vente);
+	}
+	
+	public void add(Charge charge) {
+		charges.add(charge);
+	}
+	
+	public void add(Amende amende) {
+		amendes.add(amende);
 	}
 	
 	@Override
 	public String toString() {
 		StringBuffer transactionsString = new StringBuffer("\t" + getClass().getSimpleName());
-		for (Finance transaction : transactions.values()) {
-			transactionsString.append("\n\t\t" + transaction.toString());
+		for (Achat achat : achats) {
+			transactionsString.append("\n\t\t" + achat.toString());
+		}
+		for (Vente vente : ventes) {
+			transactionsString.append("\n\t\t" + vente.toString());
 		}
 		return transactionsString.toString();
 	}

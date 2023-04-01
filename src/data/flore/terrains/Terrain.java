@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JLabel;
+
 import data.map.Map;
 import data.stucture_base.Element;
 import process.transaction.Buyable;
@@ -23,11 +24,11 @@ public class Terrain extends Element implements Buyable{
 	private int quantiteProduction;
 	
 	private EvolutionTerrain evolution;
-	private TypeTerrain type;
+	private TypeGraine type;
 	
 	private HashMap<EvolutionTerrain, BufferedImage> images = new HashMap<>();
 	
-	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,TypeTerrain type) {
+	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,TypeGraine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
@@ -85,6 +86,10 @@ public class Terrain extends Element implements Buyable{
 		return evolution;
 	}
 
+	public TypeGraine getType() {
+		return type;
+	}
+	
 	public void setEvolution(EvolutionTerrain evolution) {
 		this.evolution = evolution;
 	}
@@ -99,6 +104,17 @@ public class Terrain extends Element implements Buyable{
 	
 	public HashMap<String, JLabel> getActions() {
 		return actions;
+	}
+	
+	@Override
+	public float getPrixAchat() {
+		return PRIX_ACHAT;
+	}
+	
+	@Override
+	public <T> T accept(GestionVisitor<T> visitor) {
+		visitor.visit(this);
+		return null;
 	}
 
 //	public void setActions() {
@@ -119,15 +135,12 @@ public class Terrain extends Element implements Buyable{
 //		}
 //	}
 
-	@Override
-	public <T> T accept(GestionVisitor<T> visitor) {
-		return null;
-	}
-	
-	@Override
-	public float getPrixAchat() {
-		return PRIX_ACHAT;
-	}
 
+	
+
+
+	public String toString() {
+		return "Terrain de " + type;
+	}
 		
 }

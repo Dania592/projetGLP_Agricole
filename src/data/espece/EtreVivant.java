@@ -8,7 +8,7 @@ import data.stucture_base.Element;
 import process.transaction.Buyable;
 import process.transaction.Saleable;
 
-public abstract class EtreVivant extends Element implements Mortel,Saleable,Buyable{
+public abstract class EtreVivant extends Element implements Mortel{
 	private Milieu milieu ;
 	private int dureeVie;
 	private float prixAchat ,prixVente;
@@ -22,6 +22,7 @@ public abstract class EtreVivant extends Element implements Mortel,Saleable,Buya
 		this.milieu = milieu;
 		this.dureeVie = dureeVie;
 		this.prixAchat = prixAchat;
+		prixVente = 100;
 		this.niveauEau = niveauEau;
 		this.etatSante = EtatSante.BONNE_SANTE;
 	}
@@ -90,12 +91,10 @@ public abstract class EtreVivant extends Element implements Mortel,Saleable,Buya
 		}
 	}
     
-    @Override
 	public float getPrixAchat() {
 		return prixAchat;
 	}
 	
-	@Override
 	public float getPrixVente() {
 		return prixVente;
 	}

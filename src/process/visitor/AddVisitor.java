@@ -4,6 +4,8 @@ import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.flore.Culture;
 import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeGraine;
+import data.gestion.GestionnaireAnimaux;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
@@ -18,19 +20,19 @@ public class AddVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Animal animal) {
-		GestionnaireStocks.getInstance().getGestionnaireAnimaux().put(animal.getReference(),animal);
+		GestionnaireAnimaux.getInstance().add(animal);
 		return null;
 	}
 
 	@Override
-	public Void visit(Culture culture) {
-		GestionnaireStocks.getInstance().getGestionnaireCulture().put(culture.getReference(),culture);
+	public Void visit(TypeGraine graine) {
+		GestionnaireStocks.getInstance().add(graine);
 		return null;
 	}
 
 	@Override
 	public Void visit(Structure structure) {
-		GestionnaireStructures.getInstance().getStructures().put(structure.getReference(),structure);
+		GestionnaireStructures.getInstance().add(structure);
 		return null;
 	}
 
@@ -42,25 +44,25 @@ public class AddVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Outil outil) {
-		GestionnaireMateriel.getInstance().getGestionnaireOutils().put(outil.getReference(),outil);
+		GestionnaireMateriel.getInstance().add(outil);;
 		return null;
 	}
 
 	@Override
 	public Void visit(Engin engin) {
-		GestionnaireMateriel.getInstance().getGestionnaireEngins().put(engin.getReference(),engin);
+		GestionnaireMateriel.getInstance().add(engin);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Produit product) {
-		GestionnaireStocks.getInstance().getGestionnaireProduits().put(product.getReference(),product);
+		GestionnaireStocks.getInstance().getProduits().put(product.getClass().getSimpleName(),product);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Terrain terrain) {
-		GestionnaireTerrains.getInstance().getTerrains().put(terrain.getReference(),terrain);
+		GestionnaireTerrains.getInstance().add(terrain);
 		return null;
 	}
 

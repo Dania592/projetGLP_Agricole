@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import data.configuration.GameConfiguration;
 
 public class ImagesTerrains {
-	private static HashMap<TypeTerrain, HashMap<EvolutionTerrain, BufferedImage>> images = new HashMap<>();
+	private static HashMap<TypeGraine, HashMap<EvolutionTerrain, BufferedImage>> images = new HashMap<>();
 	
 	private static ImagesTerrains instance = new ImagesTerrains();
 	
@@ -19,7 +19,7 @@ public class ImagesTerrains {
 		return instance;
 	}
 	
-	public HashMap<TypeTerrain, HashMap<EvolutionTerrain, BufferedImage>> getImages() {
+	public HashMap<TypeGraine, HashMap<EvolutionTerrain, BufferedImage>> getImages() {
 		initializeImages();
 		return images;
 	}
@@ -38,7 +38,6 @@ public class ImagesTerrains {
 			images0.put(EvolutionTerrain.PLANTE_3, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b3.png")));
 			images0.put(EvolutionTerrain.PLANTE_4, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b4.png")));
 			images0.put(EvolutionTerrain.PLANTE_5, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b5.png")));
-			//images0.put(EvolutionTerrain.PLANTE_7, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b7.png")));
 			
 			images1.put(EvolutionTerrain.VIERGE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png")));
 			images1.put(EvolutionTerrain.LABOURE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png")));
@@ -49,7 +48,6 @@ public class ImagesTerrains {
 			images1.put(EvolutionTerrain.PLANTE_4, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"a4.png")));
 			images1.put(EvolutionTerrain.PLANTE_5, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"a5.png")));
 			
-			
 			images2.put(EvolutionTerrain.VIERGE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png")));
 			images2.put(EvolutionTerrain.LABOURE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png")));
 			images2.put(EvolutionTerrain.PLANTE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e0.png")));
@@ -58,7 +56,6 @@ public class ImagesTerrains {
 			images2.put(EvolutionTerrain.PLANTE_3, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e3.png")));
 			images2.put(EvolutionTerrain.PLANTE_4, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e4.png")));
 			images2.put(EvolutionTerrain.PLANTE_5, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e5.png")));
-			//images0.put(EvolutionTerrain.PLANTE_7, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b7.png")));
 			
 			images3.put(EvolutionTerrain.VIERGE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png")));
 			images3.put(EvolutionTerrain.LABOURE, ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png")));
@@ -71,10 +68,10 @@ public class ImagesTerrains {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		images.put(TypeTerrain.Pommier, images0);
-		images.put(TypeTerrain.Poivron, images1);
-		images.put(TypeTerrain.Choux, images3);
-		images.put(TypeTerrain.Fraise, images2);
+		images.put(TypeGraine.TOMATO, images0);
+		images.put(TypeGraine.BROCCOLI, images1);
+		images.put(TypeGraine.BOK_CHOY, images3);
+		images.put(TypeGraine.CACTUS, images2);
 	}
 	
 }

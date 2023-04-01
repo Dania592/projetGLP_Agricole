@@ -1,9 +1,13 @@
 package process.visitor;
 
+import java.util.ArrayList;
+
 import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.flore.Culture;
 import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeGraine;
+import data.gestion.GestionnaireAnimaux;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
@@ -18,19 +22,22 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Animal animal) {
-		GestionnaireStocks.getInstance().getGestionnaireAnimaux().remove(animal.getReference(),animal);
+		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getClass().getSimpleName());
+		if (animals != null ) {
+			animals.remove(animal);
+		}
 		return null;
 	}
-
+	
 	@Override
-	public Void visit(Culture culture) {
-		GestionnaireStocks.getInstance().getGestionnaireCulture().remove(culture.getReference(),culture);
+	public Void visit(TypeGraine graine) {
+		GestionnaireStocks.getInstance().getGraines().remove(graine);
 		return null;
 	}
 
 	@Override
 	public Void visit(Structure structure) {
-		GestionnaireStructures.getInstance().getStructures().remove(structure.getReference(),structure);
+		GestionnaireStructures.getInstance().getStructures().remove(structure.getClass().getSimpleName(),structure);
 		return null;
 	}
 
@@ -42,19 +49,19 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Outil outil) {
-		GestionnaireMateriel.getInstance().getGestionnaireOutils().remove(outil.getReference(),outil);
+		GestionnaireMateriel.getInstance().getOutils().remove(outil.getType(),outil);
 		return null;
 	}
 
 	@Override
 	public Void visit(Engin engin) {
-		GestionnaireMateriel.getInstance().getGestionnaireEngins().remove(engin.getReference(),engin);
+		GestionnaireMateriel.getInstance().getEngins().remove(engin.getType(),engin);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Produit product) {
-		GestionnaireStocks.getInstance().getGestionnaireProduits().remove(product.getReference(),product);
+		GestionnaireStocks.getInstance().getProduits().remove(product.getReference(),product);
 		return null;
 	}
 	
@@ -63,5 +70,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 		GestionnaireTerrains.getInstance().getTerrains().remove(terrain.getReference(),terrain);
 		return null;
 	}
+
+
 	
 }

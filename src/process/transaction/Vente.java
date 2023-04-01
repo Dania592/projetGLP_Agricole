@@ -31,7 +31,7 @@ public class Vente extends Transaction {
 			element.accept(removeVisitor);
 		}
 		game.getBanque().accrediter(getTotalCost());
-		GestionnaireFinancier.getInstance().getTransactions().put(getReference(), this);
+		GestionnaireFinancier.getInstance().getVentes().add(this);
 	}
 	
 	public void calculateTotalCost() {

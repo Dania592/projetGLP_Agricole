@@ -7,9 +7,11 @@ import process.visitor.GestionVisitor;
 
 public class Engin extends Element implements Stockage{
 	
-	public Engin(String reference, boolean statique, int nbCase, int ligne_init, int colonne_init , Map map) {
+	private Engins type;
+	
+	public Engin(String reference, boolean statique, int nbCase, int ligne_init, int colonne_init , Map map, Engins type) {
 		super(reference, statique, nbCase, ligne_init, colonne_init , map);
-		// TODO Auto-generated constructor stub
+		this.type = type;
 	}
 
 	@Override
@@ -20,5 +22,13 @@ public class Engin extends Element implements Stockage{
 
 	public void setStatique() {
 		super.setStatique(true);
+	}
+
+	public Engins getType() {
+		return type;
+	}
+	
+	public String toString() {
+		return "Engin : " + type + getReference();
 	}
 }

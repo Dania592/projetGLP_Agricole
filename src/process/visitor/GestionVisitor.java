@@ -4,6 +4,7 @@ import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.flore.Culture;
 import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeGraine;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.production.Produit;
@@ -14,7 +15,7 @@ public interface GestionVisitor<T> {
 
 		T visit(Animal animal);
 
-		T visit(Culture culture);
+		T visit(TypeGraine graine);
 
 		T visit(Structure structure);
 

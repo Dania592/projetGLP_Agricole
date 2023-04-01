@@ -10,12 +10,14 @@ import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.structure.Structure;
+import process.transaction.Buyable;
+import process.transaction.Saleable;
 import process.visitor.GestionVisitor;
 
 
 
 
-public abstract class Animal extends EtreVivant implements Mortel,Stockage{
+public abstract class Animal extends EtreVivant implements Mortel,Stockage, Saleable, Buyable{
 
 	private int naissance ;
 	private float poids ;

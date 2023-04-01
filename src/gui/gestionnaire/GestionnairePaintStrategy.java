@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -107,14 +108,14 @@ public class GestionnairePaintStrategy {
 	
 	
 	// Pas encore fonctionnelle 
-	public JPanel paintBill(JPanel panier,HashMap<String, Buyable> articles) {
+	public JPanel paintBill(JPanel panier,ArrayList<Buyable> articles) {
 		JPanel bill = paintNormalPanel(0, 0, 230, 460, new GridLayout(0,1), MEDIUM_BROWN);
 		JScrollPane billScrollPane = new JScrollPane(bill);
 		billScrollPane.setViewportView(bill);
 		billScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		billScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panier.add(billScrollPane);
-		for (Buyable article : articles.values()) {
+		for (Buyable article : articles) {
 			JPanel parentPanel = new JPanel();
 			parentPanel.setBackground(MEDIUM_BROWN);
 			parentPanel.setLayout(null);

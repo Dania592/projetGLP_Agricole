@@ -8,7 +8,7 @@ import data.map.Map;
 import data.myExceptions.MortException;
 import process.visitor.GestionVisitor;
 
-public  abstract class Culture extends EtreVivant implements Stockage{
+public  abstract class Culture extends EtreVivant {
 	
 
 	private Engrais engrais;
@@ -37,10 +37,4 @@ public  abstract class Culture extends EtreVivant implements Stockage{
 		return evolution;
 	}
 
-	
-	@Override
-	public <T> T accept(GestionVisitor<T> visitor) {
-		visitor.visit(this);
-		return null;
-	}
 }

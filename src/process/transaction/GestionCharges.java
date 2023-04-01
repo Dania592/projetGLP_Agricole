@@ -2,18 +2,24 @@ package process.transaction;
 
 import java.util.HashMap;
 
+import data.finance.Amende;
+import data.finance.Charge;
 import data.finance.Penalites;
 import process.game.Game;
-
-
 
 public class GestionCharges {
 	private HashMap<String, Penalites> transactions = new HashMap<>();
 	
-	public void payer(Penalites charge, Game game) {
+	public void payer(Charge charge, Game game) {
 		game.getBanque().debiter(charge.getMontant());
 		transactions.remove(charge.getReference());
 		game.getRessourcesManager().getGestionnaireFinancier().add(charge);
+	}
+	
+	public void payer(Amende Amende, Game game) {
+		game.getBanque().debiter(Amende.getMontant());
+		transactions.remove(Amende.getReference());
+		game.getRessourcesManager().getGestionnaireFinancier().add(Amende);
 	}
 	
 	public void ajouterPenalite(Penalites penalite) {

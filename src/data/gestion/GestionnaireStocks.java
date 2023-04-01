@@ -1,19 +1,17 @@
 package data.gestion;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.espece.EtreVivant;
-import data.espece.faune.Animal;
-import data.flore.Culture;
+import data.flore.terrains.TypeGraine;
 import data.production.Produit;
-
 
 public class GestionnaireStocks {
 
-	private HashMap<String, Animal> gestionnaireAnimaux = new HashMap<>();
-	private HashMap<String, Culture> gestionnaireCulture = new HashMap<>();
-	private HashMap<String, Produit> gestionnaireProduits = new HashMap<>();
+	// produits fruits et graines
+	private ArrayList<TypeGraine> graines = new ArrayList<TypeGraine>();
+	private HashMap<String, Produit> produits = new HashMap<>();
 	
 	private static GestionnaireStocks instance = new GestionnaireStocks();
 	
@@ -22,32 +20,36 @@ public class GestionnaireStocks {
 	public static GestionnaireStocks getInstance() {
 		return instance;
 	}
-
-	public HashMap<String, Animal> getGestionnaireAnimaux() {
-		return gestionnaireAnimaux;
+	
+	public ArrayList<TypeGraine> getGraines(){
+		return graines;
 	}
 	
-	public HashMap<String, Culture> getGestionnaireCulture() {
-		return gestionnaireCulture;
-	}
-	
-	public HashMap<String, Produit> getGestionnaireProduits() {
-		return gestionnaireProduits;
+	public HashMap<String, Produit> getProduits() {
+		return produits;
 	}
 
+	public void add(TypeGraine graine) {
+		if ( graines.contains(graine)) {
+			graine.incrementQuantity();
+		} else {
+			graine.incrementQuantity();
+			graines.add(graine);
+		}
+	}
+	
+	public void add(Produit produit) {
+		produits.put(produit.getClass().getSimpleName(), produit);
+	}
 	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
-		gestionnaire.append("\n\t\t Animaux :");
-		for (EtreVivant etre : gestionnaireAnimaux.values()) {
-			gestionnaire.append("\n\t\t\t"+ etre.toString());
-		}
 		gestionnaire.append("\n\t\t Plantes :");
-		for (EtreVivant etre : gestionnaireCulture.values()) {
-			gestionnaire.append("\n\t\t\t"+ etre.toString());
+		for (TypeGraine graine : graines) {
+			gestionnaire.append("\n\t\t\t"+ graine.toString());
 		}
 		gestionnaire.append("\n\t\t Produits :");
-		for (Produit product : gestionnaireProduits.values()) {
+		for (Produit product : produits.values()) {
 			gestionnaire.append("\n\t\t\t" + product.toString());
 		}
 		return gestionnaire.toString();

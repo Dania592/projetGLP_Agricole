@@ -85,13 +85,13 @@ public class Gestionnaire extends JFrame {
 		
 		tabbedPane = paintStrategy.paintTabs(tabbedPane, toBuy);
 		
-		JPanel animalsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireStocks().getGestionnaireAnimaux().size());
+		JPanel animalsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
 		animalsPanel.add(animalsCards);
-		JPanel plantsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireStocks().getGestionnaireCulture().size());
+		JPanel plantsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireStocks().getGraines().size());
 		plantsPanel.add(plantsCards);
-		JPanel outilsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireMateriel().getGestionnaireOutils().size());
+		JPanel outilsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireMateriel().getOutils().size());
 		outilsPanel.add(outilsCards);
-		JPanel enginsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireMateriel().getGestionnaireEngins().size());
+		JPanel enginsCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireMateriel().getEngins().size());
 		enginsPanel.add(enginsCards);
 		JPanel structuresCards = paintStrategy.paintMarketCardsContainer(10, 10, 599, 512, new CardLayout(), 20, MEDIUM_BROWN, ressourcesManager.getGestionnaireStructure().getStructures().size());
 		structuresPanel.add(structuresCards);
@@ -123,13 +123,13 @@ public class Gestionnaire extends JFrame {
 						
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		Game game = new Game();
-//		MapManager manager = GameBuilder.MapBuilder();
-//		game.acheter(manager.getMap());
-//		Gestionnaire.achat = game.getAchat();
-//		
-//		Gestionnaire gestionnaire = new Gestionnaire("Gestionnaire" , null);
-//	}
+	public static void main(String[] args) {
+		
+		Game game = new Game();
+		MapManager manager = GameBuilder.MapBuilder();
+		game.acheter(manager.getMap());
+		Gestionnaire.achat = game.getAchat();
+		
+		Gestionnaire gestionnaire = new Gestionnaire("Gestionnaire" , null);
+	}
 }

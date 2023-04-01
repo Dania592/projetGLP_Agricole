@@ -72,8 +72,8 @@ public class ChoixPanel extends JLayeredPane {
 	 * 
 	 */
 	public void initialisingPanel() {
-		for(Structure structure : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
-			
+		for(ArrayList<Structure> structures : farm.getRessourcesManager().getGestionnaireStructure().getStructures().values()) {
+			for(Structure structure : structures) {
 				if(cards.containsKey(structure.getClass().getSimpleName())) {
 					cards.get(structure.getClass().getSimpleName()).addElement(structure);
 				}
@@ -83,34 +83,38 @@ public class ChoixPanel extends JLayeredPane {
 					ElementCard newCard = new ElementCard(cardliste , farm , component);
 					cards.put(structure.getClass().getSimpleName(), newCard);
 				}			
-					
+			}		
 		}
 		
-		for( Terrain terrain : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
-			if(cards.containsKey(terrain.getClass().getSimpleName())) {
-				cards.get(terrain.getClass().getSimpleName()).addElement(terrain);
-			}
-			else {
-				ArrayList<Element> cardliste = new ArrayList<>();
-				cardliste.add(terrain);
-				ElementCard newCard = new ElementCard(cardliste , farm ,component);
-				cards.put(terrain.getClass().getSimpleName(), newCard);
-			}
-		}
-		
-		for( Animal animal : farm.getRessourcesManager().getGestionnaireStocks().getGestionnaireAnimaux().values()) {
-			if(cards.containsKey(animal.getClass().getSimpleName())) {
-				cards.get(animal.getClass().getSimpleName()).addElement(animal);
-			}
-			else {
-				ArrayList<Element> cardliste = new ArrayList<>();
-				cardliste.add(animal);
-				ElementCard newCard = new ElementCard(cardliste , farm , component);
-				cards.put(animal.getClass().getSimpleName(), newCard);
+		for( ArrayList<Terrain> terrains : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
+			for(Terrain terrain : terrains) {
+				if(cards.containsKey(terrain.getClass().getSimpleName())) {
+					cards.get(terrain.getClass().getSimpleName()).addElement(terrain);
+				}
+				else {
+					ArrayList<Element> cardliste = new ArrayList<>();
+					cardliste.add(terrain);
+					ElementCard newCard = new ElementCard(cardliste , farm ,component);
+					cards.put(terrain.getClass().getSimpleName(), newCard);
+				}
 			}
 		}
 		
-		for( Enclos enclos : farm.getRessourcesManager().getGestionnaireEnclos().getEnclos().values()) {
+		for( ArrayList<Animal> animals : farm.getRessourcesManager().getGestionnaireAnimaux().getAnimaux().values()) {
+			for(Animal animal : animals) {
+				if(cards.containsKey(animal.getClass().getSimpleName())) {
+					cards.get(animal.getClass().getSimpleName()).addElement(animal);
+				}
+				else {
+					ArrayList<Element> cardliste = new ArrayList<>();
+					cardliste.add(animal);
+					ElementCard newCard = new ElementCard(cardliste , farm , component);
+					cards.put(animal.getClass().getSimpleName(), newCard);
+				}
+			}
+		}
+		
+		for( Enclos enclos : farm.getRessourcesManager().getGestionnaireEnclos().getEnclos()) {
 			if(cards.containsKey(enclos.getClass().getSimpleName())) {
 				cards.get(enclos.getClass().getSimpleName()).addElement(enclos);
 			}

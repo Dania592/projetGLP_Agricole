@@ -2,12 +2,13 @@ package data.gestion;
 
 public class RessourcesManager {
 	private GestionnaireFinancier gestionnaireFinancier = GestionnaireFinancier.getInstance();
-	private GestionnaireRH gestionnaireRH = GestionnaireRH.getInstance();
-	private GestionnaireStocks gestionnaireStocks = GestionnaireStocks.getInstance();
 	private GestionnaireStructures gestionnaireStructure = GestionnaireStructures.getInstance();
+	private GestionnaireAnimaux gestionnaireAnimaux = GestionnaireAnimaux.getInstance();
+	private GestionnaireStocks gestionnaireStocks = GestionnaireStocks.getInstance();
 	private GestionnaireMateriel gestionnaireMateriel = GestionnaireMateriel.getInstance();
 	private GestionnaireTerrains gestionnaireTerrains = GestionnaireTerrains.getInstance();
 	private GestionnaireEnclos gestionnaireEnclos = GestionnaireEnclos.getInstance();
+	private GestionnaireRH gestionnaireRH = GestionnaireRH.getInstance();
 	 
 	
 	public GestionnaireFinancier getGestionnaireFinancier() {
@@ -31,9 +32,12 @@ public class RessourcesManager {
 	public GestionnaireEnclos getGestionnaireEnclos() {
 		return gestionnaireEnclos;
 	}
+	public GestionnaireAnimaux getGestionnaireAnimaux() {
+		return gestionnaireAnimaux;
+	}
 	
 	public String toString() {
-		return "Gestionnaire : \n" + gestionnaireStocks.toString() + "\n" + gestionnaireMateriel.toString() 
-		+"\n"+ gestionnaireStructure.toString() +"\n"+ gestionnaireFinancier.toString() +"\n"+ gestionnaireRH.toString()+"\n"+ gestionnaireTerrains.toString();
+		return "Gestionnaire : \n" + gestionnaireAnimaux.toString() + "\n" + gestionnaireStocks.toString() + "\n" + gestionnaireStructure.toString() 
+		+"\n"+ gestionnaireMateriel.toString() + "\n"+ gestionnaireRH.toString()+"\n"+ gestionnaireTerrains.toString();
 	}
 }
