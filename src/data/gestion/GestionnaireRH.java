@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.acteur.Employee;
+import data.espece.faune.Animal;
 import data.flore.terrains.Terrain;
 
 public class GestionnaireRH {
@@ -20,6 +21,10 @@ public class GestionnaireRH {
 
 	public static GestionnaireRH getInstance() {
 		return instance;
+	}
+	
+	public int getSize() {
+		return employees.size();
 	}
 	
 	public String toString() {

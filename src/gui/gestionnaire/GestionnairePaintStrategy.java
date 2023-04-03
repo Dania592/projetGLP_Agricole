@@ -7,6 +7,7 @@ import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -40,6 +41,13 @@ public class GestionnairePaintStrategy {
 		return panel;
 	}
 	
+	public JLayeredPane paintLayeredPane(int x, int y, int w, int h, LayoutManager layout) {
+		JLayeredPane jLayeredPane = new JLayeredPane();
+		jLayeredPane.setBounds(x, y, w, h);
+		jLayeredPane.setLayout(layout);
+		return jLayeredPane;
+	}
+	
 	//ok
 	public JPanel paintNormalPanel(int x, int y, int w, int h, LayoutManager layout, Color color) {
 		JPanel panel = new JPanel();
@@ -48,6 +56,7 @@ public class GestionnairePaintStrategy {
 		panel.setLayout(layout);
 		return panel;
 	}
+	
 	
 	//ok
 	public JPanel paintNormalPanel(LayoutManager layout, Color color) {
@@ -85,27 +94,60 @@ public class GestionnairePaintStrategy {
 	}
 	
 	//ok
-	public JPanel paintMarketCardsContainer(int x, int y, int w, int h, CardLayout cardLayout, int radius, Color color, int cardCount) {
-		JPanel cardContainer = paintNormalPanel(x, y, w, h, null);
-		JPanel innerContainer = paintNormalPanel(MIN_SPACE_BETWEEN, MIN_SPACE_BETWEEN, w - MIN_SPACE_BETWEEN, h - MANAGER_COLUMN_COUNT, null);
-		if(cardCount <= (MARKET_ROW_COUNT * MANAGER_COLUMN_COUNT)) {
+	public JLayeredPane paintMarketCardsContainer(int x, int y, int w, int h, CardLayout cardLayout, int radius, Color color, int cardCount) {
+		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
+		JPanel innerContainer = paintNormalPanel(x, y, w, h, null);
+		if(cardCount <= (MARKET_ROW_COUNT * MARKET_COLUMN_COUNT)) {
 			innerContainer = fillMarketCardContainer(innerContainer, cardCount);
 			cardContainer.add(innerContainer);
 		} else {
+			// count le nombre de vues du cardLayout
 			int count = cardCount / (MARKET_ROW_COUNT * MARKET_COLUMN_COUNT);
-			if ( count == 0) { // ou le résultat modulo le nbr de cartes différent de 0
+			
+//			System.out.println(cardCount);
+//			System.out.println(count);
+//			if ( count == 0 ) { // ou le résultat modulo le nbr de cartes différent de 0
+//				count++;
+//			}
+			
+			if ( cardCount % (MARKET_ROW_COUNT * MARKET_COLUMN_COUNT) != 0) {
 				count++;
 			}
-			cardCount /= count;
+			// affecter le nombre de cartes par vue du cardLayout 
+			int set;
 			for ( int i = 0; i < count; i++) {
+				if (cardCount >= (MARKET_ROW_COUNT * MARKET_COLUMN_COUNT)) {
+					set = (MARKET_ROW_COUNT * MARKET_COLUMN_COUNT);
+				} else {
+					set = cardCount;
+				}
+				cardCount -= set;
 				innerContainer = paintNormalPanel(MIN_SPACE_BETWEEN, MIN_SPACE_BETWEEN, w - MIN_SPACE_BETWEEN, h - MARKET_COLUMN_COUNT, null);
-				innerContainer = fillMarketCardContainer(innerContainer, cardCount);
+				innerContainer = fillMarketCardContainer(innerContainer, set);
 				cardContainer.add(innerContainer);
 			}
 		}
 		return cardContainer;
 	}
 	
+	// ok
+	public JPanel fillMarketCardContainer(JPanel innerContainer, int cardCount) {
+		int cpt = 0;
+		int posX = 0;
+		int posY = 0;
+		for (int i = 0; i < cardCount; i++) {
+			System.out.println("I'm painting a card " + cardCount);
+			JPanel card = paintRoundedPanel(posX, posY, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, null, RADIUS, MARKET_CARD_COLOR);
+			innerContainer.add(card);
+			cpt++;
+			posX += MARKET_CARD_WIDTH + MIN_SPACE_BETWEEN;
+			if (cpt == MARKET_COLUMN_COUNT) {
+				cpt = posX = 0;
+				posY += MIN_SPACE_BETWEEN + MARKET_CARD_HEIGHT;
+			}
+		}
+		return innerContainer;			
+	}	
 	
 	// Pas encore fonctionnelle 
 	public JPanel paintBill(JPanel panier,ArrayList<Buyable> articles) {
@@ -126,29 +168,17 @@ public class GestionnairePaintStrategy {
 		return bill;
 	}
 	
-	// ok
-	public JPanel fillMarketCardContainer(JPanel innerContainer, int cardCount) {
-		int cpt = 0;
-		int posX = 0;
-		int posY = 0;
-		for (int i = 0; i < cardCount; i++) {
-			JPanel card = paintRoundedPanel(posX, posY, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, null, RADIUS, MARKET_CARD_COLOR);
-			innerContainer.add(card);
-			cpt++;
-			posX += MIN_SPACE_BETWEEN + MARKET_CARD_WIDTH;
-			if ( cpt == MARKET_COLUMN_COUNT) {
-				cpt = posX = 0;
-				posY += MIN_SPACE_BETWEEN + MARKET_CARD_HEIGHT;
-			}
+	public JPanel paintBill(JPanel panier,HashMap<String, Buyable> articles) {
+		JPanel bill = paintNormalPanel(0, 0, 240, 475, new GridLayout(0,1), MARKET_CARD_COLOR);
+		for (Buyable article : articles.values()) {
+			JPanel parentPanel = new JPanel();
+			parentPanel.setBackground(LIGHT_BROWN);
+			parentPanel.setLayout(null);
+			JPanel articleBill = paintRoundedPanel(10, 10, 200, 50, null, 20, MARKET_CARD_COLOR);
+			parentPanel.add(articleBill);
+			bill.add(parentPanel);
 		}
-		return innerContainer;			
+		return bill;
 	}
-		
+	
 }
-
-
-
-
-
-
-

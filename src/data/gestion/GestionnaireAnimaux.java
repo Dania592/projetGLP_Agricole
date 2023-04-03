@@ -32,6 +32,25 @@ public class GestionnaireAnimaux {
 		}
 	}
 	
+	public void remove(Animal animal) {
+		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getClass().getSimpleName());
+		if (animals != null ) {
+			if (animals.size() == 1) {
+				GestionnaireAnimaux.getInstance().getAnimaux().remove(animal.getClass().getSimpleName());
+			} else {
+				animals.remove(animal);
+			}
+		}
+	}
+	
+	public int getSize() {
+		int size = 0;
+		for(ArrayList<Animal> animals : animaux.values()) {
+			size += animals.size();
+		}
+		return size;
+	}
+	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
 		gestionnaire.append("\n\t\t Animaux :");

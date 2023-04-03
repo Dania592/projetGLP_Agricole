@@ -4,6 +4,7 @@ package data.gestion;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import data.espece.faune.Animal;
 import data.flore.terrains.TypeGraine;
 import data.production.Produit;
 
@@ -41,6 +42,20 @@ public class GestionnaireStocks {
 	public void add(Produit produit) {
 		produits.put(produit.getClass().getSimpleName(), produit);
 	}
+	
+	public void remove(TypeGraine graine) {
+		if (graines.contains(graine)) {
+			graine.decrementQuantity();
+			if (graine.getQuantity() == 0) {
+				graines.remove(graine);
+			}
+		}
+	}
+	
+	public void remove(Produit produit) {
+		produits.remove(produit.getClass().getSimpleName(), produit);
+	}
+	
 	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());

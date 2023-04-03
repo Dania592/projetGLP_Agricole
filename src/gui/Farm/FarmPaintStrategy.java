@@ -69,7 +69,7 @@ public class FarmPaintStrategy {
 		Position position = terrain.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX() + 50;
 		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY() + 50;
-		RoundedPanel panelChoixTerrain = new RoundedPanel(x,y, 100, 100,20, Gestionnaire.LIGHT_BROWN);
+		RoundedPanel panelChoixTerrain = new RoundedPanel(x,y, 100, 100, null, 20, Gestionnaire.LIGHT_BROWN);
 		//panelChoixTerrain.setOpaque(false);
 		x = 10;
 		y = 10;

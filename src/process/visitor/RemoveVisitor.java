@@ -22,10 +22,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Animal animal) {
-		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getClass().getSimpleName());
-		if (animals != null ) {
-			animals.remove(animal);
-		}
+		GestionnaireAnimaux.getInstance().remove(animal);
 		return null;
 	}
 	
@@ -49,13 +46,13 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Outil outil) {
-		GestionnaireMateriel.getInstance().getOutils().remove(outil.getType(),outil);
+		GestionnaireMateriel.getInstance().remove(outil);
 		return null;
 	}
 
 	@Override
 	public Void visit(Engin engin) {
-		GestionnaireMateriel.getInstance().getEngins().remove(engin.getType(),engin);
+		GestionnaireMateriel.getInstance().remove(engin);
 		return null;
 	}
 	
@@ -67,7 +64,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	
 	@Override
 	public Void visit(Terrain terrain) {
-		GestionnaireTerrains.getInstance().getTerrains().remove(terrain.getReference(),terrain);
+		GestionnaireTerrains.getInstance().remove(terrain);
 		return null;
 	}
 

@@ -26,14 +26,33 @@ public class GestionnaireStructures {
 	}
 	
 	public void add(Structure structure) {
-			String name = structure.getClass().getSimpleName();
-			if (structures.containsKey(name)) {
-				structures.get(name).add(structure);
+		String name = structure.getClass().getSimpleName();
+		if (structures.containsKey(name)) {
+			structures.get(name).add(structure);
+		} else {
+			ArrayList<Structure> structs = new ArrayList<>();
+			structs.add(structure);
+			structures.put(name, structs);
+		}
+	}
+	
+	public void remove(Structure structure) {
+		String name = structure.getClass().getSimpleName();
+		if (structures.containsKey(name)) {
+			if (structures.get(name).size() == 1) {
+				structures.remove(name);
 			} else {
-				ArrayList<Structure> structs = new ArrayList<>();
-				structs.add(structure);
-				structures.put(name, structs);
+				structures.get(name).remove(structure);
 			}
+		}
+	}
+	
+	public int getSize() {
+		int size = 0;
+		for (ArrayList<Structure> structs : structures.values()) {
+			size += structs.size();
+		}
+		return size;
 	}
 	
 	public void initializeGestionnaire(Map map ) {

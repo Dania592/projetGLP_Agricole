@@ -2,6 +2,7 @@ package data.gestion;
 
 import java.util.ArrayList;
 
+import data.espece.faune.Animal;
 import data.structure.Enclos;
 
 public class GestionnaireEnclos {
@@ -23,6 +24,14 @@ public class GestionnaireEnclos {
 	
 	public void add(Enclos enclos) {
 		this.enclos.add(enclos);
+	}
+	
+	public void remove(Enclos enclos) {
+		this.enclos.remove(enclos);
+	}
+	
+	public int getSize() {
+		return enclos.size();
 	}
 	
 }

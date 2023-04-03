@@ -11,6 +11,8 @@ import data.materiel.Outils;
 
 public class GestionnaireMateriel {
 
+	// On pourrait appliquer le même principe des graines
+	
 	private HashMap<Outils, ArrayList<Outil>> outils = new HashMap<>();
 	private HashMap<Engins, ArrayList<Engin>> engins = new HashMap<>();
 	
@@ -52,6 +54,42 @@ public class GestionnaireMateriel {
 		}
 	}
 	
+	public void remove(Outil outil) {
+		Outils type = outil.getType();
+		ArrayList<Outil> outils = this.outils.get(type);
+		if (outils.size() == 1) {
+			this.outils.remove(type);
+		} else {
+			outils.remove(outil);
+		}
+	}
+	
+	public void remove(Engin engin) {
+		Engins type = engin.getType();
+		ArrayList<Engin> engins = this.engins.get(type);
+		if (engins.size() == 1) {
+			this.engins.remove(type);
+		} else {
+			engins.remove(engin);
+		}
+	}
+	
+	public int getOutilsSize() {
+		int size = 0;
+		for (ArrayList<Outil> outils : this.outils.values()) {
+			size += outils.size();
+		}
+		return size;
+	}
+	
+	public int getEnginsSize() {
+		int size = 0;
+		for (ArrayList<Engin> engins : this.engins.values()) {
+			size += engins.size();
+		}
+		return size;
+	}
+
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
 		gestionnaire.append("\n\t\t Outils :");

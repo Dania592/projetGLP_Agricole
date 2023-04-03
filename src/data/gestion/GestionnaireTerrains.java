@@ -38,6 +38,17 @@ public class GestionnaireTerrains {
 		}
 	}
 	
+	public void remove(Terrain terrain) {
+		TypeGraine type = terrain.getType();
+		if (terrains.containsKey(type)) { 
+			if (terrains.get(type).size() == 1) {
+				terrains.remove(type);
+			} else {
+				terrains.get(type).remove(terrain);
+			}
+		}
+	}
+	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
 		gestionnaire.append("\n\t\t Terrains :");

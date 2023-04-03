@@ -2,6 +2,7 @@ package data.gestion;
 
 import java.util.ArrayList;
 
+import data.espece.faune.Animal;
 import data.finance.Amende;
 import data.finance.Charge;
 import process.transaction.Achat;
