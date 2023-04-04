@@ -1,6 +1,5 @@
 package data.espece.faune;
 
-import java.util.Date;
 
 import data.espece.Milieu;
 import data.map.Map;

@@ -11,6 +11,30 @@ public class WeeklyPlanner {
         FRIDAY,
         SATURDAY,
         SUNDAY;
+
+        public DayOfWeek next() throws Exception{
+            switch(this){
+                case  MONDAY : 
+                    return TUESDAY;
+                case  TUESDAY : 
+                    return WEDNESDAY;
+                case  WEDNESDAY : 
+                    return THURSDAY;
+                case  THURSDAY : 
+                    return FRIDAY;
+                case  FRIDAY : 
+                    return SATURDAY;
+                case  SATURDAY : 
+                    return SUNDAY;
+                case  SUNDAY : 
+                    return MONDAY;
+                default:
+                    throw new Exception("Erreur changement de jour! ");
+
+            }
+
+        }
+
     }
 
     public static final DayOfWeek[] days = { DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,

@@ -11,6 +11,7 @@ import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Oeuf;
+import data.production.Produit;
 import data.structure.Poulallier;
 
 
@@ -25,7 +26,7 @@ public class Poule extends AnimalProducteur {
 	public Poule(int ligne_init, int colonne_init,Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
 			 
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map);
+				FREQUENCE_PRODUCTION, QUANTITE, reference , map);
 		
 		String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
 				+File.separator+EvolutionAnimal.JEUNE+File.separator+"up.png";
@@ -39,5 +40,12 @@ public class Poule extends AnimalProducteur {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public Produit collectProduction() {
+			return new Oeuf();
+	}
+
+	
 
 }

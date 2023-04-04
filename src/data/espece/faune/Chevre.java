@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import data.espece.Milieu;
 import data.map.Map;
 import data.production.Lait;
+import data.production.Produit;
 import data.structure.Etable;
 
 
@@ -22,13 +23,21 @@ public class Chevre extends AnimalProducteur{
 	
 	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, new Lait(), reference , map);
+				FREQUENCE_PRODUCTION, QUANTITE, reference , map);
 		
 		try {
 			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minichevre.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		
 	}
+
+	@Override
+	public Produit collectProduction() {
+		return new Lait(); 
+	}
+	
 
 }

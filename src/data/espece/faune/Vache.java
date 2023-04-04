@@ -3,15 +3,14 @@ package data.espece.faune;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
+import data.production.Produit;
 import data.structure.Etable;
 
 
@@ -27,7 +26,7 @@ public class Vache extends AnimalProducteur{
 	public Vache(int ligne_init, int colonne_init, int naissance, String nom, String sexe, Etable habitat , String reference , Map map) {
 		
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE,new Lait() , reference , map);
+				FREQUENCE_PRODUCTION, QUANTITE, reference , map);
 		try {
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Vache"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
@@ -37,6 +36,11 @@ public class Vache extends AnimalProducteur{
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public Produit collectProduction() {
+		return new Lait();
+	}
+
 
 }

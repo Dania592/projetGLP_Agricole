@@ -47,7 +47,7 @@ public class AddVisitor implements GestionVisitor<Void>{
 		GestionnaireMateriel.getInstance().add(outil);;
 		return null;
 	}
-
+	
 	@Override
 	public Void visit(Engin engin) {
 		GestionnaireMateriel.getInstance().add(engin);
