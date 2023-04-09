@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import data.configuration.GameConfiguration;
-import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -20,8 +19,27 @@ public class Board  extends JLayeredPane {
 	private Element selected;
 	private Element clicked;
 	private JPanel choixTerrain;
+	private MouseHandler mouseHandler;
+	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
+	
+ 	
+	public Board(Farm farm  , Element selected  ) {
+		this.farm = farm;
+		this.selected=selected;
+		keys = new KeyControls(farm.getManager() , selected); 
+		mouseHandler = new MouseHandler(farm.getManager(), this);
+		choix = new Choix(farm, this);
+		choix.init();
+		init();
+	}
+	
+	public void setClicked(Element clicked) {
+		if(clicked!=null && clicked.isStatique() ) {
+			this.clicked = clicked;			
+		}
+	}
 	
 	public Element getClicked() {
 		return clicked;
@@ -35,24 +53,10 @@ public class Board  extends JLayeredPane {
 		return hud ;
 	}
 
-	private MouseHandler mouseHandler;
-	
-	// Jlabel   
-//	private JScrollPane choixScroll;
-	
-	public Board(Farm farm  , Element selected  ) {
-		this.farm = farm;
-		this.selected=selected;
-		keys = new KeyControls(farm.getManager() , selected); 
-		mouseHandler = new MouseHandler(farm.getManager(), this);
-		init();
+	public Choix getChoix() {
+		return choix ;
 	}
 	
-	public void setClicked(Element clicked) {
-		if(clicked!=null && clicked.isStatique() ) {
-			this.clicked = clicked;			
-		}
-	}
 		
 	public void init() {
 		addKeyListener(keys);

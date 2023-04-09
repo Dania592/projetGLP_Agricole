@@ -3,10 +3,8 @@ package data.espece.faune;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
@@ -23,20 +21,24 @@ public class Vache extends AnimalProducteur{
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 300 ;
 	private final static int QUANTITE = 100 ;
+	private final static int SPEED_GROWTH = 5 ; 
 	
 	public Vache(int ligne_init, int colonne_init, int naissance, String nom, String sexe, Etable habitat , String reference , Map map) {
 		
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE,new Lait() , reference , map);
+				FREQUENCE_PRODUCTION, QUANTITE,new Lait() , reference , map , SPEED_GROWTH );
 		try {
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Vache"
-					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
+					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
 			BufferedImage image = ImageIO.read(new File(imagePath));
 			setImage(image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
+	
+	
 	
 
 }

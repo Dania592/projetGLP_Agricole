@@ -1,14 +1,12 @@
 
 package gui.Farm;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
@@ -16,8 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-import data.espece.faune.Animal;
-import data.flore.terrains.Terrain;
+
+import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
 import data.structure.Enclos;
@@ -36,6 +34,7 @@ public class ElementCard extends JPanel{
 	private JLabel imageLabel;
 	private JLabel position;
 	private JTextPane nbElementPane;
+	private String nameCard;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +42,7 @@ public class ElementCard extends JPanel{
 		this.farm = farm;
 		this.component=component;
 		this.elements = elements ;
+		nameCard = elements.get(0).getClass().getSimpleName();
 		nbElement = elements.size();
 		nbElementPresent = elements.size();
 		init();
@@ -60,7 +60,7 @@ public class ElementCard extends JPanel{
 		
 		
 		nbElementPane = new JTextPane();
-		nbElementPane.setText(elements.get(0).getClass().getSimpleName()+" : "+nbElementPresent+"/"+nbElement);
+		nbElementPane.setText(nameCard+" : "+nbElementPresent+"/"+nbElement);
 		nbElementPane.setFont(new Font("Serif",Font.BOLD,13));
 		nbElementPane.setBackground(getBackground());
 		nbElementPane.setBounds(40, 80, 100, 20);
@@ -86,14 +86,18 @@ public class ElementCard extends JPanel{
 	public void addElement(Element newElement) {
 		elements.add( newElement);
 		nbElement ++;
-		nbElementPresent++;
-		nbElementPane.setText(elements.get(0).getClass().getSimpleName()+":"+nbElementPresent+"/"+nbElement);
+		nbElementPresent = elements.size();
+		nbElementPane.setText(nameCard+":"+nbElementPresent+"/"+nbElement);
 	}
 
 
-	public void removeOneElement() {
-		nbElementPresent--;
-		nbElementPane.setText(elements.get(0).getClass().getSimpleName()+":"+nbElementPresent+"/"+nbElement);
+	public void removeOneElement(Element element) {
+		elements.remove(element);
+		nbElementPresent = elements.size();
+		if(nbElementPresent==0) {
+			remove(position);
+		}
+		nbElementPane.setText(nameCard+":"+nbElementPresent+"/"+nbElement);
 	}
 
 	public int getNbElement() {
@@ -114,8 +118,8 @@ public class ElementCard extends JPanel{
 				if(nbE>0) {
 					Element element = elements.get(nbE -1);
 					
-					if(element instanceof Animal) {
-						Animal animal = (Animal)element;
+					if(element instanceof AnimalProducteur) {
+						AnimalProducteur animal = (AnimalProducteur)element;
 						try {
 							animal.setStatique();
 							// la date de naissance == minute de naissance (à modifier)
@@ -128,7 +132,7 @@ public class ElementCard extends JPanel{
 					else {
 						Case randomCase =randomPosition(element);
 						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
-						if(element.getClass().getSimpleName().equals("Enclos")) {
+						if(nameCard.equals("Enclos")) {
 							Enclos enclos = (Enclos) element ;
 							farm.getManager().add(enclos);
 						}
@@ -137,7 +141,7 @@ public class ElementCard extends JPanel{
 							
 						}
 						
-						removeOneElement();	
+						removeOneElement(element);	
 						component.setSelected(element);
 						component.getHud().removeChoix();
 						component.getHud().addValidation();
@@ -175,12 +179,12 @@ public class ElementCard extends JPanel{
 	}
 	
 
-	public void addElementToMap(Animal animal) throws FullCapaciteException {
+	public void addElementToMap(AnimalProducteur animal) throws FullCapaciteException {
 		Case randomCase = randomPosition(animal);
 		  if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
 			  animal.setPosition(randomCase.getLigne(), randomCase.getColonne());
 				farm.getManager().add(animal);
-				removeOneElement();	
+				removeOneElement(animal);	
 		  }
 	
 	}
@@ -198,13 +202,13 @@ public class ElementCard extends JPanel{
 
 	}
 	
-	public Case randomPosition(Animal animal ) throws FullCapaciteException {
+	public Case randomPosition(AnimalProducteur animal ) throws FullCapaciteException {
 		ArrayList<Enclos> enclosdisponible = farm.getManager().getMapManager().getEnclosOnMap();
 		if(enclosdisponible.size() > 0) {
 			Iterator<Enclos> it = enclosdisponible.iterator();
 			while(it.hasNext()) {
 				Enclos enclos = it.next();
-				if(enclos.getCapacite() > enclos.getAnimals().size()) {
+				if(enclos.getCapacite() > enclos.getAnimalProducteurs().size()) {
 					Case block = new Case(true , 0 , 0);
 					Boolean libre = false ;
 					while( !libre) {	
@@ -213,7 +217,7 @@ public class ElementCard extends JPanel{
 						block = new Case(true, ligneAleatoire, colonneAleatoire);
 					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
-					enclos.addAnimal(animal);
+					enclos.addAnimalProducteur(animal);
 					return block;
 					
 				}

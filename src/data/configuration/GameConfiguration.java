@@ -40,4 +40,7 @@ public class GameConfiguration {
 	
 	public final static String IMAGE_PATH = "src"+File.separator+"ressources"+File.separator;
 	
+	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
+	
+
 }

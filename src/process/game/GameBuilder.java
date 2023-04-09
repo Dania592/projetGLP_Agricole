@@ -4,6 +4,7 @@ import java.util.Date;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
+import data.espece.faune.Chevre;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -12,7 +13,6 @@ import data.flore.terrains.TypeGraine;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
-import data.structure.Entrepot;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
@@ -82,8 +82,6 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(vache4);
 
 		
-		
-		
 		Mouton mouton = new Mouton(0, 0, 0, null, null, null, "m1", map);
 		Mouton mouton1 = new Mouton(0, 0, 0, null, null, null, "m2", map);
 		Mouton mouton2 = new Mouton(0, 0, 0, null, null, null, "m3", map);
@@ -91,10 +89,7 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(mouton);
 		stock.getGestionnaireAnimaux().add(mouton1);
 		stock.getGestionnaireAnimaux().add(mouton2);
-
-		
-		
-		
+	
 		Poule poule = new Poule(0, 0, null, 0, null, null, null, "p1", map);
 		Poule poule1 = new Poule(0, 0, null, 0, null, null, null, "p2", map);
 		Poule poule2 = new Poule(0, 0, null, 0, null, null, null, "p3", map);
@@ -111,26 +106,27 @@ public class GameBuilder {
 		stock.getGestionnaireTerrains().add(terrainInitial);
 		stock.getGestionnaireTerrains().add(terrainInitial2);
 		
-		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeGraine.BROCCOLI);
-		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeGraine.CACTUS);
+//		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeGraine.BROCCOLI);
+//		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeGraine.CACTUS);
+//		
+//		stock.getGestionnaireTerrains().add(terrain3);
+//		stock.getGestionnaireTerrains().add(terrain4);
 		
-		stock.getGestionnaireTerrains().add(terrain3);
-		stock.getGestionnaireTerrains().add(terrain4);
+		
+		Chevre chevre1 = new Chevre(0,0,0,null,null,null,"jd",map);
+		Chevre chevre2 = new Chevre(0,0,0,null,null,null,"jd2",map);
+		stock.getGestionnaireAnimaux().add(chevre2);
+		stock.getGestionnaireAnimaux().add(chevre1);
 		
 		Maison maison = new Maison(0,0,"maison",map);
-		//Entrepot entrepotInitial = new Entrepot(0, 0, "en0", map);
-		//Entrepot entrepotSecond = new Entrepot(0, 0, "en1", map);
-		Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
+		//Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
 		
 		Enclos enclos1 = new Enclos(26, 21, "enclos1",map);
 		Enclos enclos2 = new Enclos(26, 21, "enclos2",map);
 		
 		stock.getGestionnaireStructure().add(maison);
-		//stock.getGestionnaireStructure().getStructures().put(entrepotInitial.getReference(), entrepotInitial);
-		stock.getGestionnaireStructure().add(poulallierInitial);
-		//stock.getGestionnaireStructure().getStructures().put(entrepotSecond.getReference(), entrepotSecond);
-		 
-		
+		//stock.getGestionnaireStructure().add(poulallierInitial);
+		 		
 		stock.getGestionnaireEnclos().add(enclos1);
 		stock.getGestionnaireEnclos().add(enclos2);
 		

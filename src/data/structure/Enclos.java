@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import data.espece.faune.Animal;
+import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.map.Map;
 import data.stucture_base.Element;
@@ -21,12 +20,12 @@ public class Enclos extends Element {
 	private int niveauEau ; 
 	private int niveauNourriture ;
 	private int dimension ; 
-	private ArrayList<Animal> animals ; 
+	private ArrayList<AnimalProducteur> animalProducteurs ; 
 	private HashMap<String, BufferedImage > images = new HashMap<>();
 	
 	public Enclos(int ligne_init, int colonne_init, String reference, Map map ) {
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
-		animals = new ArrayList<>();
+		animalProducteurs = new ArrayList<>();
 		capacite = 10 ;
 		niveauEau = 100 ;
 		niveauNourriture = 100;
@@ -78,15 +77,15 @@ public class Enclos extends Element {
 		return dimension;
 	}
 
-	public ArrayList<Animal> getAnimals() {
-		return animals;
+	public ArrayList<AnimalProducteur> getAnimalProducteurs() {
+		return animalProducteurs;
 	}
 
-	public void addAnimal(Animal animal) {
-		animals.add(animal);
+	public void addAnimalProducteur(AnimalProducteur animalProducteur) {
+		animalProducteurs.add(animalProducteur);
 	}
-	public void removeAnimal(Animal animal) {
-		animals.remove(animal);
+	public void removeAnimalProducteur(AnimalProducteur animalProducteur) {
+		animalProducteurs.remove(animalProducteur);
 	}
 	
 	public ArrayList<Case> bordEnclos() {
@@ -109,6 +108,12 @@ public class Enclos extends Element {
 		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) || colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
 	}
 	
-	
+	public String toString() {
+		String enclos = "enclos : ";
+		for(AnimalProducteur animal : animalProducteurs) {
+			enclos+= animal.getReference();
+		}
+		return enclos ;
+	}
 
 }

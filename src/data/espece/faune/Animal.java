@@ -1,6 +1,5 @@
 package data.espece.faune;
 
-import java.util.Date;
 
 import data.espece.EtreVivant;
 import data.espece.Milieu;
@@ -10,6 +9,7 @@ import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.structure.Structure;
+import process.evolution.Direction;
 import process.transaction.Buyable;
 import process.transaction.Saleable;
 import process.visitor.GestionVisitor;
@@ -27,10 +27,12 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 	private Structure habitat ;
 	private EvolutionAnimal evolution ;
 	private int lastEvolutionHour ;
+	private Direction direction ;
+	private int speedGrowth ; 
 	
 	
 	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
-			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map ) {
+			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map  , int speedGrowth) {
 		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,1 , reference , map );
 		this.naissance = naissance;
 		this.poids = poids;
@@ -40,8 +42,21 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 		this.habitat = habitat;
 		this.evolution = EvolutionAnimal.JEUNE;
 		lastEvolutionHour = naissance;
+		direction=Direction.STAND;
+		this.speedGrowth = speedGrowth;
+		
+	}
+	public int getGrowthSpeed() {
+		return speedGrowth; 
 	}
 
+	public Direction getDirection() {
+		return direction;
+	}
+	public void setDirection(Direction new_direction) {
+		direction = new_direction;
+	}
+	
 	public int getLastEvolutionHour() {
 		return lastEvolutionHour;
 	}

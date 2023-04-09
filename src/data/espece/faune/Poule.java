@@ -1,6 +1,6 @@
 package data.espece.faune;
 
-import java.awt.Image;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,23 +21,22 @@ public class Poule extends AnimalProducteur {
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;
+	private final static int SPEED_GROWTH = 5 ; 
 	
 	public Poule(int ligne_init, int colonne_init,Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
 			 
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map);
-		
-		String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
-				+File.separator+EvolutionAnimal.JEUNE+File.separator+"up.png";
-		BufferedImage image ;
+				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map , SPEED_GROWTH);
 		
 		try {
-			image = ImageIO.read(new File(imagePath));
+			String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
+					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
+			BufferedImage image = ImageIO.read(new File(imagePath));
 			setImage(image);
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 	}
+
 
 }
