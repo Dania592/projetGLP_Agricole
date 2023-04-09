@@ -7,12 +7,8 @@ import javax.swing.plaf.ColorUIResource;
 
 import java.awt.BorderLayout;
 
-import data.acteur.Fermier;
 import data.acteur.Personne;
-import data.myExceptions.HaveABreakWithException;
-import data.myExceptions.UnAvalableTimeSlot;
 import data.planning.TimeSlot;
-import data.planning.WeeklyPlanner;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import gui.planning.component.AddTaskArea;
 import gui.planning.component.ExtraInformationPanel;

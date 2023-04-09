@@ -10,6 +10,7 @@ import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
+import data.production.Produit;
 import data.structure.Etable;
 
 
@@ -38,7 +39,11 @@ public class Vache extends AnimalProducteur{
 		
 	}
 	
-	
-	
+
+	@Override
+	public Produit collectProduction() {
+		return new Lait();
+	}
+
 
 }

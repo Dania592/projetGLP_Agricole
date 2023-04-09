@@ -11,6 +11,7 @@ import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Oeuf;
+import data.production.Produit;
 import data.structure.Poulallier;
 
 
@@ -37,6 +38,5 @@ public class Poule extends AnimalProducteur {
 			e.printStackTrace();
 		}
 	}
-
 
 }

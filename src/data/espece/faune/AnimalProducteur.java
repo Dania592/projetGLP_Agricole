@@ -3,17 +3,17 @@ package data.espece.faune;
 
 
 import data.espece.Milieu;
+import data.espece.Produceur;
 import data.map.Map;
-import data.production.Produit;
 import data.structure.Structure;
 
 
 
-public abstract class AnimalProducteur extends Animal{
+public abstract class AnimalProducteur extends Animal implements Produceur{
 
 	private int frequenceProduction ;
 	private int quantiteProduction ;
-	private Produit produit ;
+	private ProductifState productifState;
 	
 	
 	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
@@ -23,7 +23,7 @@ public abstract class AnimalProducteur extends Animal{
 				sexe, habitat ,reference ,map , speedGrowth);
 		this.frequenceProduction = frequenceProduction;
 		this.quantiteProduction = quantiteProduction;
-		this.produit = produit;
+		productifState = ProductifState.UNABLE_TO_PRODUCE; //TODO Pour l'instant mais définir à partir de quand dans son évolution il est peut produire
 	}
 
 
@@ -46,9 +46,8 @@ public abstract class AnimalProducteur extends Animal{
 		this.quantiteProduction = quantiteProduction;
 	}
 
-
-	public Produit getProduit() {
-		return produit;
+	public boolean haveProduced(){
+		return productifState == ProductifState.HAVE_PRODUCE;
 	}
 	
 	

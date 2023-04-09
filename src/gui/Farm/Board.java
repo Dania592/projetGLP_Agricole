@@ -3,10 +3,16 @@ package gui.Farm;
 
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import data.configuration.GameConfiguration;
+import data.flore.terrains.Terrain;
+import data.planning.Activity;
 import data.structure.Enclos;
+import data.structure.hability.Actionnable;
+import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import process.game.MapManager;
@@ -85,15 +91,19 @@ public class Board  extends JLayeredPane {
 				paintStrategy.paint(element, g);				
 			}
 			
-//			if (clicked != null && clicked instanceof Terrain ) {
-//				Terrain terrain = (Terrain)clicked;
-//				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
-//				terrain.evoluer();	
-//			} else {
-//				if ( choixTerrain != null ) {
-//					remove(choixTerrain);
-//				}
-//			}
+			if (clicked != null && clicked instanceof Terrain ) {
+				Terrain terrain = (Terrain)clicked;
+				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
+				terrain.evoluer();	
+			}else if(clicked instanceof Actionnable){
+				ArrayList<ActionnableKey> actionnableKey = ((Actionnable)clicked).getActionnableKey(); 
+				System.out.println(Activity.getPossibleActivity(actionnableKey));
+			}
+			 else {
+				if ( choixTerrain != null ) {
+					remove(choixTerrain);
+				}
+			}
 		}
 		hud.time();
 		

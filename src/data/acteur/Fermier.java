@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import data.map.Map;
-import data.travail.Planning;
 
 
 public class Fermier extends Personne{

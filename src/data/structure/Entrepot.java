@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 import data.map.Map;
 import data.production.Produit;
+import process.action.place.PlaceVisitor;
+import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
 
 
 public class Entrepot extends Structure{
@@ -44,5 +46,14 @@ public class Entrepot extends Structure{
 	public void setCapacite(int capacite) {
 		this.capacite = capacite;
 	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
+		return visitor.action(this);
+	}
+
+	
+
+
 
 }

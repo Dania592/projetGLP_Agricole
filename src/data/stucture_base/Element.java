@@ -84,7 +84,6 @@ public  abstract class Element {
 	  
 	@Override
 	public String toString() {
-
 		return " :[ statistique = "+statique+" nbCase = "+nbCase+ "position = "+position ;
 	}
 
@@ -103,7 +102,9 @@ public  abstract class Element {
 			  cases[indexligne][indexColone].setLibre(true); 
 			  } 
 		  } 
-	  }
-	 
+	}
+
+	
+
 		
 }

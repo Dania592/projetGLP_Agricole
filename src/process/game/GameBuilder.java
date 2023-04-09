@@ -34,7 +34,6 @@ public class GameBuilder {
 	
 	public static Farm buildinFarm() {
 		
-		// instanciation de l'element manager ferme et fermier 
 		ElementManager elementManager = new ElementManager(MapBuilder());
 		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
 		TimeManager timeManager = new TimeManager();
@@ -44,7 +43,7 @@ public class GameBuilder {
 		
 		
 		// instanciation et initialisation du stock de depart 
-		initialize( farm.getRessourcesManager() , elementManager.getMapManager().getMap());
+		initialize(farm.getRessourcesManager(), elementManager.getMapManager().getMap());
 		
 		
 		// positionnement du fermier et de la maison sur la map 

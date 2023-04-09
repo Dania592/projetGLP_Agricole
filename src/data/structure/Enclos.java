@@ -11,21 +11,29 @@ import javax.imageio.ImageIO;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.map.Map;
+import data.structure.hability.Feedable;
+import data.structure.hability.Fixable;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
+import process.action.place.PlaceVisitor;
+import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import data.structure.hability.list.EnclosStorageStructure;;
 
-public class Enclos extends Element {
+public class Enclos extends Element implements Fixable, Feedable{
 
 	private int capacite ;
 	private int niveauEau ; 
 	private int niveauNourriture ;
 	private int dimension ; 
 	private ArrayList<AnimalProducteur> animalProducteurs ; 
+	private FixableState state;
+	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
 	private HashMap<String, BufferedImage > images = new HashMap<>();
 	
-	public Enclos(int ligne_init, int colonne_init, String reference, Map map ) {
+	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
 		animalProducteurs = new ArrayList<>();
+		state = FixableState.USABLE;
 		capacite = 10 ;
 		niveauEau = 100 ;
 		niveauNourriture = 100;
@@ -34,7 +42,6 @@ public class Enclos extends Element {
 		setImage(images.get("entier"));
 		
 	}
-	
 	
 	public HashMap<String,  BufferedImage> getImages(){
 		return images ;
@@ -48,7 +55,6 @@ public class Enclos extends Element {
 			images.put("milieu", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png")));
 			images.put("entier", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -77,15 +83,15 @@ public class Enclos extends Element {
 		return dimension;
 	}
 
-	public ArrayList<AnimalProducteur> getAnimalProducteurs() {
-		return animalProducteurs;
+	public ArrayList<Animal> getAnimals() {
+		return animals;
 	}
 
-	public void addAnimalProducteur(AnimalProducteur animalProducteur) {
-		animalProducteurs.add(animalProducteur);
+	public void addAnimal(Animal animal) {
+		animals.add(animal);
 	}
-	public void removeAnimalProducteur(AnimalProducteur animalProducteur) {
-		animalProducteurs.remove(animalProducteur);
+	public void removeAnimal(Animal animal) {
+		animals.remove(animal);
 	}
 	
 	public ArrayList<Case> bordEnclos() {
@@ -108,12 +114,11 @@ public class Enclos extends Element {
 		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) || colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
 	}
 	
-	public String toString() {
-		String enclos = "enclos : ";
-		for(AnimalProducteur animal : animalProducteurs) {
-			enclos+= animal.getReference();
-		}
-		return enclos ;
-	}
+	
+
+
+	
+
+	
 
 }
