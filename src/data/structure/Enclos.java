@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+
+import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.map.Map;
@@ -17,32 +19,64 @@ import data.stucture_base.Element;
 import data.stucture_base.Position;
 import process.action.place.PlaceVisitor;
 import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.evolution.FullLevel;
 import data.structure.hability.list.EnclosStorageStructure;;
 
 public class Enclos extends Element implements Fixable, Feedable{
 
 	private int capacite ;
-	private int niveauEau ; 
-	private int niveauNourriture ;
+	private int lastDecrementation ; 
+	private FullLevel niveauEau ; 
+	private FullLevel niveauNourriture ;
 	private int dimension ; 
-	private ArrayList<AnimalProducteur> animalProducteurs ; 
+//	private ArrayList<AnimalProducteur> animalProducteurs ; 
 	private FixableState state;
+	private HungerLevel animalsHungerLevel ;
 	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
+
 	private HashMap<String, BufferedImage > images = new HashMap<>();
 	
 	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
-		animalProducteurs = new ArrayList<>();
+		//animalProducteurs = new ArrayList<>();
 		state = FixableState.USABLE;
 		capacite = 10 ;
-		niveauEau = 100 ;
-		niveauNourriture = 100;
+		niveauEau = FullLevel.FULL ;
+		niveauNourriture = FullLevel.FULL;
 		dimension = 7 ;
+		lastDecrementation = 0 ; 
 		initImage();
 		setImage(images.get("entier"));
+		animalsHungerLevel = HungerLevel.FULL;
 		
 	}
 	
+	public EnclosStorageStructure getAnimalStorage() {
+		return animalStorage;
+	}
+	
+
+	public HungerLevel getAnimalsHungerLevel() {
+		return animalsHungerLevel;
+	}
+
+	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel) {
+		this.animalsHungerLevel = animalsHungerLevel;
+		for(AnimalProducteur animal : getAnimals()) {
+			animal.setHungerLevel(animalsHungerLevel);
+		}
+	}
+
+	public int getLastDecrementation() {
+		return lastDecrementation;
+	}
+
+
+	public void setLastDecrementation(int lastDecrementation) {
+		this.lastDecrementation = lastDecrementation;
+	}
+
+
 	public HashMap<String,  BufferedImage> getImages(){
 		return images ;
 	}
@@ -63,19 +97,19 @@ public class Enclos extends Element implements Fixable, Feedable{
 		return capacite;
 	}
 	
-	public int getNiveauEau() {
+	public FullLevel getNiveauEau() {
 		return niveauEau;
 	}
 
-	public void setNiveauEau(int niveauEau) {
+	public void setNiveauEau(FullLevel niveauEau) {
 		this.niveauEau = niveauEau;
 	}
 
-	public int getNiveauNourriture() {
+	public FullLevel getNiveauNourriture() {
 		return niveauNourriture;
 	}
 
-	public void setNiveauNourriture(int niveauNourriture) {
+	public void setNiveauNourriture(FullLevel niveauNourriture) {
 		this.niveauNourriture = niveauNourriture;
 	}
 
@@ -83,15 +117,17 @@ public class Enclos extends Element implements Fixable, Feedable{
 		return dimension;
 	}
 
-	public ArrayList<Animal> getAnimals() {
-		return animals;
+	public ArrayList<AnimalProducteur> getAnimals() {
+		return animalStorage.getAnimals();
 	}
 
-	public void addAnimal(Animal animal) {
-		animals.add(animal);
+	
+	public void removeAnimal(AnimalProducteur animal) {
+		animalStorage.remove(animal);
 	}
-	public void removeAnimal(Animal animal) {
-		animals.remove(animal);
+	
+	public void addAnimal(AnimalProducteur animal ) {
+		animalStorage.add(animal);
 	}
 	
 	public ArrayList<Case> bordEnclos() {
@@ -104,14 +140,51 @@ public class Enclos extends Element implements Fixable, Feedable{
 					bords.add(block);
 				}
 			}
-		}
+		}	
 		return bords;
 	}
+	
 	
 	
 	public boolean isOnBorderEnclos(int ligne , int colonne) {
 		Position position = getPosition();
 		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) || colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
+	}
+
+	@Override
+	public ArrayList<ActionnableKey> getActionnableKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getNumberOfTaget() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isNeedToBeFeed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isNeedToBeFixed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setState(FixableState newState) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

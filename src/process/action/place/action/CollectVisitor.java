@@ -3,6 +3,7 @@ package process.action.place.action;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.production.Produit;
@@ -39,6 +40,7 @@ public class CollectVisitor implements PlaceVisitor<ArrayList<Produit>>{
         Poule currentPoule;
         while(pouleIter.hasNext()){
             currentPoule = pouleIter.next();
+            
             if(currentPoule.haveProduced()){
                 products.add(currentPoule.collectProduction());
             }
@@ -48,14 +50,15 @@ public class CollectVisitor implements PlaceVisitor<ArrayList<Produit>>{
 
     @Override
     public ArrayList<Produit> action(Enclos enclos) {
-        Iterator<Poule> poulesIter = enclos.getAnimalStorage().getPoules().iterator();
-        Poule currentPoule;
-        while(poulesIter.hasNext()){
-            currentPoule = poulesIter.next();
-            if(currentPoule.haveProduced()){
-                products.add(currentPoule.collectProduction());
-            }
-        }
+//        Iterator<AnimalProducteur> poulesIter = enclos.getAnimalStorage().getPoules().iterator();
+//        Poule currentPoule;
+//        while(poulesIter.hasNext()){
+//            currentPoule = poulesIter.next();
+//            if(currentPoule.haveProduced()){
+//                products.add(currentPoule.collectProduction());
+//            }
+//        }
+    	
         return products;
     }
 

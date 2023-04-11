@@ -5,6 +5,7 @@ package data.espece.faune;
 import data.espece.Milieu;
 import data.espece.Produceur;
 import data.map.Map;
+import data.production.Produit;
 import data.structure.Structure;
 
 

@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-
+import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
@@ -124,7 +124,7 @@ public class ElementCard extends JPanel{
 							animal.setStatique();
 							// la date de naissance == minute de naissance (à modifier)
 							animal.setNaissance(farm.getTimeManager().getClock().getMinute().getValue());
-							addElementToMap(animal);
+							addAnimalToMap(animal);
 						} catch (FullCapaciteException e1) {
 							System.err.println(e1.getLocalizedMessage());
 						}
@@ -134,6 +134,7 @@ public class ElementCard extends JPanel{
 						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
 						if(nameCard.equals("Enclos")) {
 							Enclos enclos = (Enclos) element ;
+							enclos.setLastDecrementation(farm.getTimeManager().getClock().getMinute().getValue());
 							farm.getManager().add(enclos);
 						}
 						else {
@@ -179,7 +180,7 @@ public class ElementCard extends JPanel{
 	}
 	
 
-	public void addElementToMap(AnimalProducteur animal) throws FullCapaciteException {
+	public void addAnimalToMap(AnimalProducteur animal) throws FullCapaciteException {
 		Case randomCase = randomPosition(animal);
 		  if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
 			  animal.setPosition(randomCase.getLigne(), randomCase.getColonne());
@@ -208,7 +209,7 @@ public class ElementCard extends JPanel{
 			Iterator<Enclos> it = enclosdisponible.iterator();
 			while(it.hasNext()) {
 				Enclos enclos = it.next();
-				if(enclos.getCapacite() > enclos.getAnimalProducteurs().size()) {
+				if(enclos.getCapacite() > enclos.getAnimals().size() && enclos.getAnimalsHungerLevel()!=HungerLevel.STARVING) {
 					Case block = new Case(true , 0 , 0);
 					Boolean libre = false ;
 					while( !libre) {	
@@ -217,7 +218,10 @@ public class ElementCard extends JPanel{
 						block = new Case(true, ligneAleatoire, colonneAleatoire);
 					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
-					enclos.addAnimalProducteur(animal);
+					if(enclos.getAnimals().size()==0) {
+						enclos.setLastDecrementation(animal.getNaissance());
+					}
+					enclos.addAnimal(animal);
 					return block;
 					
 				}

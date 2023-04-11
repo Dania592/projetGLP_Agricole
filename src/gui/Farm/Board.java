@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import data.configuration.GameConfiguration;
+import data.espece.FoodConsumer.HungerLevel;
 import data.flore.terrains.Terrain;
 import data.planning.Activity;
 import data.structure.Enclos;
@@ -15,6 +16,7 @@ import data.structure.hability.Actionnable;
 import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.evolution.FullLevel;
 import process.game.MapManager;
 
 public class Board  extends JLayeredPane {
@@ -86,6 +88,9 @@ public class Board  extends JLayeredPane {
 			if(element instanceof Enclos) {
 				Enclos enclos = (Enclos)element;
 				paintStrategy.paint(enclos, g);
+				if(enclos.getNiveauEau()==FullLevel.EMPTY  && enclos.getAnimals().size()!=0) {
+					paintStrategy.paintLevelHeart(enclos, g);
+				}
 			}
 			else {
 				paintStrategy.paint(element, g);				
@@ -104,6 +109,7 @@ public class Board  extends JLayeredPane {
 					remove(choixTerrain);
 				}
 			}
+			
 		}
 		hud.time();
 		

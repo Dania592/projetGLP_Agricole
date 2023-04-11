@@ -4,6 +4,7 @@ import data.myExceptions.DyingOfHungerException;
 
 public interface FoodConsumer{
     public enum HungerLevel{
+    	STARVING,
 		VERY_HUNGRY,
 		HUNGRY, 
 		NORMAL,
@@ -35,6 +36,22 @@ public interface FoodConsumer{
                 default:
                     return NORMAL;           
             }
+        }
+        
+        public HungerLevel decrease_1() {
+        	switch(this) {
+        	case STARVING : 
+        		return STARVING;
+        	case VERY_HUNGRY :
+                return STARVING;
+            case HUNGRY:
+                return VERY_HUNGRY;
+            case NORMAL:
+                return HUNGRY;
+            case FULL:
+            default:
+                return NORMAL;  
+        	}
         }
     }
 

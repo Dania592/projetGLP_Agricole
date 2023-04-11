@@ -9,7 +9,6 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
 
 import data.configuration.GameConfiguration;
 import data.time.Clock;

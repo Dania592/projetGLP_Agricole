@@ -39,4 +39,10 @@ public class Poule extends AnimalProducteur {
 		}
 	}
 
+	@Override
+	public Produit collectProduction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

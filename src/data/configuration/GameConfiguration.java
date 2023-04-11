@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * toutes les constantes du jeu 
  */
-public class GameConfiguration {
+public abstract class GameConfiguration {
 	
 	// constructeur privare 
 	public static final int WINDOW_WIDTH = 1000;
@@ -41,6 +41,8 @@ public class GameConfiguration {
 	public final static String IMAGE_PATH = "src"+File.separator+"ressources"+File.separator;
 	
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
+	
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS = 10 ; // 1 animal => 10 min 
 	
 
 }

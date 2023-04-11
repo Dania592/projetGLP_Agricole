@@ -10,10 +10,8 @@ import javax.imageio.ImageIO;
 import data.configuration.GameConfiguration;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
-import data.flore.terrains.Terrain;
 import data.myExceptions.MortException;
 import data.structure.Enclos;
-import data.stucture_base.Element;
 import process.game.ElementManager;
 import process.time.TimeManager;
 
@@ -33,7 +31,6 @@ public class AnimalEvolution {
 	public void evoluate() {
 		getAllAnimals();
 		randomMovement();
-		terrainEvolution();
 		growUp();
 		
 	}
@@ -41,7 +38,7 @@ public class AnimalEvolution {
 	public void getAllAnimals() {
 		animals.removeAll(animals);
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
-			animals.addAll(enclos.getAnimalProducteurs());
+			animals.addAll(enclos.getAnimals());
 			
 		}
 	}
@@ -50,8 +47,8 @@ public class AnimalEvolution {
 		//animals.remove(animal); //=> cause un arret dans le thread 
 		elementManager.remove(animal);
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
-			if(enclos.getAnimalProducteurs().contains(animal)) {
-				enclos.removeAnimalProducteur(animal);
+			if(enclos.getAnimals().contains(animal)) {
+				enclos.removeAnimal(animal);
 			}
 
 		}
@@ -135,15 +132,7 @@ public class AnimalEvolution {
 		}
 	}
 		
-	// n'a pas sa place ici doit etre gérér dans une class propre aux evolutions des terrains 
-	public void terrainEvolution() {
-		for (Element element : elementManager.getMapManager().getElements().values()) {
-			if(element instanceof Terrain) {
-				((Terrain)element).evoluer();
-			}
-
-		}
-	}
+	
 
 
 
