@@ -31,8 +31,7 @@ public class AnimalEvolution {
 	public void evoluate() {
 		getAllAnimals();
 		randomMovement();
-		growUp();
-		
+		growUp();	
 	}
 	
 	public void getAllAnimals() {

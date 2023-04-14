@@ -23,7 +23,6 @@ import data.stucture_base.Farm;
 import data.stucture_base.Position;
 import gui.gestionnaire.Gestionnaire;
 import gui.gestionnaire.RoundedPanel;
-import process.game.Game;
 
 
 /**
@@ -153,6 +152,17 @@ public class FarmPaintStrategy {
 		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
 		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+	}
+	
+	public void paintNight( Map map ,Graphics graphics ) {
+		int x = map.getX();
+		int y = map.getY();
+		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
+		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
+		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
+		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
+		
+		
 	}
 	
 	

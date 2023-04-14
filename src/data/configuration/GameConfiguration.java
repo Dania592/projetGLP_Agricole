@@ -42,7 +42,7 @@ public abstract class GameConfiguration {
 	
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
 	
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS = 10 ; // 1 animal => 10 min 
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS = 5 ; // 1 animal => 10 min 
 	
 
 }

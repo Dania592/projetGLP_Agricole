@@ -16,7 +16,6 @@ import data.structure.Etable;
 
 public class Chevre extends AnimalProducteur{
 
-	
 	private final static int DUREE_VIE = 500 ;
 	private final static int PRIX_ACHAT = 500 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;

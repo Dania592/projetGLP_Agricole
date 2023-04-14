@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
+import data.configuration.GameConfiguration;
 import data.map.Map;
 
 
@@ -19,7 +20,7 @@ public class Fermier extends Personne{
 		super(nom, ligne, colonne , reference , map);
 		this.dateNaissance=dateNaissance;
 		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"stand.png")));
+			setImage(ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"default"+File.separator+"stand.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

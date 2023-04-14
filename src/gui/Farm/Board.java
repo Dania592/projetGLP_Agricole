@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import data.configuration.GameConfiguration;
-import data.espece.FoodConsumer.HungerLevel;
 import data.flore.terrains.Terrain;
 import data.planning.Activity;
 import data.structure.Enclos;
@@ -83,6 +82,7 @@ public class Board  extends JLayeredPane {
 		
 		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);
+		paintStrategy.paint(farm, g);
 		
 		for(Element element : mapManager.getElements().values()) {
 			if(element instanceof Enclos) {
@@ -94,7 +94,10 @@ public class Board  extends JLayeredPane {
 			}
 			else {
 				paintStrategy.paint(element, g);				
+				
 			}
+			
+			
 			
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
@@ -114,7 +117,11 @@ public class Board  extends JLayeredPane {
 		hud.time();
 		
 		// les bords de la ferme 
-		paintStrategy.paint(farm, g);
+		
+		
+//		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
+//			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
+//		}
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

@@ -29,7 +29,6 @@ public class Enclos extends Element implements Fixable, Feedable{
 	private FullLevel niveauEau ; 
 	private FullLevel niveauNourriture ;
 	private int dimension ; 
-//	private ArrayList<AnimalProducteur> animalProducteurs ; 
 	private FixableState state;
 	private HungerLevel animalsHungerLevel ;
 	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();

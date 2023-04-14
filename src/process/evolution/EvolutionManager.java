@@ -1,7 +1,11 @@
 package process.evolution;
 
-import java.lang.reflect.Array;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
@@ -17,7 +21,9 @@ public class EvolutionManager {
 	private AnimalEvolution animalEvolution ;
 	private ElementManager elementManager ;
 	private TimeManager timeManager;
-	
+	private int deathIndex = 0;
+	private ArrayList<AnimalProducteur> animalsToRemove = new ArrayList<>();
+
 
 	// on ajoute l'evolution des terrains actions ... 
 
@@ -43,13 +49,14 @@ public class EvolutionManager {
 
 		}
 	}
-	
-	
+
+
 	public void enclosEvolution() {
-		ArrayList<AnimalProducteur> animalsToRemove = new ArrayList<>();
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
+
 			int delay = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS;
 			int dhour = timeManager.getClock().getMinute().getValue()- enclos.getLastDecrementation();
+
 			if(dhour >= delay && enclos.getAnimals().size()!=0) {
 				if(enclos.getNiveauEau()!=FullLevel.EMPTY || enclos.getNiveauNourriture()!=FullLevel.EMPTY) {
 					enclos.setNiveauEau(enclos.getNiveauEau().getNextState());
@@ -58,22 +65,42 @@ public class EvolutionManager {
 				}
 				else {
 					if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
-					enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
-					enclos.setLastDecrementation( timeManager.getClock().getMinute().getValue());
-				}
-					else {
-						animalsToRemove.addAll(enclos.getAnimals());
-						enclos.setLastDecrementation(timeManager.getClock().getMinute().getValue());
-						
+						enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
+						enclos.setLastDecrementation( timeManager.getClock().getMinute().getValue());
 					}
-								
+					else {
+						// on peut tuer plusieurs d'un coup 
+						animalsToRemove.add(enclos.getAnimals().get(0));
+						enclos.setLastDecrementation(timeManager.getClock().getMinute().getValue());
+					}
 				}
 			}
 		}
-		
-		for(AnimalProducteur animal : animalsToRemove) {
-			animalEvolution.killAnimal(animal);
+		int i = 0;
+		while(i < animalsToRemove.size()) {
+			if(deathIndex == 5) {
+				animalEvolution.killAnimal(animalsToRemove.get(0));
+				animalsToRemove.remove(0);
+				i = 0;
+				deathIndex = 0;
+			}
+			else {
+				deathIndex ++;
+				i++;
+				String imagePath =GameConfiguration.IMAGE_PATH +"nuage"+deathIndex+".png";
+				BufferedImage image;
+				try {
+					image = ImageIO.read(new File(imagePath));
+					animalsToRemove.get(0).setImage(image);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
 		}
+
+
+
 	}
 
 

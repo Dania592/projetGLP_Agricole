@@ -15,7 +15,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private static final long serialVersionUID = 1L;
 
 	private Farm farm ;
-
 	private Board dashboard ;
 	private Element selected ;
 	private int x ;
@@ -26,7 +25,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		super(title);
 		init();
 	}
-
 
 	public void init() {
 
@@ -42,7 +40,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		contentPane.add(dashboard);
 
 		dashboard.addMouseListener(new MouseControls());
-
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();

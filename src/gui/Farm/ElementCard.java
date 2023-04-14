@@ -219,7 +219,8 @@ public class ElementCard extends JPanel{
 					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
 					if(enclos.getAnimals().size()==0) {
-						enclos.setLastDecrementation(animal.getNaissance());
+						enclos.setLastDecrementation(animal.getNaissance()
+								);
 					}
 					enclos.addAnimal(animal);
 					return block;

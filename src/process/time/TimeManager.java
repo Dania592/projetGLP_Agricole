@@ -9,6 +9,7 @@ public class TimeManager extends Thread {
     private int dayCounter;
     private boolean isTimeRunning;
     private DayOfWeek day;
+    private int timeSpeed = 1; 
 
     public Clock getClock() {
         return clock;
@@ -30,7 +31,7 @@ public class TimeManager extends Thread {
                 //day = day.next();
             }
             try {
-                sleep(GameConfiguration.GAME_SPEED);
+                sleep(GameConfiguration.GAME_SPEED*timeSpeed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -45,6 +46,13 @@ public class TimeManager extends Thread {
 
     public void setIsTimeRunnning(boolean isTimeRunning) {
         this.isTimeRunning = isTimeRunning;
+    }
+    
+    public int getTimeSpeed() {
+    	return timeSpeed;
+    }
+    public void setTimeSpeed(int speed) {
+    	timeSpeed = speed;
     }
 
 }
