@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
-import data.gestion.RessourcesManager;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
@@ -19,14 +18,13 @@ public class TaskManager extends Thread {
     private ArrayList<Task<?>> inProcess = new ArrayList<>();
     private ArrayList<Task<?>> taskCompleted = new ArrayList<>();
     private int currentHour;
-    private static TaskFactory taskFactory;
+    private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager;
     // public TaskManager(RessourcesManager ressourcesManager, TimeManager
     // timeManager, ArrayList<Personne> workers){
     public TaskManager(TimeManager timeManager){
         this.timeManager = timeManager;
         currentHour = timeManager.getClock().getHour().getValue();
-        taskFactory = new TaskFactory();
 
     }
 
@@ -47,7 +45,7 @@ public class TaskManager extends Thread {
         while (taskIterator.hasNext()){
             currentTaskToBeLaunched = taskIterator.next();
             inProcess.add(currentTaskToBeLaunched);
-            System.out.println("START AT "+ currentTaskToBeLaunched);
+            System.out.println(currentTaskToBeLaunched+ " start at "+ getCurrentHour());
         }
         cleanTaskToBeLanched();
     }
@@ -78,6 +76,7 @@ public class TaskManager extends Thread {
             if(hourHaveChanged()){
                 currentHour = timeManager.getClock().getHour().getValue();
             }
+            System.err.println(currentHour);
             addToTaskToinProcess();
             processingTaskInProgess();
             removeCompletedTask();
@@ -109,7 +108,7 @@ public class TaskManager extends Thread {
         Task<?> currentTask;
         while (taskToRemove.hasNext()) {
             currentTask = taskToRemove.next();
-            System.out.println("################## "+ currentTask + " IS OVER ############# ");
+            System.out.println(currentTask + " ends at "+ getCurrentHour());
             inProcess.remove(currentTask);
         }
         taskCompleted.clear();

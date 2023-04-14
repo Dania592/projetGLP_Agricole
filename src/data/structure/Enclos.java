@@ -11,7 +11,11 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Mouton;
+import data.espece.faune.Poule;
+import data.espece.faune.Vache;
 import data.map.Case;
 import data.map.Map;
 import data.structure.hability.Distributor;
@@ -24,6 +28,7 @@ import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.HaveNotProducedYetException;
 import process.action.visitor.place.PlaceVisitor;
+import process.evolution.FullLevel;
 import data.structure.hability.list.EnclosStorageStructure;;
 
 public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
@@ -156,20 +161,10 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 
 	@Override
 	public ArrayList<ActionnableKey> getActionnableKey() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
+		actionnableKeys.add(ActionnableKey.ENCLOS);
+		return actionnableKeys;
 
-	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getNumberOfTaget() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -204,11 +199,11 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 
 	public void addAnimal(Animal animal){
 		if(animal instanceof Vache){
-			animalStorage.addToVaches((Vache) animal);
+			animalStorage.add((Vache) animal);
 		}else if(animal instanceof Poule){
-			animalStorage.addToPoules((Poule) animal);
+			animalStorage.add((Poule) animal);
 		}else if(animal instanceof Mouton){
-			animalStorage.addToMoutons((Mouton) animal);
+			animalStorage.add((Mouton) animal);
 		}
 		
 	}
@@ -241,6 +236,11 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	@Override
 	public boolean isEmpty() {
 		return getAnimals().isEmpty();
+	}
+
+	@Override
+	public void setState(FixableState newState) {
+		state = newState;
 	}
 
 	

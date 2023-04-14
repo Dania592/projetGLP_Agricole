@@ -63,7 +63,7 @@ public abstract class Task<T extends Actionnable> {
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
         this.actionnableTarget = actionnableTarget;
-        totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
+        totalTime = getTotalTimeInMilisFromTimeGivenInHours(activity.getDuration());
         // totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(actionnable.getNumberOfTarget()*Activity.getTimeItTakesForASingleUnit());
         this.activity = activity;
     }
@@ -85,11 +85,13 @@ public abstract class Task<T extends Actionnable> {
 
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
-        System.out.println(this+" ---> "+ timeSpend+ "TOTAL :"+ totalTime);
-        System.err.println("UpadateStatus() : ");
          updateTaskStatus();
+        if(timeSpend==0){
+            System.out.println("--start-- "+ this);
+        }
         if(updateTaskStatus()){
             state = state.update();
+            System.out.println("-update-");
         }else if(timeSpend == START_ACTION_X_BY_THE_END - 10*1000){
             try {
                 performAction();
@@ -98,15 +100,14 @@ public abstract class Task<T extends Actionnable> {
             }
         }
         if(timeSpend >= totalTime){
-            System.out.println("OVER");
+            System.out.println("over");
             throw new TaskCompleteException(this);
-        }
+       }
     }
 
 
     private boolean updateTaskStatus(){
-        System.out.println(totalTime*state.getStage()/(TaskState.getMaxStage()));
-        return timeSpend > totalTime*state.getStage()/(TaskState.getMaxStage());
+        return timeSpend >= totalTime*(int)(state.getStage()/(TaskState.getMaxStage()));
     }
 
     //TODO use quand on voudra lancer les actions automatisées
@@ -124,7 +125,7 @@ public abstract class Task<T extends Actionnable> {
         // return "Task label : "+activity.getLabel()+ "[Hour to start=" + ", state=" + state + ", actionnableTarget="
         //         + actionnableTarget.getActionnableKey()
         //         + ", totalTime=" + totalTime + "]= currently :"+ activity.getNumberOfHourIfPlanned()+"Heure";
-        return activity.getLabel(); 
+        return activity.getLabel()+ "total : "+ totalTime; 
     }
 
     public long getTimeSpend() {

@@ -39,7 +39,19 @@ public class TaskFactory{
     private SendToSlaughterHouseVisitor slaughterHouseSender = new SendToSlaughterHouseVisitor();
     private EnclosureSenderVisitor enclosureSender = new EnclosureSenderVisitor(new DomesticSpeciesEnclosureSender());
     private HomeSenderVisitor homeSender = new HomeSenderVisitor(new DomesticSpeciesHomeSender()); 
-    private TaskFactory instance; 
+    private static TaskFactory instance; 
+
+     
+
+    private TaskFactory() {}
+
+
+    public static TaskFactory getInstance(){
+        if(instance==null){
+            instance = new TaskFactory();
+        }
+        return instance;
+    }
 
 
     public Task<?> newTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform{

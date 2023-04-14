@@ -17,7 +17,6 @@ import process.time.TimeManager;
 import data.configuration.GameConfiguration;
 import data.espece.Milieu;
 import data.espece.faune.Poule;
-import data.evenement.TempeteSable;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;

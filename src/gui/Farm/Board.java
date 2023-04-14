@@ -140,7 +140,8 @@ public class Board  extends JLayeredPane {
 		Task<?> newTask;
 		while(activitiesIter.hasNext()){
 			try {
-					newTask = TaskFactory..newTask(farm.getTimeManager().getClock().getHour().getValue(), activitiesIter.next(), actionnable);
+					newTask = TaskFactory.getInstance()
+					.newTask(farm.getTimeManager().getClock().getHour().getValue(), activitiesIter.next(), actionnable);
 				tasksThatCanBePerform.add(newTask);
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
