@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -13,16 +14,19 @@ import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.map.Map;
+import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
 import data.structure.hability.Fixable;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
-import process.evolution.FullLevel;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.place.PlaceVisitor;
 import data.structure.hability.list.EnclosStorageStructure;;
 
-public class Enclos extends Element implements Fixable, Feedable{
+public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
 
 	private int capacite ;
 	private int lastDecrementation ; 
@@ -170,8 +174,20 @@ public class Enclos extends Element implements Fixable, Feedable{
 
 	@Override
 	public boolean isNeedToBeFeed() {
-		// TODO Auto-generated method stub
-		return false;
+		Iterator<Vache> vacheIter = animalStorage.getVaches().iterator();
+		Iterator<Mouton> moutonIter = animalStorage.getMoutons().iterator();
+		Iterator<Poule> pouleIter = animalStorage.getPoules().iterator();
+		boolean needToBeFeed = false;		
+		while(vacheIter.hasNext() && !needToBeFeed){
+			needToBeFeed = vacheIter.next().isHungry();
+		}
+		while(moutonIter.hasNext() && !needToBeFeed){
+			needToBeFeed = moutonIter.next().isHungry();
+		}
+		while(pouleIter.hasNext() && !needToBeFeed){
+			needToBeFeed = pouleIter.next().isHungry();
+		}
+		return needToBeFeed; 
 	}
 
 	@Override
@@ -181,10 +197,54 @@ public class Enclos extends Element implements Fixable, Feedable{
 	}
 
 	@Override
-	public void setState(FixableState newState) {
-		// TODO Auto-generated method stub
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+
+
+	public void addAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.addToVaches((Vache) animal);
+		}else if(animal instanceof Poule){
+			animalStorage.addToPoules((Poule) animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.addToMoutons((Mouton) animal);
+		}
 		
 	}
+
+	public void removeAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.getVaches().remove((Vache)animal);
+		}else if(animal instanceof Poule){
+			animalStorage.getPoules().remove((Poule)animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.getMoutons().remove((Mouton)animal);
+		}
+	}
+
+	@Override
+	public ArrayList<?> getTarget() {
+		return getAnimals();
+	}
+
+	@Override
+	public boolean haveProduced() {
+		Iterator<Poule> poulesIter = animalStorage.getPoules().iterator();
+		boolean haveProduced = false;
+		while(poulesIter.hasNext() && !haveProduced){
+			haveProduced = poulesIter.next().haveProduced();
+		}
+		return haveProduced;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAnimals().isEmpty();
+	}
+
+	
+
 	
 	
 

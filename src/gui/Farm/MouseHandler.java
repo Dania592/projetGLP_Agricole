@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 import data.flore.terrains.Terrain;
+import data.structure.Refuge;
+import data.structure.Structure;
 import data.stucture_base.Element;
 import process.game.ElementManager;
 
@@ -37,8 +39,16 @@ public class MouseHandler implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 
+	//TODO rendre graphique
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+		Element element = elementManager.search(e.getX(), e.getY());
+		Structure structure;
+		if(element instanceof Structure){
+			structure = (Structure)element;
+			System.out.println(structure);
+		}
+	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {}

@@ -4,9 +4,11 @@ package gui.Farm;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
 import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.planning.Activity;
@@ -15,7 +17,8 @@ import data.structure.hability.Actionnable;
 import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
-import process.evolution.FullLevel;
+import process.action.TaskFactory;
+import process.action.task.Task;
 import process.game.MapManager;
 
 public class Board  extends JLayeredPane {
@@ -103,11 +106,16 @@ public class Board  extends JLayeredPane {
 				Terrain terrain = (Terrain)clicked;
 				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
 				terrain.evoluer();	
-			}else if(clicked instanceof Actionnable){
-				ArrayList<ActionnableKey> actionnableKey = ((Actionnable)clicked).getActionnableKey(); 
-				System.out.println(Activity.getPossibleActivity(actionnableKey));
-			}
-			 else {
+			}// }else if(clicked instanceof Actionnable){
+			// 	ArrayList<ActionnableKey> actionnableKey = ((Actionnable)clicked).getActionnableKey(); 
+			// 	System.out.println(Activity.getPossibleActivity(actionnableKey));
+			// // }else if(clicked instanceof Actionnable){
+			// // 	System.out.println("On a selecté un actionnable !");
+			// // 	Actionnable actionnable =(Actionnable)clicked;
+			// // 	// ArrayList<Task<?>> taskCanBePerform = getTaskThatCanBePerform(actionnable);
+			// // 	// System.out.println(taskCanBePerform);
+			// }
+			else {
 				if ( choixTerrain != null ) {
 					remove(choixTerrain);
 				}
@@ -122,6 +130,23 @@ public class Board  extends JLayeredPane {
 //		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
 //			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 //		}
+	}
+
+
+	private ArrayList<Task<?>> getTaskThatCanBePerform(Actionnable actionnable){
+		ArrayList<Activity> activities  = Activity.getPossibleActivity(actionnable.getActionnableKey());
+		Iterator<Activity> activitiesIter = activities.iterator(); 
+		ArrayList<Task<?>> tasksThatCanBePerform = new ArrayList<>();
+		Task<?> newTask;
+		while(activitiesIter.hasNext()){
+			try {
+					newTask = TaskFactory..newTask(farm.getTimeManager().getClock().getHour().getValue(), activitiesIter.next(), actionnable);
+				tasksThatCanBePerform.add(newTask);
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+		}
+		return tasksThatCanBePerform;
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

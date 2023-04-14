@@ -2,7 +2,7 @@ package data.espece;
 
 import data.production.Produit;
 
-public interface Produceur {
+public interface Produceur extends DomesticSpecie{
     public enum ProductifState{
         UNABLE_TO_PRODUCE,
         PRODUCING,

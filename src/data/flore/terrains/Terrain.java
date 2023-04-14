@@ -1,16 +1,21 @@
 package data.flore.terrains;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JLabel;
 
 import data.map.Map;
+import data.structure.hability.Feedable;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.place.PlaceVisitor;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public class Terrain extends Element implements Buyable{
+public class Terrain extends Element implements Buyable, Feedable, Productif{
 	
 	private static int SPEED = 10;// vitesse d'évolution
 	private static int DIMENSION = 16; // C'est un carré donc une seule dimension
@@ -46,7 +51,7 @@ public class Terrain extends Element implements Buyable{
 			nextEvolution();
 		}
 	}
-	
+
 	public void nextEvolution() {
 		switch (count) {
 		case 0 :
@@ -76,7 +81,7 @@ public class Terrain extends Element implements Buyable{
 		default :
 			break;
 		}
-		//setActions();
+		setActions();
 		setImage(images.get(evolution));
 		count++;
 		
@@ -117,30 +122,57 @@ public class Terrain extends Element implements Buyable{
 		return null;
 	}
 
-//	public void setActions() {
-//		if (evolution == EvolutionTerrain.VIERGE) {
-//			actions = new HashMap<>();
-//			actions.put("Labourer", new JLabel("Labourer"));
-//		} else if (evolution == EvolutionTerrain.LABOURE) {
-//			actions = new HashMap<>();
-//			actions.put("Planter", new JLabel("Planter"));
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		}else if (evolution == EvolutionTerrain.PLANTE_6) {
-//			actions = new HashMap<>();
-//			actions.put("Recolter", new JLabel("Recolter"));
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		} else {
-//			actions = new HashMap<>();
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		}
-//	}
-
-
-	
+	public void setActions() {
+		if (evolution == EvolutionTerrain.VIERGE) {
+			actions = new HashMap<>();
+			actions.put("Labourer", new JLabel("Labourer"));
+		} else if (evolution == EvolutionTerrain.LABOURE) {
+			actions = new HashMap<>();
+			actions.put("Planter", new JLabel("Planter"));
+			actions.put("Arroser", new JLabel("Arroser"));
+		}else if (evolution == EvolutionTerrain.PLANTE_5) {
+			actions = new HashMap<>();
+			actions.put("Recolter", new JLabel("Recolter"));
+			actions.put("Arroser", new JLabel("Arroser"));
+		} else {
+			actions = new HashMap<>();
+			actions.put("Arroser", new JLabel("Arroser"));
+		}
+	}
 
 
 	public String toString() {
 		return "Terrain de " + type;
+	}
+
+	@Override
+	public ArrayList<?> getTarget() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getTarget'");
+	}
+
+	@Override
+	public ArrayList<ActionnableKey> getActionnableKey() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getActionnableKey'");
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'launchAction'");
+	}
+
+	@Override
+	public boolean haveProduced() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'haveProduced'");
+	}
+
+	@Override
+	public boolean isNeedToBeFeed() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'isNeedToBeFeed'");
 	}
 		
 }

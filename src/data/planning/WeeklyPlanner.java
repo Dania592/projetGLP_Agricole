@@ -12,28 +12,27 @@ public class WeeklyPlanner {
         SATURDAY,
         SUNDAY;
 
-        public DayOfWeek next() throws Exception{
+        public DayOfWeek next(){
             switch(this){
-                case  MONDAY : 
-                    return TUESDAY;
-                case  TUESDAY : 
+                case MONDAY:
+                    return TUESDAY; 
+                case TUESDAY: 
                     return WEDNESDAY;
-                case  WEDNESDAY : 
+                case WEDNESDAY: 
                     return THURSDAY;
-                case  THURSDAY : 
+                case THURSDAY: 
                     return FRIDAY;
-                case  FRIDAY : 
+                case FRIDAY: 
                     return SATURDAY;
-                case  SATURDAY : 
+                case SATURDAY: 
                     return SUNDAY;
-                case  SUNDAY : 
-                    return MONDAY;
                 default:
-                    throw new Exception("Erreur changement de jour! ");
-
+                    return MONDAY;
             }
 
         }
+
+
 
     }
 
@@ -50,7 +49,6 @@ public class WeeklyPlanner {
     public HashMap<DayOfWeek, DailyPlanner> getWeek() {
         return week;
     }
-    
     
     public String toString(){
         String weekText = "Week";

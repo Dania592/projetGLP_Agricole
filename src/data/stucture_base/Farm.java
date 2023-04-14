@@ -1,9 +1,11 @@
+
 package data.stucture_base;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.flore.Saison;
 import data.gestion.RessourcesManager;
+import process.action.TaskManager;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
 import process.time.TimeManager;
@@ -22,6 +24,7 @@ public class Farm {
 	private int nbEtoile ;
 	private ElementManager elementManager ;
 	private TimeManager timeManager ; 
+	private TaskManager taskManager;
 	private EvolutionManager evolutionManager ;
 	private int ligne ; 
 	private int colonne ; 
@@ -35,10 +38,15 @@ public class Farm {
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager, timeManager);
+		taskManager = new TaskManager(timeManager);
 		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
 		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
 	}
 	
+	public ElementManager getElementManager() {
+		return elementManager;
+	}
+
 	public EvolutionManager getEvolutionManager() {
 		return evolutionManager;
 	}

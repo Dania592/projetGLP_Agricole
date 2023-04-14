@@ -3,8 +3,6 @@ package data.stucture_base;
 
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;

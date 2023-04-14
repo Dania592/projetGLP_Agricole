@@ -1,38 +1,41 @@
 package process.action.task;
 
-
-import data.configuration.GameConfiguration;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
+import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.TaskCompleteException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.HaveNotProducedYetException;
 
+public abstract class Task<T extends Actionnable> {
 
-public abstract class Task<T extends Actionnable>{
-
-    public enum TaskState{
+    public enum TaskState {
         WAITING_TO_BE_LANCHED(0),
         JUST_BEGIN(1),
         IN_PROCESS(2),
-        ALMOST_DONE(3),
-        DONE(4);
+        MORE_THAT_HALF(3),
+        ALMOST_DONE(4);
 
         private int stage;
-        private TaskState(int stage){
+
+        private TaskState(int stage) {
             this.stage = stage;
         }
 
-        public TaskState update(){
-            switch(this){
+        public TaskState update() {
+            switch (this) {
                 case WAITING_TO_BE_LANCHED:
                     return JUST_BEGIN;
                 case JUST_BEGIN:
                     return IN_PROCESS;
                 case IN_PROCESS:
+                    return MORE_THAT_HALF;
+                case MORE_THAT_HALF:
                     return ALMOST_DONE;
-                case ALMOST_DONE:
-                    return DONE;
-                default :
-                    return DONE;
+                default:
+                    return ALMOST_DONE;
             }
         }
 
@@ -40,23 +43,29 @@ public abstract class Task<T extends Actionnable>{
             return stage;
         }
 
-        public static int getMaxStage(){
-            return TaskState.values().length;
+        public static int getMaxStage() {
+            return TaskState.values().length-1;
+        }
+
+        public static TaskState getMatchingStage(int index){
+            return TaskState.values()[index];
         }
 
     }
-  
-    private Activity activity;
-    private TaskState state = TaskState.WAITING_TO_BE_LANCHED; 
-    private T actionnableTarget;
 
+    private TaskState state = TaskState.WAITING_TO_BE_LANCHED;
+    private T actionnableTarget;
+    private Activity activity; 
     private long totalTime;
+    private long timeSpend = 0;
+    private int START_ACTION_X_BY_THE_END = 10;
 
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
-        this.activity = activity;
-        totalTime = activity.getDuration()*GameConfiguration.GAME_SPEED*60000;
         this.actionnableTarget = actionnableTarget;
+        totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
+        // totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(actionnable.getNumberOfTarget()*Activity.getTimeItTakesForASingleUnit());
+        this.activity = activity;
     }
 
     public Activity getActivity() {
@@ -71,22 +80,79 @@ public abstract class Task<T extends Actionnable>{
         return actionnableTarget;
     }
 
-    protected abstract void performAction();
+    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable;
 
-    private long getTimeAStateTake(){
-        return (long)(totalTime/TaskState.getMaxStage());
-    }
 
-    public void launch(){
-        while(state!=TaskState.DONE){
-            state.update();
+    public void process() throws TaskCompleteException{
+        timeSpend+= 1000;
+        System.out.println(this+" ---> "+ timeSpend+ "TOTAL :"+ totalTime);
+        System.err.println("UpadateStatus() : ");
+         updateTaskStatus();
+        if(updateTaskStatus()){
+            state = state.update();
+        }else if(timeSpend == START_ACTION_X_BY_THE_END - 10*1000){
             try {
-                Thread.sleep(getTimeAStateTake());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                performAction();
+            } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable temp) {
+                temp.printStackTrace();
             }
         }
-        performAction();
+        if(timeSpend >= totalTime){
+            System.out.println("OVER");
+            throw new TaskCompleteException(this);
+        }
     }
+
+
+    private boolean updateTaskStatus(){
+        System.out.println(totalTime*state.getStage()/(TaskState.getMaxStage()));
+        return timeSpend > totalTime*state.getStage()/(TaskState.getMaxStage());
+    }
+
+    //TODO use quand on voudra lancer les actions automatisées
+    private long getTotalTimeInMilisFromTimeGivenInHours(int timeGivenInHours){
+        return timeGivenInHours*3600000;
+    }
+
+    //TODO 
+    private long getTotalTimeInMilisFromTimeGivenInMinutes(int timeGivenInMinutes){
+        return timeGivenInMinutes*60*1000;
+    }
+
+    @Override
+    public String toString() {
+        // return "Task label : "+activity.getLabel()+ "[Hour to start=" + ", state=" + state + ", actionnableTarget="
+        //         + actionnableTarget.getActionnableKey()
+        //         + ", totalTime=" + totalTime + "]= currently :"+ activity.getNumberOfHourIfPlanned()+"Heure";
+        return activity.getLabel(); 
+    }
+
+    public long getTimeSpend() {
+        return timeSpend;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Task<?> other = (Task<?>) obj;
+        if (actionnableTarget == null) {
+            if (other.actionnableTarget != null)
+                return false;
+        } else if (!actionnableTarget.equals(other.actionnableTarget))
+            return false;
+        if (totalTime != other.totalTime)
+            return false;
+        return true;
+    }
+
+    public long getTotalTime() {
+        return totalTime;
+    }
+
 
 }

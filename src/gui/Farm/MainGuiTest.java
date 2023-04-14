@@ -56,7 +56,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//dashboard.setSelected(dashboard.getSelected());
+			dashboard.setSelected(dashboard.getSelected());
 			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
 			dashboard.repaint();
 		}

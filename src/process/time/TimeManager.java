@@ -3,8 +3,7 @@ package process.time;
 import data.configuration.GameConfiguration;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import data.time.Clock;
-
-public class TimeManager extends Thread {
+public class TimeManager extends Thread{
     private Clock clock;
     private int dayCounter;
     private boolean isTimeRunning;
@@ -15,11 +14,20 @@ public class TimeManager extends Thread {
         return clock;
     }
 
-    public TimeManager(){
-        clock = new Clock();
+    public TimeManager(boolean running){
+        clock = Clock.getInstance();
         dayCounter= 0;
-        isTimeRunning = true;
+        isTimeRunning = running;
         day = DayOfWeek.MONDAY;
+    }
+
+    public TimeManager(){
+        this(true);
+    }
+
+
+    public void setTimeRunning(boolean isTimeRunning) {
+        this.isTimeRunning = isTimeRunning;
     }
 
     public void run() {
@@ -35,8 +43,11 @@ public class TimeManager extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //System.out.println(clock);
         }
+    }
+
+    public boolean isTimeRunning() {
+        return isTimeRunning;
     }
 
     @Override
@@ -44,15 +55,8 @@ public class TimeManager extends Thread {
         return "TimeManager [clock=" + clock + ", dayCounter=" + dayCounter + ", isTimeRunning=" + isTimeRunning + "]";
     }
 
-    public void setIsTimeRunnning(boolean isTimeRunning) {
-        this.isTimeRunning = isTimeRunning;
-    }
-    
-    public int getTimeSpeed() {
-    	return timeSpeed;
-    }
-    public void setTimeSpeed(int speed) {
-    	timeSpeed = speed;
+    public void stopTime(){
+        isTimeRunning = false;
     }
 
 }

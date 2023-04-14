@@ -3,8 +3,8 @@ package data.structure;
 import java.util.ArrayList;
 
 import data.map.Map;
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.place.PlaceVisitor;
 
 public class Abatoire extends StructureAction{
 

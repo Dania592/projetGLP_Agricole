@@ -12,10 +12,15 @@ import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Oeuf;
 import data.production.Produit;
+import data.structure.Enclos;
 import data.structure.Poulallier;
+import data.structure.Refuge;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.DomesticSpeciesVisitor;
 
 
-public class Poule extends AnimalProducteur {
+public class Poule extends AnimalProducteur{
 
 	private final static int DUREE_VIE = 500 ;
 	private final static int PRIX_ACHAT = 1000 ;
@@ -45,4 +50,11 @@ public class Poule extends AnimalProducteur {
 		return null;
 	}
 
+	@Override
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+	 
+
+	
 }

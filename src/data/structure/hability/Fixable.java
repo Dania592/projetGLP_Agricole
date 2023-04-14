@@ -3,7 +3,6 @@ package data.structure.hability;
 public interface Fixable extends Actionnable{
     
     public enum FixableState {
-
         USABLE,
         DAMAGED,
         DESTROYED;

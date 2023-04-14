@@ -104,7 +104,6 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		return evolution;
 	}
 
-	@Override
 	public void vieillir() throws MortException{
 		this.evolution = (EvolutionAnimal) evolution.evolue();
 	}

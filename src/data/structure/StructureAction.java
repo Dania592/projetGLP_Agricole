@@ -1,9 +1,6 @@
 package data.structure;
 
-
 import data.map.Map;
-
-
 
 public  abstract class StructureAction extends Structure {
 

@@ -4,8 +4,6 @@ import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.stucture_base.Element;
-import process.transaction.Buyable;
-import process.transaction.Saleable;
 
 public abstract class EtreVivant extends Element implements Mortel{
 	private Milieu milieu ;

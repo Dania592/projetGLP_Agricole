@@ -12,6 +12,9 @@ import data.map.Map;
 import data.production.Lait;
 import data.production.Produit;
 import data.structure.Etable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.DomesticSpeciesVisitor;
 
 
 public class Chevre extends AnimalProducteur{
@@ -35,14 +38,18 @@ public class Chevre extends AnimalProducteur{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		
 	}
 
 	@Override
 	public Produit collectProduction() {
 		return new Lait(); 
 	}
-	
 
+	@Override
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+
+
+	
 }

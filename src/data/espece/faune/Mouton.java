@@ -6,13 +6,19 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import data.espece.Milieu;
+import data.espece.Slaughtable;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Laine;
 import data.production.Produit;
+import data.structure.Enclos;
 import data.structure.Etable;
+import data.structure.Refuge;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.DomesticSpeciesVisitor;
 
-public class Mouton extends AnimalProducteur {
+public class Mouton extends AnimalProducteur{
 	
 	private final static int DUREE_VIE = 50 ;
 	private final static int PRIX_ACHAT = 100 ;
@@ -39,6 +45,11 @@ public class Mouton extends AnimalProducteur {
 	@Override
 	public Produit collectProduction() {
 		return new Laine();
+	}
+
+	@Override
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this); 
 	}
 
 }
