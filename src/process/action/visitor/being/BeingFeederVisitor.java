@@ -22,13 +22,13 @@ public class BeingFeederVisitor implements DomesticSpeciesVisitor<Void> {
 
     @Override
     public Void action(Poule poule) throws HaveNotProducedYetException {
-        poule.feed();
+        System.out.println("On nourris "+ poule);
         return null;
     }
 
     @Override
     public Void action(Vache vache) throws HaveNotProducedYetException {
-        vache.feed();
+        System.out.println("On nourris "+ vache);
         return null;
     }
 

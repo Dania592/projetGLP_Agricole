@@ -123,7 +123,8 @@ public class CollectVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable{
-        throw new UnableToPerformSuchActionWithCurrentActionnable(salleDeTraite);
+        System.out.println("Collecte les produit de l'enclos : "+ salleDeTraite);
+        return null;
     }
 
     @Override
@@ -133,7 +134,8 @@ public class CollectVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException();
+        System.out.println("Collecte les produit de du terrain : "+ terrain);
+        return null;
     }
     
 }

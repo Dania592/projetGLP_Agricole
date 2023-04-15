@@ -49,18 +49,17 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException();
-        // switch(terrain.getEvolution()){
-        //     case VIERGE : 
-        //         System.out.println("On laboure");
-        //         break;
-        //     case LABOURE : 
-        //         System.out.println("On plante");
-        //         break;
-        //     default : 
-        //         throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
-        // }
-        // return null;
+        switch(terrain.getEvolution()){
+            case VIERGE : 
+                System.out.println("On laboure");
+                break;
+            case LABOURE : 
+                System.out.println("On plante");
+                break;
+            default : 
+                throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
+        }
+        return null;
     }
 
 }

@@ -18,7 +18,7 @@ public abstract class GameConfiguration {
 	
 	public final static int NB_COLONNE = 60;
 	
-	public final static int GAME_SPEED = 1;
+	public final static int GAME_SPEED = 10;
 	
 	public final static int X_MAP = -15*CASE_DIMENSION ;
 	

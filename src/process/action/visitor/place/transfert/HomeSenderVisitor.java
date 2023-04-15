@@ -2,6 +2,8 @@ package process.action.visitor.place.transfert;
 
 import java.util.Iterator;
 
+import data.espece.faune.Mouton;
+import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.structure.Abatoire;
@@ -37,18 +39,18 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Enclos enclos) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        // Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
+        Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
         Iterator<Vache> vacheIter = enclos.getAnimalStorage().getVaches().iterator();
-        // Iterator<Mouton> moutonIter = enclos.getAnimalStorage().getMoutons().iterator();
-        // while(pouleIter.hasNext()){
-        //     pouleIter.next().launchAction(homeSender);
-        // }
+        Iterator<Mouton> moutonIter = enclos.getAnimalStorage().getMoutons().iterator();
+        while(pouleIter.hasNext()){
+            pouleIter.next().launchAction(homeSender);
+        }
         while(vacheIter.hasNext()){
             vacheIter.next().launchAction(homeSender);
         }
-        // while(moutonIter.hasNext()){
-        //     moutonIter.next().launchAction(homeSender);
-        // }
+        while(moutonIter.hasNext()){
+            moutonIter.next().launchAction(homeSender);
+        }
         return null;
 
     }

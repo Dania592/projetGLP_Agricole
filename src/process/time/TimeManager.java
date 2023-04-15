@@ -13,7 +13,6 @@ public class TimeManager extends Thread{
     public Clock getClock() {
         return clock;
     }
-
     public TimeManager(boolean running){
         clock = Clock.getInstance();
         dayCounter= 0;

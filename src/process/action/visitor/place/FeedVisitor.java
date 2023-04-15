@@ -1,7 +1,7 @@
 package process.action.visitor.place;
 
 import data.flore.terrains.Terrain;
-
+import data.flore.terrains.EvolutionTerrain;
 // import java.util.Iterator;
 
 // import data.espece.faune.Poule;
@@ -118,7 +118,18 @@ public class FeedVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException();
+        if(canFeedTerrain(terrain)){
+            System.out.println("Nourissant les animaux de mon enclos "+ terrain);
+        }
+        return null;
+    }
+
+    private boolean canFeedTerrain(Terrain terrain){
+        return terrain.getEvolution() == EvolutionTerrain.PLANTE|
+            terrain.getEvolution() == EvolutionTerrain.PLANTE_1|
+            terrain.getEvolution() == EvolutionTerrain.PLANTE_2|
+            terrain.getEvolution() == EvolutionTerrain.PLANTE_3|
+            terrain.getEvolution() == EvolutionTerrain.PLANTE_4;
     }
 
 }

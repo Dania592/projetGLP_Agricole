@@ -13,7 +13,7 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
 
     @Override
     public Void action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        System.out.println("On renvoie dans sa maison l");
+        System.out.println("On renvoie dans sa maison");
         return null;
     }
     

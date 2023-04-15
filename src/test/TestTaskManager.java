@@ -43,6 +43,10 @@ public class TestTaskManager {
     public static ArrayList<Task<?>> tasks  = new ArrayList<>();
     
     static {
+        
+    }
+
+    public static void main(String[] args) {
         timeManager.start();
         poulallier.addInHabitant(poule1);
         poulallier.addInHabitant(poule2);
@@ -58,9 +62,6 @@ public class TestTaskManager {
         listOfActionnable.add(enclos);
         taskManager = new TaskManager(timeManager);
         taskManager.start();
-    }
-
-    public static void main(String[] args) {
         ArrayList<Task<?>> tempTask;
         for (Actionnable actionnable : listOfActionnable) {
             System.out.println(

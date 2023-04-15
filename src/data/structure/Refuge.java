@@ -43,7 +43,7 @@ public abstract class Refuge<T> extends Structure {
 		}
 	}
 
-	public void removeAnimal(Animal animal) {
+	public void removeAnimal(T animal) {
 		inHabitant.remove(animal);
 		currentNumberOfInhabitant--;
 	}

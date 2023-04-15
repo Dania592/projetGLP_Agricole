@@ -12,15 +12,16 @@ import process.action.visitor.being.HaveNotProducedYetException;
 public abstract class Task<T extends Actionnable> {
 
     public enum TaskState {
-        WAITING_TO_BE_LANCHED(0),
-        JUST_BEGIN(1),
-        IN_PROCESS(2),
-        MORE_THAT_HALF(3),
-        ALMOST_DONE(4);
+        WAITING_TO_BE_LANCHED(0f),
+        JUST_BEGIN(1f),
+        IN_PROCESS(2f),
+        MORE_THAT_HALF(3f),
+        ALMOST_DONE(4f),
+        DONE(5f);
 
-        private int stage;
+        private float stage;
 
-        private TaskState(int stage) {
+        private TaskState(float stage) {
             this.stage = stage;
         }
 
@@ -34,17 +35,18 @@ public abstract class Task<T extends Actionnable> {
                     return MORE_THAT_HALF;
                 case MORE_THAT_HALF:
                     return ALMOST_DONE;
+                case ALMOST_DONE:
                 default:
-                    return ALMOST_DONE;
+                    return DONE;
             }
         }
 
-        public int getStage() {
+        public float getStage() {
             return stage;
         }
 
-        public static int getMaxStage() {
-            return TaskState.values().length-1;
+        public static int getLastState() {
+            return TaskState.values().length-2;
         }
 
         public static TaskState getMatchingStage(int index){
@@ -71,7 +73,7 @@ public abstract class Task<T extends Actionnable> {
     public Activity getActivity() {
         return activity;
     }
-
+    
     public TaskState getState() {
         return state;
     }
@@ -85,13 +87,18 @@ public abstract class Task<T extends Actionnable> {
 
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
-         updateTaskStatus();
         if(timeSpend==0){
             System.out.println("--start-- "+ this);
         }
         if(updateTaskStatus()){
+            System.out.println("\n\nCurrent stage : "+ state.getStage());
+            System.out.println("Max stage: "+ (TaskState.getLastState()));
+            System.out.println("Résult to div : "+state.getStage()/(TaskState.getLastState()));
+            System.out.println("FROM : "+ state+ " TO ");
             state = state.update();
-            System.out.println("-update-");
+            System.out.println(state);
+            System.out.println("-update- "+ this+ " status :"+ state+ "Time Spend "+ timeSpend+ "Total Time"+ totalTime);
+            System.out.println("Said to be true : "+ timeSpend+ ">="+ (totalTime*(state.getStage()/(TaskState.getLastState()))));
         }else if(timeSpend == START_ACTION_X_BY_THE_END - 10*1000){
             try {
                 performAction();
@@ -99,7 +106,7 @@ public abstract class Task<T extends Actionnable> {
                 temp.printStackTrace();
             }
         }
-        if(timeSpend >= totalTime){
+        if(state == TaskState.DONE){
             System.out.println("over");
             throw new TaskCompleteException(this);
        }
@@ -107,7 +114,7 @@ public abstract class Task<T extends Actionnable> {
 
 
     private boolean updateTaskStatus(){
-        return timeSpend >= totalTime*(int)(state.getStage()/(TaskState.getMaxStage()));
+        return timeSpend >= (totalTime*(state.getStage()/(TaskState.getLastState())));
     }
 
     //TODO use quand on voudra lancer les actions automatisées
@@ -125,7 +132,7 @@ public abstract class Task<T extends Actionnable> {
         // return "Task label : "+activity.getLabel()+ "[Hour to start=" + ", state=" + state + ", actionnableTarget="
         //         + actionnableTarget.getActionnableKey()
         //         + ", totalTime=" + totalTime + "]= currently :"+ activity.getNumberOfHourIfPlanned()+"Heure";
-        return activity.getLabel()+ "total : "+ totalTime; 
+        return activity.getLabel()+ "total : "+ activity.getDuration(); 
     }
 
     public long getTimeSpend() {

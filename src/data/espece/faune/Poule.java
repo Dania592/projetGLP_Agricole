@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
+import data.production.Lait;
 import data.production.Oeuf;
 import data.production.Produit;
 import data.structure.Enclos;
@@ -46,8 +47,7 @@ public class Poule extends AnimalProducteur{
 
 	@Override
 	public Produit collectProduction() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Lait();
 	}
 
 	@Override

@@ -31,7 +31,6 @@ public class TaskManager extends Thread {
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
             throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform {
         Task<?> generatedTask = taskFactory.newTask(activity, actionnable);
-        // TODO vérifier ici que l'action peut-être effectuée
         taskToBeLaunched.add(generatedTask);
     }
 
@@ -73,10 +72,11 @@ public class TaskManager extends Thread {
 
     public void run(){
         while(true){
+            System.out.println(timeManager.getClock());
             if(hourHaveChanged()){
                 currentHour = timeManager.getClock().getHour().getValue();
             }
-            System.err.println(currentHour);
+            System.err.println(timeManager.getClock());
             addToTaskToinProcess();
             processingTaskInProgess();
             removeCompletedTask();
@@ -87,6 +87,9 @@ public class TaskManager extends Thread {
             }
         }
     }
+
+
+    
 
     private void processingTaskInProgess(){
         Iterator<Task<?>> taskIterator;

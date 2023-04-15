@@ -19,6 +19,7 @@ import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import process.action.TaskFactory;
 import process.action.task.Task;
+import process.evolution.FullLevel;
 import process.game.MapManager;
 
 public class Board  extends JLayeredPane {
@@ -130,24 +131,6 @@ public class Board  extends JLayeredPane {
 //		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
 //			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 //		}
-	}
-
-
-	private ArrayList<Task<?>> getTaskThatCanBePerform(Actionnable actionnable){
-		ArrayList<Activity> activities  = Activity.getPossibleActivity(actionnable.getActionnableKey());
-		Iterator<Activity> activitiesIter = activities.iterator(); 
-		ArrayList<Task<?>> tasksThatCanBePerform = new ArrayList<>();
-		Task<?> newTask;
-		while(activitiesIter.hasNext()){
-			try {
-					newTask = TaskFactory.getInstance()
-					.newTask(farm.getTimeManager().getClock().getHour().getValue(), activitiesIter.next(), actionnable);
-				tasksThatCanBePerform.add(newTask);
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-			}
-		}
-		return tasksThatCanBePerform;
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {
