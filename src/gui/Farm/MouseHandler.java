@@ -30,6 +30,7 @@ public class MouseHandler implements MouseListener{
 			JPanel choixTerrain = farmPaintStrategy.paint(terrain, terrain.getActions(), board.getFarm().getManager().getMapManager().getMap());
 			board.setChoixTerrain(choixTerrain);
 		}
+		System.out.println("element séléctionnée "+ element);
 		board.setClicked(element);
 	}
 
@@ -42,12 +43,6 @@ public class MouseHandler implements MouseListener{
 	//TODO rendre graphique
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		Element element = elementManager.search(e.getX(), e.getY());
-		Structure structure;
-		if(element instanceof Structure){
-			structure = (Structure)element;
-			System.out.println(structure);
-		}
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.planning.Activity;
 import data.structure.Enclos;
+import data.structure.Maison;
 import data.structure.hability.Actionnable;
 import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
@@ -100,31 +101,20 @@ public class Board  extends JLayeredPane {
 				paintStrategy.paint(element, g);				
 				
 			}
-			
-			
-			
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
 				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
 				terrain.evoluer();	
-			}// }else if(clicked instanceof Actionnable){
-			// 	ArrayList<ActionnableKey> actionnableKey = ((Actionnable)clicked).getActionnableKey(); 
-			// 	System.out.println(Activity.getPossibleActivity(actionnableKey));
-			// // }else if(clicked instanceof Actionnable){
-			// // 	System.out.println("On a selecté un actionnable !");
-			// // 	Actionnable actionnable =(Actionnable)clicked;
-			// // 	// ArrayList<Task<?>> taskCanBePerform = getTaskThatCanBePerform(actionnable);
-			// // 	// System.out.println(taskCanBePerform);
-			// }
-			else {
+			}else {
 				if ( choixTerrain != null ) {
 					remove(choixTerrain);
 				}
 			}
+
 			
 		}
 		hud.time();
-		
+
 		// les bords de la ferme 
 		
 		

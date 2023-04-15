@@ -20,8 +20,7 @@ public class TaskManager extends Thread {
     private int currentHour;
     private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager;
-    // public TaskManager(RessourcesManager ressourcesManager, TimeManager
-    // timeManager, ArrayList<Personne> workers){
+    // public TaskManager(RessourcesManager ressourcesManager, TimeManager // Pour l'automatisation des tâches et leur attribution à un personnage!
     public TaskManager(TimeManager timeManager){
         this.timeManager = timeManager;
         currentHour = timeManager.getClock().getHour().getValue();
@@ -44,7 +43,6 @@ public class TaskManager extends Thread {
         while (taskIterator.hasNext()){
             currentTaskToBeLaunched = taskIterator.next();
             inProcess.add(currentTaskToBeLaunched);
-            System.out.println(currentTaskToBeLaunched+ " start at "+ getCurrentHour());
         }
         cleanTaskToBeLanched();
     }
@@ -53,7 +51,6 @@ public class TaskManager extends Thread {
     public void addToTaskToBeLaunched(Task<?> task){
         taskToBeLaunched.add(task);
     }
-
 
     private void cleanTaskToBeLanched() {
         Iterator<Task<?>> taskIterator = inProcess.iterator();
@@ -69,14 +66,11 @@ public class TaskManager extends Thread {
         return false;
     }
 
-
     public void run(){
         while(true){
-            System.out.println(timeManager.getClock());
             if(hourHaveChanged()){
                 currentHour = timeManager.getClock().getHour().getValue();
             }
-            System.err.println(timeManager.getClock());
             addToTaskToinProcess();
             processingTaskInProgess();
             removeCompletedTask();
@@ -88,8 +82,6 @@ public class TaskManager extends Thread {
         }
     }
 
-
-    
 
     private void processingTaskInProgess(){
         Iterator<Task<?>> taskIterator;
@@ -111,12 +103,10 @@ public class TaskManager extends Thread {
         Task<?> currentTask;
         while (taskToRemove.hasNext()) {
             currentTask = taskToRemove.next();
-            System.out.println(currentTask + " ends at "+ getCurrentHour());
             inProcess.remove(currentTask);
         }
         taskCompleted.clear();
     }
-
 
     public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable){
         ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getActionnableKey());
@@ -128,13 +118,12 @@ public class TaskManager extends Thread {
                 task = taskFactory.newTask(activitiesIter.next(), actionnable);
                 possibleTaskToPerform.add(task);
             } catch (Exception e) {
-                System.out.println(e);
+                //TODO
+                // System.err.println(e);
             }
         }
         return possibleTaskToPerform;
     }
-
-    
 
     public int getCurrentHour() {
         return currentHour;
@@ -151,6 +140,5 @@ public class TaskManager extends Thread {
     public ArrayList<Task<?>> getinProcess() {
         return inProcess;
     }
-
 
 }

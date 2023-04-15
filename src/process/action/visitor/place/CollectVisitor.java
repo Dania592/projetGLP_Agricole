@@ -2,7 +2,9 @@ package process.action.visitor.place;
 
 import java.util.ArrayList;
 // import java.util.Iterator;
+import java.util.Iterator;
 
+import data.espece.faune.Poule;
 import data.flore.terrains.Terrain;
 // import data.espece.faune.Poule;
 // import data.espece.faune.Vache;
@@ -15,8 +17,10 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.SalleDeTraite;
 import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.AnimalProductCollector;
+import process.action.visitor.being.HaveNotProducedYetException;
 
 // public class CollectVisitor implements PlaceVisitor<ArrayList<Produit>>{
 //     ArrayList<Produit> products =  new ArrayList<>();
@@ -100,14 +104,28 @@ public class CollectVisitor implements PlaceVisitor<Void>{
     }
     
     @Override
-    public Void action(Poulallier poulallier) {
-        System.out.println("Collecte des produit de l'étable : "+ poulallier);
+    public Void action(Poulallier poulallier) throws BeingCannotPerformSuchActionException {
+        Iterator<Poule> pouleIter = poulallier.getInHabitant().iterator();
+        while(pouleIter.hasNext()){
+            try {
+                pouleIter.next().launchAction(collector);
+            } catch (HaveNotProducedYetException e) {
+                System.out.println("N'a pas encore produit");
+            }   
+        }
         return null;
     }
 
     @Override
     public Void action(Enclos enclos) {
-        System.out.println("Collecte les produit de l'enclos : "+ enclos);
+        Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
+        while(pouleIter.hasNext()){
+            try {
+                pouleIter.next().launchAction(collector);
+            } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException e) {
+                System.out.println("N'a pas encore produit");
+            }
+        }
         return null;
     }
 

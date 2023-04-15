@@ -169,20 +169,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 
 	@Override
 	public boolean isNeedToBeFeed() {
-		Iterator<Vache> vacheIter = animalStorage.getVaches().iterator();
-		Iterator<Mouton> moutonIter = animalStorage.getMoutons().iterator();
-		Iterator<Poule> pouleIter = animalStorage.getPoules().iterator();
-		boolean needToBeFeed = false;		
-		while(vacheIter.hasNext() && !needToBeFeed){
-			needToBeFeed = vacheIter.next().isHungry();
-		}
-		while(moutonIter.hasNext() && !needToBeFeed){
-			needToBeFeed = moutonIter.next().isHungry();
-		}
-		while(pouleIter.hasNext() && !needToBeFeed){
-			needToBeFeed = pouleIter.next().isHungry();
-		}
-		return needToBeFeed; 
+		return animalsHungerLevel == HungerLevel.HUNGRY || animalsHungerLevel == HungerLevel.VERY_HUNGRY || animalsHungerLevel == HungerLevel.STARVING;
 	}
 
 	@Override

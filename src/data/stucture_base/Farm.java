@@ -135,5 +135,9 @@ public class Farm {
 			}
 		}
 	}
+
+	public TaskManager getTaskManager() {
+		return taskManager;
+	}
 	
 }

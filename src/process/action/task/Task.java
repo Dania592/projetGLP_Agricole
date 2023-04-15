@@ -2,6 +2,7 @@ package process.action.task;
 
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.structure.hability.AbleToActOnInHabitant;
 import data.structure.hability.Actionnable;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -65,8 +66,7 @@ public abstract class Task<T extends Actionnable> {
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
         this.actionnableTarget = actionnableTarget;
-        totalTime = getTotalTimeInMilisFromTimeGivenInHours(activity.getDuration());
-        // totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(actionnable.getNumberOfTarget()*Activity.getTimeItTakesForASingleUnit());
+        totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
         this.activity = activity;
     }
 
@@ -88,28 +88,20 @@ public abstract class Task<T extends Actionnable> {
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
         if(timeSpend==0){
-            System.out.println("--start-- "+ this);
+            System.out.println("start"+ this);
         }
         if(updateTaskStatus()){
-            System.out.println("\n\nCurrent stage : "+ state.getStage());
-            System.out.println("Max stage: "+ (TaskState.getLastState()));
-            System.out.println("Résult to div : "+state.getStage()/(TaskState.getLastState()));
-            System.out.println("FROM : "+ state+ " TO ");
             state = state.update();
-            System.out.println(state);
-            System.out.println("-update- "+ this+ " status :"+ state+ "Time Spend "+ timeSpend+ "Total Time"+ totalTime);
-            System.out.println("Said to be true : "+ timeSpend+ ">="+ (totalTime*(state.getStage()/(TaskState.getLastState()))));
-        }else if(timeSpend == START_ACTION_X_BY_THE_END - 10*1000){
+        }if(state == TaskState.DONE){
             try {
+                System.out.println("PERFORM_ACTION");
                 performAction();
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable temp) {
                 temp.printStackTrace();
             }
-        }
-        if(state == TaskState.DONE){
             System.out.println("over");
             throw new TaskCompleteException(this);
-       }
+        }
     }
 
 

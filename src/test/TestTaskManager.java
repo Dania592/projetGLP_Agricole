@@ -12,7 +12,6 @@ import process.action.TaskManager;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.TaskNotNeededToBePerform;
 import process.action.task.Task;
-import process.action.task.Task.TaskState;
 import process.time.TimeManager;
 import data.configuration.GameConfiguration;
 import data.espece.Milieu;
@@ -42,10 +41,6 @@ public class TestTaskManager {
 
     public static ArrayList<Task<?>> tasks  = new ArrayList<>();
     
-    static {
-        
-    }
-
     public static void main(String[] args) {
         timeManager.start();
         poulallier.addInHabitant(poule1);
@@ -62,6 +57,8 @@ public class TestTaskManager {
         listOfActionnable.add(enclos);
         taskManager = new TaskManager(timeManager);
         taskManager.start();
+
+
         ArrayList<Task<?>> tempTask;
         for (Actionnable actionnable : listOfActionnable) {
             System.out.println(

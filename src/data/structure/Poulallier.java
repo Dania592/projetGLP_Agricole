@@ -16,7 +16,7 @@ import process.action.exception.structure.UnableToPerformSuchActionWithCurrentAc
 import process.action.visitor.being.HaveNotProducedYetException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Poulallier extends Refuge<Poule> implements Productif, Distributor, SlaughterHouseSender{
+public class Poulallier extends Refuge<Poule> implements Productif, Distributor{
 	private ArrayList<Poule> chikenToKill = new ArrayList<>(); 
 
 	private boolean haveProduced = false;
@@ -62,8 +62,5 @@ public class Poulallier extends Refuge<Poule> implements Productif, Distributor,
 	protected int getMaxCapacity(){
 		return MaxCapacity.MAX_CAPACITE_POULAILLER.getCapacity();
 	}
-
-	
-
 
 }
