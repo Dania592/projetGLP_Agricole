@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import data.espece.faune.Animal;
 import data.structure.Enclos;
 
-public class GestionnaireEnclos implements GestionnaireInterface{
+public class GestionnaireEnclos {
 
 	private ArrayList<Enclos> enclos = new ArrayList<Enclos>();
 	

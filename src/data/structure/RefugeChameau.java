@@ -1,7 +1,6 @@
 package data.structure;
 
 import data.map.Map;
-import gui.gestionnaire.keys.Structures;
 
 public class RefugeChameau extends Refuge {
 
@@ -13,7 +12,4 @@ public class RefugeChameau extends Refuge {
 		
 	}
 
-	public Structures getKey() {
-		return Structures.REFUGE_CHAMEAU;
-	}
 }

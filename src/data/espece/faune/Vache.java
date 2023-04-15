@@ -13,7 +13,6 @@ import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
 import data.structure.Etable;
-import gui.gestionnaire.keys.Animals;
 
 
 
@@ -39,8 +38,5 @@ public class Vache extends AnimalProducteur{
 		}
 	}
 	
-	public Animals getKey() {
-		return Animals.VACHE;
-	}
 
 }

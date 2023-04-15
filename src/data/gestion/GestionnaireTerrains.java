@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.flore.terrains.Terrain;
-import gui.gestionnaire.keys.Graine;
+import data.flore.terrains.TypeGraine;
 
-public class GestionnaireTerrains implements GestionnaireInterface{
+public class GestionnaireTerrains {
 	
-	private HashMap<Graine, ArrayList<Terrain>> terrains = new HashMap<>();
+	private HashMap<TypeGraine, ArrayList<Terrain>> terrains = new HashMap<>();
 	
-	public HashMap<Graine, ArrayList<Terrain>> getTerrains() {
+	public HashMap<TypeGraine, ArrayList<Terrain>> getTerrains() {
 		return terrains;
 	}
 
@@ -28,7 +28,7 @@ public class GestionnaireTerrains implements GestionnaireInterface{
 //	}
 	
 	public void add(Terrain terrain) {
-		Graine type = terrain.getType();
+		TypeGraine type = terrain.getType();
 		if (terrains.containsKey(type)) { 
 			terrains.get(type).add(terrain);
 		} else {
@@ -39,7 +39,7 @@ public class GestionnaireTerrains implements GestionnaireInterface{
 	}
 	
 	public void remove(Terrain terrain) {
-		Graine type = terrain.getType();
+		TypeGraine type = terrain.getType();
 		if (terrains.containsKey(type)) { 
 			if (terrains.get(type).size() == 1) {
 				terrains.remove(type);

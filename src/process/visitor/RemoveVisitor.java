@@ -1,8 +1,12 @@
 package process.visitor;
 
+import java.util.ArrayList;
+
 import data.acteur.Employee;
 import data.espece.faune.Animal;
+import data.flore.Culture;
 import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeGraine;
 import data.gestion.GestionnaireAnimaux;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireRH;
@@ -13,7 +17,6 @@ import data.materiel.Engin;
 import data.materiel.Outil;
 import data.production.Produit;
 import data.structure.Structure;
-import gui.gestionnaire.keys.Graine;
 
 public class RemoveVisitor implements GestionVisitor<Void>{
 
@@ -24,7 +27,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	}
 	
 	@Override
-	public Void visit(Graine graine) {
+	public Void visit(TypeGraine graine) {
 		GestionnaireStocks.getInstance().getGraines().remove(graine);
 		return null;
 	}
@@ -55,7 +58,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	
 	@Override
 	public Void visit(Produit product) {
-		GestionnaireStocks.getInstance().remove(product);;
+		GestionnaireStocks.getInstance().getProduits().remove(product.getReference(),product);
 		return null;
 	}
 	

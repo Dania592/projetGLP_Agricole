@@ -1,18 +1,12 @@
 package data.production;
 
-public abstract class Produit {
+public abstract  class Produit {
 	
-	private Produits type;
-	private int quantity;
-	private float prixVente;
-		
+	private float prixVente ;
+	private String reference;
 	
-	public Produit(Produits type, float prixVente) {
-		this.type = type;
-		this.prixVente = prixVente;
-		quantity = 0;
-	}
-	
+
+
 	public Produit(float prixVente) {
 		this.prixVente=prixVente;
 	}
@@ -24,23 +18,11 @@ public abstract class Produit {
 	public void setPrixVente(float prixVente) {
 		this.prixVente = prixVente;
 	}
-	
-	public Produits getType() {
-		return type;
+	public String getReference() {
+		return reference;
 	}
 	
-	public int getQuantity() {
-		return quantity;
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
-	
-	public void incrementQuantity() {
-		quantity++;
-	}
-	
-	public void decrementQuantity() {
-		if (quantity > 0) {
-			quantity--;
-		}
-	}
-	
 }

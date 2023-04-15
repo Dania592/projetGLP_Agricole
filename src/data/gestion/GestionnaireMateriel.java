@@ -5,12 +5,11 @@ import java.util.HashMap;
 
 import data.espece.faune.Animal;
 import data.materiel.Engin;
+import data.materiel.Engins;
 import data.materiel.Outil;
-import gui.gestionnaire.keys.Animals;
-import gui.gestionnaire.keys.Engins;
-import gui.gestionnaire.keys.Outils;
+import data.materiel.Outils;
 
-public class GestionnaireMateriel implements GestionnaireInterface{
+public class GestionnaireMateriel {
 
 	// On pourrait appliquer le même principe des graines
 	
@@ -62,20 +61,6 @@ public class GestionnaireMateriel implements GestionnaireInterface{
 			this.outils.remove(type);
 		} else {
 			outils.remove(outil);
-		}
-	}
-	
-	public void remove(Outils key,int quantity) {
-		int i = 0;
-		while(i<quantity) {
-			outils.get(key).remove(0);
-		}
-	}
-	
-	public void remove(Engins key,int quantity) {
-		int i = 0;
-		while(i<quantity) {
-			engins.get(key).remove(0);
 		}
 	}
 	

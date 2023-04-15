@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import data.map.Map;
-import gui.gestionnaire.keys.Structures;
 
 public class Maison extends Refuge {
 	
@@ -18,8 +17,5 @@ public class Maison extends Refuge {
 		}
 	}
 
-	public Structures getKey() {
-		return Structures.MAISON;
-	}
 
 }

@@ -30,7 +30,7 @@ public class Farm {
 		this.timeManager=timeManager;
 		elementManager = manager;
 		this.fermier=fermier;
-		ressourcesManager = RessourcesManager.getInstance();
+		ressourcesManager = new RessourcesManager();
 		nbEtoile =0;
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;

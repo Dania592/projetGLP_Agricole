@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 import data.map.Map;
 import data.production.Produit;
-import gui.gestionnaire.keys.Structures;
 
 
 public class Entrepot extends Structure{
@@ -46,8 +45,4 @@ public class Entrepot extends Structure{
 		this.capacite = capacite;
 	}
 
-	public Structures getKey() {
-		return Structures.ENTREPOT;
-	}
-	
 }

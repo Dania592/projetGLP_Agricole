@@ -1,68 +1,53 @@
 package process.transaction;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.gestion.GestionnaireFinancier;
-import gui.gestionnaire.keys.Keys;
 import process.game.Game;
-import process.visitor.AddKeyVisitor;
+import process.visitor.AddVisitor;
+
 
 public class Achat extends Transaction{
-	
-	private HashMap<Keys,Integer> cart = new HashMap<Keys, Integer>();
-	private AddKeyVisitor addKeyVisitor = new AddKeyVisitor();
+	private ArrayList<Buyable> cart = new ArrayList<>();
 
-	public HashMap<Keys, Integer> getCart() {
+	
+	public ArrayList<Buyable> getCart() {
 		return cart;
 	}
 
-	public void addToCart(Keys element) {
-		if (cart.containsKey(element)){
-			incrementQuantity(element);
-		} else {
-			cart.put(element, 1);
-		}
+	public void addToCart(Buyable element) {
+		cart.add(element);
 		setTotalCost(getTotalCost() + element.getPrixAchat());
 	}
 	
 	public void removeFromCart(Buyable element) {
-		cart.remove(element.getKey());
+		cart.remove(element);
 	}
-
+	
 	public void validateOrder(Game game) {
+		AddVisitor addVisitor = new AddVisitor();
 		setValidated(true);
 		System.out.println("Commande validée");
-		for (Keys key : cart.keySet()) {
-			addToGestionnaire(key,cart.get(key));
+		for (Buyable element : cart) {
+			element.accept(addVisitor);
 		}
 		calculateTotalCost();
 		game.getBanque().debiter(getTotalCost());
 		GestionnaireFinancier.getInstance().getAchats().add(this);
 	}
 	
-	public void addToGestionnaire(Keys key, Integer entier) {
-		key.accept(addKeyVisitor, entier);
-	}
-	
 	public void cancelOrder(Game game) {
 		System.out.println("Commande annulée !");
-		for (Keys key : cart.keySet()) {
-			cart.remove(key);
+		for (Buyable element : cart) {
+			cart.remove(element);
 		}
-	}
-	
-	public void incrementQuantity(Keys key) {
-		cart.put(key, cart.get(key) + 1);
-	}
-	
-	public void decrementQuantity(Keys key) {
-		cart.put(key, cart.get(key) - 1);
 	}
 	
 	public void calculateTotalCost() {
 		setTotalCost(0);
-		for(Keys key : cart.keySet()) {
-			setTotalCost(getTotalCost() + key.getPrixAchat());
+		for(Buyable element : cart) {
+			setTotalCost(getTotalCost() + element.getPrixAchat());
 		}
 	}
 	
@@ -70,8 +55,8 @@ public class Achat extends Transaction{
 		StringBuffer achats = new StringBuffer("Votre achat : ");
 		if (isValidated()) {
 			achats.append("\n - montant : " + getTotalCost());
-			for (Keys key : cart.keySet()) {
-				achats.append("\n\t + "+ key.toString() + cart.get(key) );
+			for (Buyable element : cart) {
+				achats.append("\n\t + " + element.toString());
 			}
 		} else {
 			achats.append("n'a pas encore été validé");

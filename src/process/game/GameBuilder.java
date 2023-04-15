@@ -8,6 +8,7 @@ import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
+import data.flore.terrains.TypeGraine;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
@@ -16,9 +17,6 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
 import data.stucture_base.Farm;
-import gui.gestionnaire.GestionnaireKey;
-import gui.gestionnaire.keys.Graine;
-import gui.gestionnaire.keys.Structures;
 import process.time.TimeManager;
 
 
@@ -50,14 +48,14 @@ public class GameBuilder {
 		
 		
 		// positionnement du fermier et de la maison sur la map 
-		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
-		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0).setStatique();
+		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0).setStatique();
 		initisaliseFarmerPosition(farm, farmer);
 		
 		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer); 
-		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get("Maison").get(0));
 		
 		return farm ;
 	}
@@ -107,14 +105,14 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(poule2);
 
 		// sera remplacer par une instance de terrain 
-		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, Graine.TOMATO_SEED);
-		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, Graine.BROCCOLI_SEED);
+		Terrain terrainInitial = new Terrain("t0",false, 0, 0,map, TypeGraine.TOMATO);
+		Terrain terrainInitial2 = new Terrain("t1",false, 0, 0,map, TypeGraine.BROCCOLI);
 		
 		stock.getGestionnaireTerrains().add(terrainInitial);
 		stock.getGestionnaireTerrains().add(terrainInitial2);
 		
-		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, Graine.BROCCOLI_SEED);
-		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, Graine.CACTUS_SEED);
+		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeGraine.BROCCOLI);
+		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeGraine.CACTUS);
 		
 		stock.getGestionnaireTerrains().add(terrain3);
 		stock.getGestionnaireTerrains().add(terrain4);

@@ -7,9 +7,6 @@ import javax.swing.JLabel;
 
 import data.map.Map;
 import data.stucture_base.Element;
-import gui.gestionnaire.GestionnaireKey;
-import gui.gestionnaire.keys.Graine;
-import gui.gestionnaire.keys.Keys;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
@@ -27,11 +24,11 @@ public class Terrain extends Element implements Buyable{
 	private int quantiteProduction;
 	
 	private EvolutionTerrain evolution;
-	private Graine type;
+	private TypeGraine type;
 	
 	private HashMap<EvolutionTerrain, BufferedImage> images = new HashMap<>();
 	
-	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
+	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,TypeGraine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
@@ -89,7 +86,7 @@ public class Terrain extends Element implements Buyable{
 		return evolution;
 	}
 
-	public Graine getType() {
+	public TypeGraine getType() {
 		return type;
 	}
 	
@@ -138,20 +135,12 @@ public class Terrain extends Element implements Buyable{
 //		}
 //	}
 
+
+	
+
+
 	public String toString() {
 		return "Terrain de " + type;
 	}
-
-	@Override
-	public Keys getKey() {
-		return type;
-	}
-
-	@Override
-	public GestionnaireKey getGestionnaireKey() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 		
 }

@@ -1,5 +1,7 @@
 package data.espece.faune;
 
+import java.util.Date;
+
 import data.espece.EtreVivant;
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
@@ -8,12 +10,12 @@ import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.structure.Structure;
-import gui.gestionnaire.GestionnaireKey;
-import gui.gestionnaire.keys.Animals;
-import gui.gestionnaire.keys.Keys;
 import process.transaction.Buyable;
 import process.transaction.Saleable;
 import process.visitor.GestionVisitor;
+
+
+
 
 public abstract class Animal extends EtreVivant implements Mortel,Stockage, Saleable, Buyable{
 
@@ -101,19 +103,7 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 		visitor.visit(this);
 		return null;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj.getClass().getSimpleName().equals(this.getClass().getSimpleName())) {
-			return true;
-		}
-		return false;
-	}
 
-	public abstract Animals getKey();
-	
-	public GestionnaireKey getGestionnaireKey() {
-		return GestionnaireKey.ANIMALS;
-	}
 
+	
 }

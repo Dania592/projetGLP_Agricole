@@ -6,7 +6,6 @@ import data.espece.Milieu;
 import data.map.Map;
 import data.production.Oeuf;
 import data.structure.CagePoisson;
-import gui.gestionnaire.keys.Animals;
 
 
 
@@ -22,10 +21,6 @@ public class Poisson extends AnimalProducteur{
 		super(ligne_init, colonne_init, Milieu.AQUATIQUE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.CARNIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE,new Oeuf() , reference ,map);
 
-	}
-	
-	public Animals getKey() {
-		return Animals.POISSON;
 	}
 
 }

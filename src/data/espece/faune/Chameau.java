@@ -6,7 +6,6 @@ import data.espece.Milieu;
 import data.map.Map;
 import data.production.Lait;
 import data.structure.RefugeChameau;
-import gui.gestionnaire.keys.Animals;
 
 
 
@@ -23,10 +22,6 @@ public class Chameau extends AnimalProducteur{
 		super(ligne_init, colonne_init, Milieu.DESERT, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Lait() , reference ,map);
 	
-	}
-	
-	public Animals getKey() {
-		return Animals.CHAMEAU;
 	}
 
 	

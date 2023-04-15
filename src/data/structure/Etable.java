@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import data.map.Map;
-import gui.gestionnaire.keys.Structures;
 
 public class Etable extends Refuge {
 	
@@ -19,7 +18,5 @@ public class Etable extends Refuge {
 		}
 	}
 	
-	public Structures getKey() {
-		return Structures.ETABLE;
-	}
+
 }

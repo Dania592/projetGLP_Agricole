@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import data.map.Map;
-import gui.gestionnaire.keys.Structures;
 
 public class Poulallier  extends Refuge{
 
@@ -19,10 +18,6 @@ public class Poulallier  extends Refuge{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public Structures getKey() {
-		return Structures.POULAILLER;
 	}
 
 }
