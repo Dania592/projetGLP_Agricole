@@ -3,13 +3,24 @@ package gui.Farm;
 
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
 import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
+import data.planning.Activity;
 import data.structure.Enclos;
+import data.structure.Maison;
+import data.structure.hability.Actionnable;
+import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.TaskFactory;
+import process.action.task.Task;
+import process.evolution.FullLevel;
 import process.game.MapManager;
 
 public class Board  extends JLayeredPane {
@@ -20,8 +31,27 @@ public class Board  extends JLayeredPane {
 	private Element selected;
 	private Element clicked;
 	private JPanel choixTerrain;
+	private MouseHandler mouseHandler;
+	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
+	
+ 	
+	public Board(Farm farm  , Element selected  ) {
+		this.farm = farm;
+		this.selected=selected;
+		keys = new KeyControls(farm.getManager() , selected); 
+		mouseHandler = new MouseHandler(farm.getManager(), this);
+		choix = new Choix(farm, this);
+		choix.init();
+		init();
+	}
+	
+	public void setClicked(Element clicked) {
+		if(clicked!=null && clicked.isStatique() ) {
+			this.clicked = clicked;			
+		}
+	}
 	
 	public Element getClicked() {
 		return clicked;
@@ -35,24 +65,10 @@ public class Board  extends JLayeredPane {
 		return hud ;
 	}
 
-	private MouseHandler mouseHandler;
-	
-	// Jlabel   
-//	private JScrollPane choixScroll;
-	
-	public Board(Farm farm  , Element selected  ) {
-		this.farm = farm;
-		this.selected=selected;
-		keys = new KeyControls(farm.getManager() , selected); 
-		mouseHandler = new MouseHandler(farm.getManager(), this);
-		init();
+	public Choix getChoix() {
+		return choix ;
 	}
 	
-	public void setClicked(Element clicked) {
-		if(clicked!=null && clicked.isStatique() ) {
-			this.clicked = clicked;			
-		}
-	}
 		
 	public void init() {
 		addKeyListener(keys);
@@ -71,30 +87,40 @@ public class Board  extends JLayeredPane {
 		
 		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);
+		paintStrategy.paint(farm, g);
 		
 		for(Element element : mapManager.getElements().values()) {
 			if(element instanceof Enclos) {
 				Enclos enclos = (Enclos)element;
 				paintStrategy.paint(enclos, g);
+				if(enclos.getNiveauEau()==FullLevel.EMPTY  && enclos.getAnimals().size()!=0) {
+					paintStrategy.paintLevelHeart(enclos, g);
+				}
 			}
 			else {
 				paintStrategy.paint(element, g);				
+				
 			}
+			if (clicked != null && clicked instanceof Terrain ) {
+				Terrain terrain = (Terrain)clicked;
+				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
+				terrain.evoluer();	
+			}else {
+				if ( choixTerrain != null ) {
+					remove(choixTerrain);
+				}
+			}
+
 			
-//			if (clicked != null && clicked instanceof Terrain ) {
-//				Terrain terrain = (Terrain)clicked;
-//				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
-//				terrain.evoluer();	
-//			} else {
-//				if ( choixTerrain != null ) {
-//					remove(choixTerrain);
-//				}
-//			}
 		}
 		hud.time();
-		
+
 		// les bords de la ferme 
-		paintStrategy.paint(farm, g);
+		
+		
+//		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
+//			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
+//		}
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

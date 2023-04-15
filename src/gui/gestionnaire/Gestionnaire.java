@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
-import data.configuration.GameConfiguration;
 import data.gestion.RessourcesManager;
 import process.game.Game;
 import process.game.GameBuilder;

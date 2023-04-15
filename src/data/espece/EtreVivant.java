@@ -1,12 +1,9 @@
 package data.espece;
 
 import data.map.Map;
-import data.myExceptions.EstDejaEnBonneSanteException;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.stucture_base.Element;
-import process.transaction.Buyable;
-import process.transaction.Saleable;
 
 public abstract class EtreVivant extends Element implements Mortel{
 	private Milieu milieu ;
@@ -67,7 +64,7 @@ public abstract class EtreVivant extends Element implements Mortel{
 				throw new MortException(this);	
 		}
 	}
-    public void amelioreEtatSante() throws EstDejaEnBonneSanteException{
+    public void amelioreEtatSante(){
 		switch(etatSante){
 			case MALADE:
 				etatSante = EtatSante.BONNE_SANTE;
@@ -79,13 +76,13 @@ public abstract class EtreVivant extends Element implements Mortel{
 				etatSante = EtatSante.GRAVEMENT_MALADE;
 				break;
 			default :
-				throw new EstDejaEnBonneSanteException(this);
+				break; // TODO rajouter info log
 		}
 	}
-    public void guerir() throws EstDejaEnBonneSanteException{
+    public void guerir(){
 		switch(etatSante){
 			case BONNE_SANTE:
-				throw new EstDejaEnBonneSanteException(this);
+				break; // TODO rajouter info log
 			default:
 				etatSante = EtatSante.BONNE_SANTE;
 		}

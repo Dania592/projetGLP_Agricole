@@ -11,6 +11,29 @@ public class WeeklyPlanner {
         FRIDAY,
         SATURDAY,
         SUNDAY;
+
+        public DayOfWeek next(){
+            switch(this){
+                case MONDAY:
+                    return TUESDAY; 
+                case TUESDAY: 
+                    return WEDNESDAY;
+                case WEDNESDAY: 
+                    return THURSDAY;
+                case THURSDAY: 
+                    return FRIDAY;
+                case FRIDAY: 
+                    return SATURDAY;
+                case SATURDAY: 
+                    return SUNDAY;
+                default:
+                    return MONDAY;
+            }
+
+        }
+
+
+
     }
 
     public static final DayOfWeek[] days = { DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
@@ -26,7 +49,6 @@ public class WeeklyPlanner {
     public HashMap<DayOfWeek, DailyPlanner> getWeek() {
         return week;
     }
-    
     
     public String toString(){
         String weekText = "Week";

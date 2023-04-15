@@ -3,8 +3,6 @@ package data.stucture_base;
 
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;
@@ -84,7 +82,6 @@ public  abstract class Element {
 	  
 	@Override
 	public String toString() {
-
 		return " :[ statistique = "+statique+" nbCase = "+nbCase+ "position = "+position ;
 	}
 
@@ -103,7 +100,9 @@ public  abstract class Element {
 			  cases[indexligne][indexColone].setLibre(true); 
 			  } 
 		  } 
-	  }
-	 
+	}
+
+	
+
 		
 }

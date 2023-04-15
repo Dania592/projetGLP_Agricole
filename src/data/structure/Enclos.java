@@ -6,37 +6,85 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+
+import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.Animal;
+import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Mouton;
+import data.espece.faune.Poule;
+import data.espece.faune.Vache;
 import data.map.Case;
 import data.map.Map;
+import data.structure.hability.Distributor;
+import data.structure.hability.Feedable;
+import data.structure.hability.Fixable;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.place.PlaceVisitor;
+import process.evolution.FullLevel;
+import data.structure.hability.list.EnclosStorageStructure;;
 
-public class Enclos extends Element {
+public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
 
 	private int capacite ;
-	private int niveauEau ; 
-	private int niveauNourriture ;
+	private int lastDecrementation ; 
+	private FullLevel niveauEau ; 
+	private FullLevel niveauNourriture ;
 	private int dimension ; 
-	private ArrayList<Animal> animals ; 
+	private FixableState state;
+	private HungerLevel animalsHungerLevel ;
+	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
+
 	private HashMap<String, BufferedImage > images = new HashMap<>();
 	
-	public Enclos(int ligne_init, int colonne_init, String reference, Map map ) {
+	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
-		animals = new ArrayList<>();
+		//animalProducteurs = new ArrayList<>();
+		state = FixableState.USABLE;
 		capacite = 10 ;
-		niveauEau = 100 ;
-		niveauNourriture = 100;
+		niveauEau = FullLevel.FULL ;
+		niveauNourriture = FullLevel.FULL;
 		dimension = 7 ;
+		lastDecrementation = 0 ; 
 		initImage();
 		setImage(images.get("entier"));
+		animalsHungerLevel = HungerLevel.FULL;
 		
 	}
 	
+	public EnclosStorageStructure getAnimalStorage() {
+		return animalStorage;
+	}
 	
+
+	public HungerLevel getAnimalsHungerLevel() {
+		return animalsHungerLevel;
+	}
+
+	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel) {
+		this.animalsHungerLevel = animalsHungerLevel;
+		for(AnimalProducteur animal : getAnimals()) {
+			animal.setHungerLevel(animalsHungerLevel);
+		}
+	}
+
+	public int getLastDecrementation() {
+		return lastDecrementation;
+	}
+
+
+	public void setLastDecrementation(int lastDecrementation) {
+		this.lastDecrementation = lastDecrementation;
+	}
+
+
 	public HashMap<String,  BufferedImage> getImages(){
 		return images ;
 	}
@@ -49,7 +97,6 @@ public class Enclos extends Element {
 			images.put("milieu", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png")));
 			images.put("entier", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -58,19 +105,19 @@ public class Enclos extends Element {
 		return capacite;
 	}
 	
-	public int getNiveauEau() {
+	public FullLevel getNiveauEau() {
 		return niveauEau;
 	}
 
-	public void setNiveauEau(int niveauEau) {
+	public void setNiveauEau(FullLevel niveauEau) {
 		this.niveauEau = niveauEau;
 	}
 
-	public int getNiveauNourriture() {
+	public FullLevel getNiveauNourriture() {
 		return niveauNourriture;
 	}
 
-	public void setNiveauNourriture(int niveauNourriture) {
+	public void setNiveauNourriture(FullLevel niveauNourriture) {
 		this.niveauNourriture = niveauNourriture;
 	}
 
@@ -78,15 +125,17 @@ public class Enclos extends Element {
 		return dimension;
 	}
 
-	public ArrayList<Animal> getAnimals() {
-		return animals;
+	public ArrayList<AnimalProducteur> getAnimals() {
+		return animalStorage.getAnimals();
 	}
 
-	public void addAnimal(Animal animal) {
-		animals.add(animal);
+	
+	public void removeAnimal(AnimalProducteur animal) {
+		animalStorage.remove(animal);
 	}
-	public void removeAnimal(Animal animal) {
-		animals.remove(animal);
+	
+	public void addAnimal(AnimalProducteur animal ) {
+		animalStorage.add(animal);
 	}
 	
 	public ArrayList<Case> bordEnclos() {
@@ -99,16 +148,96 @@ public class Enclos extends Element {
 					bords.add(block);
 				}
 			}
-		}
+		}	
 		return bords;
 	}
+	
 	
 	
 	public boolean isOnBorderEnclos(int ligne , int colonne) {
 		Position position = getPosition();
 		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) || colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
 	}
+
+	@Override
+	public ArrayList<ActionnableKey> getActionnableKey() {
+		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
+		actionnableKeys.add(ActionnableKey.ENCLOS);
+		return actionnableKeys;
+
+	}
+
+	@Override
+	public boolean isNeedToBeFeed() {
+		return animalsHungerLevel == HungerLevel.HUNGRY || animalsHungerLevel == HungerLevel.VERY_HUNGRY || animalsHungerLevel == HungerLevel.STARVING;
+	}
+
+	@Override
+	public boolean isNeedToBeFixed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+
+
+	public void addAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.add((Vache) animal);
+		}else if(animal instanceof Poule){
+			animalStorage.add((Poule) animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.add((Mouton) animal);
+		}
+		
+	}
+
+	public void removeAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.getVaches().remove((Vache)animal);
+		}else if(animal instanceof Poule){
+			animalStorage.getPoules().remove((Poule)animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.getMoutons().remove((Mouton)animal);
+		}
+	}
+
+	@Override
+	public ArrayList<?> getTarget() {
+		return getAnimals();
+	}
+
+	@Override
+	public boolean haveProduced() {
+		Iterator<Poule> poulesIter = animalStorage.getPoules().iterator();
+		boolean haveProduced = false;
+		while(poulesIter.hasNext() && !haveProduced){
+			haveProduced = poulesIter.next().haveProduced();
+		}
+		return haveProduced;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAnimals().isEmpty();
+	}
+
+	@Override
+	public void setState(FixableState newState) {
+		state = newState;
+	}
+
 	
+
+	
+	
+
+
+	
+
 	
 
 }

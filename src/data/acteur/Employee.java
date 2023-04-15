@@ -1,7 +1,6 @@
 package data.acteur;
 
 import data.map.Map;
-import data.travail.Planning;
 
 public class Employee extends Personne {
 

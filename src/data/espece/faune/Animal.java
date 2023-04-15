@@ -1,15 +1,15 @@
 package data.espece.faune;
 
-import java.util.Date;
 
 import data.espece.EtreVivant;
+import data.espece.FoodConsumer;
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.gestion.Stockage;
 import data.map.Map;
 import data.myExceptions.MortException;
-import data.notion.Mortel;
 import data.structure.Structure;
+import process.evolution.Direction;
 import process.transaction.Buyable;
 import process.transaction.Saleable;
 import process.visitor.GestionVisitor;
@@ -17,7 +17,7 @@ import process.visitor.GestionVisitor;
 
 
 
-public abstract class Animal extends EtreVivant implements Mortel,Stockage, Saleable, Buyable{
+public abstract class Animal extends EtreVivant implements Stockage, Saleable, Buyable, FoodConsumer{
 
 	private int naissance ;
 	private float poids ;
@@ -26,11 +26,13 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 	private String sexe ;
 	private Structure habitat ;
 	private EvolutionAnimal evolution ;
+	private Direction direction ;
+	private HungerLevel hungerLevel;
 	private int lastEvolutionHour ;
-	
+	private int speedGrowth ; 
 	
 	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
-			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map ) {
+			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map  , int speedGrowth) {
 		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,1 , reference , map );
 		this.naissance = naissance;
 		this.poids = poids;
@@ -39,9 +41,23 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 		this.sexe = sexe;
 		this.habitat = habitat;
 		this.evolution = EvolutionAnimal.JEUNE;
+		hungerLevel = HungerLevel.FULL; 
 		lastEvolutionHour = naissance;
+		direction=Direction.STAND;
+		this.speedGrowth = speedGrowth;
+		
+	}
+	public int getGrowthSpeed() {
+		return speedGrowth; 
 	}
 
+	public Direction getDirection() {
+		return direction;
+	}
+	public void setDirection(Direction new_direction) {
+		direction = new_direction;
+	}
+	
 	public int getLastEvolutionHour() {
 		return lastEvolutionHour;
 	}
@@ -62,10 +78,6 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 		return poids;
 	}
 
-
-	public void setPoids(float poids) {
-		this.poids = poids;
-	}
 
 
 	public String getNom() {
@@ -92,7 +104,6 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 		return evolution;
 	}
 
-	@Override
 	public void vieillir() throws MortException{
 		this.evolution = (EvolutionAnimal) evolution.evolue();
 	}
@@ -105,5 +116,19 @@ public abstract class Animal extends EtreVivant implements Mortel,Stockage, Sale
 	}
 
 
+	public HungerLevel getHungerLevel(){
+		return hungerLevel;
+	}
+    public boolean isHungry(){
+		return hungerLevel == HungerLevel.HUNGRY || hungerLevel == HungerLevel.VERY_HUNGRY;
+	}
+
+    public void setHungerLevel(HungerLevel hungerLevel) {
+        this.hungerLevel = hungerLevel;
+    }
+
+	public void feed(){
+		hungerLevel = HungerLevel.FULL;
+	}
 	
 }

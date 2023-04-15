@@ -23,7 +23,6 @@ import data.stucture_base.Farm;
 import data.stucture_base.Position;
 import gui.gestionnaire.Gestionnaire;
 import gui.gestionnaire.RoundedPanel;
-import process.game.Game;
 
 
 /**
@@ -42,7 +41,7 @@ public class FarmPaintStrategy {
 			for (int columnIndex = 0; columnIndex < map.getNbColones(); columnIndex++) {
 				 Case block = cases[lineIndex ][columnIndex ];
 				 graphics.setColor(new Color(000));
-					 ImageIcon herbe = new ImageIcon("src"+File.separator+"ressources"+File.separator+"terre.png");
+					 ImageIcon herbe = new ImageIcon(GameConfiguration.IMAGE_PATH+"terre.png");
 					 int x = block.getColonne()*GameConfiguration.CASE_DIMENSION + map.getX();
 					 int y = block.getLigne()*GameConfiguration.CASE_DIMENSION + map.getY();		 
 					 graphics.drawImage(herbe.getImage(),x,y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);
@@ -111,17 +110,21 @@ public class FarmPaintStrategy {
 			}
 		}
 		
-		String imagePaths = "src"+File.separator+"ressources"+File.separator+enclos.getClass().getSimpleName()
-				+File.separator+"saut100.png";
+		String waterPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauEau()+"_W.png";
+		String foodPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauEau()+"_F.png";
 		Image images ;
 		try {
-			images = ImageIO.read(new File(imagePaths));
-			int x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
-			int y = (enclos.getPosition().getColonne_init()+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getY();
+			images = ImageIO.read(new File(waterPath));
+			int x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
+			int y = (enclos.getPosition().getColonne_init()+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
 			graphics.drawImage(images, y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
 			
-		} catch (IOException e) {
-			
+		
+			images = ImageIO.read(new File(foodPath));
+			 x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
+			 y = (enclos.getPosition().getColonne_init()+1+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
+			graphics.drawImage(images, y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
+		} catch (IOException e) {	
 			e.printStackTrace();
 		}
 		
@@ -129,7 +132,7 @@ public class FarmPaintStrategy {
 
 	
 	public void paint(Farm farm ,Graphics graphics) {
-		ImageIcon buisson = new ImageIcon("src"+File.separator+"ressources"+File.separator+"buisson.png");
+		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+"buisson.png");
 		
 		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getDimension()+farm.getLigne() ; ligneIndex ++) {
 			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getDimension()+farm.getColonne() ; colonneIndex ++) {
@@ -140,6 +143,26 @@ public class FarmPaintStrategy {
 				}
 			}
 		}
+	}
+	
+	
+	public void paintLevelHeart(Enclos enclos , Graphics graphics ) {
+		Position position = enclos.getPosition();
+		int y = (position.getLigne_init() - 1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
+		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
+		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
+		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+	}
+	
+	public void paintNight( Map map ,Graphics graphics ) {
+		int x = map.getX();
+		int y = map.getY();
+		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
+		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
+		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
+		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
+		
+		
 	}
 	
 	

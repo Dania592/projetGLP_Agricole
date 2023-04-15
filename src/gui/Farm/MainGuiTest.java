@@ -4,10 +4,14 @@ package gui.Farm;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import data.configuration.GameConfiguration;
+import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.task.Task;
 import process.game.GameBuilder;
 
 public class MainGuiTest  extends JFrame implements Runnable{
@@ -15,7 +19,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private static final long serialVersionUID = 1L;
 
 	private Farm farm ;
-
 	private Board dashboard ;
 	private Element selected ;
 	private int x ;
@@ -26,7 +29,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		super(title);
 		init();
 	}
-
 
 	public void init() {
 
@@ -43,7 +45,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 		dashboard.addMouseListener(new MouseControls());
 
-
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
@@ -59,9 +60,16 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//dashboard.setSelected(dashboard.getSelected());
+			dashboard.setSelected(selected);
 			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
 			dashboard.repaint();
+			if(dashboard.getSelected() instanceof Actionnable){
+				Actionnable actionnableSelected = (Actionnable) dashboard.getSelected();
+				ArrayList<Task<?>> tasks = farm.getTaskManager().getPossibleTaskToPerform(actionnableSelected);
+				for (Task<?> task : tasks) {
+					System.out.println(tasks);
+				}
+			}
 		}
 	}
 

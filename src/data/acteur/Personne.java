@@ -2,11 +2,12 @@ package data.acteur;
 
 
 import data.map.Map;
+import data.notion.Mortel;
 import data.notion.Mortel.EtatSante;
 import data.planning.WeeklyPlanner;
 import data.stucture_base.Element;
 
-public abstract class Personne extends Element {
+public abstract class Personne extends Element{
 	private String name;
 	private WeeklyPlanner planning;
 	private EtatSante etatSante;

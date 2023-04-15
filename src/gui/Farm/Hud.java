@@ -9,7 +9,6 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
 
 import data.configuration.GameConfiguration;
 import data.time.Clock;
@@ -26,7 +25,7 @@ public class Hud {
 	private JLabel cancel ;
 	private JLabel farmer ; 
 	private JLabel player ;
-	private JScrollPane choixScroll;
+	private ChoixPanel choixScroll;
 	
 	
 	private JLabel time = new JLabel();
@@ -113,12 +112,8 @@ public class Hud {
 	}
 	
 	public void addingChoix() {
-		choixScroll = new JScrollPane();
-		ChoixPanel choix = new ChoixPanel( component.getFarm() , component);
-		
-		choixScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		choixScroll = new ChoixPanel(component);
 		choixScroll.setBounds(50, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-170, 160);
-		choixScroll.setViewportView(choix);
 		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
 	}
 	

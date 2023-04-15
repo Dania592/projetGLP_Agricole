@@ -2,7 +2,7 @@ package data.notion;
 
 import data.myExceptions.*;
 
-public interface Mortel {
+public interface Mortel{
     public enum EtatSante {
         BONNE_SANTE, 
         MALADE, 
@@ -10,7 +10,6 @@ public interface Mortel {
         MOURANT;
     }
 
-    void vieillir() throws MortException;
     void empireEtatSante() throws MortException;
     void amelioreEtatSante() throws EstDejaEnBonneSanteException;
     void guerir() throws EstDejaEnBonneSanteException;

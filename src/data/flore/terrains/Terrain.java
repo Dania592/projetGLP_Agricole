@@ -10,6 +10,9 @@ import data.stucture_base.Element;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
+
+
+//Traitement se rapproche d'un animal !!! Sauf que n'est pas un foodConsumer ! 
 public class Terrain extends Element implements Buyable{
 	
 	private static int SPEED = 10;// vitesse d'évolution
@@ -46,7 +49,7 @@ public class Terrain extends Element implements Buyable{
 			nextEvolution();
 		}
 	}
-	
+
 	public void nextEvolution() {
 		switch (count) {
 		case 0 :
@@ -76,7 +79,7 @@ public class Terrain extends Element implements Buyable{
 		default :
 			break;
 		}
-		//setActions();
+		setActions();
 		setImage(images.get(evolution));
 		count++;
 		
@@ -117,30 +120,29 @@ public class Terrain extends Element implements Buyable{
 		return null;
 	}
 
-//	public void setActions() {
-//		if (evolution == EvolutionTerrain.VIERGE) {
-//			actions = new HashMap<>();
-//			actions.put("Labourer", new JLabel("Labourer"));
-//		} else if (evolution == EvolutionTerrain.LABOURE) {
-//			actions = new HashMap<>();
-//			actions.put("Planter", new JLabel("Planter"));
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		}else if (evolution == EvolutionTerrain.PLANTE_6) {
-//			actions = new HashMap<>();
-//			actions.put("Recolter", new JLabel("Recolter"));
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		} else {
-//			actions = new HashMap<>();
-//			actions.put("Arroser", new JLabel("Arroser"));
-//		}
-//	}
-
-
-	
+	public void setActions() {
+		if (evolution == EvolutionTerrain.VIERGE) {
+			actions = new HashMap<>();
+			actions.put("Labourer", new JLabel("Labourer"));
+		} else if (evolution == EvolutionTerrain.LABOURE) {
+			actions = new HashMap<>();
+			actions.put("Planter", new JLabel("Planter"));
+			actions.put("Arroser", new JLabel("Arroser"));
+		}else if (evolution == EvolutionTerrain.PLANTE_5) {
+			actions = new HashMap<>();
+			actions.put("Recolter", new JLabel("Recolter"));
+			actions.put("Arroser", new JLabel("Arroser"));
+		} else {
+			actions = new HashMap<>();
+			actions.put("Arroser", new JLabel("Arroser"));
+		}
+	}
 
 
 	public String toString() {
 		return "Terrain de " + type;
 	}
+
+
 		
 }

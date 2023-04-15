@@ -15,10 +15,10 @@ import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.planning.DailyPlanner;
 import data.myExceptions.HaveABreakWithException;
 import data.myExceptions.IsOverWorkedException;
-import process.PlanningManager;
 import data.myExceptions.UnAvalableTimeSlot;
 import data.planning.WeeklyPlanner;
 import data.planning.WeeklyPlanner.DayOfWeek;
+import process.time.PlanningManager;
 
 public class AddTaskArea extends JPanel {
     private TimeTable timeTable;

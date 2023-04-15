@@ -1,63 +1,49 @@
 package data.structure;
 
-import data.espece.evolution.EvolutionStructure;
+import java.util.ArrayList;
+
 import data.gestion.Stockage;
 import data.map.Map;
+import data.structure.hability.Fixable;
 import data.stucture_base.Element;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public  abstract class Structure extends Element implements Buyable,Stockage {
+public  abstract class Structure extends Element implements Buyable,Stockage, Fixable{
 
 	private float prixAchat ;
-	private boolean accessible ;
-	private EvolutionStructure etat ;
+	private FixableState state ;
 	private Charge[] charges ;
 	
+	public FixableState getState() {
+		return state;
+	}
+
+
+
 	private final static int  NB_CASE = 16;
 	
-	// accessible ?? utilité 
 	public Structure( int ligne_init, int colonne_init, float prixAchat , String reference , Map map  ) {
 		super(reference ,false,NB_CASE, ligne_init, colonne_init , map);
 		this.prixAchat = prixAchat;
-		this.accessible = false ;
-		this.etat = EvolutionStructure.ETAT_INITIAL;
+		state = FixableState.USABLE;
 		charges = new Charge[2];
 	}
 
 
 	public float getPrixAchat() {
 		return prixAchat;
-	}
-
+		}
 
 	public void setPrixAchat(float prixAchat) {
 		this.prixAchat = prixAchat;
 	}
 
-
-	public boolean isAccessible() {
-		return accessible;
-	}
-
-
-	public void setAccessible(boolean accessible) {
-		this.accessible = accessible;
-	}
-
-
-	public EvolutionStructure getEtat() {
-		return etat;
-	}
 	
 	public void setStatique() {
 		super.setStatique(true);
 	}
 
-
-	public void setEtat(EvolutionStructure etat) {
-		this.etat = etat;
-	}
 
 
 	public Charge[] getCharges() {
@@ -68,13 +54,26 @@ public  abstract class Structure extends Element implements Buyable,Stockage {
 	public void setCharges(Charge[] charges) {
 		this.charges = charges;
 	}
-	
-	
 
 	@Override
 	public <T> T accept(GestionVisitor<T> visitor) {
 		visitor.visit(this);
 		return null;
 	}
+
+	public boolean isNeedToBeFixed(){
+		return state == FixableState.DAMAGED;
+	}
+
+
+	public ArrayList<ActionnableKey> getActionnableKey() {
+		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
+		actionnableKeys.add(ActionnableKey.STRUCTURE);
+		return actionnableKeys;
+	}
 	
+	public void setState(FixableState newState){
+		state = newState;
+	}
+
 }

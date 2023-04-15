@@ -6,7 +6,7 @@ public class Clock {
     private static CyclicCounter second = new CyclicCounter(0, 59, 0);
     private static Clock reference;
    
-    public Clock(){
+    private Clock(){
         init(); 
     } 
 	  
@@ -43,6 +43,7 @@ public class Clock {
     return hour.toString() + " : " + minute.toString() + " : " + second.toString();
     }
 
+    
 
     private void init() {
         hour.setValue(0);
