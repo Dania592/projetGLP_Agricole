@@ -9,6 +9,7 @@ import data.espece.Milieu;
 import data.map.Map;
 import data.production.Lait;
 import data.structure.Etable;
+import gui.gestionnaire.keys.Animals;
 
 
 public class Chevre extends AnimalProducteur{
@@ -29,6 +30,10 @@ public class Chevre extends AnimalProducteur{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Animals getKey() {
+		return Animals.CHEVRE;
 	}
 
 }

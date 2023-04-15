@@ -105,5 +105,12 @@ public  abstract class Element {
 		  } 
 	  }
 	 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass().getSimpleName().equals(this.getClass().getSimpleName())) {
+			return true;
+		}
+		return false;
+	}
 		
 }

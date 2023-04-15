@@ -1,13 +1,10 @@
 package data.gestion;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.acteur.Employee;
-import data.espece.faune.Animal;
-import data.flore.terrains.Terrain;
 
-public class GestionnaireRH {
+public class GestionnaireRH implements GestionnaireInterface{
 	
 	private HashMap<String, Employee> employees = new HashMap<>();
 

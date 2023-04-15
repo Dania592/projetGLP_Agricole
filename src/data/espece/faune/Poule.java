@@ -12,6 +12,7 @@ import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Oeuf;
 import data.structure.Poulallier;
+import gui.gestionnaire.keys.Animals;
 
 
 public class Poule extends AnimalProducteur {
@@ -38,6 +39,10 @@ public class Poule extends AnimalProducteur {
 			
 			e.printStackTrace();
 		}
+	}
+	
+	public Animals getKey() {
+		return Animals.POULE;
 	}
 
 }

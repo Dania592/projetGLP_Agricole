@@ -1,67 +1,107 @@
 package data.gestion;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-import data.espece.faune.Animal;
-import data.flore.terrains.TypeGraine;
 import data.production.Produit;
+import data.production.Produits;
+import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Graine;
 
-public class GestionnaireStocks {
+public class GestionnaireStocks implements GestionnaireInterface{
 
 	// produits fruits et graines
-	private ArrayList<TypeGraine> graines = new ArrayList<TypeGraine>();
-	private HashMap<String, Produit> produits = new HashMap<>();
+	private HashMap<Graine, Integer> graines = new HashMap<Graine, Integer>();
+	private HashMap<Produits, Produit> produits = new HashMap<>();
+	
+	private GestionnaireStocks() {
+		for (Graine graine : Graine.values()) {
+			graines.put(graine,0);
+		}
+	}
 	
 	private static GestionnaireStocks instance = new GestionnaireStocks();
 	
-	private GestionnaireStocks() {}
 	
 	public static GestionnaireStocks getInstance() {
 		return instance;
 	}
 	
-	public ArrayList<TypeGraine> getGraines(){
+	public HashMap<Graine, Integer> getGraines(){
 		return graines;
 	}
 	
-	public HashMap<String, Produit> getProduits() {
+	public Set<Graine> getAvailableGraines(){
+		Set<Graine> set = new HashSet<>();
+		for (Graine graine : graines.keySet()) {
+			if (graines.get(graine) != 0) {
+				set.add(graine);
+			}
+		}
+		return set;
+	}
+	
+	public HashMap<Produits, Produit> getProduits() {
 		return produits;
 	}
 
-	public void add(TypeGraine graine) {
-		if ( graines.contains(graine)) {
-			graine.incrementQuantity();
-		} else {
-			graine.incrementQuantity();
-			graines.add(graine);
-		}
+	public void add(Graine graine) {
+		graines.put(graine, graines.get(graine) + 1);
 	}
 	
 	public void add(Produit produit) {
-		produits.put(produit.getClass().getSimpleName(), produit);
+		produits.put(produit.getType(), produit);
 	}
 	
-	public void remove(TypeGraine graine) {
-		if (graines.contains(graine)) {
-			graine.decrementQuantity();
-			if (graine.getQuantity() == 0) {
+	public void remove(Graine key,int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			remove(key);
+		}
+	}
+	
+	public int getNbSeedType() {
+		int nbType = 0;
+		for(int number : graines.values()) {
+			if (number != 0) {
+				nbType++;
+			}
+		}
+		return nbType;
+	}
+	
+	public void remove(Graine graine) {
+		if (graines.containsKey(graine)) {
+			graines.put(graine, graines.get(graine) - 1);
+			if (graines.get(graine) == 0) {
 				graines.remove(graine);
 			}
 		}
 	}
 	
 	public void remove(Produit produit) {
-		produits.remove(produit.getClass().getSimpleName(), produit);
+		produit.decrementQuantity();
+		if (produit.getQuantity() == 0 ) {
+			produits.remove(produit.getType());
+		}
 	}
 	
+	public void remove(Produits key, int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			if (produits.containsKey(key)) {
+				remove(produits.get(key));
+			}
+		}
+	}
 	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
 		gestionnaire.append("\n\t\t Plantes :");
-		for (TypeGraine graine : graines) {
-			gestionnaire.append("\n\t\t\t"+ graine.toString());
+		for (Graine graine : graines.keySet()) {
+			gestionnaire.append("\n\t\t\t"+ graine.toString() + " : " + graines.get(graine));
 		}
 		gestionnaire.append("\n\t\t Produits :");
 		for (Produit product : produits.values()) {

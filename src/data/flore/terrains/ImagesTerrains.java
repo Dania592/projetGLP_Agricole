@@ -7,9 +7,10 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
+import gui.gestionnaire.keys.Graine;
 
 public class ImagesTerrains {
-	private static HashMap<TypeGraine, HashMap<EvolutionTerrain, BufferedImage>> images = new HashMap<>();
+	private static HashMap<Graine, HashMap<EvolutionTerrain, BufferedImage>> images = new HashMap<>();
 	
 	private static ImagesTerrains instance = new ImagesTerrains();
 	
@@ -19,7 +20,7 @@ public class ImagesTerrains {
 		return instance;
 	}
 	
-	public HashMap<TypeGraine, HashMap<EvolutionTerrain, BufferedImage>> getImages() {
+	public HashMap<Graine, HashMap<EvolutionTerrain, BufferedImage>> getImages() {
 		initializeImages();
 		return images;
 	}
@@ -68,10 +69,10 @@ public class ImagesTerrains {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		images.put(TypeGraine.TOMATO, images0);
-		images.put(TypeGraine.BROCCOLI, images1);
-		images.put(TypeGraine.BOK_CHOY, images3);
-		images.put(TypeGraine.CACTUS, images2);
+		images.put(Graine.TOMATO_SEED, images0);
+		images.put(Graine.BROCCOLI_SEED, images1);
+		images.put(Graine.BOK_CHOY_SEED, images3);
+		images.put(Graine.CACTUS_SEED, images2);
 	}
 	
 }

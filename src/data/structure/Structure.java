@@ -4,6 +4,8 @@ import data.espece.evolution.EvolutionStructure;
 import data.gestion.Stockage;
 import data.map.Map;
 import data.stucture_base.Element;
+import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.Structures;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
@@ -75,6 +77,12 @@ public  abstract class Structure extends Element implements Buyable,Stockage {
 	public <T> T accept(GestionVisitor<T> visitor) {
 		visitor.visit(this);
 		return null;
+	}
+	
+	public abstract Structures getKey();
+	
+	public GestionnaireKey getGestionnaireKey() {
+		return GestionnaireKey.STRUCTURES;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package data.structure;
 
 import data.map.Map;
+import gui.gestionnaire.keys.Structures;
 
 public class Abatoire extends StructureAction{
 
@@ -8,6 +9,10 @@ public class Abatoire extends StructureAction{
 	
 	public Abatoire(int ligne_init, int colonne_init, String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT, reference , map);
+	}
+	
+	public Structures getKey() {
+		return Structures.ABATTOIRE;
 	}
 	
 }

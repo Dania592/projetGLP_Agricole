@@ -4,6 +4,7 @@ package data.espece.faune;
 import data.espece.Milieu;
 import data.map.Map;
 import data.structure.Maison;
+import gui.gestionnaire.keys.Animals;
 
 
 public class Chien extends AnimalCompagnie {
@@ -17,4 +18,8 @@ public class Chien extends AnimalCompagnie {
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.CARNIVORE, sexe, habitat , reference , map);
 	}
 
+	public Animals getKey() {
+		return Animals.CHIEN;
+	}
+	
 }

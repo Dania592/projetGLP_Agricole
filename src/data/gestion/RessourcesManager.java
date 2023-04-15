@@ -10,7 +10,15 @@ public class RessourcesManager {
 	private GestionnaireEnclos gestionnaireEnclos = GestionnaireEnclos.getInstance();
 	private GestionnaireRH gestionnaireRH = GestionnaireRH.getInstance();
 	 
+	private static RessourcesManager instance = new RessourcesManager();
 	
+	private RessourcesManager() {
+	}
+	
+	public static RessourcesManager getInstance() {
+		return instance;
+	}
+
 	public GestionnaireFinancier getGestionnaireFinancier() {
 		return gestionnaireFinancier;
 	}

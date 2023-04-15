@@ -1,13 +1,9 @@
 package data.espece.faune;
 
-import java.util.Date;
-
 import data.espece.Milieu;
 import data.map.Map;
 import data.production.Produit;
 import data.structure.Structure;
-
-
 
 public abstract class AnimalProducteur extends Animal{
 
@@ -50,9 +46,5 @@ public abstract class AnimalProducteur extends Animal{
 	public Produit getProduit() {
 		return produit;
 	}
-	
-	
 
-
-	
 }

@@ -10,6 +10,7 @@ import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Laine;
 import data.structure.Etable;
+import gui.gestionnaire.keys.Animals;
 
 
 public class Mouton extends AnimalProducteur {
@@ -32,6 +33,10 @@ public class Mouton extends AnimalProducteur {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Animals getKey() {
+		return Animals.MOUTON;
 	}
 
 }
