@@ -1,5 +1,7 @@
 package process.game;
 
+import java.io.Serializable;
+
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.structure.Enclos;
@@ -10,7 +12,7 @@ import data.stucture_base.Element;
  * @author dania
  *
  */
-public class ElementManager {
+public class ElementManager implements Serializable{
 	private MapManager mapManager;
 
 	public ElementManager(MapManager mapManager) {
@@ -24,6 +26,7 @@ public class ElementManager {
 	public void add(Element element) {	
 		mapManager.addElement(element);
 	}
+	
 	public void add(Enclos enclos) {
 		mapManager.addEnclos(enclos);
 	}
@@ -39,7 +42,7 @@ public class ElementManager {
 	 * @param element : the element to move 
 	 */
 	public void moveRight(Element element) {
-		if (!element.isOnRight()) {
+		if (!element.isOnRight() ) {
 			Case new_case = mapManager.getMap().getCase(element.getPosition().getLigne_init(),
 					element.getPosition().getColonne_init() + 1);
 			mapManager.moveElement(element, new_case);
@@ -74,7 +77,7 @@ public class ElementManager {
 	 * @param element
 	 */
 	public void moveDown(Element element) {
-		if (!element.isOnBottom()) {
+		if (!element.isOnBottom() ) {
 			Case new_case = mapManager.getMap().getCase(element.getPosition().getLigne_init() + 1,
 					element.getPosition().getColonne_init());
 			mapManager.moveElement(element, new_case);

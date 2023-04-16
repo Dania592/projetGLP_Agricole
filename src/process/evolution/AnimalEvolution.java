@@ -3,6 +3,7 @@ package process.evolution;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,7 @@ import data.time.Clock;
 import process.game.ElementManager;
 import process.time.TimeManager;
 
-public class AnimalEvolution {
+public class AnimalEvolution implements Serializable {
 	private ArrayList<AnimalProducteur> animals = new ArrayList<>();
 	private ElementManager elementManager ;
 	private Clock clock;
@@ -45,13 +46,12 @@ public class AnimalEvolution {
 
 	public void killAnimal(AnimalProducteur animal ) {
 		//animals.remove(animal); //=> cause un arret dans le thread 
-		elementManager.remove(animal);
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
 			if(enclos.getAnimals().contains(animal)) {
 				enclos.removeAnimal(animal);
 			}
-
 		}
+		elementManager.remove(animal);
 	}
 	
 	public void growUp() {
@@ -64,7 +64,7 @@ public class AnimalEvolution {
 					String imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
 							+File.separator+animal.getEvolution()+File.separator+"STAND.png";
 					BufferedImage image = ImageIO.read(new File(imagePath));
-					animal.setImage(image);
+					animal.setImage(imagePath);
 				} catch (MortException | IOException e ) {
 					System.out.println("animal mort : "+animal.getReference());
 					killAnimal(animal);
@@ -76,49 +76,28 @@ public class AnimalEvolution {
 	public void randomMovement() {
 		if(index==GameConfiguration.ANIMAL_MOUVE_SPEED) {
 			for(Animal animal : animals) {
-				BufferedImage image;
 				String imagePath;
 				animal.setDirection(animal.getDirection().avancer());		
 				imagePath =GameConfiguration.IMAGE_PATH +animal.getClass().getSimpleName()
 						+File.separator+animal.getEvolution()+File.separator+animal.getDirection()+".png";
 				index =0;
+				animal.setImage(imagePath);
 				switch(animal.getDirection()) {
 				case UP_1,UP_2:
 					elementManager.moveUp(animal);
-				try {
-					image = ImageIO.read(new File(imagePath));
-					animal.setImage(image);
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
+				
 				break;
 				case DOWN_1,DOWN_2 : 
 					elementManager.moveDown(animal);	
-				try {
-					image = ImageIO.read(new File(imagePath));
-					animal.setImage(image);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			
 				break;
 				case RIGHT_1,RIGHT_2 :
 					elementManager.moveRight(animal);
-				try {
-					image = ImageIO.read(new File(imagePath));
-					animal.setImage(image);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				
 				break;
 				case LEFT_1,LEFT_2 : 
 					elementManager.moveLeft(animal);
-				try {
-					image = ImageIO.read(new File(imagePath));
-					animal.setImage(image);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				
 				break;
 				default:
 					break;
