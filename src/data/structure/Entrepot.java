@@ -10,8 +10,8 @@ import javax.swing.ImageIcon;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Produit;
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.place.PlaceVisitor;
 
 
 public class Entrepot extends Structure{

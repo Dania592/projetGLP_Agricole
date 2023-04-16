@@ -5,26 +5,47 @@ import java.util.ArrayList;
 import data.espece.faune.Animal;
 import data.map.Map;
 
-
 public abstract class Refuge<T> extends Structure {
+	// public abstract class Refuge<T> extends Structureimplements Healable {
+	private ArrayList<T> inHabitant;
+	private int currentNumberOfInhabitant;
 
-	private ArrayList<T> animals;
+	public enum MaxCapacity{
+		MAX_CAPACITE_POULAILLER(30),
+		MAX_CAPACITE_MAISON(40),
+		MAX_CAPACITE_ETABLE(40),
+		;
+		int capacity;
+		
+		private MaxCapacity(int capacity){
+			this.capacity = capacity;
+		}
+
+		public int getCapacity() {
+			return capacity;
+		}
+	}
 
 	public Refuge(int ligne_init, int colonne_init, float prixAchat, String reference, Map map) {
 		super(ligne_init, colonne_init, prixAchat, reference, map);
-		this.animals = new ArrayList<>();
+		this.inHabitant = new ArrayList<>();
+		currentNumberOfInhabitant = 0;
 	}
 
-	public ArrayList<T> getAnimals() {
-		return animals;
+	public ArrayList<T> getInHabitant() {
+		return inHabitant;
 	}
 
-	public void addAnimal(T animal) {
-		animals.add(animal);
+	public void addInHabitant(T animal) {
+		if(ableToAcceptInhabitant()){
+			inHabitant.add(animal);
+			currentNumberOfInhabitant++;
+		}
 	}
 
-		public void removeAnimal(Animal animal) {
-		animals.remove(animal);
+	public void removeAnimal(T animal) {
+		inHabitant.remove(animal);
+		currentNumberOfInhabitant--;
 	}
 
 	public ArrayList<ActionnableKey> getActionnableKey() {
@@ -33,8 +54,12 @@ public abstract class Refuge<T> extends Structure {
 		return actionnableKeys;
 	}
 
+	protected abstract int getMaxCapacity();
+
+	public boolean ableToAcceptInhabitant(){
+		return currentNumberOfInhabitant+1<=getMaxCapacity();
+	}
 
 
 	
-
 }

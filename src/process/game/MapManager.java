@@ -103,7 +103,6 @@ public class MapManager implements Serializable{
 				}
 			}
 			else {
-				
 				reserve(element);				
 			}
 				

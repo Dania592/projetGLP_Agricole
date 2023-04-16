@@ -7,6 +7,8 @@ import java.io.Serializable;
 import javax.swing.JPanel;
 
 import data.flore.terrains.Terrain;
+import data.structure.Refuge;
+import data.structure.Structure;
 import data.stucture_base.Element;
 import process.game.ElementManager;
 
@@ -29,6 +31,7 @@ public class MouseHandler implements MouseListener,Serializable{
 			JPanel choixTerrain = farmPaintStrategy.paint(terrain, terrain.getActions(), board.getFarm().getManager().getMapManager().getMap());
 			board.setChoixTerrain(choixTerrain);
 		}
+		System.out.println("element séléctionnée "+ element);
 		board.setClicked(element);
 	}
 
@@ -38,8 +41,10 @@ public class MouseHandler implements MouseListener,Serializable{
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 
+	//TODO rendre graphique
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {}

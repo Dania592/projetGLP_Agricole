@@ -4,6 +4,7 @@ package data.acteur;
 import java.io.Serializable;
 
 import data.map.Map;
+import data.notion.Mortel;
 import data.notion.Mortel.EtatSante;
 import data.planning.WeeklyPlanner;
 import data.stucture_base.Element;

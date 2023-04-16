@@ -2,8 +2,11 @@ package data.structure.hability;
 
 import java.util.ArrayList;
 
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.place.PlaceVisitor;
 
 
 public interface Actionnable{
@@ -17,11 +20,11 @@ public interface Actionnable{
         REFUGE,
         ENCLOS,
         ENTREPOT,
-        STRUCTURE
-
+        STRUCTURE,
+        TERRAIN,
     }
 
     ArrayList<ActionnableKey> getActionnableKey();
-    <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable;
+    <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException;
 
 }   

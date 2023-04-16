@@ -3,16 +3,24 @@ package data.espece.faune;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
+import data.espece.Slaughtable;
 import data.espece.evolution.EvolutionAnimal;
+import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.production.Lait;
 import data.production.Produit;
+import data.structure.Enclos;
 import data.structure.Etable;
+import data.structure.Refuge;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.DomesticSpeciesVisitor;
 
 
 
@@ -43,5 +51,11 @@ public class Vache extends AnimalProducteur{
 		return new Lait();
 	}
 
+	@Override
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);	
+	}
+
+	
 
 }

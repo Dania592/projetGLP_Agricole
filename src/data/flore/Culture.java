@@ -28,7 +28,6 @@ public  abstract class Culture extends EtreVivant {
 		this.engrais = engrais;
 	}
 
-	@Override
 	public void vieillir() throws MortException {
 		// TODO Auto-generated method stub
 	}

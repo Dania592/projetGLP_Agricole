@@ -4,12 +4,16 @@ package gui.Farm;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import data.configuration.GameConfiguration;
+import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.task.Task;
+import process.game.GameBuilder;
 
 public class MainGuiTest  extends JFrame implements Runnable{
 
@@ -65,11 +69,17 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			dashboard.setSelected(selected);
 			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
 			
 			dashboard.repaint();
-				
-			
+			if(dashboard.getSelected() instanceof Actionnable){
+				Actionnable actionnableSelected = (Actionnable) dashboard.getSelected();
+				ArrayList<Task<?>> tasks = farm.getTaskManager().getPossibleTaskToPerform(actionnableSelected);
+				for (Task<?> task : tasks) {
+					System.out.println(tasks);
+				}
+			}
 		}
 	}
 

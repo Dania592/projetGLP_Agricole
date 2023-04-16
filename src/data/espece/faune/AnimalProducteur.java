@@ -4,13 +4,15 @@ package data.espece.faune;
 
 import data.espece.Milieu;
 import data.espece.Produceur;
+import data.espece.Slaughtable;
+import data.espece.Transportable;
 import data.map.Map;
 import data.production.Produit;
 import data.structure.Structure;
 
 
 
-public abstract class AnimalProducteur extends Animal implements Produceur{
+public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
 
 	private int frequenceProduction ;
 	private int quantiteProduction ;
@@ -51,6 +53,9 @@ public abstract class AnimalProducteur extends Animal implements Produceur{
 		return productifState == ProductifState.HAVE_PRODUCE;
 	}
 	
+	public void setToHaveProduced(){
+		productifState =  ProductifState.HAVE_PRODUCE;
+	}
 	
 
 

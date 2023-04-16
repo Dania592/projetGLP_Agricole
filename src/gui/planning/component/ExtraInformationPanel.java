@@ -10,8 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import process.PlanningManager;
 import data.planning.WeeklyPlanner.DayOfWeek;
+import process.time.PlanningManager;
 
 public class ExtraInformationPanel extends JPanel {
     

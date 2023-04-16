@@ -9,10 +9,7 @@ public class Clock implements Serializable{
     private static Clock reference = new Clock();
    
     private Clock(){
-    	hour =  new CyclicCounter(0, 59, 0);
-    	minute = new CyclicCounter(0, 59, 0);
-    	second = new CyclicCounter(0, 59, 0);
-    	//init(); 
+        init(); 
     } 
 	  
     // pourquoi le getInstance public ? 
@@ -45,6 +42,7 @@ public class Clock implements Serializable{
     	return hour.toString() + " : " + minute.toString() + " : " + second.toString();
     }
 
+    
 
     private void init() {
         hour.setValue(0);

@@ -34,8 +34,7 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 
 	public float getPrixAchat() {
 		return prixAchat;
-	}
-
+		}
 
 	public void setPrixAchat(float prixAchat) {
 		this.prixAchat = prixAchat;
@@ -56,8 +55,6 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 	public void setCharges(Charge[] charges) {
 		this.charges = charges;
 	}
-	
-	
 
 	@Override
 	public <T> T accept(GestionVisitor<T> visitor) {

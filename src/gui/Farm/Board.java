@@ -14,10 +14,13 @@ import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.planning.Activity;
 import data.structure.Enclos;
+import data.structure.Maison;
 import data.structure.hability.Actionnable;
 import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.TaskFactory;
+import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 
@@ -109,26 +112,20 @@ public class Board  extends JLayeredPane implements Serializable{
 				paintStrategy.paint(element, g);				
 				
 			}
-			
-			
-			
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
 				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
 				terrain.evoluer();	
-			}else if(clicked instanceof Actionnable){
-				ArrayList<ActionnableKey> actionnableKey = ((Actionnable)clicked).getActionnableKey(); 
-				System.out.println(Activity.getPossibleActivity(actionnableKey));
-			}
-			 else {
+			}else {
 				if ( choixTerrain != null ) {
 					remove(choixTerrain);
 				}
 			}
+
 			
 		}
 		hud.time();
-		
+
 		// les bords de la ferme 
 		
 		

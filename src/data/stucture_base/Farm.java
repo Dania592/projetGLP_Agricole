@@ -1,3 +1,4 @@
+
 package data.stucture_base;
 
 import java.io.Serializable;
@@ -6,6 +7,7 @@ import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.flore.Saison;
 import data.gestion.RessourcesManager;
+import process.action.TaskManager;
 import data.time.Clock;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
@@ -23,6 +25,8 @@ public class Farm implements Serializable{
 	private int nbEtoile ;
 	private ElementManager elementManager ;
 	private Clock clock ; 
+	private TaskManager taskManager;
+	private TimeManager timeManager ; 
 	private EvolutionManager evolutionManager ;
 	private int ligne ; 
 	private int colonne ; 
@@ -36,10 +40,15 @@ public class Farm implements Serializable{
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager, clock);
+		taskManager = new TaskManager(timeManager);
 		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
 		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
 	}
 	
+	public ElementManager getElementManager() {
+		return elementManager;
+	}
+
 	public EvolutionManager getEvolutionManager() {
 		return evolutionManager;
 	}
@@ -130,6 +139,10 @@ public class Farm implements Serializable{
 				}
 			}
 		}
+	}
+
+	public TaskManager getTaskManager() {
+		return taskManager;
 	}
 	
 }
