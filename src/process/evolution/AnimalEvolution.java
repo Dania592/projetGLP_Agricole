@@ -12,18 +12,19 @@ import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.myExceptions.MortException;
 import data.structure.Enclos;
+import data.time.Clock;
 import process.game.ElementManager;
 import process.time.TimeManager;
 
 public class AnimalEvolution {
 	private ArrayList<AnimalProducteur> animals = new ArrayList<>();
 	private ElementManager elementManager ;
-	private TimeManager timeManager ;
+	private Clock clock;
 	private int index = 0 ;
 
-	public AnimalEvolution(ElementManager elementManager , TimeManager timeManager) {
+	public AnimalEvolution(ElementManager elementManager , Clock clock) {
 		this.elementManager=elementManager;
-		this.timeManager=timeManager;
+		this.clock=clock;
 		getAllAnimals();
 	}
 	
@@ -55,7 +56,7 @@ public class AnimalEvolution {
 	
 	public void growUp() {
 		for(AnimalProducteur animal : animals) {
-			int gameHour = timeManager.getClock().getMinute().getValue();
+			int gameHour = clock.getMinute().getValue();
 			if((gameHour-animal.getLastEvolutionHour())> animal.getGrowthSpeed()*animal.getEvolution().getDureeEvolution()) {
 				animal.setLastEvolutionHour(gameHour);
 				try {

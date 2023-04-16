@@ -13,6 +13,7 @@ import data.espece.faune.AnimalProducteur;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
+import data.time.Clock;
 import process.game.ElementManager;
 import process.time.TimeManager;
 
@@ -20,17 +21,17 @@ public class EvolutionManager {
 
 	private AnimalEvolution animalEvolution ;
 	private ElementManager elementManager ;
-	private TimeManager timeManager;
+	private Clock clock;
 	private int deathIndex = 0;
 	private ArrayList<AnimalProducteur> animalsToRemove = new ArrayList<>();
 
 
 	// on ajoute l'evolution des terrains actions ... 
 
-	public EvolutionManager(ElementManager elementManager , TimeManager timeManager) {
+	public EvolutionManager(ElementManager elementManager , Clock clock) {
 		this.elementManager=elementManager;
-		this.timeManager=timeManager;
-		animalEvolution = new AnimalEvolution(elementManager, timeManager);
+		this.clock=clock;
+		animalEvolution = new AnimalEvolution(elementManager, clock);
 
 	}
 
@@ -55,23 +56,23 @@ public class EvolutionManager {
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
 
 			int delay = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS;
-			int dhour = timeManager.getClock().getMinute().getValue()- enclos.getLastDecrementation();
+			int dhour = clock.getMinute().getValue()- enclos.getLastDecrementation();
 
 			if(dhour >= delay && enclos.getAnimals().size()!=0) {
 				if(enclos.getNiveauEau()!=FullLevel.EMPTY || enclos.getNiveauNourriture()!=FullLevel.EMPTY) {
 					enclos.setNiveauEau(enclos.getNiveauEau().getNextState());
 					enclos.setNiveauNourriture(enclos.getNiveauNourriture().getNextState());
-					enclos.setLastDecrementation( timeManager.getClock().getMinute().getValue());
+					enclos.setLastDecrementation( clock.getMinute().getValue());
 				}
 				else {
 					if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
 						enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
-						enclos.setLastDecrementation( timeManager.getClock().getMinute().getValue());
+						enclos.setLastDecrementation( clock.getMinute().getValue());
 					}
 					else {
 						// on peut tuer plusieurs d'un coup 
 						animalsToRemove.add(enclos.getAnimals().get(0));
-						enclos.setLastDecrementation(timeManager.getClock().getMinute().getValue());
+						enclos.setLastDecrementation(clock.getMinute().getValue());
 					}
 				}
 			}

@@ -102,7 +102,7 @@ public class Hud {
 			time.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
 			component.add(time);			
 		}
-		Clock clock = component.getFarm().getTimeManager().getClock();
+		Clock clock = component.getFarm().getClock();
 		CyclicCounter hour = clock.getHour();
 		CyclicCounter minute = clock.getMinute();
 		CyclicCounter second = clock.getSecond();

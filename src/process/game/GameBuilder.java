@@ -38,7 +38,7 @@ public class GameBuilder {
 		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
 		TimeManager timeManager = new TimeManager();
 		timeManager.start();
-		Farm farm = new Farm( elementManager , farmer , timeManager);
+		Farm farm = new Farm( elementManager , farmer , timeManager.getClock());
 		farm.reservePlaceToFarm();
 		
 		

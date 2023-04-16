@@ -123,7 +123,7 @@ public class ElementCard extends JPanel{
 						try {
 							animal.setStatique();
 							// la date de naissance == minute de naissance (à modifier)
-							animal.setNaissance(farm.getTimeManager().getClock().getMinute().getValue());
+							animal.setNaissance(farm.getClock().getMinute().getValue());
 							addAnimalToMap(animal);
 						} catch (FullCapaciteException e1) {
 							System.err.println(e1.getLocalizedMessage());
@@ -134,7 +134,7 @@ public class ElementCard extends JPanel{
 						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
 						if(nameCard.equals("Enclos")) {
 							Enclos enclos = (Enclos) element ;
-							enclos.setLastDecrementation(farm.getTimeManager().getClock().getMinute().getValue());
+							enclos.setLastDecrementation(farm.getClock().getMinute().getValue());
 							farm.getManager().add(enclos);
 						}
 						else {
