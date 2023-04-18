@@ -2,46 +2,47 @@ package data.espece.faune;
 
 
 
+import java.util.concurrent.CyclicBarrier;
+
 import data.espece.Milieu;
 import data.espece.Produceur;
+import data.espece.Slaughtable;
+import data.espece.Transportable;
 import data.map.Map;
 import data.production.Produit;
 import data.structure.Structure;
+import data.time.BoundedCounter;
+import data.time.CyclicCounter;
 
 
 
-public abstract class AnimalProducteur extends Animal implements Produceur{
+public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
 
-	private int frequenceProduction ;
 	private int quantiteProduction ;
 	private ProductifState productifState;
+	private CyclicCounter productionCycle;
+	private Produceur.Type produceurType;
+	private Produceur.TimeItTakes timeItTakesToProduce;
 	
 	
+	public Produceur.TimeItTakes getTimeItTakesToProduce() {
+		return timeItTakesToProduce;
+	}
+
 	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
 			Structure habitat, int frequenceProduction, int quantiteProduction,
 			Produit produit , String reference , Map map ,int speedGrowth ) {
 		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
 				sexe, habitat ,reference ,map , speedGrowth);
-		this.frequenceProduction = frequenceProduction;
 		this.quantiteProduction = quantiteProduction;
-		productifState = ProductifState.UNABLE_TO_PRODUCE; //TODO Pour l'instant mais définir à partir de quand dans son évolution il est peut produire
+		produceurType = Type.AVERAGE_PRODUCEUR; 
+		productifState = ProductifState.UNABLE_TO_PRODUCE;
+		productionCycle = new CyclicCounter(getTimeItTakesToProduceInSeconde());
 	}
-
-
-	public int getFrequenceProduction() {
-		return frequenceProduction;
-	}
-
-
-	public void setFrequenceProduction(int frequenceProduction) {
-		this.frequenceProduction = frequenceProduction;
-	}
-
 
 	public int getQuantiteProduction() {
 		return quantiteProduction;
 	}
-
 
 	public void setQuantiteProduction(int quantiteProduction) {
 		this.quantiteProduction = quantiteProduction;
@@ -51,7 +52,29 @@ public abstract class AnimalProducteur extends Animal implements Produceur{
 		return productifState == ProductifState.HAVE_PRODUCE;
 	}
 	
-	
+	public void setProductifState(ProductifState productifState) {
+		this.productifState = productifState;
+	}
+
+	public void setProduceurType(Produceur.Type produceurType) {
+		this.produceurType = produceurType;
+	}
+
+	public ProductifState getProductifState(){
+		return productifState;
+	}
+    public Type getProduceurType(){
+		return produceurType;
+	}
+
+    public int getTimeItTakesToProduceInSeconde(){
+		return getTimeItTakes().getTimeInSeconde();
+	}
+
+    public CyclicCounter getProductionCycle() {
+        return productionCycle;
+    }
+
 
 
 	

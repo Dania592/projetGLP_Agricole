@@ -8,10 +8,10 @@ import data.acteur.Personne;
 import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.planning.DailyPlanner;
 import data.planning.Hour;
-import process.PlanningManager;
 import data.planning.TimeSlot;
 import data.planning.WeeklyPlanner;
 import data.planning.WeeklyPlanner.DayOfWeek;
+import process.time.PlanningManager;
 
 
 

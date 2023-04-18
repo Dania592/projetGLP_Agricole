@@ -2,18 +2,17 @@ package data.espece.evolution;
 
 import data.myExceptions.MortException;
 
-public enum EvolutionAnimal implements Evolution{
+public enum EvolutionAnimal{
 	JEUNE, 
 	ADULTE, 
 	VIEUX;
 
-	@Override
-	public Evolution evolue() throws MortException {
+	public EvolutionAnimal evolue() throws MortException {
 		switch(this){
 		case JEUNE:
-			return ADULTE;
+			return EvolutionAnimal.ADULTE;
 		case ADULTE:
-			return VIEUX;
+			return EvolutionAnimal.VIEUX;
 		case VIEUX:
 			throw new MortException();
 		default:

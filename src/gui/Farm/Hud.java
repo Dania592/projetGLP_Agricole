@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
@@ -15,7 +16,7 @@ import data.time.Clock;
 import data.time.CyclicCounter;
 import process.game.SaveFarm;
 
-public class Hud {
+public class Hud implements Serializable {
 	
 	private Board component;
 	

@@ -2,15 +2,15 @@ package data.espece.evolution;
 
 import data.myExceptions.MortException;
 
-public enum EvolutionArbre implements Evolution {
+public enum EvolutionArbre{
 	ARBUSTE, 
 	ARBRE_SANS_FEUILLE, 
 	ARBRE_AVEC_FEUILLE, 
 	ARBRE_FLEURI, 
 	ARBRE_AVEC_FRUIT;
 
-	@Override //TODO Discuter de l'évolution d'un Arbre : ici on confond évolution et évolution en fonction des saisons  
-	public Evolution evolue() throws MortException {
+	//TODO Discuter de l'évolution d'un Arbre : ici on confond évolution et évolution en fonction des saisons  
+	public EvolutionArbre evolue() throws MortException {
 		switch(this){
 			case ARBUSTE:
 				return ARBRE_SANS_FEUILLE;

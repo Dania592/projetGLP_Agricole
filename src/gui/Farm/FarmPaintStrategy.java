@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -14,7 +15,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
+import data.espece.evolution.EvolutionAnimal;
 import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
@@ -31,7 +34,7 @@ import gui.gestionnaire.RoundedPanel;
  * @author dania
  *
  */
-public class FarmPaintStrategy {
+public class FarmPaintStrategy implements Serializable {
 	
 	private Map map ;
 	
@@ -71,7 +74,8 @@ public class FarmPaintStrategy {
 			e.printStackTrace();
 		}
 	}
-	
+
+		
 	public JPanel paint(Terrain terrain, HashMap<String, JLabel> actions, Map map) {
 		Position position = terrain.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX() + 50;
@@ -94,28 +98,44 @@ public class FarmPaintStrategy {
 	public void paint(Enclos enclos , Graphics graphics ) {
 		  
 		Position position = enclos.getPosition();
+		BufferedImage image ;
 		
 		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {
 			for(int colonneIndex = position.getColonne_init() ; colonneIndex < enclos.getDimension()+position.getColonne_init(); colonneIndex ++) {
 				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					ImageIcon image = new ImageIcon(enclos.getImages().get("bas_gauche"));
-					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					try {
+						image = ImageIO.read(new File(enclos.getImages().get("bas_gauche")));
+						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 				if((ligneIndex==position.getLigne_init()|| ligneIndex == position.getLigne_init()+enclos.getDimension()-1) && colonneIndex < enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					ImageIcon image = new ImageIcon(enclos.getImages().get("bas_milieu"));
-					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					try {
+						image = ImageIO.read(new File(enclos.getImages().get("bas_milieu")));
+						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 				if(colonneIndex== position.getColonne_init() ||  colonneIndex==enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					ImageIcon image = new ImageIcon(enclos.getImages().get("milieu"));
-					graphics.drawImage(image.getImage(), x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
+					try {
+						image = ImageIO.read(new File(enclos.getImages().get("milieu")));
+						graphics.drawImage(image, x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			}

@@ -1,9 +1,14 @@
 package data.time;
 
+
 public class CyclicCounter extends BoundedCounter {
 
 	public CyclicCounter(int value, int max, int min) {
 		super(value, max, min); 
+	}
+
+	public CyclicCounter(int max){
+		super(max);
 	}
 
 	@Override
@@ -14,5 +19,5 @@ public class CyclicCounter extends BoundedCounter {
 			setValue(getMin());
 		}
 	}
-
+	
 }

@@ -5,13 +5,18 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
+import data.configuration.GameConfiguration;
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
 import data.production.Produit;
 import data.structure.Etable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.DomesticSpeciesVisitor;
 
 
 public class Chevre extends AnimalProducteur{
@@ -27,10 +32,8 @@ public class Chevre extends AnimalProducteur{
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Lait(), reference , map , SPEED_GROWTH);
 		
-		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Chevre"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
-			
 			setImage(imagePath);
 		
 		
@@ -40,6 +43,17 @@ public class Chevre extends AnimalProducteur{
 	public Produit collectProduction() {
 		return new Lait(); 
 	}
-	
 
+	@Override
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+
+	@Override
+	public TimeItTakes getTimeItTakes() {
+		return TimeItTakes.CHEVRE;
+	}
+
+
+	
 }

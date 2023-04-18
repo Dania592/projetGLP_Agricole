@@ -3,7 +3,6 @@ package data.structure.hability;
 public interface Fixable extends Actionnable{
     
     public enum FixableState {
-
         USABLE,
         DAMAGED,
         DESTROYED;
@@ -39,5 +38,6 @@ public interface Fixable extends Actionnable{
     
     boolean isNeedToBeFixed();
     void setState(FixableState newState);
+    FixableState getState();
 
 }

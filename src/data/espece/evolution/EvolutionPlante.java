@@ -1,14 +1,14 @@
 package data.espece.evolution;
 
-public enum EvolutionPlante implements Evolution{
+public enum EvolutionPlante{
 	GRAINE, 
 	PREMIERE_FEUILLE, 
 	PLANTE_VERTE, 
 	PLANTE_FLEURIE, 
 	PLANTE_MURE;
 
-	@Override //TODO rediscuter de l'évolution d'une plante
-	public Evolution evolue() {
+	//TODO rediscuter de l'évolution d'une plante
+	public EvolutionPlante evolue() {
 		switch(this){
 			case GRAINE:
 				return PREMIERE_FEUILLE;

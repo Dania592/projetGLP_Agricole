@@ -12,13 +12,6 @@ public class DailyPlanner implements Serializable{
     private int freeHours;
 
     
-    public int getFreeHours() {
-        return freeHours;
-    }
-
-    public void setFreeHours(int freeHours) {
-        this.freeHours = freeHours;
-    }
 
     public DailyPlanner(int maxHourOfWork) {
         setFreeHours(maxHourOfWork);
@@ -29,6 +22,13 @@ public class DailyPlanner implements Serializable{
             indexPlanner++;
         }
 
+    }
+    public int getFreeHours() {
+    	return freeHours;
+    }
+    
+    public void setFreeHours(int freeHours) {
+    	this.freeHours = freeHours;
     }
 
     public boolean haveEnoughFreeTimeToPerformTask(Activity taskToAdd) {

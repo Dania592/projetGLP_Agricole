@@ -2,7 +2,7 @@ package data.espece;
 
 import data.myExceptions.DyingOfHungerException;
 
-public interface FoodConsumer{
+public interface FoodConsumer extends DomesticSpecie{
     public enum HungerLevel{
     	STARVING,
 		VERY_HUNGRY,
@@ -56,7 +56,6 @@ public interface FoodConsumer{
     }
 
     HungerLevel getHungerLevel();
-    void feed();
     boolean isHungry();
 
     

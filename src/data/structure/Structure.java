@@ -1,5 +1,6 @@
 package data.structure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.gestion.Stockage;
@@ -9,7 +10,7 @@ import data.stucture_base.Element;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public  abstract class Structure extends Element implements Buyable,Stockage, Fixable{
+public  abstract class Structure extends Element implements Buyable,Stockage, Fixable,Serializable{
 
 	private float prixAchat ;
 	private FixableState state ;
@@ -33,8 +34,7 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 
 	public float getPrixAchat() {
 		return prixAchat;
-	}
-
+		}
 
 	public void setPrixAchat(float prixAchat) {
 		this.prixAchat = prixAchat;
@@ -55,8 +55,6 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 	public void setCharges(Charge[] charges) {
 		this.charges = charges;
 	}
-	
-	
 
 	@Override
 	public <T> T accept(GestionVisitor<T> visitor) {

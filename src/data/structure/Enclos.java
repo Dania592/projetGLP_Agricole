@@ -1,28 +1,37 @@
 package data.structure;
 
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
+import java.util.Iterator;
 
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Mouton;
+import data.espece.faune.Poule;
+import data.espece.faune.Vache;
 import data.map.Case;
 import data.map.Map;
+import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
 import data.structure.hability.Fixable;
+import data.structure.hability.list.EnclosStorageStructure;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
 import data.structure.hability.list.EnclosStorageStructure;;
 
-public class Enclos extends Element implements Fixable, Feedable{
+public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
+	
+
+
 
 	private int capacite ;
 	private int lastDecrementation ; 
@@ -145,31 +154,21 @@ public class Enclos extends Element implements Fixable, Feedable{
 	
 	public boolean isOnBorderEnclos(int ligne , int colonne) {
 		Position position = getPosition();
-		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) || colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
+		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) ||
+				colonne==position.getColonne_init() || colonne==(position.getColonne_init()+dimension-1);
 	}
 
 	@Override
 	public ArrayList<ActionnableKey> getActionnableKey() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
+		actionnableKeys.add(ActionnableKey.ENCLOS);
+		return actionnableKeys;
 
-	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getNumberOfTaget() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
 	public boolean isNeedToBeFeed() {
-		// TODO Auto-generated method stub
-		return false;
+		return animalsHungerLevel == HungerLevel.HUNGRY || animalsHungerLevel == HungerLevel.VERY_HUNGRY || animalsHungerLevel == HungerLevel.STARVING;
 	}
 
 	@Override
@@ -179,10 +178,64 @@ public class Enclos extends Element implements Fixable, Feedable{
 	}
 
 	@Override
-	public void setState(FixableState newState) {
-		// TODO Auto-generated method stub
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+		return visitor.action(this);
+	}
+
+
+	public void addAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.add((Vache) animal);
+		}else if(animal instanceof Poule){
+			animalStorage.add((Poule) animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.add((Mouton) animal);
+		}
 		
 	}
+
+	public void removeAnimal(Animal animal){
+		if(animal instanceof Vache){
+			animalStorage.getVaches().remove((Vache)animal);
+		}else if(animal instanceof Poule){
+			animalStorage.getPoules().remove((Poule)animal);
+		}else if(animal instanceof Mouton){
+			animalStorage.getMoutons().remove((Mouton)animal);
+		}
+	}
+
+	@Override
+	public ArrayList<?> getTarget() {
+		return getAnimals();
+	}
+
+	@Override
+	public boolean haveProduced() {
+		Iterator<Poule> poulesIter = animalStorage.getPoules().iterator();
+		boolean haveProduced = false;
+		while(poulesIter.hasNext() && !haveProduced){
+			haveProduced = poulesIter.next().haveProduced();
+		}
+		return haveProduced;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAnimals().isEmpty();
+	}
+
+	@Override
+	public void setState(FixableState newState) {
+		state = newState;
+	}
+
+	@Override
+	public FixableState getState() {
+		return state;
+	}
+
+	
+
 	
 	
 

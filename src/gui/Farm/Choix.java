@@ -1,5 +1,6 @@
 package gui.Farm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import data.structure.Structure;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 
-public class Choix {
+public class Choix implements Serializable {
 
 	private RessourcesManager resources ;
 	private HashMap<String, ElementCard> cards = new HashMap<>();

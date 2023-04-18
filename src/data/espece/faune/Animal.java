@@ -1,6 +1,8 @@
 package data.espece.faune;
 
 
+import javax.swing.plaf.nimbus.State;
+
 import data.espece.EtreVivant;
 import data.espece.FoodConsumer;
 import data.espece.Milieu;
@@ -33,7 +35,7 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 	
 	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
 			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map  , int speedGrowth) {
-		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,1 , reference , map );
+		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,reference , map );
 		this.naissance = naissance;
 		this.poids = poids;
 		this.nom = nom;
@@ -104,7 +106,6 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		return evolution;
 	}
 
-	@Override
 	public void vieillir() throws MortException{
 		this.evolution = (EvolutionAnimal) evolution.evolue();
 	}
@@ -116,7 +117,6 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		return null;
 	}
 
-
 	public HungerLevel getHungerLevel(){
 		return hungerLevel;
 	}
@@ -127,9 +127,5 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
     public void setHungerLevel(HungerLevel hungerLevel) {
         this.hungerLevel = hungerLevel;
     }
-
-	public void feed(){
-		hungerLevel = HungerLevel.FULL;
-	}
 	
 }

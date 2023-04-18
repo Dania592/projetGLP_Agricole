@@ -7,7 +7,8 @@ import process.game.GameBuilder;
 public class Test {
 	
 	public static void main(String[] args) {
-		Farm farm = GameBuilder.buildinFarm();		
+
+		Farm farm = GameBuilder.buildinFarm();
 		MainGuiTest gameTest = new MainGuiTest("test" , farm);
 		Thread gameThread = new Thread(gameTest);
 		gameThread.start();

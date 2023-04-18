@@ -1,15 +1,12 @@
 package data.structure;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import data.acteur.Personne;
 import data.map.Map;
-import process.action.place.PlaceVisitor;
-import process.action.place.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.place.PlaceVisitor;
 
 public class Maison extends Refuge<Personne>{
 	
@@ -33,6 +30,12 @@ public class Maison extends Refuge<Personne>{
 	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable {
 		return visitor.action(this);
 	}
+
+	@Override
+	protected int getMaxCapacity() {
+		return MaxCapacity.MAX_CAPACITE_MAISON.getCapacity();
+	}
+
 
 	
 }

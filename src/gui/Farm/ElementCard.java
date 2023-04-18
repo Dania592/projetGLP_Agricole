@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -145,6 +146,8 @@ public class ElementCard extends JPanel{
 						
 						//removeOneElement(element);	
 						component.setSelected(element);
+						//System.out.println(component.getSelected().getReference());
+						
 						component.getHud().removeChoix();
 						component.getHud().addValidation();
 						

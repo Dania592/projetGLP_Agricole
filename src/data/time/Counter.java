@@ -1,9 +1,11 @@
 package data.time;
 
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Counter implements Serializable {
-	private int value;
+
+public class Counter implements Serializable{
+	private int value = 0;
 
 	public Counter(int value) {
 		this.value = value;
@@ -29,5 +31,6 @@ public class Counter implements Serializable {
 			return ""+value;			
 		}
 	}
+	
 
 }

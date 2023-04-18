@@ -20,6 +20,8 @@ public abstract class GameConfiguration {
 	
 	public final static int GAME_SPEED = 100;
 	
+	public final static int TIME_SPEED = 3 ;
+	
 	public final static int X_MAP = -15*CASE_DIMENSION ;
 	
 	public final static int Y_MAP = -18*CASE_DIMENSION ;

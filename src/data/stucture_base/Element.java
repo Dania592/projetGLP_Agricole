@@ -20,7 +20,7 @@ public  abstract class Element implements Serializable {
 	 * la reference d'un objet une fois instancier est unique 
 	 */
 	private String reference;
-	private String image ;
+	private String image = GameConfiguration.IMAGE_PATH+"terre.png";
 	
 	
 	public Element(String reference ,boolean statique, int nbCase , int ligne_init , int colonne_init , Map map ) {
@@ -94,19 +94,29 @@ public  abstract class Element implements Serializable {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage( String image) {
 		this.image = image;
 	}
+	
 
-	public void freePosition() { Case[][] cases = position.getTabCase(); 
+	public void freePosition() { 
+		Case[][] cases = position.getTabCase(); 
 	  for(int indexligne =0 ;indexligne < position.getNbLigne() ;indexligne++) { 
 		  for(int indexColone=0 ; indexColone < position.getNbColonne(); indexColone++ ) {
 			  cases[indexligne][indexColone].setLibre(true); 
 			  } 
 		  } 
 	}
-
 	
-
+//	 private void writeObject(ObjectOutputStream out) throws IOException {
+//		 ImageIO.write(image, "png", out);	
+//		 out.defaultWriteObject();
+//	}
+//
+//	
+//	 private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+//		 in.defaultReadObject();
+//		 image = ImageIO.read(in);
+//	}
 		
 }

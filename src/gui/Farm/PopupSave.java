@@ -35,7 +35,7 @@ public class PopupSave extends JDialog {
 	content.setBackground(new Color(255, 231, 171));
 	JButton okButton = new JButton("Ok");
 	okButton.setBounds(100,50 , 50 , 30);
-	okButton.setBackground(new Color(103, 148, 76));
+	//okButton.setBackground(new Color(103, 148, 76));
 	
 	okButton.addActionListener(new Ok());
 	content.add(okButton);

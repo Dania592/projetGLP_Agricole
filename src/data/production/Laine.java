@@ -1,6 +1,6 @@
 package data.production;
 
-public class Laine extends Produit{
+public class Laine extends Produit {
 
 	private final static float PRIX_VENTE = 15 ;
 	

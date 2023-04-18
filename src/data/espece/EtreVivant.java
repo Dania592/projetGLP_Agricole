@@ -1,28 +1,27 @@
 package data.espece;
 
+import java.io.Serializable;
+
 import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.stucture_base.Element;
-import process.transaction.Buyable;
-import process.transaction.Saleable;
 
-public abstract class EtreVivant extends Element implements Mortel{
+public abstract class EtreVivant extends Element implements Mortel, Serializable{
 	private Milieu milieu ;
 	private int dureeVie;
 	private float prixAchat ,prixVente;
-	private float niveauEau;
+
 	private EtatSante etatSante;
 	
 
 	public EtreVivant( int nbCase, int ligne_init, int colonne_init, Milieu milieu, int dureeVie,
-			float prixAchat, float niveauEau , String reference , Map map) {
+			float prixAchat, String reference , Map map) {
 		super(reference ,false, nbCase, ligne_init, colonne_init , map );
 		this.milieu = milieu;
 		this.dureeVie = dureeVie;
 		this.prixAchat = prixAchat;
 		prixVente = 100;
-		this.niveauEau = niveauEau;
 		this.etatSante = EtatSante.BONNE_SANTE;
 	}
 
@@ -34,16 +33,6 @@ public abstract class EtreVivant extends Element implements Mortel{
 
 	public int getDureeVie() {
 		return dureeVie;
-	}
-
-
-	public float getNiveauEau() {
-		return niveauEau;
-	}
-
-
-	public void setNiveauEau(float niveauEau) {
-		this.niveauEau = niveauEau;
 	}
 
 

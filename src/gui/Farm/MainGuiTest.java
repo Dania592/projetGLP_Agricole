@@ -4,10 +4,16 @@ package gui.Farm;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
+
 import data.configuration.GameConfiguration;
+import data.structure.hability.Actionnable;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.task.Task;
 import process.game.GameBuilder;
 
 public class MainGuiTest  extends JFrame implements Runnable{
@@ -17,6 +23,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private Farm farm ;
 	private Board dashboard ;
 	private Element selected ;
+	private int index =0; 
 	private int x ;
 	private int y ;
 
@@ -31,6 +38,14 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
+		
+		//farm=GameBuilder.buildinFarm();
+		
+		//System.out.println(farm.getTimeManager().getClock().getMinute().getValue());
+		//SaveFarm save = new SaveFarm(farm);
+		
+		//farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
+		//System.out.println(farm.getTimeManager().getClock().getMinute().getValue());
 
 		//farm=GameBuilder.buildinFarm();
 
@@ -57,9 +72,18 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//dashboard.setSelected(dashboard.getSelected());
+			//dashboard.setSelected(selected);
+			
 			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
+			
 			dashboard.repaint();
+//			if(dashboard.getSelected() instanceof Actionnable){
+//				Actionnable actionnableSelected = (Actionnable) dashboard.getSelected();
+//				ArrayList<Task<?>> tasks = farm.getTaskManager().getPossibleTaskToPerform(actionnableSelected);
+//				for (Task<?> task : tasks) {
+//					System.out.println(tasks);
+//				}
+//			}
 		}
 	}
 
@@ -73,6 +97,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			if(element!=null) {
 				//System.out.println(element.getReference());
 				selected = element ;
+				dashboard.setSelected(element);
 			}
 
 		}
@@ -81,7 +106,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		public void mousePressed(MouseEvent e) {
 			x = e.getX() ;
 			y = e.getY() ;
-			//System.out.println(x+" "+y);
+			
 		}
 
 		@Override

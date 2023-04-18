@@ -2,11 +2,12 @@ package gui.Farm;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Serializable;
 
 import process.game.ElementManager;
 import data.stucture_base.Element;
 
-public class KeyControls implements KeyListener {
+public class KeyControls implements KeyListener,Serializable {
 
 	private ElementManager manager ;
 	private Element selected ;
@@ -28,8 +29,7 @@ public class KeyControls implements KeyListener {
 					break;
 					
 				case 's':
-					manager.moveDown(selected);
-					
+					manager.moveDown(selected);			
 					break;
 					
 				case 'q':
@@ -38,6 +38,7 @@ public class KeyControls implements KeyListener {
 					
 				case 'd':
 					manager.moveRight(selected);
+					
 					break;
 					
 				default:

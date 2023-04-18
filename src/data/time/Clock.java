@@ -6,18 +6,15 @@ public class Clock implements Serializable{
     private static CyclicCounter hour = new CyclicCounter(0, 59, 0);
     private static CyclicCounter minute = new CyclicCounter(0, 59, 0);
     private static CyclicCounter second = new CyclicCounter(0, 59, 0);
-    private static Clock reference;
+    private static Clock reference = new Clock();
    
-    public Clock(){
+    private Clock(){
         init(); 
     } 
 	  
     // pourquoi le getInstance public ? 
     public static Clock getInstance(){
-	    if(reference==null){
-	    	reference = new Clock();
-	    }
-	    return reference; 
+    	return reference ;
     }
 	    
     public void increment() {
@@ -42,9 +39,10 @@ public class Clock implements Serializable{
     }
 
     public String toString() {
-    return hour.toString() + " : " + minute.toString() + " : " + second.toString();
+    	return hour.toString() + " : " + minute.toString() + " : " + second.toString();
     }
 
+    
 
     private void init() {
         hour.setValue(0);
