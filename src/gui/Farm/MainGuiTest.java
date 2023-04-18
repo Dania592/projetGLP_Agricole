@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import data.configuration.GameConfiguration;
 import data.structure.hability.Actionnable;
+import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import process.action.task.Task;

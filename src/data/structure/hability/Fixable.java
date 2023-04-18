@@ -38,5 +38,6 @@ public interface Fixable extends Actionnable{
     
     boolean isNeedToBeFixed();
     void setState(FixableState newState);
+    FixableState getState();
 
 }

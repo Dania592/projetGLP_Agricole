@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
+import data.espece.ProductionManager;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
@@ -68,6 +69,7 @@ public class TaskManager extends Thread {
 
     public void run(){
         while(true){
+            ProductionManager.getInstance().manageProduction();
             if(hourHaveChanged()){
                 currentHour = timeManager.getClock().getHour().getValue();
             }

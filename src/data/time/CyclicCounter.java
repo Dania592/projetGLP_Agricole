@@ -7,6 +7,10 @@ public class CyclicCounter extends BoundedCounter {
 		super(value, max, min); 
 	}
 
+	public CyclicCounter(int max){
+		super(max);
+	}
+
 	@Override
 	public void increment() {
 		if (getValue() < getMax()) {

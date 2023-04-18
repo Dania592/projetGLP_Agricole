@@ -56,4 +56,11 @@ public class Mouton extends AnimalProducteur{
 		return visitor.action(this); 
 	}
 
+
+	@Override
+	public TimeItTakes getTimeItTakes() {
+		return TimeItTakes.MOUTON;
+	}
+	
+
 }

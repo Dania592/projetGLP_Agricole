@@ -1,6 +1,8 @@
 package data.espece.faune;
 
 
+import javax.swing.plaf.nimbus.State;
+
 import data.espece.EtreVivant;
 import data.espece.FoodConsumer;
 import data.espece.Milieu;
@@ -115,7 +117,6 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		return null;
 	}
 
-
 	public HungerLevel getHungerLevel(){
 		return hungerLevel;
 	}
@@ -126,9 +127,5 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
     public void setHungerLevel(HungerLevel hungerLevel) {
         this.hungerLevel = hungerLevel;
     }
-
-	public void feed(){
-		hungerLevel = HungerLevel.FULL;
-	}
 	
 }

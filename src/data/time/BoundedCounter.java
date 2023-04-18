@@ -10,6 +10,18 @@ public class BoundedCounter extends Counter {
 		this.max = max;
 		this.min = min;
 	}
+	
+	public void setMax(int max) {
+		this.max = max;
+	}
+
+	public void setMin(int min) {
+		this.min = min;
+	}
+
+	public BoundedCounter(int max){
+		this(0, max, 0);
+	}
 
 	@Override
 	public void increment() {

@@ -32,6 +32,9 @@ import process.evolution.FullLevel;
 import data.structure.hability.list.EnclosStorageStructure;;
 
 public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
+	
+
+
 
 	private int capacite ;
 	private int lastDecrementation ; 
@@ -226,6 +229,11 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	@Override
 	public void setState(FixableState newState) {
 		state = newState;
+	}
+
+	@Override
+	public FixableState getState() {
+		return state;
 	}
 
 	

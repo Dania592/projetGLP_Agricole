@@ -56,7 +56,6 @@ public interface FoodConsumer extends DomesticSpecie{
     }
 
     HungerLevel getHungerLevel();
-    void feed();
     boolean isHungry();
 
     

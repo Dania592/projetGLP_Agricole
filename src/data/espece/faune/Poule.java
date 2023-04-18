@@ -51,6 +51,13 @@ public class Poule extends AnimalProducteur{
 	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
 		return visitor.action(this);
 	}
+
+	@Override
+	public TimeItTakes getTimeItTakes() {
+		return TimeItTakes.POULE;
+	}
+
+	
 	 
 
 	

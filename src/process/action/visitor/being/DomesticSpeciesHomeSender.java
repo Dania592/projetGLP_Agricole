@@ -5,11 +5,11 @@ import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
+import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 
 public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
-    GestionnaireStructures  gestionnaireStructure;
 
     @Override
     public Void action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
@@ -41,6 +41,12 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
         return null;
 
     }
+
+    // @Override
+    // public Void action(Terrain terrain) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'action'");
+    // }
 
     
 }

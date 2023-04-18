@@ -41,6 +41,7 @@ public class Farm implements Serializable{
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager, clock);
 		taskManager = new TaskManager(timeManager);
+		taskManager.start();
 		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
 		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
 	}

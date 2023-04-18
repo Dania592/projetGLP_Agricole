@@ -1,10 +1,10 @@
 package process.action.visitor.being;
 
-import data.espece.faune.Animal;
+import data.espece.Produceur;
 
 public class HaveNotProducedYetException extends Exception {   
-    public  HaveNotProducedYetException(Animal animal){
-        super(animal + "have not produced yet");
+    public  HaveNotProducedYetException(Produceur produceur){
+        super(produceur + "have not produced yet");
     }
 
 }

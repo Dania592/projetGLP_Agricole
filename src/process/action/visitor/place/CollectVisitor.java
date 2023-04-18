@@ -19,7 +19,7 @@ import data.structure.SalleDeTraite;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.AnimalProductCollector;
+import process.action.visitor.being.ProductCollectorVisitor;
 import process.action.visitor.being.HaveNotProducedYetException;
 
 // public class CollectVisitor implements PlaceVisitor<ArrayList<Produit>>{
@@ -88,19 +88,18 @@ import process.action.visitor.being.HaveNotProducedYetException;
 // }
 
 public class CollectVisitor implements PlaceVisitor<Void>{
-    AnimalProductCollector collector;
+    ProductCollectorVisitor collector;
     ArrayList<Produit> products =  new ArrayList<>();
 
 
     
-    public CollectVisitor(AnimalProductCollector collector) {
+    public CollectVisitor(ProductCollectorVisitor collector) {
         this.collector = collector;
     }
 
     @Override
-    public Void action(Etable etable) {
-        System.out.println("Collecte des produits de l'étable : "+ etable);
-        return null;
+    public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable{
+        throw new UnableToPerformSuchActionWithCurrentActionnable(etable);
     }
     
     @Override

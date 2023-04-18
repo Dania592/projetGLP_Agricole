@@ -56,6 +56,12 @@ public class Vache extends AnimalProducteur{
 		return visitor.action(this);	
 	}
 
+
+	@Override
+	public TimeItTakes getTimeItTakes() {
+		return TimeItTakes.VACHE;
+	}
+
 	
 
 }

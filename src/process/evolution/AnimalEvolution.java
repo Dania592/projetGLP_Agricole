@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
+import data.espece.ProductionManager;
+import data.espece.evolution.EvolutionAnimal;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.myExceptions.MortException;
@@ -49,6 +51,8 @@ public class AnimalEvolution implements Serializable {
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
 			if(enclos.getAnimals().contains(animal)) {
 				enclos.removeAnimal(animal);
+			}if(ProductionManager.getInstance().contains(animal)){
+				ProductionManager.getInstance().removeFromProductionManager(animal);
 			}
 		}
 		elementManager.remove(animal);
@@ -61,6 +65,9 @@ public class AnimalEvolution implements Serializable {
 				animal.setLastEvolutionHour(gameHour);
 				try {
 					animal.vieillir();
+					if(animal.getEvolution() == EvolutionAnimal.ADULTE){
+						ProductionManager.getInstance().addProduceur(animal);
+						}
 					String imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
 							+File.separator+animal.getEvolution()+File.separator+"STAND.png";
 					BufferedImage image = ImageIO.read(new File(imagePath));

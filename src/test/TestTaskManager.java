@@ -40,14 +40,13 @@ public class TestTaskManager {
     public static Poule poule5 = new Poule(0,0,Milieu.ESPACE, 4, "pape", "female", poulallier, "C'est ma ref", testMap );
 
     public static ArrayList<Task<?>> tasks  = new ArrayList<>();
-    
+
     public static void main(String[] args) {
         timeManager.start();
         poulallier.addInHabitant(poule1);
         poulallier.addInHabitant(poule2);
         poulallier.addInHabitant(poule3);
         poulallier.addInHabitant(poule4);
-        poule5.setToHaveProduced();
         enclos.addAnimal(poule5);
         
         etable.setState(FixableState.DAMAGED);

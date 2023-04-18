@@ -40,6 +40,7 @@ public enum Activity {
     SEND_BACK_HOME_ANIMALS(3, "Rentrer les animaux", Type.GO_BACK_HOME, ActionnableKey.ENCLOS, 10),
     FEED_ANIMAL_FROM_ENCLOSURE(3, "Nourrir les animaux", Type.FEED, ActionnableKey.ENCLOS, 5),
     COLLECT_EGG_FROM_ENCLOSURE(1, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 2),
+    GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 1),
     // ------------------------------------------------------------------- //
     
     

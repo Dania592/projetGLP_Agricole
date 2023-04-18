@@ -8,49 +8,59 @@ import data.structure.Etable;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.SalleDeTraite;
+import data.structure.hability.Fixable;
+import data.structure.hability.Fixable.FixableState;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 
 public class FixVisitor implements PlaceVisitor<Void> {
 
+    private Void fixStructure(Fixable fixable){
+        if(fixable.getState() != FixableState.DESTROYED){
+            fixable.setState(FixableState.USABLE);
+        }
+        return null;
+    }
+
+
     @Override
     public Void action(Etable etable) {
-        System.out.println("Réparation de mon étable " + etable);
+        fixStructure(etable);
         return null;
     }
 
     @Override
     public Void action(Poulallier poulallier) {
-        System.out.println("Réparationde mon poulailler " + poulallier);
+        fixStructure(poulallier);
         return null;
     }
 
     @Override
     public Void action(Enclos enclos) {
-        System.out.println("Réparation de mon enclos" + enclos);
+        fixStructure(enclos);
         return null;
     }
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("Réparation de mon abatoire "+ abatoire);
+        fixStructure(abatoire);
         return null;
     }
 
     @Override
     public Void action(Maison maison) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("Réparation de ma maison "+ maison);
+        fixStructure(maison);
         return null;
     }
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("Réparation de la salle des traite " + salleDeTraite);
+        fixStructure(salleDeTraite);
         return null;
     }
 
     @Override
     public Void action(Entrepot entrepot) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("Réparation de l'entrepôt " + entrepot);
+        fixStructure(entrepot);
         return null;
     }
 

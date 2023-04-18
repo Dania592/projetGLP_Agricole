@@ -1,54 +1,53 @@
 package process.action.visitor.being;
 
+import data.espece.FoodConsumer.HungerLevel;
+import data.espece.faune.Animal;
 import data.espece.faune.Chevre;
 import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
+import data.flore.terrains.Terrain;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
 //TODO Il faudra vérifier que l'on a la bonne nourriture
 public class BeingFeederVisitor implements DomesticSpeciesVisitor<Void> {
 
-    // @Override
-    // public Void action(Chevre chevre) throws HaveNotProducedYetException {
-    //     chevre.feed();    
-    //     return null;
-    // }
+    public Void feedAnimal(Animal animal){
+        animal.setHungerLevel(HungerLevel.FULL);
+        return null;
+    }
 
-    // @Override
-    // public Void action(Mouton mouton) throws HaveNotProducedYetException {
-    //     mouton.feed();
-    //     return null;
-    // }
+
 
     @Override
     public Void action(Poule poule) throws HaveNotProducedYetException {
-        System.out.println("On nourris "+ poule);
-        return null;
+        return feedAnimal(poule); 
     }
 
     @Override
     public Void action(Vache vache) throws HaveNotProducedYetException {
-        System.out.println("On nourris "+ vache);
-        return null;
+        return feedAnimal(vache);
     }
 
     @Override
     public Void action(Chevre chevre) throws HaveNotProducedYetException {
-        System.out.println("On nourris "+ chevre);
-        return null;
+        return feedAnimal(chevre);
     }
 
     @Override
     public Void action(Chien chien) throws HaveNotProducedYetException {
-        System.out.println("On nourris "+ chien);
-        return null;
+        return feedAnimal(chien);
     }
 
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException {
-        System.out.println("On nourris "+ mouton);
-        return null;
+        return feedAnimal(mouton);
     }
+
+    // @Override
+    // public Void action(Terrain terrain) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+    //     throw new BeingCannotPerformSuchActionException(terrain); 
+    // }
 
     
 }

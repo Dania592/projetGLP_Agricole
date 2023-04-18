@@ -21,8 +21,7 @@ import process.action.task.action.FixTask;
 import process.action.task.action.transfert.SendBackHomeTask;
 import process.action.task.action.transfert.SendToEnclosureTask;
 import process.action.task.action.transfert.SendToSlaugtherHouseTask;
-import process.action.visitor.being.AnimalProductCollector;
-import process.action.visitor.being.BeingFeederVisitor;
+import process.action.visitor.being.ProductCollectorVisitor;
 import process.action.visitor.being.DomesticSpeciesEnclosureSender;
 import process.action.visitor.being.DomesticSpeciesHomeSender;
 import process.action.visitor.place.CollectVisitor;
@@ -33,8 +32,8 @@ import process.action.visitor.place.transfert.HomeSenderVisitor;
 import process.action.visitor.place.transfert.SendToSlaughterHouseVisitor;
 
 public class TaskFactory{
-    private CollectVisitor collector = new CollectVisitor(new AnimalProductCollector());
-    private FeedVisitor feeder = new FeedVisitor(new BeingFeederVisitor());
+    private CollectVisitor collector = new CollectVisitor(new ProductCollectorVisitor());
+    private FeedVisitor feeder = new FeedVisitor();
     private FixVisitor fixer = new FixVisitor();
     private SendToSlaughterHouseVisitor slaughterHouseSender = new SendToSlaughterHouseVisitor();
     private EnclosureSenderVisitor enclosureSender = new EnclosureSenderVisitor(new DomesticSpeciesEnclosureSender());
