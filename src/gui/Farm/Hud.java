@@ -13,6 +13,7 @@ import javax.swing.JLayeredPane;
 import data.configuration.GameConfiguration;
 import data.time.Clock;
 import data.time.CyclicCounter;
+import process.game.SaveFarm;
 
 public class Hud {
 	
@@ -24,7 +25,7 @@ public class Hud {
 	private JLabel validate ;
 	private JLabel cancel ;
 	private JLabel farmer ; 
-	private JLabel player ;
+	private JLabel save ;
 	private ChoixPanel choixScroll;
 	
 	
@@ -84,10 +85,11 @@ public class Hud {
 	public void profile() {
 		// ajouter le mouse listener lors de la création des frames du jouer et fermier 
 		
-		player = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"player.png"));
-		player.setBounds(GameConfiguration.WINDOW_WIDTH-100 , 10, GameConfiguration.WIDHT_LABEL ,  GameConfiguration.HEIGHT_LABEL);
-		player.setToolTipText("Acceder au votre profil");
-		component.add(player , JLayeredPane.DRAG_LAYER);
+		save = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"save.png"));
+		save.setBounds(GameConfiguration.WINDOW_WIDTH-100 , 10, GameConfiguration.WIDHT_LABEL ,  GameConfiguration.HEIGHT_LABEL);
+		save.setToolTipText("Sauvegarder l'état de la ferme");
+		save.addMouseListener(new MouseHud());
+		component.add(save , JLayeredPane.DRAG_LAYER);
 		
 		
 		farmer = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"farmer.png"));
@@ -144,6 +146,7 @@ public class Hud {
 				}
 				else {
 					if(e.getSource().equals(validate)) {
+						component.getChoix().removeElement(component.getSelected());
 						component.getHud().build();
 						component.getSelected().setStatique(true);
 						component.setSelected(component.getFarm().getFermier());
@@ -153,6 +156,13 @@ public class Hud {
 							component.getFarm().getManager().remove(component.getSelected());
 							component.setSelected(component.getFarm().getFermier());
 							component.getHud().build();
+						}
+						else {
+							if(e.getSource().equals(save)) {
+								SaveFarm save = new SaveFarm();
+								save.serializationSave(GameConfiguration.FILE_NAME_SAVE, component.getFarm());
+								new PopupSave(component);
+							}
 						}
 					}
 				}

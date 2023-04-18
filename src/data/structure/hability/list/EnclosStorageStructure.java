@@ -1,5 +1,6 @@
 package data.structure.hability.list;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.espece.faune.AnimalProducteur;
@@ -8,7 +9,7 @@ import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 
-public class EnclosStorageStructure{
+public class EnclosStorageStructure implements Serializable{
 	private ArrayList<Vache> vaches = new ArrayList<>(); 
 	private ArrayList<Poule> poules = new ArrayList<>(); 
 	private ArrayList<Mouton> moutons = new ArrayList<>();

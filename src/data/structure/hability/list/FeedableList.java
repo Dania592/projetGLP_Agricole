@@ -1,11 +1,12 @@
 package data.structure.hability.list;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.structure.hability.Feedable;
 
-public class FeedableList implements ActionnableList<Feedable> {
+public class FeedableList implements ActionnableList<Feedable>,Serializable {
     private ArrayList<Feedable> feedables = new  ArrayList<>();
 
 

@@ -44,5 +44,7 @@ public abstract class GameConfiguration {
 	
 	public final static int FREQUENCE_DECREMENTATION_ENCLOS = 5 ; // 1 animal => 10 min 
 	
+	public final static String FILE_NAME_SAVE = "saved_farm.ser";
+	
 
 }

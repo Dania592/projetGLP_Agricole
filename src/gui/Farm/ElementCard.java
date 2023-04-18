@@ -143,7 +143,7 @@ public class ElementCard extends JPanel{
 							
 						}
 						
-						removeOneElement(element);	
+						//removeOneElement(element);	
 						component.setSelected(element);
 						component.getHud().removeChoix();
 						component.getHud().addValidation();

@@ -30,41 +30,57 @@ public class Choix {
 		for(ArrayList<Structure> structures : resources.getGestionnaireStructure().getStructures().values()) {
 			ArrayList<Element> cardliste = new ArrayList<>();
 			for(Structure structure : structures) {
-				cardliste.add(structure);
+				if(!structure.isStatique()) {
+					cardliste.add(structure);					
+				}
 			}
-			ElementCard newCard = new ElementCard(cardliste, farm, component);
-			cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);	
+			if(cardliste.size()>0) {
+				ElementCard newCard = new ElementCard(cardliste, farm, component);
+				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
+			}
 		}
 		
 		// parcours des terrains 
 		for( ArrayList<Terrain> terrains : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
 			ArrayList<Element> cardliste = new ArrayList<>();
 			for(Terrain terrain : terrains) {
-				cardliste.add(terrain);
+				if(!terrain.isStatique()) {					
+					cardliste.add(terrain);
+				}
 			}
-			ElementCard newCard = new ElementCard(cardliste, farm, component);
-			cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);	
+			if(cardliste.size()>0) {
+				ElementCard newCard = new ElementCard(cardliste, farm, component);
+				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
+			}	
 		}
 		
 		// parcours des animaux 
 		for( ArrayList<Animal> animals : farm.getRessourcesManager().getGestionnaireAnimaux().getAnimaux().values()) {
 			ArrayList<Element> cardliste = new ArrayList<>();
 			for(Animal animal : animals) {
-				cardliste.add(animal);
+				if(!animal.isStatique()){					
+					cardliste.add(animal);
+				}
 			}
-			ElementCard newCard = new ElementCard(cardliste, farm, component);
-			cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);	
+			if(cardliste.size()>0) {
+				ElementCard newCard = new ElementCard(cardliste, farm, component);
+				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
+			}	
 		}
 		
 		// parcours des enclos
 		ArrayList<Element> cardliste = new ArrayList<>();
 		for( Enclos enclos : farm.getRessourcesManager().getGestionnaireEnclos().getEnclos()) {
-			cardliste.add(enclos);
+			if(!enclos.isStatique()) {
+				cardliste.add(enclos);				
+			}
 		}	
+		if(cardliste.size()>0) {
 			ElementCard newCard = new ElementCard(cardliste, farm, component);
-			cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);	
+			cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
+		}	
 
-			cards.get("Maison").removeOneElement(cards.get("Maison").getElements().get(0));
+			//cards.get("Maison").removeOneElement(cards.get("Maison").getElements().get(0));
 	}
 	
 	
@@ -73,6 +89,11 @@ public class Choix {
 		return cards;
 	}
 
+	public void removeElement(Element element ) {
+		if(cards.containsKey(element.getClass().getSimpleName())) {
+			cards.get(element.getClass().getSimpleName()).removeOneElement(element);
+		}
+	}
 
 	public void addElement(Element element) {
 		if(cards.containsKey(element.getClass().getSimpleName())) {

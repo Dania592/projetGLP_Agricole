@@ -21,8 +21,9 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private int y ;
 
 
-	public MainGuiTest(String title ) {
+	public MainGuiTest(String title , Farm farm ) {
 		super(title);
+		this.farm = farm ;
 		init();
 	}
 
@@ -31,7 +32,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 
-		farm=GameBuilder.buildinFarm();
+		//farm=GameBuilder.buildinFarm();
 
 		selected= farm.getManager().getMapManager().get("fermier");	
 

@@ -1,10 +1,11 @@
 package data.structure.hability.list;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.structure.hability.Fixable;
-public class FixableList implements ActionnableList<Fixable> {
+public class FixableList implements ActionnableList<Fixable>,Serializable {
     private ArrayList<Fixable> fixables = new ArrayList<>();
 
     @Override

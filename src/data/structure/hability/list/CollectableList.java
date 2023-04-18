@@ -1,11 +1,12 @@
 package data.structure.hability.list;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.structure.hability.Productif;
 
-public class CollectableList implements ActionnableList<Productif> {
+public class CollectableList implements ActionnableList<Productif>,Serializable {
     private ArrayList<Productif> productifs = new ArrayList<>();
 
     public CollectableList(){}

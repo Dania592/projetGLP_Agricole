@@ -99,7 +99,7 @@ public abstract class EtreVivant extends Element implements Mortel{
 	}
 
 	public void setStatique() {
-		super.setStatique(false);
+		super.setStatique(true);
 	}
 
 }
