@@ -17,11 +17,9 @@ public class Poulallier extends Refuge<Poule>{
 	
 	public Poulallier(int ligne_init, int colonne_init,String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT, reference , map );
-		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minimoulin.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
+		
 	}
 	@Override
 	public ArrayList<ActionnableKey> getActionnableKey(){

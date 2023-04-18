@@ -21,11 +21,9 @@ public class Entrepot extends Structure{
 	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map);
 		this.produits = new ArrayList<>();
-		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minigrange.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		setImage("src"+File.separator+"ressources"+File.separator+"minigrange.png");
+		
 	}
 
 	public ArrayList<Produit> getProduits() {

@@ -1,13 +1,14 @@
 package data.gestion;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.flore.terrains.TypeGraine;
 import data.production.Produit;
 
-public class GestionnaireStocks {
+public class GestionnaireStocks implements Serializable{
 
 	// produits fruits et graines
 	private ArrayList<TypeGraine> graines = new ArrayList<TypeGraine>();

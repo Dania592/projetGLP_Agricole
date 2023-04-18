@@ -1,11 +1,12 @@
 package data.jeu;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import data.finance.Compte;
 import data.stucture_base.Farm;
 
-public class Player {
+public class Player implements Serializable{
 	
 	private String name;
 	private int age;

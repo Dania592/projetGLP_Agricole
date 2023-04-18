@@ -1,12 +1,14 @@
 package data.map;
 
+import java.io.Serializable;
+
 /**
  * cette classe represente la case minimal qui composera la map 
  * avec une dimensin fixe 
  * @author dania
  *
  */
-public class Case {
+public class Case implements Serializable{
 	
 	private boolean libre = true;
 	private int ligne ;

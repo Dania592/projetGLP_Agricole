@@ -1,10 +1,11 @@
 package process.time;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import data.planning.DailyPlanner;
 
-public class WeeklyPlanner {
+public class WeeklyPlanner implements Serializable {
     public enum DayOfWeek {
         MONDAY,
         TUESDAY,

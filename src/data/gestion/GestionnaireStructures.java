@@ -1,5 +1,6 @@
 package data.gestion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +11,7 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
 
-public class GestionnaireStructures {
+public class GestionnaireStructures implements Serializable{
 	private HashMap<String, ArrayList<Structure>> structures = new HashMap<>();
 	
 	public HashMap<String, ArrayList<Structure>> getStructures() {

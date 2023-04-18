@@ -17,11 +17,9 @@ public class Etable extends Refuge<Vache>{
 	
 	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map );
-		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minietable.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
+		
 	}
 	
 	@Override

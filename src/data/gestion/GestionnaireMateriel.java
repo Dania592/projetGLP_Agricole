@@ -1,5 +1,6 @@
 package data.gestion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +10,7 @@ import data.materiel.Engins;
 import data.materiel.Outil;
 import data.materiel.Outils;
 
-public class GestionnaireMateriel {
+public class GestionnaireMateriel implements Serializable {
 
 	// On pourrait appliquer le même principe des graines
 	

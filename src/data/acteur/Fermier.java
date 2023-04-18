@@ -11,7 +11,7 @@ import data.configuration.GameConfiguration;
 import data.map.Map;
 
 
-public class Fermier extends Personne{
+public class Fermier extends Personne {
 	private Image farmerImage ;
 
 	private Date dateNaissance ;
@@ -19,11 +19,9 @@ public class Fermier extends Personne{
 	public Fermier(String nom, int ligne, int colonne , Date dateNaissance ,String reference , Map map ) {
 		super(nom, ligne, colonne , reference , map);
 		this.dateNaissance=dateNaissance;
-		try {
-			setImage(ImageIO.read(new File(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"default"+File.separator+"stand.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		setImage(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"default"+File.separator+"stand.png");
+		
 	}
 
 	public Date getDateNaissance() {

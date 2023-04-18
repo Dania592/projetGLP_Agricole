@@ -1,5 +1,6 @@
 package data.evenement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.acteur.ModeDefense;
@@ -8,7 +9,7 @@ import data.stucture_base.Element;
 
 
 
-public class Catastrophe {
+public class Catastrophe implements Serializable{
 	private int duree;
 	private int debut;
 	private boolean succes;

@@ -26,7 +26,7 @@ public class Terrain extends Element implements Buyable{
 	private EvolutionTerrain evolution;
 	private TypeGraine type;
 	
-	private HashMap<EvolutionTerrain, BufferedImage> images = new HashMap<>();
+	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	
 	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,TypeGraine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
@@ -98,7 +98,7 @@ public class Terrain extends Element implements Buyable{
 		quantiteProduction = ThreadLocalRandom.current().nextInt(10,20);
 	}
 	
-	public BufferedImage getCurrentImage() {
+	public String getCurrentImage() {
 		return getImage();
 	}
 	

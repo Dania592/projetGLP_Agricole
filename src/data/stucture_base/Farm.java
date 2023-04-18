@@ -1,5 +1,7 @@
 package data.stucture_base;
 
+import java.io.Serializable;
+
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.flore.Saison;
@@ -7,10 +9,13 @@ import data.gestion.RessourcesManager;
 import data.time.Clock;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
-import process.time.TimeManager;
 
-public class Farm {
+public class Farm  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * correspond à la dimension de la ferme = nombre de case par côté 
 	 * 

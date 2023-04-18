@@ -1,9 +1,11 @@
 package data.flore.terrains;
 
+import java.io.Serializable;
+
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public enum TypeGraine implements Buyable{
+public enum TypeGraine implements Buyable , Serializable{
 	
 	RADISH,
 	RED_CABBAGE,

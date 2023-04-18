@@ -33,7 +33,7 @@ public class Enclos extends Element implements Fixable, Feedable{
 	private HungerLevel animalsHungerLevel ;
 	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
 
-	private HashMap<String, BufferedImage > images = new HashMap<>();
+	private HashMap<String, String > images = new HashMap<>();
 	
 	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
@@ -76,20 +76,18 @@ public class Enclos extends Element implements Fixable, Feedable{
 	}
 
 
-	public HashMap<String,  BufferedImage> getImages(){
+	public HashMap<String,  String> getImages(){
 		return images ;
 	}
 	
 	private void initImage() {
-		try {
-			images.put("bas_milieu",ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_m.png")));
-			images.put("bas_gauche", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_g.png")));
-			images.put("bas_droit", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_d.png")));
-			images.put("milieu", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png")));
-			images.put("entier", ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			images.put("bas_milieu","src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_m.png");
+			images.put("bas_gauche", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_g.png");
+			images.put("bas_droit", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_d.png");
+			images.put("milieu", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png");
+			images.put("entier", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png");
+		
 	}
 
 	public int getCapacite() {

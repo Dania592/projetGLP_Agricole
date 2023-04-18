@@ -1,5 +1,7 @@
 package process.game;
 
+import java.io.Serializable;
+
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.structure.Enclos;
@@ -10,7 +12,7 @@ import data.stucture_base.Element;
  * @author dania
  *
  */
-public class ElementManager {
+public class ElementManager implements Serializable{
 	private MapManager mapManager;
 
 	public ElementManager(MapManager mapManager) {

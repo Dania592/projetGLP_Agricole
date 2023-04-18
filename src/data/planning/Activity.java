@@ -1,11 +1,12 @@
 package data.planning;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.myExceptions.UnknownActivityException;
 import data.structure.hability.Actionnable.ActionnableKey;
 
-public enum Activity {
+public enum Activity implements Serializable{
 
     SEND_TO_MILKING_PARLOUR(1, "Envoyer en salle de traite", Type.TRANSFERT, ActionnableKey.ABATOIRE, 2),
     /*

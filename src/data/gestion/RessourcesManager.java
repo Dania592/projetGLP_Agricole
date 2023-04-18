@@ -1,6 +1,8 @@
 package data.gestion;
 
-public class RessourcesManager {
+import java.io.Serializable;
+
+public class RessourcesManager implements Serializable {
 	private GestionnaireFinancier gestionnaireFinancier = GestionnaireFinancier.getInstance();
 	private GestionnaireStructures gestionnaireStructure = GestionnaireStructures.getInstance();
 	private GestionnaireAnimaux gestionnaireAnimaux = GestionnaireAnimaux.getInstance();

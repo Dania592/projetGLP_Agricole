@@ -1,6 +1,8 @@
 package data.map;
 
-public class Map {
+import java.io.Serializable;
+
+public class Map implements Serializable{
 	
 	private Case[][] cases ;
 	private int nbLignes ;

@@ -3,6 +3,7 @@ package process.evolution;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -18,7 +19,7 @@ import data.time.Clock;
 import process.game.ElementManager;
 import process.time.TimeManager;
 
-public class EvolutionManager {
+public class EvolutionManager implements Serializable {
 
 	private AnimalEvolution animalEvolution ;
 	private ElementManager elementManager ;
@@ -90,14 +91,10 @@ public class EvolutionManager {
 				deathIndex ++;
 				i++;
 				String imagePath =GameConfiguration.IMAGE_PATH +"nuage"+deathIndex+".png";
+				animalsToRemove.get(0).setImage(imagePath);
+				
 				BufferedImage image;
-				try {
-					image = ImageIO.read(new File(imagePath));
-					animalsToRemove.get(0).setImage(image);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}				
+						
 			}
 		}
 

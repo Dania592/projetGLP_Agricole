@@ -1,10 +1,11 @@
 package data.finance;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import process.transaction.Transaction;
 
-public class Banque {
+public class Banque implements Serializable {
 	
 	private Compte compte = new Compte();
 	private HashMap<String, Transaction> historique = new HashMap<>();

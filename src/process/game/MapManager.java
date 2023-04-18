@@ -1,5 +1,6 @@
 package process.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +20,7 @@ import data.stucture_base.Element;
  * @author dania
  *
  */
-public class MapManager {
+public class MapManager implements Serializable{
 
 	private Map map ; 
 	private HashMap<String, Element> composants ;

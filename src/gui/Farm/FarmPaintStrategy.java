@@ -4,6 +4,7 @@ package gui.Farm;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,7 +62,14 @@ public class FarmPaintStrategy {
 		Position position = element.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX();
 		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY();
-		graphics.drawImage(element.getImage(), x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(element.getImage()));
+			graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public JPanel paint(Terrain terrain, HashMap<String, JLabel> actions, Map map) {
@@ -92,19 +100,22 @@ public class FarmPaintStrategy {
 				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					graphics.drawImage(enclos.getImages().get("bas_gauche"), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					ImageIcon image = new ImageIcon(enclos.getImages().get("bas_gauche"));
+					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
 					
 				}
 				if((ligneIndex==position.getLigne_init()|| ligneIndex == position.getLigne_init()+enclos.getDimension()-1) && colonneIndex < enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					graphics.drawImage(enclos.getImages().get("bas_milieu"), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+					ImageIcon image = new ImageIcon(enclos.getImages().get("bas_milieu"));
+					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
 					
 				}
 				if(colonneIndex== position.getColonne_init() ||  colonneIndex==enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					graphics.drawImage(enclos.getImages().get("milieu"), x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
+					ImageIcon image = new ImageIcon(enclos.getImages().get("milieu"));
+					graphics.drawImage(image.getImage(), x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
 				}
 
 			}

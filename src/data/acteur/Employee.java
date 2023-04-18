@@ -2,7 +2,7 @@ package data.acteur;
 
 import data.map.Map;
 
-public class Employee extends Personne {
+public class Employee extends Personne  {
 
 	private float salaire;
 

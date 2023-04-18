@@ -1,6 +1,8 @@
 package data.time;
 
-public class Clock {
+import java.io.Serializable;
+
+public class Clock implements Serializable{
     private static CyclicCounter hour = new CyclicCounter(0, 59, 0);
     private static CyclicCounter minute = new CyclicCounter(0, 59, 0);
     private static CyclicCounter second = new CyclicCounter(0, 59, 0);

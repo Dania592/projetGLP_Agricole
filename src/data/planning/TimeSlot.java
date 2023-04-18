@@ -1,11 +1,12 @@
 package data.planning;
 
+import java.io.Serializable;
 
 /**
  * A TimeSlot is a period of time between two hours, and has a duration and an activity.
  * This class is use to facilitate the addition of a task in a {@see core.planning.DailyPlanner}
  */
-public class TimeSlot{
+public class TimeSlot implements Serializable{
 
     private int startHour;
     private int endHour;

@@ -1,8 +1,10 @@
 package data.planning;
 
+import java.io.Serializable;
+
 import data.myExceptions.AskingToWorkAtIllegalHourException;
 
-public class DailyPlanner {
+public class DailyPlanner implements Serializable{
     public static int FIRST_HOUR_OF_WORK = 6;
     public static int LAST_HOUR_OF_WORK = 22;
 

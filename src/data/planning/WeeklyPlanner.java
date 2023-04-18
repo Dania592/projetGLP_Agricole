@@ -1,8 +1,9 @@
 package data.planning;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class WeeklyPlanner {
+public class WeeklyPlanner implements Serializable {
     public enum DayOfWeek {
         MONDAY,
         TUESDAY,

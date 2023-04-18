@@ -1,5 +1,7 @@
 package data.stucture_base;
 
+import java.io.Serializable;
+
 import data.map.Case;
 import data.map.Map;
 
@@ -10,7 +12,7 @@ import data.map.Map;
  * @author dania
  *
  */
-public class Position {
+public class Position implements Serializable{
 
 
 	private Case[][] tabCase;

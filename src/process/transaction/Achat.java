@@ -1,5 +1,6 @@
 package process.transaction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +9,7 @@ import process.game.Game;
 import process.visitor.AddVisitor;
 
 
-public class Achat extends Transaction{
+public class Achat extends Transaction implements Serializable{
 	private ArrayList<Buyable> cart = new ArrayList<>();
 
 	

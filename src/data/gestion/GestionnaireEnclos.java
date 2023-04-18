@@ -1,11 +1,12 @@
 package data.gestion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.espece.faune.Animal;
 import data.structure.Enclos;
 
-public class GestionnaireEnclos {
+public class GestionnaireEnclos implements Serializable {
 
 	private ArrayList<Enclos> enclos = new ArrayList<Enclos>();
 	

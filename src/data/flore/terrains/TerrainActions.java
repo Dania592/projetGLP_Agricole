@@ -1,10 +1,11 @@
 package data.flore.terrains;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
 
-public class TerrainActions {
+public class TerrainActions implements Serializable {
 	private HashMap<String, JLabel> actions = new HashMap<>();
 	private String[] actionsTab;
 	

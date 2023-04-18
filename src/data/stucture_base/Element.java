@@ -1,15 +1,17 @@
 package data.stucture_base;
 
 
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
+import java.io.Serializable;
 
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;
 
-public  abstract class Element {
+public  abstract class Element implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean statique;
 	private Position position ;
 	private int nbCase ;
@@ -18,7 +20,7 @@ public  abstract class Element {
 	 * la reference d'un objet une fois instancier est unique 
 	 */
 	private String reference;
-	private BufferedImage image ;
+	private String image ;
 	
 	
 	public Element(String reference ,boolean statique, int nbCase , int ligne_init , int colonne_init , Map map ) {
@@ -88,11 +90,11 @@ public  abstract class Element {
 	}
 
 	
-	public BufferedImage getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(BufferedImage image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

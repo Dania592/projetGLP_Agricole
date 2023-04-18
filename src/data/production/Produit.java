@@ -1,6 +1,8 @@
 package data.production;
 
-public abstract  class Produit {
+import java.io.Serializable;
+
+public abstract  class Produit implements Serializable{
 	
 	private float prixVente ;
 	private String reference;

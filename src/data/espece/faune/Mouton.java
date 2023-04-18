@@ -25,14 +25,12 @@ public class Mouton extends AnimalProducteur {
 			
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Laine() , reference , map ,SPEED_GROWTH);
-		try {
+		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Mouton"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
-			BufferedImage image = ImageIO.read(new File(imagePath));
-			setImage(image);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			
+			setImage(imagePath);
+		
 	}
 	
 

@@ -1,8 +1,10 @@
 package data.finance;
 
+import java.io.Serializable;
+
 import process.game.Game;
 
-public abstract class Penalites implements Finance{
+public abstract class Penalites implements Finance,Serializable{
 	private float montant;
 	private int delais;
 	private String type;

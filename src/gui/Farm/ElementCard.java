@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -53,8 +54,8 @@ public class ElementCard extends JPanel{
 		setSize(200, 150);
 		setLayout(null);
 		
-		BufferedImage imageElement = elements.get(0).getImage();
-		imageLabel= new JLabel(new ImageIcon(imageElement));
+		//BufferedImage imageElement = ImageIO.read(new File(elements.get(0).getImage()));
+		imageLabel= new JLabel(new ImageIcon(elements.get(0).getImage()));
 		imageLabel.setBounds(40, 5 , 70, 70);
 		add(imageLabel);
 		

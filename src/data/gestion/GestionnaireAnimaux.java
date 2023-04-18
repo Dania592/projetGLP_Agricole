@@ -1,11 +1,12 @@
 package data.gestion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.espece.faune.Animal;
 
-public class GestionnaireAnimaux {
+public class GestionnaireAnimaux implements Serializable{
 	
 	private HashMap<String, ArrayList<Animal>> animaux = new HashMap<>();
 

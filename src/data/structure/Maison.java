@@ -16,11 +16,9 @@ public class Maison extends Refuge<Personne>{
 	private final static float PRIX_ACHAT = 5000 ;
 	public Maison(int ligne_init, int colonne_init , String reference , Map map ) {
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map );
-		try {
-			setImage(ImageIO.read(new File("src"+File.separator+"ressources"+File.separator+"minimaison.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+			setImage("src"+File.separator+"ressources"+File.separator+"minimaison.png");
+		
 	}
 	
 	@Override

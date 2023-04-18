@@ -1,6 +1,8 @@
 package data.finance;
 
-public class Compte {
+import java.io.Serializable;
+
+public class Compte implements Serializable{
 	
 	private float solde = 1000;
 

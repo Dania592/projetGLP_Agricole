@@ -1,8 +1,10 @@
 package process.transaction;
 
+import java.io.Serializable;
+
 import data.finance.Finance;
 
-public abstract class Transaction implements Finance{
+public abstract class Transaction implements Finance,Serializable{
 	
 	private boolean validated = false;
 	private float totalCost;
