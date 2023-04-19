@@ -51,7 +51,7 @@ public class GestionnaireStocksGUI extends JFrame {
 
 	    addWindowListener(new WindowDispose(this, container));
 		setBackground(LIGHT_BROWN);
-		setSize(910,560);	
+		setSize(910,560);
 		
 		setVisible(true);
 		setResizable(false);

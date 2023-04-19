@@ -5,21 +5,20 @@ import process.visitor.KeyVisitor;
 
 public enum Structures implements Keys{
 
-	MAISON,
-	POULAILLER,
-	ETABLE,
-	GRANGE,
-	ENTREPOT,
-	SALLE_DE_TRAITE,
-	ABATTOIRE,
-	CAGE_POISSON,
-	REFUGE_CHAMEAU,
-	REFUGE_CANARDLUNE,
-	GARAGE;
+	MAISON(150),
+	POULAILLER(300),
+	ETABLE(150),
+	GRANGE(150),
+	ENTREPOT(150),
+	SALLE_DE_TRAITE(400),
+	ABATTOIRE(400),
+	GARAGE(150);
 	
 	private float prixAchat;
 	
-	Structures() {}
+	Structures(float prixAchat) {
+		this.prixAchat = prixAchat;
+	}
 	
 	@Override
 	public float getPrixAchat() {

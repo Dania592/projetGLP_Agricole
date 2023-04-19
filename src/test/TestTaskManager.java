@@ -53,7 +53,7 @@ public class TestTaskManager {
         listOfActionnable.add(poulallier);
         listOfActionnable.add(etable);
         listOfActionnable.add(enclos);
-        taskManager = new TaskManager(timeManager);
+        taskManager = new TaskManager();
         taskManager.start();
 
 

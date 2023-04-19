@@ -5,10 +5,14 @@ import process.visitor.KeyVisitor;
 
 public enum Engins implements Keys{
 
-	TRACTEUR,
-	MACHINE_TRAITE;
+	TRACTEUR(400),
+	TONDEUSE(200);
 	
 	private float prixAchat;
+	
+	Engins(float prixAchat) {
+		this.prixAchat = prixAchat;
+	}
 	
 	@Override
 	public float getPrixAchat() {

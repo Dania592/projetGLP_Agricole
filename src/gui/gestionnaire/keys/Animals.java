@@ -6,10 +6,10 @@ import process.visitor.KeyVisitor;
 public enum Animals implements Keys{
 
 	VACHE(100),
-	MOUTON(200),
-	CHEVRE(300),
-	CHIEN(100),
-	POULE(100);
+	MOUTON(70),
+	CHEVRE(70),
+	CHIEN(50),
+	POULE(20);
 	
 	private float prixAchat;
 	

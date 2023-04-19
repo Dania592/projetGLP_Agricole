@@ -59,7 +59,7 @@ public enum Graine implements Buyable, Keys{
 	
 	@Override
 	public float getPrixAchat() {
-		return prixAchat;
+		return 5;
 	}
 	
 	public <T> T accept(GestionVisitor<T> visitor) {
