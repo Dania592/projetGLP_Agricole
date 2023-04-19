@@ -85,9 +85,11 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud = new Hud(this);
 		hud.build();
 			
-		setBounds(0, 0, GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
+		//setBounds(0, 0, GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
+		setBounds(0, 0, WIDTH, HEIGHT);
 		setLayout(null);
 		setFocusable(true);
+		//setSize(WIDTH, HEIGHT);
 	}
 	
 	public void paintComponent(Graphics g) {

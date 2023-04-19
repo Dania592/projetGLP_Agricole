@@ -1,6 +1,7 @@
 package gui.Farm;
 
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,7 +38,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	public void init() {
 
 		Container contentPane = getContentPane();
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout());
 		
 		//farm=GameBuilder.buildinFarm();
 		
@@ -59,8 +60,10 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
+		setDefaultLookAndFeelDecorated(true);
+		setExtendedState(this.MAXIMIZED_BOTH);
 		setVisible(true);
-		setSize(GameConfiguration.WINDOW_WIDTH , GameConfiguration.WINDOW_HEIGHT);
+		//setSize(GameConfiguration.WINDOW_WIDTH , GameConfiguration.WINDOW_HEIGHT);
 		setResizable(false);
 	}
 

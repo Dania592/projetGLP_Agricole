@@ -50,12 +50,12 @@ public class FarmPaintStrategy implements Serializable {
 					 int y = block.getLigne()*GameConfiguration.CASE_DIMENSION + map.getY();		 
 					 graphics.drawImage(herbe.getImage(),x,y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);
 					 
-	//					 graphics.setColor(Color.black);
-	//					 graphics.drawLine(x, y, x, y+ GameConfiguration.CASE_DIMENSION);
-	//					 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
-	//					 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
-	//					 graphics.drawLine(x+ GameConfiguration.CASE_DIMENSION, y, x+ GameConfiguration.CASE_DIMENSION, y+ GameConfiguration.CASE_DIMENSION);
-	//					 graphics.drawLine(x, y+GameConfiguration.CASE_DIMENSION, x +GameConfiguration.CASE_DIMENSION, y+GameConfiguration.CASE_DIMENSION);
+//						 graphics.setColor(Color.black);
+//						 graphics.drawLine(x, y, x, y+ GameConfiguration.CASE_DIMENSION);
+//						 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
+//						 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
+//						 graphics.drawLine(x+ GameConfiguration.CASE_DIMENSION, y, x+ GameConfiguration.CASE_DIMENSION, y+ GameConfiguration.CASE_DIMENSION);
+//						 graphics.drawLine(x, y+GameConfiguration.CASE_DIMENSION, x +GameConfiguration.CASE_DIMENSION, y+GameConfiguration.CASE_DIMENSION);
 			}
 		}
 	}

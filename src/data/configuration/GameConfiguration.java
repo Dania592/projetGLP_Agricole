@@ -8,7 +8,7 @@ import java.io.File;
 public abstract class GameConfiguration {
 	
 	// constructeur privare 
-	public static final int WINDOW_WIDTH = 1000;
+	public static final int WINDOW_WIDTH = GameConfiguration.CASE_DIMENSION*48;
 	
 	public static final int WINDOW_HEIGHT = 800;
 	
@@ -22,7 +22,7 @@ public abstract class GameConfiguration {
 	
 	public final static int TIME_SPEED = 3 ;
 	
-	public final static int X_MAP = -15*CASE_DIMENSION ;
+	public final static int X_MAP = -10*CASE_DIMENSION ;
 	
 	public final static int Y_MAP = -18*CASE_DIMENSION ;
 	

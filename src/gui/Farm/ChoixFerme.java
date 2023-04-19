@@ -42,20 +42,20 @@ public class ChoixFerme extends JFrame{
 			lastFarme = new JLabel();
 			icon = new ImageIcon(GameConfiguration.IMAGE_PATH+"lastFarm.png");
 			lastFarme.setIcon(icon);
-			lastFarme.setBounds(50, 100, 200, 50);
+			lastFarme.setBounds(100, 100, 200, 50);
 			lastFarme.addMouseListener(new ReadFarmAction());
 			contentPane.add(lastFarme);	
 		}
 		
 		newFarme = new JLabel();
-		newFarme.setBounds(50, 200, 200, 50);
+		newFarme.setBounds(100, 200, 200, 50);
 		ImageIcon newicon = new ImageIcon(GameConfiguration.IMAGE_PATH+"newFarm.png");
 		newFarme.setIcon(newicon);
 		newFarme.addMouseListener(new ReadFarmAction() );
 		contentPane.add(newFarme);	
 	
 		JLabel personnage = new JLabel();
-		personnage.setBounds(280,0,200 , 400);
+		personnage.setBounds(450,0,200 , 400);
 		ImageIcon persoicon = new ImageIcon(GameConfiguration.IMAGE_PATH+"personnage2.png");
 		personnage.setIcon(persoicon);
 		contentPane.add(personnage);
