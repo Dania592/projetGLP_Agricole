@@ -38,9 +38,9 @@ public class Achat extends Transaction{
 	public void validateOrder() {
 		if (cart!=null && cart.size()!=0) {
 			setValidated(true);
-			System.out.println("Commande validée");
 			for (Keys key : cart.keySet()) {
 				addToGestionnaire(key,cart.get(key));
+				
 			}
 			calculateTotalCost();
 			Banque.getInstance().debiter(getTotalCost());
@@ -53,7 +53,6 @@ public class Achat extends Transaction{
 	}
 	
 	public void cancelOrder(Game game) {
-		System.out.println("Commande annulée !");
 		cart.clear();
 		setTotalCost(0);
 	}

@@ -3,17 +3,21 @@ package gui.Farm;
 
 
 import java.awt.Graphics;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import data.stucture_base.Position;
 import gui.Farm.actions.ActionsPane;
 import process.action.TaskManager;
 import process.action.task.Task;
@@ -124,6 +128,7 @@ public class Board  extends JLayeredPane implements Serializable{
 			
 		}
 		hud.time();
+		paintProgressBar(g);
 
 		// les bords de la ferme 
 		
@@ -147,10 +152,15 @@ public class Board  extends JLayeredPane implements Serializable{
 	}
 	
 	
-	public void paintProgressBar() {
+	public void paintProgressBar(Graphics g ) {
 		ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
+		//g.drawLine(0, 0, 300, 300);
 		for(Task task : tasks) {
-			
+			Position position =task.getActionnableTarget().getPosition();
+			int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
+			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
+			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
+			g.drawImage(bar.getImage(), x, y, 100,20, null);
 		}
 	}
 	

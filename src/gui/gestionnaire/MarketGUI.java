@@ -173,9 +173,9 @@ public class MarketGUI extends JFrame{
 	
 	public static void main(String[] args) {
 		MarketGUI market = new MarketGUI(null);
-		for(GestionnaireKey key : data.gestion.Market.getInstance().getArticles().keySet()) {
-			System.out.println(key.name() + " : " + data.gestion.Market.getInstance().getArticles().get(key).size() + "\n");
-		}
+//for(GestionnaireKey key : data.gestion.Market.getInstance().getArticles().keySet()) {
+//			//System.out.println(key.name() + " : " + data.gestion.Market.getInstance().getArticles().get(key).size() + "\n");
+//		}
 	}
 	
 }

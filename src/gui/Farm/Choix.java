@@ -6,11 +6,13 @@ import java.util.HashMap;
 
 import data.espece.faune.Animal;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireFinancier;
 import data.gestion.RessourcesManager;
 import data.structure.Enclos;
 import data.structure.Structure;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.transaction.Achat;
 
 public class Choix implements Serializable {
 
@@ -107,4 +109,6 @@ public class Choix implements Serializable {
 			cards.put(element.getClass().getSimpleName(), newCard);
 		}
 	}
+	
+
 }

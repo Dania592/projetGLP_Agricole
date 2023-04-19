@@ -15,7 +15,7 @@ import process.GestionnaireFactory;
 public class AddKeyVisitor implements KeyVisitor<Void>{
 	
 	private GestionnaireFactory gestionnaireFactory = new GestionnaireFactory();
-	private Map map = new Map(10, 10, 0, 0);
+	private Map map = Map.getInstance();
 	private AddVisitor addVisitor = new AddVisitor();
 
 	@Override

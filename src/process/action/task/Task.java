@@ -88,18 +88,18 @@ public abstract class Task<T extends Actionnable> {
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
         if(timeSpend==0){
-            System.out.println("start"+ this);
+            //System.out.println("start"+ this);
         }
         if(updateTaskStatus()){
             state = state.update();
         }if(state == TaskState.DONE){
             try {
-                System.out.println("PERFORM_ACTION");
+                //System.out.println("PERFORM_ACTION");
                 performAction();
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable temp) {
                 temp.printStackTrace();
             }
-            System.out.println("over");
+           // System.out.println("over");
             throw new TaskCompleteException(this);
         }
     }

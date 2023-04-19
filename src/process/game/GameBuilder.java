@@ -28,7 +28,7 @@ public class GameBuilder {
 	 * @return
 	 */
 	public static MapManager MapBuilder() {
-		Map map = new Map(GameConfiguration.NB_LIGNE , GameConfiguration.NB_COLONNE , GameConfiguration.X_MAP, GameConfiguration.Y_MAP);
+		Map map = Map.getInstance();
 		MapManager manager = new MapManager(map);
 		return manager ;
 	}

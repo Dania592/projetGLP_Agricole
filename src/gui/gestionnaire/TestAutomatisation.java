@@ -51,7 +51,6 @@ public class TestAutomatisation extends JFrame{
 				paneel.setBackground(Color.BLACK);
 				paneel.setPreferredSize(new Dimension(200,20));
 				panel.add(paneel);
-				System.out.println(pos + "\n");
 				pos++;
 				panel.revalidate();
 				panel.repaint();

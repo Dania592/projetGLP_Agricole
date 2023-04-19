@@ -39,19 +39,19 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Enclos enclos) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
-        Iterator<Vache> vacheIter = enclos.getAnimalStorage().getVaches().iterator();
-        Iterator<Mouton> moutonIter = enclos.getAnimalStorage().getMoutons().iterator();
-        while(pouleIter.hasNext()){
-            pouleIter.next().launchAction(homeSender);
-        }
-        while(vacheIter.hasNext()){
-            vacheIter.next().launchAction(homeSender);
-        }
-        while(moutonIter.hasNext()){
-            moutonIter.next().launchAction(homeSender);
-        }
-        return null;
+//        Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
+//        Iterator<Vache> vacheIter = enclos.getAnimalStorage().getVaches().iterator();
+//        Iterator<Mouton> moutonIter = enclos.getAnimalStorage().getMoutons().iterator();
+//        while(pouleIter.hasNext()){
+//            pouleIter.next().launchAction(homeSender);
+//        }
+//        while(vacheIter.hasNext()){
+//            vacheIter.next().launchAction(homeSender);
+//        }
+//        while(moutonIter.hasNext()){
+//            moutonIter.next().launchAction(homeSender);
+//        }
+        throw new UnableToPerformSuchActionWithCurrentActionnable(enclos);
 
     }
 

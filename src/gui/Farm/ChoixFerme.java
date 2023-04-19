@@ -65,6 +65,7 @@ public class ChoixFerme extends JFrame{
 		setVisible(true);
 		setSize(GameConfiguration.WINDOW_WIDTH/2 , GameConfiguration.WINDOW_HEIGHT/2);
 		setResizable(false);
+		setLocationRelativeTo(null);
 	}
 	
 

@@ -67,13 +67,13 @@ public class TaskFactory{
         }else if(activityType == Type.FIX && actionnable instanceof Fixable){
             Fixable fixable = (Fixable)actionnable;
             return newFixTask(activity, fixable);
-        }else if((activityType == Type.SEND_TO_ENCLOSURE || activityType == Type.GO_BACK_HOME )&& actionnable instanceof Distributor){
-            Distributor distributor = (Distributor)actionnable;
-            if(activityType == Type.SEND_TO_ENCLOSURE){
-                return newSendToEnclosureTask(activity, distributor);
-            }else{
-                return newSendBackHomeTask(activity, distributor);
-            }
+//        }else if((activityType == Type.SEND_TO_ENCLOSURE || activityType == Type.GO_BACK_HOME )&& actionnable instanceof Distributor){
+//            Distributor distributor = (Distributor)actionnable;
+//            if(activityType == Type.SEND_TO_ENCLOSURE){
+//                return newSendToEnclosureTask(activity, distributor);
+//            }else{
+//                return newSendBackHomeTask(activity, distributor);
+//            }
         }else if(activityType == Type.SEND_TO_SLAUGHTERHOUSE && actionnable instanceof SlaughterHouseSender){
             SlaughterHouseSender slaughtable = (SlaughterHouseSender)actionnable;
             throw new NotImplementYetException(activity);

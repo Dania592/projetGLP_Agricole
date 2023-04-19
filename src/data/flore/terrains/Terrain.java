@@ -47,7 +47,7 @@ public class Terrain extends Element implements Buyable, Serializable{
 	
 	public void evoluer() {
 		index++;
-		if (index > SPEED) {
+		if (index > SPEED && isStatique()) {
 			index = 0;
 			nextEvolution();
 		}

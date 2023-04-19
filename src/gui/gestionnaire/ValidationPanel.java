@@ -37,7 +37,6 @@ public class ValidationPanel extends JPanel{
 	public void updateTotalCost(float cost) {
 		cost += Float.valueOf(totalCostLabel.getText());
 		totalCostLabel.setText(String.valueOf(cost));
-		System.out.println(cost);
 	}
 	
 	private class Validate implements ActionListener {

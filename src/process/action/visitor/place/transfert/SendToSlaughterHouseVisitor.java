@@ -15,13 +15,13 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("On envoie les vaches de l'"+ etable +"à l'abbatoire");
+        //System.out.println("On envoie les vaches de l'"+ etable +"à l'abbatoire");
         return null;
     }
 
     @Override
     public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable {
-        System.out.println("On envoie les poules du "+poulallier+" à l'abatoire");
+       // System.out.println("On envoie les poules du "+poulallier+" à l'abatoire");
         return null;
     }
 

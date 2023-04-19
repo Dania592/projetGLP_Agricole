@@ -2,6 +2,9 @@ package data.map;
 
 import java.io.Serializable;
 
+import data.configuration.GameConfiguration;
+import process.game.MapManager;
+
 public class Map implements Serializable{
 	
 	private Case[][] cases ;
@@ -12,8 +15,13 @@ public class Map implements Serializable{
 	private Case case_inital ;
 	private int x ; 
 	private int y ;
+	private static Map instance =  new Map(GameConfiguration.NB_LIGNE , GameConfiguration.NB_COLONNE , GameConfiguration.X_MAP, GameConfiguration.Y_MAP);
+
 	
-	public Map( int nbLignes, int nbColones , int x , int y ) {
+	public static Map getInstance() {
+		return instance ;
+	}
+	private Map( int nbLignes, int nbColones , int x , int y ) {
 	
 		// modification 
 		this.x = x;

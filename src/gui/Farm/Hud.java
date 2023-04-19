@@ -126,6 +126,7 @@ public class Hud implements Serializable {
 	}
 	
 	public void addingChoix() {
+		component.getChoix().init();
 		choixScroll = new ChoixPanel(component);
 		choixScroll.setBounds(50, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-170, 160);
 		component.add(choixScroll, JLayeredPane.DRAG_LAYER);

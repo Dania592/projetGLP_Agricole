@@ -2,6 +2,7 @@ package data.structure.hability;
 
 import java.util.ArrayList;
 
+import data.stucture_base.Position;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -27,4 +28,5 @@ public interface Actionnable{
     ArrayList<ActionnableKey> getActionnableKey();
     <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException;
 
+    public Position getPosition() ;
 }   
