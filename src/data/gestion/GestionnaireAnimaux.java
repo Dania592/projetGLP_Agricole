@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.espece.faune.Animal;
+import gui.gestionnaire.keys.Animals;
 
-public class GestionnaireAnimaux implements Serializable{
-	
-	private HashMap<String, ArrayList<Animal>> animaux = new HashMap<>();
+public class GestionnaireAnimaux implements GestionnaireInterface, Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	private HashMap<Animals, ArrayList<Animal>> animaux = new HashMap<>();
 
 	private static GestionnaireAnimaux instance = new GestionnaireAnimaux();
 	
@@ -18,29 +21,36 @@ public class GestionnaireAnimaux implements Serializable{
 		return instance;
 	}
 	
-	public HashMap<String, ArrayList<Animal>> getAnimaux(){
+	public HashMap<Animals, ArrayList<Animal>> getAnimaux(){
 		return animaux;
 	}
 	
 	public void add(Animal animal) {
-		String name = animal.getClass().getSimpleName();
-		if (animaux.containsKey(name)) {
-			animaux.get(name).add(animal);
+		Animals key = animal.getKey();
+		if (animaux.containsKey(key)) {
+			animaux.get(key).add(animal);
 		} else {
 			ArrayList<Animal> animals = new ArrayList<>();
 			animals.add(animal);
-			animaux.put(name, animals);
+			animaux.put(key, animals);
 		}
 	}
 	
 	public void remove(Animal animal) {
-		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getClass().getSimpleName());
+		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getKey());
 		if (animals != null ) {
 			if (animals.size() == 1) {
-				GestionnaireAnimaux.getInstance().getAnimaux().remove(animal.getClass().getSimpleName());
+				GestionnaireAnimaux.getInstance().getAnimaux().remove(animal.getKey());
 			} else {
 				animals.remove(animal);
 			}
+		}
+	}
+	
+	public void remove(Animals key,int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			animaux.get(key).remove(0);
 		}
 	}
 	

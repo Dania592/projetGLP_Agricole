@@ -1,8 +1,14 @@
 package test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import data.configuration.GameConfiguration;
+import data.espece.Milieu;
+import data.espece.faune.Poule;
+import data.gestion.RessourcesManager;
+import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.structure.Enclos;
 import data.structure.Etable;
 import data.structure.Poulallier;
@@ -13,13 +19,6 @@ import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.TaskNotNeededToBePerform;
 import process.action.task.Task;
 import process.time.TimeManager;
-import data.configuration.GameConfiguration;
-import data.espece.Milieu;
-import data.espece.faune.Poule;
-import data.gestion.RessourcesManager;
-import data.map.Map;
-import data.myExceptions.UnableToGenerateNewTaskException;
-import data.planning.Activity;
 
 public class TestTaskManager {
     public static ArrayList<Task<?>> taskToAddToManager = new ArrayList<>();
@@ -27,7 +26,7 @@ public class TestTaskManager {
     public static Map testMap = new Map(GameConfiguration.NB_LIGNE, GameConfiguration.NB_COLONNE, GameConfiguration.X_MAP, GameConfiguration.Y_MAP);
     public static TaskManager taskManager;
     public static TimeManager timeManager = new TimeManager();
-    public static RessourcesManager ressourcesManager =  new RessourcesManager();
+    public static RessourcesManager ressourcesManager =  RessourcesManager.getInstance();
 
     public static Poulallier poulallier =   new Poulallier(0, 0, "poulepoule", testMap);
     public static Etable etable =   new Etable(0, 0, "vavache", testMap);

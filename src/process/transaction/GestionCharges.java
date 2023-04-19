@@ -1,6 +1,5 @@
 package process.transaction;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 import data.finance.Amende;
@@ -8,7 +7,7 @@ import data.finance.Charge;
 import data.finance.Penalites;
 import process.game.Game;
 
-public class GestionCharges  implements Serializable{
+public class GestionCharges {
 	private HashMap<String, Penalites> transactions = new HashMap<>();
 	
 	public void payer(Charge charge, Game game) {

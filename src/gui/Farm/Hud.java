@@ -8,16 +8,21 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingUtilities;
 
 import data.configuration.GameConfiguration;
 import data.time.Clock;
 import data.time.CyclicCounter;
+import gui.gestionnaire.MarketGUI;
 import process.game.SaveFarm;
 
 public class Hud implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private Board component;
 	
 	private JLabel adding = new JLabel();
@@ -142,8 +147,9 @@ public class Hud implements Serializable {
 			}
 			else {
 				if(e.getSource().equals(home)) {
-					Hud.this.component.getParent().setVisible(false);
-					//new Gestionnaire("gestionnaire", Hud.this.component.getParent());	
+					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+					new MarketGUI(frame);
+					frame.dispose();
 				}
 				else {
 					if(e.getSource().equals(validate)) {

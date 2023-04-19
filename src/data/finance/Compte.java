@@ -3,6 +3,8 @@ package data.finance;
 import java.io.Serializable;
 
 public class Compte implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private float solde = 1000;
 

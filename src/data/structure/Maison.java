@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import data.acteur.Personne;
 import data.map.Map;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.place.PlaceVisitor;
 
@@ -36,6 +37,8 @@ public class Maison extends Refuge<Personne>{
 		return MaxCapacity.MAX_CAPACITE_MAISON.getCapacity();
 	}
 
-
+	public Structures getKey() {
+		return Structures.MAISON;
+	}
 	
 }

@@ -4,7 +4,6 @@ package gui.Farm;
 
 import java.awt.Graphics;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JLayeredPane;
@@ -12,15 +11,9 @@ import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
-import data.planning.Activity;
 import data.structure.Enclos;
-import data.structure.Maison;
-import data.structure.hability.Actionnable;
-import data.structure.hability.Actionnable.ActionnableKey;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
-import process.action.TaskFactory;
-import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Produit;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.place.PlaceVisitor;
 
@@ -52,8 +53,8 @@ public class Entrepot extends Structure{
 		return visitor.action(this);
 	}
 
-	
-
-
+	public Structures getKey() {
+		return Structures.ENTREPOT;
+	}
 
 }

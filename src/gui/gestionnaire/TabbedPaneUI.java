@@ -14,10 +14,10 @@ public class TabbedPaneUI extends BasicTabbedPaneUI {
  
     @Override
     public void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
-        g.setColor(Gestionnaire.LIGHT_BROWN);
+        g.setColor(GestionnaireStocksGUI.LIGHT_BROWN);
         g.fillRect(x, y, w, h);
         if (isSelected) {
-            g.setColor(Gestionnaire.MEDIUM_BROWN);
+            g.setColor(GestionnaireStocksGUI.MEDIUM_BROWN);
             g.fillRect(x, y, w, h);
         }
     }

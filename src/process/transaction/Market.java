@@ -1,6 +1,5 @@
 package process.transaction;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 import data.espece.faune.Animal;
@@ -11,7 +10,7 @@ import data.structure.Structure;
 import data.flore.Culture;
 
 
-public class Market implements Serializable{
+public class Market {
 	
 	private static Market instance = new Market();
 	

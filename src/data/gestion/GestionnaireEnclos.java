@@ -3,13 +3,13 @@ package data.gestion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.espece.faune.Animal;
 import data.structure.Enclos;
 
-public class GestionnaireEnclos implements Serializable {
+public class GestionnaireEnclos implements GestionnaireInterface, Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Enclos> enclos = new ArrayList<Enclos>();
-	
 	
 	private static GestionnaireEnclos instance = new GestionnaireEnclos();
 	

@@ -10,11 +10,15 @@ import data.structure.Etable;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Structure;
+import gui.gestionnaire.keys.Structures;
 
-public class GestionnaireStructures implements Serializable{
-	private HashMap<String, ArrayList<Structure>> structures = new HashMap<>();
+public class GestionnaireStructures implements GestionnaireInterface, Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
-	public HashMap<String, ArrayList<Structure>> getStructures() {
+	private HashMap<Structures, ArrayList<Structure>> structures = new HashMap<>();
+	
+	public HashMap<Structures, ArrayList<Structure>> getStructures() {
 		return structures;
 	}
 
@@ -27,24 +31,31 @@ public class GestionnaireStructures implements Serializable{
 	}
 	
 	public void add(Structure structure) {
-		String name = structure.getClass().getSimpleName();
-		if (structures.containsKey(name)) {
-			structures.get(name).add(structure);
+		Structures key = structure.getKey();
+		if (structures.containsKey(key)) {
+			structures.get(key).add(structure);
 		} else {
 			ArrayList<Structure> structs = new ArrayList<>();
 			structs.add(structure);
-			structures.put(name, structs);
+			structures.put(key, structs);
 		}
 	}
 	
 	public void remove(Structure structure) {
-		String name = structure.getClass().getSimpleName();
-		if (structures.containsKey(name)) {
-			if (structures.get(name).size() == 1) {
-				structures.remove(name);
+		Structures key = structure.getKey();
+		if (structures.containsKey(key)) {
+			if (structures.get(key).size() == 1) {
+				structures.remove(key);
 			} else {
-				structures.get(name).remove(structure);
+				structures.get(key).remove(structure);
 			}
+		}
+	}
+	
+	public void remove(Structures key,int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			structures.get(key).remove(0);
 		}
 	}
 	
@@ -66,16 +77,16 @@ public class GestionnaireStructures implements Serializable{
 		ArrayList<Structure> maisons = new ArrayList<>();
 		maisons.add(maison0);
 		maisons.add(maison1);
-		structures.put("Maison", maisons);
+		structures.put(Structures.MAISON, maisons);
 		maisons = new ArrayList<>();
 		maisons.add(etable);
-		structures.put("Etable", maisons);
+		structures.put(Structures.ETABLE, maisons);
 		maisons = new ArrayList<>();
 		maisons.add(poulallier);
-		structures.put(poulallier.getReference(), maisons);
+		structures.put(poulallier.getKey(), maisons);
 		maisons = new ArrayList<>();
 		maisons.add(entrepot);
-		structures.put(entrepot.getReference(), maisons);
+		structures.put(entrepot.getKey(), maisons);
 	}
 	
 	public String toString() {

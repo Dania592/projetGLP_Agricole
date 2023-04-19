@@ -33,7 +33,7 @@ public class Farm implements Serializable{
 		this.clock=clock;
 		elementManager = manager;
 		this.fermier=fermier;
-		ressourcesManager = new RessourcesManager();
+		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile =0;
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;

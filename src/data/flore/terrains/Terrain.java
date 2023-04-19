@@ -1,19 +1,22 @@
 package data.flore.terrains;
 
-import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
+
 import javax.swing.JLabel;
 
 import data.map.Map;
 import data.stucture_base.Element;
+import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.Graine;
+import gui.gestionnaire.keys.Keys;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
+public class Terrain extends Element implements Buyable, Serializable{
 
-
-//Traitement se rapproche d'un animal !!! Sauf que n'est pas un foodConsumer ! 
-public class Terrain extends Element implements Buyable{
+	private static final long serialVersionUID = 1L;
 	
 	private static int SPEED = 10;// vitesse d'évolution
 	private static int DIMENSION = 16; // C'est un carré donc une seule dimension
@@ -27,11 +30,11 @@ public class Terrain extends Element implements Buyable{
 	private int quantiteProduction;
 	
 	private EvolutionTerrain evolution;
-	private TypeGraine type;
+	private Graine type;
 	
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	
-	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,TypeGraine type) {
+	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
@@ -49,7 +52,7 @@ public class Terrain extends Element implements Buyable{
 			nextEvolution();
 		}
 	}
-
+	
 	public void nextEvolution() {
 		switch (count) {
 		case 0 :
@@ -79,7 +82,7 @@ public class Terrain extends Element implements Buyable{
 		default :
 			break;
 		}
-		setActions();
+		//setActions();
 		setImage(images.get(evolution));
 		count++;
 		
@@ -89,7 +92,7 @@ public class Terrain extends Element implements Buyable{
 		return evolution;
 	}
 
-	public TypeGraine getType() {
+	public Graine getType() {
 		return type;
 	}
 	
@@ -120,29 +123,37 @@ public class Terrain extends Element implements Buyable{
 		return null;
 	}
 
-	public void setActions() {
-		if (evolution == EvolutionTerrain.VIERGE) {
-			actions = new HashMap<>();
-			actions.put("Labourer", new JLabel("Labourer"));
-		} else if (evolution == EvolutionTerrain.LABOURE) {
-			actions = new HashMap<>();
-			actions.put("Planter", new JLabel("Planter"));
-			actions.put("Arroser", new JLabel("Arroser"));
-		}else if (evolution == EvolutionTerrain.PLANTE_5) {
-			actions = new HashMap<>();
-			actions.put("Recolter", new JLabel("Recolter"));
-			actions.put("Arroser", new JLabel("Arroser"));
-		} else {
-			actions = new HashMap<>();
-			actions.put("Arroser", new JLabel("Arroser"));
-		}
-	}
-
+//	public void setActions() {
+//		if (evolution == EvolutionTerrain.VIERGE) {
+//			actions = new HashMap<>();
+//			actions.put("Labourer", new JLabel("Labourer"));
+//		} else if (evolution == EvolutionTerrain.LABOURE) {
+//			actions = new HashMap<>();
+//			actions.put("Planter", new JLabel("Planter"));
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		}else if (evolution == EvolutionTerrain.PLANTE_6) {
+//			actions = new HashMap<>();
+//			actions.put("Recolter", new JLabel("Recolter"));
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		} else {
+//			actions = new HashMap<>();
+//			actions.put("Arroser", new JLabel("Arroser"));
+//		}
+//	}
 
 	public String toString() {
 		return "Terrain de " + type;
 	}
 
+	@Override
+	public Keys getKey() {
+		return type;
+	}
 
+	@Override
+	public GestionnaireKey getGestionnaireKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 }

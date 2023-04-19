@@ -48,7 +48,7 @@ public class TogglesButtonUI extends BasicToggleButtonUI{
             viewRect, iconRect, textRect,
             b.getText() == null ? 0 : b.getIconTextGap());
 
-        g.setColor(Gestionnaire.RED);
+        g.setColor(GestionnaireStocksGUI.RED);
 
         if (model.isArmed() && model.isPressed() || model.isSelected()) {
             paintButtonPressed(g,b);

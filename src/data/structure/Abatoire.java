@@ -3,11 +3,14 @@ package data.structure;
 import java.util.ArrayList;
 
 import data.map.Map;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.place.PlaceVisitor;
 
 public class Abatoire extends StructureAction{
 
+	private static final long serialVersionUID = 1L;
+	
 	private final static float PRIX_ACHAT = 50000 ;
 	
 	public Abatoire(int ligne_init, int colonne_init, String reference , Map map ) {
@@ -25,7 +28,8 @@ public class Abatoire extends StructureAction{
 		return visitor.action(this);
 	}
 
-
-
+	public Structures getKey() {
+		return Structures.ABATTOIRE;
+	}
 	
 }

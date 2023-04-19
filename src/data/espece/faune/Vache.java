@@ -1,31 +1,22 @@
 package data.espece.faune;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import data.espece.Milieu;
-import data.espece.Slaughtable;
 import data.espece.evolution.EvolutionAnimal;
-import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.production.Lait;
 import data.production.Produit;
-import data.structure.Enclos;
 import data.structure.Etable;
-import data.structure.Refuge;
-import process.action.visitor.being.HaveNotProducedYetException;
+import gui.gestionnaire.keys.Animals;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
-
-
+import process.action.visitor.being.HaveNotProducedYetException;
 
 public class Vache extends AnimalProducteur{
 
+	private static final long serialVersionUID = 1L;
+	
 	private final static int DUREE_VIE = 300 ;
 	private final static int PRIX_ACHAT = 1000 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
@@ -62,6 +53,8 @@ public class Vache extends AnimalProducteur{
 		return TimeItTakes.VACHE;
 	}
 
-	
+	public Animals getKey() {
+		return Animals.VACHE;
+	}
 
 }

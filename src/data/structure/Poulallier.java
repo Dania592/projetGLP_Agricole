@@ -13,6 +13,7 @@ import data.map.Map;
 import data.structure.hability.Distributor;
 import data.structure.hability.Productif;
 import data.structure.hability.SlaughterHouseSender;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.HaveNotProducedYetException;
@@ -61,6 +62,10 @@ public class Poulallier extends Refuge<Poule> implements Productif, Distributor{
 	@Override
 	protected int getMaxCapacity(){
 		return MaxCapacity.MAX_CAPACITE_POULAILLER.getCapacity();
+	}
+	
+	public Structures getKey() {
+		return Structures.POULAILLER;
 	}
 
 }

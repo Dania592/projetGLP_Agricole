@@ -15,9 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
-import data.espece.evolution.EvolutionAnimal;
 import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
@@ -25,7 +23,7 @@ import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import data.stucture_base.Position;
-import gui.gestionnaire.Gestionnaire;
+import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
 
 
@@ -35,6 +33,8 @@ import gui.gestionnaire.RoundedPanel;
  *
  */
 public class FarmPaintStrategy implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private Map map ;
 	
@@ -80,14 +80,14 @@ public class FarmPaintStrategy implements Serializable {
 		Position position = terrain.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX() + 50;
 		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY() + 50;
-		RoundedPanel panelChoixTerrain = new RoundedPanel(x,y, 100, 100, null, 20, Gestionnaire.LIGHT_BROWN);
+		RoundedPanel panelChoixTerrain = new RoundedPanel(x,y, 100, 100, null, 20, GeneralPaintStrategy.LIGHT_BROWN);
 		//panelChoixTerrain.setOpaque(false);
 		x = 10;
 		y = 10;
 		for(String titre : actions.keySet()) {
 			actions.get(titre).setBounds(x, y, 80, 20);
-			actions.get(titre).setForeground(Gestionnaire.DARK_GREEN);
-			panelChoixTerrain.setBackground(Gestionnaire.LIGHT_BROWN);
+			actions.get(titre).setForeground(GeneralPaintStrategy.DARK_GREEN);
+			panelChoixTerrain.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 			panelChoixTerrain.add(titre, actions.get(titre));
 			y += 30;
 		}
