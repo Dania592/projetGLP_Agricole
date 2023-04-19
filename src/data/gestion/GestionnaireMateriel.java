@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.espece.faune.Animal;
 import data.materiel.Engin;
-import data.materiel.Engins;
 import data.materiel.Outil;
-import data.materiel.Outils;
+import gui.gestionnaire.keys.Engins;
+import gui.gestionnaire.keys.Outils;
 
-public class GestionnaireMateriel implements Serializable {
+public class GestionnaireMateriel implements GestionnaireInterface, Serializable{
 
+	private static final long serialVersionUID = 1L;
 	// On pourrait appliquer le même principe des graines
 	
 	private HashMap<Outils, ArrayList<Outil>> outils = new HashMap<>();
@@ -62,6 +62,20 @@ public class GestionnaireMateriel implements Serializable {
 			this.outils.remove(type);
 		} else {
 			outils.remove(outil);
+		}
+	}
+	
+	public void remove(Outils key,int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			outils.get(key).remove(0);
+		}
+	}
+	
+	public void remove(Engins key,int quantity) {
+		int i = 0;
+		while(i<quantity) {
+			engins.get(key).remove(0);
 		}
 	}
 	

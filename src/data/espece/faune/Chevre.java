@@ -1,26 +1,23 @@
 package data.espece.faune;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
-import data.configuration.GameConfiguration;
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
 import data.production.Produit;
 import data.structure.Etable;
-import process.action.visitor.being.HaveNotProducedYetException;
+import gui.gestionnaire.keys.Animals;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
+import process.action.visitor.being.HaveNotProducedYetException;
 
 
 public class Chevre extends AnimalProducteur{
 
+	private static final long serialVersionUID = 1L;
+	
 	private final static int DUREE_VIE = 500 ;
 	private final static int PRIX_ACHAT = 500 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
@@ -35,8 +32,6 @@ public class Chevre extends AnimalProducteur{
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Chevre"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
 			setImage(imagePath);
-		
-		
 	}
 
 	@Override
@@ -54,6 +49,8 @@ public class Chevre extends AnimalProducteur{
 		return TimeItTakes.CHEVRE;
 	}
 
-
+	public Animals getKey() {
+		return Animals.CHEVRE;
+	}
 	
 }

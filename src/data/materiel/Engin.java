@@ -3,6 +3,7 @@ package data.materiel;
 import data.gestion.Stockage;
 import data.map.Map;
 import data.stucture_base.Element;
+import gui.gestionnaire.keys.Engins;
 import process.visitor.GestionVisitor;
 
 public class Engin extends Element implements Stockage{

@@ -5,8 +5,10 @@ import java.util.HashMap;
 
 import data.acteur.Employee;
 
-public class GestionnaireRH  implements Serializable{
-	
+public class GestionnaireRH implements GestionnaireInterface, Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private HashMap<String, Employee> employees = new HashMap<>();
 
 	private static GestionnaireRH instance = new GestionnaireRH();

@@ -3,6 +3,9 @@ package data.gestion;
 import java.io.Serializable;
 
 public class RessourcesManager implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private GestionnaireFinancier gestionnaireFinancier = GestionnaireFinancier.getInstance();
 	private GestionnaireStructures gestionnaireStructure = GestionnaireStructures.getInstance();
 	private GestionnaireAnimaux gestionnaireAnimaux = GestionnaireAnimaux.getInstance();
@@ -12,7 +15,15 @@ public class RessourcesManager implements Serializable {
 	private GestionnaireEnclos gestionnaireEnclos = GestionnaireEnclos.getInstance();
 	private GestionnaireRH gestionnaireRH = GestionnaireRH.getInstance();
 	 
+	private static RessourcesManager instance = new RessourcesManager();
 	
+	private RessourcesManager() {
+	}
+	
+	public static RessourcesManager getInstance() {
+		return instance;
+	}
+
 	public GestionnaireFinancier getGestionnaireFinancier() {
 		return gestionnaireFinancier;
 	}

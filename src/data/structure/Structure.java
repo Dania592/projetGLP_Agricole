@@ -7,11 +7,15 @@ import data.gestion.Stockage;
 import data.map.Map;
 import data.structure.hability.Fixable;
 import data.stucture_base.Element;
+import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.Structures;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
 public  abstract class Structure extends Element implements Buyable,Stockage, Fixable,Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private float prixAchat ;
 	private FixableState state ;
 	private Charge[] charges ;
@@ -76,5 +80,11 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 	public void setState(FixableState newState){
 		state = newState;
 	}
+	
+	public GestionnaireKey getGestionnaireKey() {
+		return GestionnaireKey.STRUCTURES;
+	}
+	
+	public abstract Structures getKey();
 
 }

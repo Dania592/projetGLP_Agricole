@@ -3,13 +3,14 @@ package data.gestion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.espece.faune.Animal;
 import data.finance.Amende;
 import data.finance.Charge;
 import process.transaction.Achat;
 import process.transaction.Vente;
 
-public class GestionnaireFinancier implements Serializable{
+public class GestionnaireFinancier implements GestionnaireInterface, Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Achat> achats = new ArrayList<Achat>();
 	private ArrayList<Vente> ventes = new ArrayList<Vente>();

@@ -8,6 +8,9 @@ import data.notion.Mortel;
 import data.stucture_base.Element;
 
 public abstract class EtreVivant extends Element implements Mortel, Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private Milieu milieu ;
 	private int dureeVie;
 	private float prixAchat ,prixVente;

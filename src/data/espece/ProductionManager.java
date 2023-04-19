@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.espece.Produceur.ProductifState;
-import data.espece.faune.Animal;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.HaveNotProducedYetException;
 import process.action.visitor.being.ProduceVisitor;

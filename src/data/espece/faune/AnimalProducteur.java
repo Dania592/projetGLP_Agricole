@@ -2,8 +2,6 @@ package data.espece.faune;
 
 
 
-import java.util.concurrent.CyclicBarrier;
-
 import data.espece.Milieu;
 import data.espece.Produceur;
 import data.espece.Slaughtable;
@@ -11,13 +9,14 @@ import data.espece.Transportable;
 import data.map.Map;
 import data.production.Produit;
 import data.structure.Structure;
-import data.time.BoundedCounter;
 import data.time.CyclicCounter;
 
 
 
 public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private int quantiteProduction ;
 	private ProductifState productifState;
 	private CyclicCounter productionCycle;

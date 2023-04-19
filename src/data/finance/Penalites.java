@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import process.game.Game;
 
-public abstract class Penalites implements Finance,Serializable{
+public abstract class Penalites implements Finance, Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private float montant;
 	private int delais;
 	private String type;

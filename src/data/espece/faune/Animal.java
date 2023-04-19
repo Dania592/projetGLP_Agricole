@@ -1,8 +1,6 @@
 package data.espece.faune;
 
 
-import javax.swing.plaf.nimbus.State;
-
 import data.espece.EtreVivant;
 import data.espece.FoodConsumer;
 import data.espece.Milieu;
@@ -11,6 +9,8 @@ import data.gestion.Stockage;
 import data.map.Map;
 import data.myExceptions.MortException;
 import data.structure.Structure;
+import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.Animals;
 import process.evolution.Direction;
 import process.transaction.Buyable;
 import process.transaction.Saleable;
@@ -21,6 +21,8 @@ import process.visitor.GestionVisitor;
 
 public abstract class Animal extends EtreVivant implements Stockage, Saleable, Buyable, FoodConsumer{
 
+	private static final long serialVersionUID = 1L;
+	
 	private int naissance ;
 	private float poids ;
 	private String nom ;
@@ -127,5 +129,11 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
     public void setHungerLevel(HungerLevel hungerLevel) {
         this.hungerLevel = hungerLevel;
     }
+    
+    public GestionnaireKey getGestionnaireKey() {
+    	return GestionnaireKey.ANIMALS;
+    }
+    
+    public abstract Animals getKey();
 	
 }

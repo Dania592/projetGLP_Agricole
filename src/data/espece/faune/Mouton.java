@@ -1,26 +1,21 @@
 package data.espece.faune;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
-import data.configuration.GameConfiguration;
 import data.espece.Milieu;
-import data.espece.Slaughtable;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Laine;
 import data.production.Produit;
-import data.structure.Enclos;
 import data.structure.Etable;
-import data.structure.Refuge;
-import process.action.visitor.being.HaveNotProducedYetException;
+import gui.gestionnaire.keys.Animals;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
+import process.action.visitor.being.HaveNotProducedYetException;
 
 public class Mouton extends AnimalProducteur{
+
+	private static final long serialVersionUID = 1L;
 	
 	private final static int DUREE_VIE = 50 ;
 	private final static int PRIX_ACHAT = 100 ;
@@ -37,8 +32,6 @@ public class Mouton extends AnimalProducteur{
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Mouton"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
 			setImage(imagePath);
-			
-		
 	}
 	
 
@@ -58,5 +51,8 @@ public class Mouton extends AnimalProducteur{
 		return TimeItTakes.MOUTON;
 	}
 	
+	public Animals getKey() {
+		return Animals.MOUTON;
+	}
 
 }

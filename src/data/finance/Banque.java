@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import process.transaction.Transaction;
 
-public class Banque implements Serializable {
+public class Banque implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private Compte compte = new Compte();
 	private HashMap<String, Transaction> historique = new HashMap<>();

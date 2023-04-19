@@ -2,13 +2,21 @@ package data.production;
 
 import java.io.Serializable;
 
-public abstract  class Produit implements Serializable{
-	
-	private float prixVente ;
-	private String reference;
-	
+public abstract class Produit implements Serializable{
 
-
+	private static final long serialVersionUID = 1L;
+	
+	private Produits type;
+	private int quantity;
+	private float prixVente;
+		
+	
+	public Produit(Produits type, float prixVente) {
+		this.type = type;
+		this.prixVente = prixVente;
+		quantity = 0;
+	}
+	
 	public Produit(float prixVente) {
 		this.prixVente=prixVente;
 	}
@@ -20,11 +28,23 @@ public abstract  class Produit implements Serializable{
 	public void setPrixVente(float prixVente) {
 		this.prixVente = prixVente;
 	}
-	public String getReference() {
-		return reference;
+	
+	public Produits getType() {
+		return type;
 	}
 	
-	public void setReference(String reference) {
-		this.reference = reference;
+	public int getQuantity() {
+		return quantity;
 	}
+	
+	public void incrementQuantity() {
+		quantity++;
+	}
+	
+	public void decrementQuantity() {
+		if (quantity > 0) {
+			quantity--;
+		}
+	}
+	
 }
