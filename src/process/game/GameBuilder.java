@@ -17,6 +17,7 @@ import data.structure.Structure;
 import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
+import process.action.TaskManager;
 import process.time.TimeManager;
 
 
@@ -36,8 +37,12 @@ public class GameBuilder {
 		
 		ElementManager elementManager = new ElementManager(MapBuilder());
 		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
-		TimeManager timeManager = new TimeManager();
+		TimeManager timeManager = TimeManager.getInstance();
 		timeManager.start();
+		
+		TaskManager taskManager = TaskManager.getInstance();
+		taskManager.start();
+		
 		Farm farm = new Farm( elementManager , farmer , timeManager.getClock());
 		farm.reservePlaceToFarm();
 		

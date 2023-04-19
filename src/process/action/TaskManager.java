@@ -20,12 +20,20 @@ public class TaskManager extends Thread {
     private ArrayList<Task<?>> taskCompleted = new ArrayList<>();
     private int currentHour;
     private static TaskFactory taskFactory = TaskFactory.getInstance();
-    private TimeManager timeManager;
+    private TimeManager timeManager ;
+    
+    private static TaskManager taskManager = new TaskManager();
+    
+    
     // public TaskManager(RessourcesManager ressourcesManager, TimeManager // Pour l'automatisation des tâches et leur attribution à un personnage!
-    public TaskManager(TimeManager timeManager){
-        this.timeManager = timeManager;
+    private  TaskManager(){
+        this.timeManager =TimeManager.getInstance();
         currentHour = timeManager.getClock().getHour().getValue();
 
+    }
+
+    public static TaskManager getInstance() {
+    	return taskManager ;
     }
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)

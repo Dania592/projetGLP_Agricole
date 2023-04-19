@@ -1,5 +1,4 @@
 package process.time;
-
 import data.configuration.GameConfiguration;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import data.time.Clock;
@@ -9,21 +8,21 @@ public class TimeManager extends Thread{
     private boolean isTimeRunning;
     private DayOfWeek day;
     private int timeSpeed = 1; 
+    private static TimeManager timeManager = new TimeManager();
 
     public Clock getClock() {
         return clock;
     }
-    public TimeManager(boolean running){
+    private TimeManager(){
         clock = Clock.getInstance();
         dayCounter= 0;
-        isTimeRunning = running;
+        isTimeRunning = true;
         day = DayOfWeek.MONDAY;
     }
 
-    public TimeManager(){
-        this(true);
-    }
-
+   public static TimeManager getInstance() {
+	  return timeManager;
+   }
 
     public void setTimeRunning(boolean isTimeRunning) {
         this.isTimeRunning = isTimeRunning;

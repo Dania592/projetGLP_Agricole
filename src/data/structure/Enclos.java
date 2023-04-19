@@ -168,7 +168,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 
 	@Override
 	public boolean isNeedToBeFeed() {
-		return animalsHungerLevel == HungerLevel.HUNGRY || animalsHungerLevel == HungerLevel.VERY_HUNGRY || animalsHungerLevel == HungerLevel.STARVING;
+		return niveauNourriture == FullLevel.EMPTY || niveauNourriture== FullLevel.HALF_FULL || niveauNourriture == FullLevel.QUARTER_FULL;
 	}
 
 	@Override

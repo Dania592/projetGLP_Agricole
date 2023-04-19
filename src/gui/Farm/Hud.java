@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
@@ -16,7 +17,9 @@ import javax.swing.SwingUtilities;
 import data.configuration.GameConfiguration;
 import data.time.Clock;
 import data.time.CyclicCounter;
+import gui.Farm.actions.ActionsPane;
 import gui.gestionnaire.MarketGUI;
+import process.action.task.Task;
 import process.game.SaveFarm;
 
 public class Hud implements Serializable {
@@ -33,6 +36,7 @@ public class Hud implements Serializable {
 	private JLabel farmer ; 
 	private JLabel save ;
 	private ChoixPanel choixScroll;
+	private ActionsPane actions;
 	
 	
 	private JLabel time = new JLabel();
@@ -101,7 +105,9 @@ public class Hud implements Serializable {
 		farmer = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"farmer.png"));
 		farmer.setBounds(10 , 10, GameConfiguration.WIDHT_LABEL ,  GameConfiguration.HEIGHT_LABEL);
 		farmer.setToolTipText("Acceder au profil du fermier");
+		farmer.addMouseListener(new MouseHud());
 		component.add(farmer , JLayeredPane.DRAG_LAYER);
+		
 	}
 
 	public void time() {
@@ -135,6 +141,20 @@ public class Hud implements Serializable {
 		} else {
 			addingChoix();
 		}
+	}
+	// passer en parametre la structure pour recuperer
+	public void add_Actions(int x , int y , ArrayList<Task<?>> taches ) {
+		if(!Arrays.asList(component.getComponents()).contains(actions)) {
+			actions = new ActionsPane(taches, x , y , this);
+			component.add(actions);		
+		}
+		else {
+			component.remove(actions);
+		}
+	}
+	
+	public void removeActionPane() {
+		component.remove(actions);
 	}
 	
 	
@@ -170,10 +190,24 @@ public class Hud implements Serializable {
 								save.serializationSave(GameConfiguration.FILE_NAME_SAVE, component.getFarm());
 								new PopupSave(component);
 							}
+							else {
+//								if(e.getSource().equals(farmer)) {
+//									ArrayList<String> taches = new ArrayList<>();
+//									taches.add("Arroser");
+//									taches.add("Nourrir");
+//									int x = e.getX();
+//									int y = e.getY();
+//									actions = new ActionsPane(taches, x , y);
+//									component.add(actions);
+//								}
+								
+							}
 						}
 					}
 				}
 			}
+			
+			
 		}
 
 		@Override

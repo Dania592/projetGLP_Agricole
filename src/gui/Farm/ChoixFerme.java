@@ -76,7 +76,7 @@ public class ChoixFerme extends JFrame{
 			if(e.getSource().equals(lastFarme)) {
 				SaveFarm save = new SaveFarm();
 				Farm farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
-				TimeManager timeManager = new TimeManager();
+				TimeManager timeManager = TimeManager.getInstance();
 				timeManager.start();
 				
 				MainGuiTest gameTest = new MainGuiTest("test", farm);

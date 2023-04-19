@@ -4,16 +4,19 @@ package gui.Farm;
 
 import java.awt.Graphics;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import gui.Farm.actions.ActionsPane;
+import process.action.TaskManager;
+import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 
@@ -26,6 +29,8 @@ public class Board  extends JLayeredPane implements Serializable{
 	private Element clicked;
 	private JPanel choixTerrain;
 	private MouseHandler mouseHandler;
+	private ChoixPanel choixScroll;
+	private ActionsPane actions;
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
@@ -82,7 +87,6 @@ public class Board  extends JLayeredPane implements Serializable{
 		setBounds(0, 0, WIDTH, HEIGHT);
 		setLayout(null);
 		setFocusable(true);
-		//setSize(WIDTH, HEIGHT);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -142,6 +146,13 @@ public class Board  extends JLayeredPane implements Serializable{
 		keys.setSelected(selected);
 	}
 	
+	
+	public void paintProgressBar() {
+		ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
+		for(Task task : tasks) {
+			
+		}
+	}
 	
 
 	

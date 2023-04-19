@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import data.configuration.GameConfiguration;
+import data.planning.Activity;
 import data.structure.hability.Actionnable;
 import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import process.action.TaskManager;
 import process.action.task.Task;
 import process.game.GameBuilder;
 
@@ -101,7 +103,13 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				//System.out.println(element.getReference());
 				selected = element ;
 				dashboard.setSelected(element);
+				if(selected instanceof Actionnable) {
+					Actionnable actionnable = (Actionnable)element;
+					ArrayList<Task<?>> tasks = TaskManager.getInstance().getPossibleTaskToPerform(actionnable);
+					dashboard.getHud().add_Actions(x, y , tasks);					
+				}
 			}
+			
 
 		}
 

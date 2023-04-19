@@ -1,6 +1,7 @@
 package process.action.visitor.place;
 
 import data.flore.terrains.Terrain;
+import data.espece.FoodConsumer.HungerLevel;
 import data.flore.terrains.EvolutionTerrain;
 // import java.util.Iterator;
 
@@ -15,6 +16,7 @@ import data.structure.Poulallier;
 import data.structure.SalleDeTraite;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.evolution.FullLevel;
 
 public class FeedVisitor implements PlaceVisitor<Void>{
     @Override
@@ -31,6 +33,9 @@ public class FeedVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Enclos enclos){
+    	enclos.setNiveauEau(FullLevel.FULL);
+    	enclos.setNiveauNourriture(FullLevel.FULL);
+    	enclos.setAnimalsHungerLevel(HungerLevel.FULL);
         System.out.println("Nourissant les animaux de mon enclos "+ enclos);
         return null;
     }
