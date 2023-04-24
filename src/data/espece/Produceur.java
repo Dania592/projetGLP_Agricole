@@ -1,35 +1,39 @@
 package data.espece;
 
-import data.production.Produit;
+import data.notion.Mortel.EtatSante;
+import data.production.Produits;
+import data.time.CyclicCounter;
+
 
 public interface Produceur extends DomesticSpecie{
         public enum ProductifState{
         UNABLE_TO_PRODUCE,
         PRODUCING,
         HAVE_PRODUCE,
+        IN_WAIT_TO_BE_TRANSPORTED,
+        IN_WAIT,
         ;
         //TODO A absoluement faire QUAND L'EVOLUTION PASSE EN MODE ADULTE il faut se la productivité
         
     }
 
     public enum Type{
-        BAD_PRODUCEUR(7),
-        AVERAGE_PRODUCEUR(1),
-        GOOD_PRODUCEUR(3),
-        FAST_PRODUCEUR(2),
-        DOPED_PRODUCEUR(1),
+        BAD_PRODUCEUR(1),
+        AVERAGE_PRODUCEUR(2),
+        GOOD_PRODUCEUR(4),
+        FAST_PRODUCEUR(6),
+        DOPED_PRODUCEUR(10),
         ;
 
-        private int productionTimeMultiplier;
+        private int numberOfProductPerProductifCycle;
 
-        private Type(int productionMultiplier) {
-            this.productionTimeMultiplier = productionMultiplier;
+        private Type(int numberOfProductPerProductifCycle) {
+            this.numberOfProductPerProductifCycle = numberOfProductPerProductifCycle;
         }
 
-        public int getProductionTimeMultiplier() {
-            return productionTimeMultiplier;
+        public int getNumberOfProductPerProductifCycle() {
+            return numberOfProductPerProductifCycle;
         }
-
 
 
         public Type upgradeProduceurType(){
@@ -65,11 +69,14 @@ public interface Produceur extends DomesticSpecie{
     }
 
 	public enum TimeItTakes{
-    CHEVRE(1000, Type.AVERAGE_PRODUCEUR),
-		MOUTON(3300, Type.AVERAGE_PRODUCEUR),
-		POULE(1000, Type.AVERAGE_PRODUCEUR),
-		VACHE(100, Type.AVERAGE_PRODUCEUR),
+        CHEVRE(250, Type.AVERAGE_PRODUCEUR),
+		MOUTON(300, Type.AVERAGE_PRODUCEUR),
+		POULE(200, Type.AVERAGE_PRODUCEUR),
+		VACHE(500, Type.AVERAGE_PRODUCEUR),
+        TERRAIN(500, Type.AVERAGE_PRODUCEUR),
+
         ;
+        
 		private int timeInSeconde;
         private Type produceurType;
         private TimeItTakes(int timeInSeconde, Type produceurType) {
@@ -78,7 +85,7 @@ public interface Produceur extends DomesticSpecie{
         }
 
         public int getTimeInSeconde() {
-            return timeInSeconde*produceurType.getProductionTimeMultiplier();
+            return timeInSeconde;
         }
 
         public Type getProduceurType() {
@@ -87,17 +94,20 @@ public interface Produceur extends DomesticSpecie{
         public void setProduceurType(Type produceurType) {
             this.produceurType = produceurType;
         }
-		
 
 	}
 	
     boolean haveProduced();
-    Produit collectProduction();
+    Produits collectProduction();
     ProductifState getProductifState();
     Type getProduceurType();
     TimeItTakes getTimeItTakes();
     int getTimeItTakesToProduceInSeconde();
     void setProductifState(ProductifState productifState);
-     
+    boolean needSpecialPlaceToGetProduction();
+    boolean needSpecialActionToGetProduction();
+    CyclicCounter getProductionCycle();
+    EtatSante getEtatSante();
+    
 
 }

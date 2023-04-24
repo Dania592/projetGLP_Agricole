@@ -6,7 +6,10 @@ import data.stucture_base.Position;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 
@@ -23,10 +26,21 @@ public interface Actionnable{
         ENTREPOT,
         STRUCTURE,
         TERRAIN,
+        BERGERIE_CHEVRE,
+        BERGERIE_MOUTON,
+        PUIT,
+        GARAGE,
+        GRANGE,
+        ;
     }
 
-    ArrayList<ActionnableKey> getActionnableKey();
-    <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException;
+    ArrayList<ActionnableKey> getASetOfAllActionnableKey();
+    ActionnableKey getSpecificActionnableKey();
+    boolean isCurrentlyUsedForAnotherTask();
+    void setStructureStatus(boolean isCurrentlyUsedForAnotherTask);
+    <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
+    public Position getPosition();
+    boolean isNeedToBeFixed();
+    boolean isStatique();
 
-    public Position getPosition() ;
 }   

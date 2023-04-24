@@ -11,35 +11,37 @@ import data.flore.terrains.EvolutionTerrain;
 // import data.espece.faune.Poule;
 // import data.espece.faune.Vache;
 import data.structure.Abatoire;
+import data.structure.BergerieChevre;
+import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Etable;
+import data.structure.Garage;
+import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
+import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.evolution.FullLevel;
 
 public class FeedVisitor implements PlaceVisitor<Void>{
     @Override
-    public Void action(Etable etable) {
-        System.out.println("Noussissant les vaches de mon étable "+etable);
-        return null;
+    public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(etable);
     }    
 
     @Override
-    public Void action(Poulallier poulallier) {
-
-        return null;
+    public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos){
-    	enclos.setNiveauEau(FullLevel.FULL);
     	enclos.setNiveauNourriture(FullLevel.FULL);
-    	enclos.setAnimalsHungerLevel(HungerLevel.FULL );
-        System.out.println("Nourissant les animaux de mon enclos "+ enclos);
+    	enclos.setAnimalsHungerLevel(HungerLevel.FULL);
         return null;
     }
 
@@ -64,19 +66,36 @@ public class FeedVisitor implements PlaceVisitor<Void>{
     }
 
     @Override
-    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        if(canFeedTerrain(terrain)){
-            System.out.println("Nourissant les animaux de mon enclos "+ terrain);
-        }
-        return null;
+    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable{
+        throw new UnableToPerformSuchActionWithCurrentActionnable();
     }
 
-    private boolean canFeedTerrain(Terrain terrain){
-        return terrain.getEvolution() == EvolutionTerrain.PLANTE|
-            terrain.getEvolution() == EvolutionTerrain.PLANTE_1|
-            terrain.getEvolution() == EvolutionTerrain.PLANTE_2|
-            terrain.getEvolution() == EvolutionTerrain.PLANTE_3|
-            terrain.getEvolution() == EvolutionTerrain.PLANTE_4;
+    @Override
+    public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,
+            NotImplementYetException, UnableToMakeTheTransfertException {
+        throw new UnableToPerformSuchActionWithCurrentActionnable();
+
+    }
+
+    @Override
+    public Void action(BergerieMouton bergerieMouton) throws UnableToPerformSuchActionWithCurrentActionnable,
+            NotImplementYetException, UnableToMakeTheTransfertException {
+        throw new UnableToPerformSuchActionWithCurrentActionnable();
+    }
+
+    @Override
+    public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(puit);
+    }
+
+    @Override
+    public Void action(Garage garage) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(garage);
+    }
+
+    @Override
+    public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
     }
 
 }

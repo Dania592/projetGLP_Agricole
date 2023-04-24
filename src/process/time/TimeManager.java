@@ -40,7 +40,7 @@ public class TimeManager extends Thread{
             if (clock.getHour().getValue() == 24) {
                 dayCounter++;
                 clock.getHour().setValue(0);
-                //day = day.next();
+                day = day.next();
             }
             try {
                 sleep(GameConfiguration.GAME_SPEED*timeSpeed);

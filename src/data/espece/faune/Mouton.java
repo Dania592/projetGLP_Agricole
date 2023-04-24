@@ -6,12 +6,21 @@ import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Laine;
+import data.production.Lait;
+import data.production.Meat;
 import data.production.Produit;
+import data.production.Produits;
 import data.structure.Etable;
+import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 
 public class Mouton extends AnimalProducteur{
 
@@ -23,9 +32,10 @@ public class Mouton extends AnimalProducteur{
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 10 ;
 	private final static int SPEED_GROWTH = 2; 
+	private final static Laine laine = new Laine();
+	private final static Meat equivalentInMeat = new Meat();
 	
 	public Mouton(int ligne_init, int colonne_init, int naissance,String nom, String sexe, Etable habitat,String reference ,Map map) {
-			
 		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, new Laine() , reference , map ,SPEED_GROWTH);
 		
@@ -36,12 +46,12 @@ public class Mouton extends AnimalProducteur{
 	
 
 	@Override
-	public Produit collectProduction() {
-		return new Laine();
+	public Produits collectProduction() {
+		return laine.getType();
 	}
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
 		return visitor.action(this); 
 	}
 
@@ -54,5 +64,33 @@ public class Mouton extends AnimalProducteur{
 	public Animals getKey() {
 		return Animals.MOUTON;
 	}
+
+
+	@Override
+	public boolean needSpecialPlaceToGetProduction() {
+		return false;
+	}
+
+
+	@Override
+	public Structures getHomeLabel() {
+		return Structures.BERGERIE_MOUTON;
+	}
+
+
+	@Override
+	public Meat getEquivalentInMeat() {
+		return equivalentInMeat;
+	}
+
+
+	@Override
+	public boolean needSpecialActionToGetProduction() {
+		return false;
+	}
+
+
+
+
 
 }

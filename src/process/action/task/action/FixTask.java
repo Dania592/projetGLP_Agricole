@@ -7,7 +7,10 @@ import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.task.Task;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.FixVisitor;
 
 public class FixTask extends Task<Fixable> {
@@ -19,12 +22,20 @@ public class FixTask extends Task<Fixable> {
     }
 
     @Override
-    protected void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException {
+    protected synchronized void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         try {
             getActionnableTarget().launchAction(visitor);
         } catch (UnableToPerformSuchActionWithCurrentActionnable e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void performSpecialActionToInitTask() {}
+
+    @Override
+    protected void performSpecialActionToTerminateTask() {
+    }
+
     
 }

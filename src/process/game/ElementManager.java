@@ -2,9 +2,13 @@ package process.game;
 
 import java.io.Serializable;
 
+import javax.crypto.AEADBadTagException;
+
 import data.configuration.GameConfiguration;
+import data.espece.ProductionManager;
 import data.map.Case;
 import data.structure.Enclos;
+import data.structure.hability.ProductifPlace;
 import data.stucture_base.Element;
 
 /**
@@ -25,9 +29,20 @@ public class ElementManager implements Serializable{
 	 */
 	public void add(Element element) {	
 		mapManager.addElement(element);
+		if(element instanceof ProductifPlace){
+			ProductifPlace productifPlace = (ProductifPlace)element;
+			if(!(productifPlace.needPlayerIntervention())){
+				ProductionManager.getInstance().addToProductifList((ProductifPlace)element);
+			}
+		}
 	}
+
 	public void add(Enclos enclos) {
 		mapManager.addEnclos(enclos);
+		System.out.println("On a ajouter l'enclos");
+		ProductionManager.getInstance().addToProductifList(enclos);
+		System.out.println("Or : "+ ProductionManager.getInstance().getProductifList().contains(enclos));
+
 	}
 	
 	

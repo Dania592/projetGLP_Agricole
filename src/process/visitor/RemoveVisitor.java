@@ -55,7 +55,7 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	
 	@Override
 	public Void visit(Produit product) {
-		GestionnaireStocks.getInstance().remove(product);;
+		GestionnaireStocks.getInstance().getProduits().remove(product, product);
 		return null;
 	}
 	

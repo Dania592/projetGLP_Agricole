@@ -2,13 +2,15 @@ package process.action.task;
 
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.structure.hability.AbleToActOnInHabitant;
 import data.structure.hability.Actionnable;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskCompleteException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 
 public abstract class Task<T extends Actionnable> {
 
@@ -61,8 +63,6 @@ public abstract class Task<T extends Actionnable> {
     private Activity activity; 
     private long totalTime;
     private long timeSpend = 0;
-    private int START_ACTION_X_BY_THE_END = 10;
-
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
         this.actionnableTarget = actionnableTarget;
@@ -70,36 +70,45 @@ public abstract class Task<T extends Actionnable> {
         this.activity = activity;
     }
 
-    public Activity getActivity() {
+    public synchronized Activity getActivity() {
         return activity;
     }
     
-    public TaskState getState() {
+    public synchronized TaskState getState() {
         return state;
     }
 
-    public T getActionnableTarget() {
+    public synchronized T getActionnableTarget() {
         return actionnableTarget;
     }
 
-    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable;
-
+    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
+    protected abstract void performSpecialActionToInitTask();
+    protected abstract void performSpecialActionToTerminateTask();
 
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
-        if(timeSpend==0){
-            //System.out.println("start"+ this);
+        if(state == TaskState.WAITING_TO_BE_LANCHED){
+            System.out.println("Début de la tâche");
+            System.out.println("avant le set : "+ getActionnableTarget().isCurrentlyUsedForAnotherTask());
+            getActionnableTarget().setStructureStatus(true);
+            System.out.println("avant après le set: "+ getActionnableTarget().isCurrentlyUsedForAnotherTask());
+            performSpecialActionToInitTask();
         }
         if(updateTaskStatus()){
             state = state.update();
         }if(state == TaskState.DONE){
             try {
-                //System.out.println("PERFORM_ACTION");
+                System.out.println("PERFORM_ACTION : "+ activity.getLabel());
                 performAction();
-            } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable temp) {
+            } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException 
+        | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException temp) {
                 temp.printStackTrace();
+            } catch (UnableToMakeTheTransfertException e) {
+                e.printStackTrace();
             }
-           // System.out.println("over");
+            getActionnableTarget().setStructureStatus(false);
+            performSpecialActionToTerminateTask();
             throw new TaskCompleteException(this);
         }
     }
@@ -132,7 +141,7 @@ public abstract class Task<T extends Actionnable> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public synchronized boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

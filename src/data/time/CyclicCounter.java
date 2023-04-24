@@ -19,5 +19,9 @@ public class CyclicCounter extends BoundedCounter {
 			setValue(getMin());
 		}
 	}
+
+	public void reset(){
+		setValue(getMin());
+	}
 	
 }

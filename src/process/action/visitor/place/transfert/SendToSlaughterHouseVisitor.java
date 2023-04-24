@@ -1,28 +1,69 @@
 package process.action.visitor.place.transfert;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import data.espece.Slaughtable;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireStructures;
 import data.structure.Abatoire;
+import data.structure.BergerieChevre;
+import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Etable;
+import data.structure.Garage;
+import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
+import data.structure.Puit;
 import data.structure.SalleDeTraite;
+import data.structure.Structure;
+import data.structure.hability.SlaughterHouseSender;
+import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
-    @Override
-    public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
-        //System.out.println("On envoie les vaches de l'"+ etable +"à l'abbatoire");
+    private Abatoire getAvalablAbatoire() throws UnableToMakeTheTransfertException{
+        ArrayList<Structure> abatoirePossible = GestionnaireStructures.getInstance().getStructures().get(Structures.ABATTOIRE);
+        int index= 0;
+        boolean isAvalable = false;
+        while(index<abatoirePossible.size() && !isAvalable) {
+            isAvalable = abatoirePossible.get(index).isStatique();
+            index++;
+        }if(index >= abatoirePossible.size()){
+            throw new UnableToMakeTheTransfertException(" No Abatoir Avalable");
+        }
+        return (Abatoire)abatoirePossible.get(index);
+    } 
+    
+    private Void sendToSlaugtherHouse(SlaughterHouseSender structure, Iterator<Slaughtable> iterator) throws UnableToMakeTheTransfertException{
+        ArrayList<Slaughtable> slaughtablesToRemove = new ArrayList<>(); 
+        Slaughtable currentSlaughtable;
+        Abatoire abatoire = getAvalablAbatoire();
+        while(iterator.hasNext()){
+            currentSlaughtable = iterator.next();
+            abatoire.addSpecialSenderElement(currentSlaughtable);
+            slaughtablesToRemove.add(currentSlaughtable);
+        }
+        structure.getAnimalToSlaugther().removeAll(slaughtablesToRemove);
         return null;
     }
 
+
+
     @Override
-    public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable {
-       // System.out.println("On envoie les poules du "+poulallier+" à l'abatoire");
-        return null;
+    public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
+        return sendToSlaugtherHouse(etable,etable.getAnimalToSlaugther().iterator());
+    }
+
+    @Override
+    public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
+        return sendToSlaugtherHouse(poulallier,poulallier.getAnimalToSlaugther().iterator());
     }
 
     @Override
@@ -54,6 +95,34 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
     }
+
+    @Override
+    public Void action(BergerieChevre bergerieChevre)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+        return sendToSlaugtherHouse(bergerieChevre,bergerieChevre.getAnimalToSlaugther().iterator());
+    }
+
+    @Override
+    public Void action(BergerieMouton bergerieMouton)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+        return sendToSlaugtherHouse(bergerieMouton,bergerieMouton.getAnimalToSlaugther().iterator());
+    }
+
+    @Override
+    public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(puit);
+    }
+
+    @Override
+    public Void action(Garage garage) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(garage);
+    }
+
+    @Override
+    public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
+    }
+
 
     
 }

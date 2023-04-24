@@ -1,16 +1,9 @@
 package data.structure;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.text.html.HTMLDocument.Iterator;
-
-import data.espece.evolution.EvolutionAnimal;
 import data.espece.Slaughtable;
-import data.espece.faune.Animal;
 import data.espece.faune.Vache;
 import data.map.Map;
 import data.structure.hability.Distributor;
@@ -18,35 +11,34 @@ import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor{
-	private ArrayList<Vache> cowToKill = new ArrayList<>();
+public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>{
+	private ArrayList<Slaughtable> animalToSlaughter = new ArrayList<>();
 	private final static float PRIX_ACHAT = 50000 ;
-	
+	private static boolean usedForAnAction = false;
+
 	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map );
+		super(ligne_init, colonne_init, reference , map );
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
 		
 	}
 	
 	@Override
-	public ArrayList<ActionnableKey> getActionnableKey(){
+	public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){
 		ArrayList<ActionnableKey> actionnableKeys = super.getActionnableKey();
-		actionnableKeys.add(ActionnableKey.ETABLE);
+		actionnableKeys.add(getSpecificActionnableKey());
 		return actionnableKeys;
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
-	}
-
-	@Override
-	public ArrayList<?> getTarget() {
-		return getInHabitant();
 	}
 
 	@Override
@@ -59,19 +51,62 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 		return MaxCapacity.MAX_CAPACITE_MAISON.getCapacity();
 	}
 
-	@Override
-	public <T extends Slaughtable> void addToSlaughter(T animalToAdd) {
-		
-	}
-
-	@Override
-	public ArrayList<?> getAnimalToSlaugther() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAnimalToSlaugther'");
-	}
 
 	public Structures getKey() {
 		return Structures.ETABLE;
 	}
+
+	@Override
+	public void addToSlaughter(Slaughtable slaughtable) {
+		animalToSlaughter.add(slaughtable);
+		getInHabitant().remove(slaughtable);
+	}
+
+	@Override
+	public ArrayList<Slaughtable> getAnimalToSlaugther() {
+		return animalToSlaughter;
+	}
+
+	@Override
+	public boolean readyToSend() {
+		return true; 
+	}
+
+	@Override
+	public void addSpecialSenderElement(Vache specialSenderElement) {
+		addInHabitant(specialSenderElement);
+	}
+
+	@Override
+	public boolean isReadyToSendToSlaughterHouse() {
+		return !animalToSlaughter.isEmpty();
+	}
+
+	@Override
+	public void removeAll(ArrayList<Vache> transportableToRemoveList) {
+		getInHabitant().removeAll(transportableToRemoveList);
+	}
+
+	@Override
+	public ActionnableKey getSpecificActionnableKey() {
+		return ActionnableKey.ETABLE;
+	}
+	
+	@Override
+	public boolean isCurrentlyUsedForAnotherTask() {
+		return usedForAnAction;
+	}
+
+	@Override
+	public void setStructureStatus(boolean isCurrentlyUsedForAnotherTask) {
+		usedForAnAction = isCurrentlyUsedForAnotherTask;
+	}
+
+	@Override
+	public int getNumberOfTarget() {
+		return getInHabitant().size();
+	}
+
+
 
 }

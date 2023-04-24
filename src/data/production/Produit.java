@@ -7,14 +7,12 @@ public abstract class Produit implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Produits type;
-	private int quantity;
 	private float prixVente;
 		
 	
 	public Produit(Produits type, float prixVente) {
 		this.type = type;
 		this.prixVente = prixVente;
-		quantity = 0;
 	}
 	
 	public Produit(float prixVente) {
@@ -32,19 +30,12 @@ public abstract class Produit implements Serializable{
 	public Produits getType() {
 		return type;
 	}
+
+    @Override
+    public String toString() {
+        return "Produit [type=" + type + ", prixVente=" + prixVente + "]";
+    }
+
 	
-	public int getQuantity() {
-		return quantity;
-	}
-	
-	public void incrementQuantity() {
-		quantity++;
-	}
-	
-	public void decrementQuantity() {
-		if (quantity > 0) {
-			quantity--;
-		}
-	}
 	
 }

@@ -10,6 +10,7 @@ import data.map.Map;
 import data.production.Produit;
 import data.structure.Structure;
 import data.time.CyclicCounter;
+import gui.gestionnaire.keys.Animals;
 
 
 
@@ -37,6 +38,12 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		produceurType = Type.AVERAGE_PRODUCEUR; 
 		productifState = ProductifState.UNABLE_TO_PRODUCE;
 		productionCycle = new CyclicCounter(getTimeItTakesToProduceInSeconde());
+	}
+
+	@Override
+	public String toString() {
+		return "AnimalProducteur [quantiteProduction=" + quantiteProduction + ", productifState=" + productifState
+				+ ", productionCycle=" + productionCycle + ", produceurType=" + produceurType + "nom :"+getNom()+"]";
 	}
 
 	public int getQuantiteProduction() {
@@ -74,7 +81,11 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
         return productionCycle;
     }
 
+	@Override
+	public Animals getTypeOfAnimal() {
+		return getKey();
+	}
 
 
-	
+
 }

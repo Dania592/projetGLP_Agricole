@@ -1,69 +1,121 @@
 package process.action.visitor.place.transfert;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Chevre;
+import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireEnclos;
 import data.structure.Abatoire;
+import data.structure.BergerieChevre;
+import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Etable;
+import data.structure.Garage;
+import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
+import data.structure.Puit;
 import data.structure.SalleDeTraite;
+import data.structure.hability.Distributor;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.DomesticSpeciesEnclosureSender;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
-    DomesticSpeciesEnclosureSender domesticEnclosureSender;
     
+    private int capacityLeft(Enclos enclos){
+        return enclos.getCapacite()-enclos.getAnimals().size();
+    }
 
-    public EnclosureSenderVisitor(DomesticSpeciesEnclosureSender domesticEnclosureSender) {
-        this.domesticEnclosureSender = domesticEnclosureSender;
+    private ArrayList<Enclos> getAvalableEnclosureList(int numberOfTarget) throws UnableToMakeTheTransfertException{
+        int numberOfPlacesToLookFor = numberOfTarget;
+        Iterator<Enclos>enclosIter = GestionnaireEnclos.getInstance().getEnclos().iterator();
+        ArrayList<Enclos> avalableEnclosures = new ArrayList<>();
+        Enclos currentEnclosure;
+        int currentEnclosureCapacity;
+        while(enclosIter.hasNext() && numberOfPlacesToLookFor>0){
+            currentEnclosure = enclosIter.next();
+            currentEnclosureCapacity = capacityLeft(currentEnclosure);
+            if(currentEnclosure.isStatique() && currentEnclosureCapacity>0){
+                avalableEnclosures.add(currentEnclosure);
+                numberOfPlacesToLookFor-= currentEnclosureCapacity;
+            }
+        }if(numberOfPlacesToLookFor>0){
+            throw new UnableToMakeTheTransfertException("No enclosure left");
+        }
+        return avalableEnclosures;
+    }
+
+    private <T extends Distributor<E>, E extends AnimalProducteur> Void sendToEnclosure(T distributor, Iterator<E> iterator) throws UnableToMakeTheTransfertException{
+        ArrayList<E> tranportableToRemove = new ArrayList<>(); 
+        E currentTransportable;
+        Enclos currentEnclosure;
+        ArrayList<Enclos> enclosureIter = getAvalableEnclosureList(distributor.getNumberOfTarget());
+        int indexEnclosure = 0;
+        while(iterator.hasNext() && indexEnclosure<enclosureIter.size()){
+            currentTransportable = iterator.next();
+            tranportableToRemove.add(currentTransportable);
+            currentEnclosure = enclosureIter.get(indexEnclosure);
+            currentEnclosure.addSpecialSenderElement(currentTransportable);;
+            if(capacityLeft(currentEnclosure)==0){
+                indexEnclosure++;
+            }
+        }
+        distributor.removeAll(tranportableToRemove);
+        return null;
+    }
+//TO DO trouver moyen de rassemnbler les type s!!
+    private Void sendToEnclosure(SalleDeTraite salleDeTraite, Iterator<MilkProduceur> iterator) throws UnableToMakeTheTransfertException{
+        ArrayList<MilkProduceur> tranportableToRemove = new ArrayList<>(); 
+        MilkProduceur currentMilkProduceur;
+        Enclos currentEnclosure;
+        ArrayList<Enclos> enclosureIter = getAvalableEnclosureList(salleDeTraite.getMilkProduceur().size());
+        int indexEnclosure = 0;
+        while(iterator.hasNext() && indexEnclosure<enclosureIter.size()){
+            currentMilkProduceur = iterator.next();
+            tranportableToRemove.add(currentMilkProduceur);
+            currentEnclosure = enclosureIter.get(indexEnclosure);
+            currentEnclosure.addSpecialSenderElement(currentMilkProduceur);;
+            if(capacityLeft(currentEnclosure)==0){
+                indexEnclosure++;
+            }
+        }
+        salleDeTraite.removeAll(tranportableToRemove);
+        return null;
     }
 
 
+
+
+
     @Override
-    public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+    public Void action(Etable etable) throws UnableToMakeTheTransfertException{
         Iterator<Vache> vacheIter = etable.getInHabitant().iterator();
-        while(vacheIter.hasNext()){
-            vacheIter.next().launchAction(domesticEnclosureSender);
-        }
-        return null;
+        return sendToEnclosure(etable, vacheIter);
     }
 
-
     @Override
-    public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+    public Void action(Poulallier poulallier) throws UnableToMakeTheTransfertException{
         Iterator<Poule> pouleIter = poulallier.getInHabitant().iterator();
-        while(pouleIter.hasNext()){
-            pouleIter.next().launchAction(domesticEnclosureSender);
-        }
-        return null;
+        return sendToEnclosure(poulallier, pouleIter);
     }
 
 
     @Override
-    public Void action(Enclos enclos) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        Iterator<Poule> pouleIter = enclos.getAnimalStorage().getPoules().iterator();
-        Iterator<Vache> vacheIter = enclos.getAnimalStorage().getVaches().iterator();
-        Iterator<Mouton> moutonIter = enclos.getAnimalStorage().getMoutons().iterator();
-        while(pouleIter.hasNext()){
-            pouleIter.next().launchAction(domesticEnclosureSender);
-        }
-        while(vacheIter.hasNext()){
-            vacheIter.next().launchAction(domesticEnclosureSender);
-        }
-        while(moutonIter.hasNext()){
-            moutonIter.next().launchAction(domesticEnclosureSender);
-        }
-        return null;
+    public Void action(Enclos enclos) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(enclos);
     }
 
 
@@ -80,8 +132,9 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
 
 
     @Override
-    public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException("Attention le retour");
+    public Void action(SalleDeTraite salleDeTraite) throws UnableToMakeTheTransfertException{
+        Iterator<MilkProduceur>  milkPIterator = salleDeTraite.getMilkProduceur().iterator();
+        return sendToEnclosure(salleDeTraite, milkPIterator);
     }
 
 
@@ -95,6 +148,35 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
     public Void action(Terrain terrain)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
         throw new NotImplementYetException("Pas pour les terrains");
+    }
+
+    @Override
+    public Void action(BergerieChevre bergerieChevre)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+        Iterator<Chevre> chevreIter = bergerieChevre.getInHabitant().iterator();
+        return sendToEnclosure(bergerieChevre, chevreIter);
+    }
+
+    @Override
+    public Void action(BergerieMouton bergerieMouton)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+        Iterator<Mouton> moutonIter = bergerieMouton.getInHabitant().iterator();
+        return sendToEnclosure(bergerieMouton, moutonIter);
+    }
+
+    @Override
+    public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(puit);
+    }
+
+    @Override
+    public Void action(Garage garage) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(garage);
+    }
+
+    @Override
+    public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
     }
 
     
