@@ -23,9 +23,9 @@ import process.time.TimeManager;
 public class TestTaskManager {
     public static ArrayList<Task<?>> taskToAddToManager = new ArrayList<>();
     public static ArrayList<Actionnable> listOfActionnable = new ArrayList<>();
-    public static Map testMap = new Map(GameConfiguration.NB_LIGNE, GameConfiguration.NB_COLONNE, GameConfiguration.X_MAP, GameConfiguration.Y_MAP);
+    public static Map testMap = Map.getInstance();
     public static TaskManager taskManager;
-    public static TimeManager timeManager = new TimeManager();
+    public static TimeManager timeManager =TimeManager.getInstance();
     public static RessourcesManager ressourcesManager =  RessourcesManager.getInstance();
 
     public static Poulallier poulallier =   new Poulallier(0, 0, "poulepoule", testMap);
@@ -53,7 +53,7 @@ public class TestTaskManager {
         listOfActionnable.add(poulallier);
         listOfActionnable.add(etable);
         listOfActionnable.add(enclos);
-        taskManager = new TaskManager();
+        taskManager = TaskManager.getInstance();
         taskManager.start();
 
 

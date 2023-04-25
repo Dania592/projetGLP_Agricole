@@ -18,6 +18,7 @@ import data.configuration.GameConfiguration;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
+import gui.Farm.choix.ChoixPanel;
 import gui.gestionnaire.MarketGUI;
 import process.action.task.Task;
 import process.game.SaveFarm;
@@ -192,15 +193,15 @@ public class Hud implements Serializable {
 								new PopupSave(component);
 							}
 							else {
-//								if(e.getSource().equals(farmer)) {
-//									ArrayList<String> taches = new ArrayList<>();
-//									taches.add("Arroser");
-//									taches.add("Nourrir");
-//									int x = e.getX();
-//									int y = e.getY();
-//									actions = new ActionsPane(taches, x , y);
-//									component.add(actions);
-//								}
+								if(e.getSource().equals(farmer)) {
+									ArrayList<Task<?>> taches = new ArrayList<>();
+									//taches.add("Arroser");
+									//taches.add("Nourrir");
+									int x = e.getX();
+									int y = e.getY();
+									actions = new ActionsPane(taches, x , y , Hud.this);
+									component.add(actions);
+								}
 								
 							}
 						}

@@ -3,19 +3,21 @@ package data.time;
 import java.io.Serializable;
 
 public class Clock implements Serializable{
-    private static CyclicCounter hour = new CyclicCounter(0, 59, 0);
-    private static CyclicCounter minute = new CyclicCounter(0, 59, 0);
-    private static CyclicCounter second = new CyclicCounter(0, 59, 0);
-    private static Clock reference = new Clock();
+    private  CyclicCounter hour  ;
+    private  CyclicCounter minute ;
+    private  CyclicCounter  second ;
+    //private static Clock reference = new Clock();
    
-    private Clock(){
-        init(); 
+    public Clock( CyclicCounter hour , CyclicCounter minute , CyclicCounter second ){
+    	this.hour = hour;
+    	this.minute = minute ;
+    	this.second = second ;
     } 
 	  
     // pourquoi le getInstance public ? 
-    public static Clock getInstance(){
-    	return reference ;
-    }
+//    public static Clock getInstance(){
+//    	return reference ;
+//    }
 	    
     public void increment() {
         second.increment();

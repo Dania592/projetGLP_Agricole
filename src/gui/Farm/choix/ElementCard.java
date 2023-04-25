@@ -1,5 +1,5 @@
 
-package gui.Farm;
+package gui.Farm.choix;
 
 import java.awt.Font;
 import java.awt.event.MouseEvent;
@@ -23,6 +23,7 @@ import data.myExceptions.FullCapaciteException;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import gui.Farm.Board;
 
 
 

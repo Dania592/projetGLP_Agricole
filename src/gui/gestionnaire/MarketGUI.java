@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -15,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 
 import gui.gestionnaire.keys.Keys;
-import process.game.Game;
 import process.transaction.Achat;
 
 

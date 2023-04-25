@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 
 public class Counter implements Serializable{
-	private int value = 0;
+	private int value ;
 
 	public Counter(int value) {
 		this.value = value;

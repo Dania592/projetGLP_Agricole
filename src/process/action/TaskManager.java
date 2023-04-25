@@ -22,19 +22,19 @@ public class TaskManager extends Thread {
     private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager ;
     
-    private static TaskManager taskManager = new TaskManager();
+   // private static TaskManager taskManager = new TaskManager();
     
     
     // public TaskManager(RessourcesManager ressourcesManager, TimeManager // Pour l'automatisation des tâches et leur attribution à un personnage!
-    private  TaskManager(){
-        this.timeManager =TimeManager.getInstance();
+    public  TaskManager(TimeManager timeManager){
+        this.timeManager =timeManager;
         currentHour = timeManager.getClock().getHour().getValue();
 
     }
 
-    public static TaskManager getInstance() {
-    	return taskManager ;
-    }
+//    public static TaskManager getInstance() {
+//    	return taskManager ;
+//    }
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
             throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform {

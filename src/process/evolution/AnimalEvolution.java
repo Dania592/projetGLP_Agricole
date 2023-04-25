@@ -2,11 +2,8 @@ package process.evolution;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
 import data.espece.faune.Animal;
@@ -15,7 +12,6 @@ import data.myExceptions.MortException;
 import data.structure.Enclos;
 import data.time.Clock;
 import process.game.ElementManager;
-import process.time.TimeManager;
 
 public class AnimalEvolution implements Serializable{
 	private ArrayList<AnimalProducteur> animals = new ArrayList<>();
@@ -23,7 +19,7 @@ public class AnimalEvolution implements Serializable{
 	private Clock clock ;
 	private int index = 0 ;
 
-	public AnimalEvolution(ElementManager elementManager , Clock clock) {
+	public AnimalEvolution(ElementManager elementManager , Clock clock ) {
 		this.elementManager=elementManager;
 		this.clock=clock;
 		getAllAnimals();

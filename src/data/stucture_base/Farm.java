@@ -9,6 +9,7 @@ import data.flore.Saison;
 import data.gestion.RessourcesManager;
 import process.action.TaskManager;
 import data.time.Clock;
+import data.time.CyclicCounter;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
 
@@ -29,22 +30,19 @@ public class Farm implements Serializable{
 	private int ligne ; 
 	private int colonne ; 
 	
-	public Farm( ElementManager manager, Fermier fermier , Clock clock) {
-		this.clock=clock;
+	public Farm( ElementManager manager, Fermier fermier ) {
+		this.clock= new Clock(new CyclicCounter(0,23,0), new CyclicCounter(0,59,0), new CyclicCounter(0, 59, 0));
 		elementManager = manager;
 		this.fermier=fermier;
 		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile =0;
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
-		evolutionManager = new EvolutionManager(manager, clock);
-		//il faut retirer le thread d'ici 
-		//taskManager = new TaskManager(timeManager);
-		//taskManager.start();
+		evolutionManager = new EvolutionManager(manager , clock);
 		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
 		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
 	}
-	
+		
 	public ElementManager getElementManager() {
 		return elementManager;
 	}

@@ -3,6 +3,7 @@ package gui.Farm;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -10,14 +11,11 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import data.configuration.GameConfiguration;
-import data.planning.Activity;
 import data.structure.hability.Actionnable;
-import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import process.action.TaskManager;
 import process.action.task.Task;
-import process.game.GameBuilder;
 
 public class MainGuiTest  extends JFrame implements Runnable{
 
@@ -26,14 +24,16 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private Farm farm ;
 	private Board dashboard ;
 	private Element selected ;
-	private int index =0; 
+	private TaskManager taskManager ;
+	//private int index =0; 
 	private int x ;
 	private int y ;
 
 
-	public MainGuiTest(String title , Farm farm ) {
+	public MainGuiTest(String title , Farm farm  , TaskManager taskManager) {
 		super(title);
 		this.farm = farm ;
+		this.taskManager=taskManager;
 		init();
 	}
 
@@ -42,19 +42,9 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
-		//farm=GameBuilder.buildinFarm();
-		
-		//System.out.println(farm.getTimeManager().getClock().getMinute().getValue());
-		//SaveFarm save = new SaveFarm(farm);
-		
-		//farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
-		//System.out.println(farm.getTimeManager().getClock().getMinute().getValue());
-
-		//farm=GameBuilder.buildinFarm();
-
 		selected= farm.getManager().getMapManager().get("fermier");	
 
-		dashboard = new Board(farm, selected);
+		dashboard = new Board(farm, selected , taskManager);
 
 		contentPane.add(dashboard);
 
@@ -63,9 +53,8 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setDefaultLookAndFeelDecorated(true);
-		setExtendedState(this.MAXIMIZED_BOTH);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setVisible(true);
-		//setSize(GameConfiguration.WINDOW_WIDTH , GameConfiguration.WINDOW_HEIGHT);
 		setResizable(false);
 	}
 
@@ -77,21 +66,16 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//dashboard.setSelected(selected);
-			
-			dashboard.getFarm().getEvolutionManager().UpdateEvolution();
 			
 			dashboard.repaint();
-//			if(dashboard.getSelected() instanceof Actionnable){
-//				Actionnable actionnableSelected = (Actionnable) dashboard.getSelected();
-//				ArrayList<Task<?>> tasks = farm.getTaskManager().getPossibleTaskToPerform(actionnableSelected);
-//				for (Task<?> task : tasks) {
-//					System.out.println(tasks);
-//				}
-//			}
+
 		}
 	}
 
+	public Farm getFarm() {
+		return farm ;
+	}
+	
 	private class MouseControls implements MouseListener{
 
 		@Override
@@ -105,7 +89,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				dashboard.setSelected(element);
 				if(selected instanceof Actionnable) {
 					Actionnable actionnable = (Actionnable)element;
-					ArrayList<Task<?>> tasks = TaskManager.getInstance().getPossibleTaskToPerform(actionnable);
+					ArrayList<Task<?>> tasks = taskManager.getPossibleTaskToPerform(actionnable);
 					dashboard.getHud().add_Actions(x, y , tasks);					
 				}
 			}
@@ -130,13 +114,12 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//System.out.println(x+" "+y);
-
+			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
+			
 
 		}
 

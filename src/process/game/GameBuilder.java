@@ -17,8 +17,6 @@ import data.structure.Structure;
 import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import process.action.TaskManager;
-import process.time.TimeManager;
 
 
 public class GameBuilder {
@@ -37,19 +35,18 @@ public class GameBuilder {
 		
 		ElementManager elementManager = new ElementManager(MapBuilder());
 		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
-		TimeManager timeManager = TimeManager.getInstance();
-		timeManager.start();
 		
-		TaskManager taskManager = TaskManager.getInstance();
-		taskManager.start();
-		
-		Farm farm = new Farm( elementManager , farmer , timeManager.getClock());
+		Farm farm = new Farm( elementManager , farmer );
 		farm.reservePlaceToFarm();
 		
-		
+//		TimeManager timeManager = new TimeManager(farm.getClock());
+//		timeManager.start();
+//				
+//		TaskManager taskManager = new TaskManager(timeManager);
+//		taskManager.start();
+//		
 		// instanciation et initialisation du stock de depart 
 		initialize(farm.getRessourcesManager(), elementManager.getMapManager().getMap());
-		
 		
 		// positionnement du fermier et de la maison sur la map 
 		sethousePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));

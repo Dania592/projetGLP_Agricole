@@ -1,23 +1,16 @@
 package process.evolution;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
-
 import data.stucture_base.Element;
 import data.time.Clock;
 import process.game.ElementManager;
-import process.time.TimeManager;
 
 public class EvolutionManager implements Serializable {
 
@@ -33,8 +26,12 @@ public class EvolutionManager implements Serializable {
 	public EvolutionManager(ElementManager elementManager , Clock clock) {
 		this.elementManager=elementManager;
 		this.clock=clock;
-		animalEvolution = new AnimalEvolution(elementManager, clock);
+		animalEvolution = new AnimalEvolution(elementManager , clock);
 
+	}
+	
+	public void setClock(Clock clock) {
+		this.clock=clock;
 	}
 
 	public void UpdateEvolution() {
@@ -92,9 +89,7 @@ public class EvolutionManager implements Serializable {
 				i++;
 				String imagePath =GameConfiguration.IMAGE_PATH +"nuage"+deathIndex+".png";
 				animalsToRemove.get(0).setImage(imagePath);
-				
-				BufferedImage image;
-						
+								
 			}
 		}
 

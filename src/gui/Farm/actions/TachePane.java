@@ -2,7 +2,6 @@ package gui.Farm.actions;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -13,17 +12,14 @@ import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
 import gui.Farm.Hud;
-import process.action.TaskManager;
 import process.action.task.Task;
 
 public class TachePane extends JPanel{
 
 	private Task task ;
-	private ActionsPane pane ;
 	private Hud hud ;
 	
-	public  TachePane(Task task , ActionsPane pane , Hud hud ) {
-		this.pane=pane;
+	public  TachePane(Task task , Hud hud ) {
 		this.task=task;
 		this.hud = hud;
 		init();
@@ -48,14 +44,14 @@ public class TachePane extends JPanel{
 	}
 	
 	public void lunchTask() {
-		TaskManager.getInstance().addToTaskToBeLaunched(task);
+		//TaskManager.getInstance().addToTaskToBeLaunched(task);
 	}
 	
 	private class MouseTask implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			lunchTask();
+			//lunchTask();
 			hud.removeActionPane();
 			
 			

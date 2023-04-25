@@ -1,4 +1,4 @@
-package gui.Farm;
+package gui.Farm.choix;
 
 
 import java.awt.Color;
@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.util.HashMap;
 
 import javax.swing.JLayeredPane;
+
+import gui.Farm.Board;
 
 
 

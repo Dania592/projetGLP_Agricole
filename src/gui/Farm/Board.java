@@ -19,6 +19,7 @@ import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import data.stucture_base.Position;
 import gui.Farm.actions.ActionsPane;
+import gui.Farm.choix.Choix;
 import process.action.TaskManager;
 import process.action.task.Task;
 import process.evolution.FullLevel;
@@ -32,18 +33,20 @@ public class Board  extends JLayeredPane implements Serializable{
 	private Element selected;
 	private Element clicked;
 	private JPanel choixTerrain;
+	private TaskManager taskManager ;
 	private MouseHandler mouseHandler;
-	private ChoixPanel choixScroll;
-	private ActionsPane actions;
+	//private ChoixPanel choixScroll;
+	//private ActionsPane actions;
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
 
 	
  	
-	public Board(Farm farm  , Element selected  ) {
+	public Board(Farm farm  , Element selected , TaskManager taskManager ) {
 		this.farm = farm;
 		this.selected=selected;
+		this.taskManager = taskManager ;
 		keys = new KeyControls(farm.getManager() , selected); 
 		mouseHandler = new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
@@ -87,7 +90,6 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud = new Hud(this);
 		hud.build();
 			
-		//setBounds(0, 0, GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
 		setBounds(0, 0, WIDTH, HEIGHT);
 		setLayout(null);
 		setFocusable(true);
@@ -124,14 +126,11 @@ public class Board  extends JLayeredPane implements Serializable{
 					remove(choixTerrain);
 				}
 			}
-
 			
 		}
 		hud.time();
-		paintProgressBar(g);
-
-		// les bords de la ferme 
-		
+		paintStrategy.paintProgressBar(g, taskManager);
+				
 		
 //		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
 //			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
@@ -151,19 +150,5 @@ public class Board  extends JLayeredPane implements Serializable{
 		keys.setSelected(selected);
 	}
 	
-	
-	public void paintProgressBar(Graphics g ) {
-		ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
-		//g.drawLine(0, 0, 300, 300);
-		for(Task task : tasks) {
-			Position position =task.getActionnableTarget().getPosition();
-			int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
-			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
-			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
-			g.drawImage(bar.getImage(), x, y, 100,20, null);
-		}
-	}
-	
-
 	
 }

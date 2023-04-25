@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import data.configuration.GameConfiguration;
 import data.stucture_base.Farm;
 import process.game.GameBuilder;
+import process.game.Jeu;
 import process.game.SaveFarm;
-import process.time.TimeManager;
 
 
 /**
@@ -23,6 +23,10 @@ import process.time.TimeManager;
  *
  */
 public class ChoixFerme extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel lastFarme ;
 	private JLabel newFarme ;
 	public ChoixFerme() {
@@ -77,20 +81,17 @@ public class ChoixFerme extends JFrame{
 			if(e.getSource().equals(lastFarme)) {
 				SaveFarm save = new SaveFarm();
 				Farm farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
-				TimeManager timeManager = TimeManager.getInstance();
-				timeManager.start();
-				
-				MainGuiTest gameTest = new MainGuiTest("test", farm);
-				ChoixFerme.this.dispose();
-				Thread gameThread = new Thread(gameTest);
+				Jeu jeu = new Jeu(farm);
+				Thread gameThread = new Thread(jeu);
 				gameThread.start();				
+				ChoixFerme.this.dispose();
 			}
 			else {
 				if(e.getSource().equals(newFarme)) {
-					Farm farm=GameBuilder.buildinFarm();					
-					MainGuiTest gameTest = new MainGuiTest("test", farm);
-					Thread gameThread = new Thread(gameTest);
-					gameThread.start();						
+					Farm farm=GameBuilder.buildinFarm();	
+					Jeu jeu = new Jeu(farm);
+					Thread game = new Thread(jeu);
+					game.start();						
 				}
 			}
 			ChoixFerme.this.dispose();

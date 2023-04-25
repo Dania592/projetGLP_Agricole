@@ -8,19 +8,26 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import data.stucture_base.Farm;
-import gui.Farm.Choix;
+import gui.Farm.choix.Choix;
 
 public class SaveFarm {
 	
-	public void serializationSave(String fileName , Farm Farm ) {
+	public void serializationSave(String fileName , Farm farm ) {
 		
 		try {
 			FileOutputStream f = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(f);
 			
-			oos.writeObject(Farm);
+			oos.writeObject(farm);
 		
 			oos.close();
+			
+			FileOutputStream t = new FileOutputStream("time.ser");
+			ObjectOutputStream oost = new ObjectOutputStream(t);
+			
+			oost.writeObject(farm.getClock());
+			oost.close();
+			
 	}
 	catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -29,6 +36,8 @@ public class SaveFarm {
 	catch ( IOException e) {
 		e.printStackTrace();
 	}
+		
+		 
 }
 	
 	public Farm serializationRead(String fileName)  {

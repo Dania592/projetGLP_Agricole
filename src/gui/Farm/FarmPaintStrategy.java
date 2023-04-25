@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,8 @@ import data.stucture_base.Farm;
 import data.stucture_base.Position;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
+import process.action.TaskManager;
+import process.action.task.Task;
 
 
 /**
@@ -191,9 +194,19 @@ public class FarmPaintStrategy implements Serializable {
 		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
 		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
 		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
-		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
-		
-		
+		graphics.drawImage(night.getImage(), x, y, dx, dy, null);	
+	}
+	
+	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {
+		ArrayList<Task<?>> tasks = taskManager.getinProcess();
+		//g.drawLine(0, 0, 300, 300);
+		for(Task task : tasks) {
+			Position position =task.getActionnableTarget().getPosition();
+			int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + map.getX() ; 
+			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + map.getY();
+			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
+			g.drawImage(bar.getImage(), x, y, 100,20, null);
+		}
 	}
 	
 	

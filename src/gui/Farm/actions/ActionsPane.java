@@ -10,6 +10,10 @@ import process.action.task.Task;
 
 public class ActionsPane extends JLayeredPane {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Task<?>> taches = new ArrayList<>();
 	private int x ;
 	private int y ;
@@ -29,7 +33,7 @@ public class ActionsPane extends JLayeredPane {
 		int height = 50*taches.size();
 		setBounds(x,y,200,height);
 		for(Task<?> tache : taches ) {
-			TachePane pane = new TachePane(tache , this , hud );
+			TachePane pane = new TachePane(tache , hud );
 			add(pane);
 		}
 		
