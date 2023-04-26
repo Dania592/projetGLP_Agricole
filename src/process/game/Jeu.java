@@ -22,6 +22,7 @@ public class Jeu implements Runnable{
 				
 		taskManager = new TaskManager(timeManager);
 		taskManager.start();
+		
 		frame = new MainGuiTest("test de la ferme", farm , taskManager);
 		
 		Thread thread = new Thread(frame);

@@ -36,6 +36,7 @@ public class Hud implements Serializable {
 	private JLabel cancel ;
 	private JLabel farmer ; 
 	private JLabel save ;
+	private JLabel message ;
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
 	
@@ -68,6 +69,10 @@ public class Hud implements Serializable {
 			home.addMouseListener(new MouseHud());
 			component.add(home, JLayeredPane.DRAG_LAYER);	
 			
+//			message = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"maintenance.png"));
+//			message.setBounds(100, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+//			component.add(message , JLayeredPane.DRAG_LAYER);
+//			
 			profile();
 		}
 		time();
@@ -134,7 +139,9 @@ public class Hud implements Serializable {
 	}
 	
 	public void removeChoix() {
-		component.remove(choixScroll);	
+		if(Arrays.asList(component.getComponents()).contains(choixScroll)) {
+			component.remove(choixScroll);				
+		}
 	}
 	
 	public void changeState() {
@@ -170,6 +177,7 @@ public class Hud implements Serializable {
 			else {
 				if(e.getSource().equals(home)) {
 					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+					removeChoix();
 					new MarketGUI(frame);
 					frame.dispose();
 				}

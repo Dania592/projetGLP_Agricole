@@ -172,11 +172,11 @@ public class MapManager implements Serializable{
 	public void movingMap(int dx , int dy ) {
 		int xmap = map.getX();
 		
-		if((xmap +dx <= 0) && (xmap+ map.getNbColones()*GameConfiguration.CASE_DIMENSION +dx)>= GameConfiguration.CASE_DIMENSION*50 ) {
+		if((xmap + dx <= 0) && (xmap + map.getNbColones()*GameConfiguration.CASE_DIMENSION +dx)>= GameConfiguration.CASE_DIMENSION*50 ) {
 			map.setX(xmap + decalage(dx));
 		}
 		int ymap = map.getY();
-		if(ymap +dy <=0 && (ymap +map.getNbLignes()*GameConfiguration.CASE_DIMENSION +dy )>= GameConfiguration.WINDOW_HEIGHT) {
+		if(ymap +dy <=0 && (ymap +map.getNbLignes()*GameConfiguration.CASE_DIMENSION +dy )>= GameConfiguration.WINDOW_HEIGHT) {	
 			map.setY(ymap + decalage(dy) );			
 		}
 		

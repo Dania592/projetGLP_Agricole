@@ -1,11 +1,8 @@
 package gui.Farm.choix;
 
-
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -66,25 +63,32 @@ public class ChoixPanel extends JLayeredPane {
 		add(next);
 		
 		
-		ArrayList<ElementCard> listCards = new ArrayList<>();
+		int indexCard = 0 ;
+		int i =1;
+		int x = 50 ;
+		JPanel liste = new JPanel();
+		liste.setLayout(null);
+		liste.setBackground(GeneralPaintStrategy.MEDIUM_BROWN);
 		for(ElementCard card : cards.values()) {
-			//System.out.println(card.getElements().size());
-			listCards.add(card);
-		}
-		int nb = GameConfiguration.NB_CARD_CHOIX;
-		for(int index = 0 ; index <= listCards.size()/nb ; index++) {
-			JPanel liste = new JPanel();
-			liste.setBackground(GeneralPaintStrategy.MEDIUM_BROWN);
-			int x = 50 ;
-			liste.setLayout(null);
-			for(int i = index*nb ; i <= index*nb+nb && i< listCards.size() ; i++) {	
-				ElementCard card = listCards.get(i);
-				card.setBounds(x,5, card.getWidth(), card.getHeight());
-				card.removePositionforEmpty();
-				liste.add(card);
-				x+= card.getWidth()+50;
+			if(GameConfiguration.NB_CARD_CHOIX==indexCard ) {			
+				indexCard = 0;
+				panel.add(liste);
+				liste = new JPanel();
+				liste.setLayout(null);
+				liste.setBackground(GeneralPaintStrategy.MEDIUM_BROWN);
+				x = 50;
 			}
-			panel.add(liste);
+		
+			card.setBounds(x,5, card.getWidth(), card.getHeight());
+			card.removePositionforEmpty();
+			liste.add(card);
+			if(i== cards.values().size()) {
+				panel.add(liste);
+			}
+			x+= card.getWidth()+50;
+			indexCard ++;
+			i++;
+			
 		}
 		
 	}

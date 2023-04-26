@@ -199,8 +199,8 @@ public class ElementCard extends JPanel{
 		Case block = new Case(true , 0 , 0);
 		Boolean libre = false ;
 		while( !libre) {	
-			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbLigne()-1));
-			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbColonne()-1));
+			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getHeight()-elements.get(0).getPosition().getNbLigne()-1));
+			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getWidth()-elements.get(0).getPosition().getNbColonne()-1));
 			block = new Case(true, ligneAleatoire, colonneAleatoire);
 		   libre = farm.getManager().getMapManager().verificationLiberte(element, block);
 		}

@@ -17,7 +17,8 @@ public class Farm implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private int dimension = 22; 
+	private int height = 22; 
+	private int width = 38;
 	private int cptJour ;
 	private Saison saisonActuelle ;
 	private Fermier fermier ; 
@@ -39,8 +40,8 @@ public class Farm implements Serializable{
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager , clock);
-		ligne = (GameConfiguration.NB_LIGNE - dimension )/2 ;
-		colonne = (GameConfiguration.NB_COLONNE - dimension )/2 ;
+		ligne = 2 ;
+		colonne = 5 ;
 	}
 		
 	public ElementManager getElementManager() {
@@ -73,11 +74,17 @@ public class Farm implements Serializable{
 	public void setNbEtoile(int nbEtoile ) {
 		this.nbEtoile = nbEtoile;
 	}
-	public int getDimension() {
-		return dimension;
+	public int getHeight() {
+		return height;
 	}
-	public void setDimension(int dimension) {
-		this.dimension = dimension;
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidht(int width) {
+		this.width = width;
 	}
 	public int getCptJour() {
 		return cptJour;
@@ -127,11 +134,11 @@ public class Farm implements Serializable{
 	}
 	
 	public Boolean isOnborderFarm(int ligne , int colonne  ) {
-		return ( this.ligne ==ligne) || (this.colonne == colonne) || ( ligne == (this.ligne+dimension-1)) || (colonne == (this.colonne+dimension-1)) ;
+		return ( this.ligne ==ligne) || (this.colonne == colonne) || ( ligne == (this.ligne+height-1)) || (colonne == (this.colonne+width-1)) ;
 	}
 	public void reservePlaceToFarm() {
-		for(int ligneIndex = ligne ; ligneIndex < dimension+ligne ; ligneIndex ++) {
-			for(int colonneIndex = colonne ; colonneIndex < dimension+colonne; colonneIndex ++) {
+		for(int ligneIndex = ligne ; ligneIndex < height+ligne ; ligneIndex ++) {
+			for(int colonneIndex = colonne ; colonneIndex < width+colonne; colonneIndex ++) {
 				if(isOnborderFarm(ligneIndex, colonneIndex )) {
 					elementManager.getMapManager().getMap().getCase(ligneIndex , colonneIndex).setLibre(false);
 				}
