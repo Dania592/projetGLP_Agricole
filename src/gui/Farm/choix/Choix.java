@@ -38,22 +38,22 @@ public class Choix implements Serializable {
 			}
 			if(cardliste.size()>0) {
 				ElementCard newCard = new ElementCard(cardliste, farm, component);
-				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
+				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);
 			}
 		}
 		
-		// parcours des terrains 
-		for( ArrayList<Terrain> terrains : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {
-			ArrayList<Element> cardliste = new ArrayList<>();
+		// parcours des terrains
+		ArrayList<Element> cardlisteT = new ArrayList<>();
+		for( ArrayList<Terrain> terrains : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {	
 			for(Terrain terrain : terrains) {
 				if(!terrain.isStatique()) {					
-					cardliste.add(terrain);
+					cardlisteT.add(terrain);
 				}
-			}
-			if(cardliste.size()>0) {
-				ElementCard newCard = new ElementCard(cardliste, farm, component);
-				cards.put(cardliste.get(0).getClass().getSimpleName(), newCard);					
-			}	
+			}			
+		}
+		if(cardlisteT.size()>0) {
+			ElementCard newCard = new ElementCard(cardlisteT, farm, component);
+			cards.put(cardlisteT.get(0).getClass().getSimpleName() , newCard);					
 		}
 		
 		// parcours des animaux 

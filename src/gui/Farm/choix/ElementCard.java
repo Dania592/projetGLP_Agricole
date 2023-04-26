@@ -53,7 +53,7 @@ public class ElementCard extends JPanel{
 	
 	
 	public void init() {
-		setSize(200, 150);
+		setSize(150, 140);
 		setLayout(null);
 		
 		//BufferedImage imageElement = ImageIO.read(new File(elements.get(0).getImage()));

@@ -13,6 +13,8 @@ import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
 import data.structure.Maison;
+import data.structure.Poulallier;
+import data.structure.Puit;
 import data.structure.Structure;
 import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
@@ -39,12 +41,7 @@ public class GameBuilder {
 		Farm farm = new Farm( elementManager , farmer );
 		farm.reservePlaceToFarm();
 		
-//		TimeManager timeManager = new TimeManager(farm.getClock());
-//		timeManager.start();
-//				
-//		TaskManager taskManager = new TaskManager(timeManager);
-//		taskManager.start();
-//		
+	
 		// instanciation et initialisation du stock de depart 
 		initialize(farm.getRessourcesManager(), elementManager.getMapManager().getMap());
 		
@@ -107,11 +104,11 @@ public class GameBuilder {
 		stock.getGestionnaireTerrains().add(terrainInitial);
 		stock.getGestionnaireTerrains().add(terrainInitial2);
 		
-//		Terrain terrain3 = new Terrain("t3",false, 0, 0,map, TypeGraine.BROCCOLI);
-//		Terrain terrain4 = new Terrain("t4",false, 0, 0,map, TypeGraine.CACTUS);
-//		
-//		stock.getGestionnaireTerrains().add(terrain3);
-//		stock.getGestionnaireTerrains().add(terrain4);
+		//Terrain terrain3 = new Terrain("t3",false, 0, 0,map, Graine.AMARANTH_SEED);
+		Terrain terrain4 = new Terrain("t4",false, 0, 0,map,Graine.CACTUS_SEED);
+		
+		//stock.getGestionnaireTerrains().add(terrain3);
+		stock.getGestionnaireTerrains().add(terrain4);
 		
 		
 		Chevre chevre1 = new Chevre(0,0,0,null,null,null,"jd",map);
@@ -120,16 +117,19 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(chevre1);
 		
 		Maison maison = new Maison(0,0,"maison",map);
-		//Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
+		Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
 		
 		Enclos enclos1 = new Enclos(26, 21, "enclos1",map);
 		Enclos enclos2 = new Enclos(26, 21, "enclos2",map);
 		
 		stock.getGestionnaireStructure().add(maison);
-		//stock.getGestionnaireStructure().add(poulallierInitial);
+		stock.getGestionnaireStructure().add(poulallierInitial);
 		 		
 		stock.getGestionnaireEnclos().add(enclos1);
 		stock.getGestionnaireEnclos().add(enclos2);
+		
+		Puit puit = new Puit(0,0,0, "puit",map);
+		stock.getGestionnaireStructure().add(puit);
 		
 	}
 	
