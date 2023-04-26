@@ -32,7 +32,7 @@ public class Farm implements Serializable{
 	private int colonne ; 
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
-		this.clock= new Clock(new CyclicCounter(0,23,0), new CyclicCounter(0,59,0), new CyclicCounter(0, 59, 0));
+		this.clock= Clock.getInstance();
 		elementManager = manager;
 		this.fermier=fermier;
 		ressourcesManager = RessourcesManager.getInstance();

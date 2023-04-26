@@ -131,8 +131,8 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud.time();
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-		
-//		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
+		//night mode 
+//		if(farm.getClock().getMinute().getValue() == 2) {
 //			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 //		}
 	}

@@ -48,6 +48,6 @@ public abstract class GameConfiguration {
 	
 	public final static String FILE_NAME_SAVE = "saved_farm.ser";
 	
-	public final static int NB_CARD_CHOIX = 6 ;
+	public final static int NB_CARD_CHOIX = 5 ;
 
 }

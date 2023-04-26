@@ -6,18 +6,18 @@ public class Clock implements Serializable{
     private  CyclicCounter hour  ;
     private  CyclicCounter minute ;
     private  CyclicCounter  second ;
-    //private static Clock reference = new Clock();
+    private static Clock reference = new Clock();
    
-    public Clock( CyclicCounter hour , CyclicCounter minute , CyclicCounter second ){
-    	this.hour = hour;
-    	this.minute = minute ;
-    	this.second = second ;
+    private Clock(){
+    	this.hour = new CyclicCounter(0,23,0);
+    	this.minute = new CyclicCounter(0,59,0);
+    	this.second = new CyclicCounter(0,59,0);
     } 
 	  
-    // pourquoi le getInstance public ? 
-//    public static Clock getInstance(){
-//    	return reference ;
-//    }
+     
+    public static Clock getInstance(){
+    	return reference ;
+    }
 	    
     public void increment() {
         second.increment();

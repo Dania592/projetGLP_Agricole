@@ -37,8 +37,12 @@ public class Hud implements Serializable {
 	private JLabel farmer ; 
 	private JLabel save ;
 	private JLabel message ;
+	private JLabel statistique ;
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
+	private MarketGUI market ;
+	
+	
 	
 	
 	private JLabel time = new JLabel();
@@ -54,6 +58,9 @@ public class Hud implements Serializable {
 			component.remove(cancel);
 			component.add(adding, JLayeredPane.DRAG_LAYER);
 			component.add(home, JLayeredPane.DRAG_LAYER);
+			component.add(message , JLayeredPane.DRAG_LAYER);
+			component.add(statistique, JLayeredPane.DRAG_LAYER);
+			
 		}
 		else {
 			adding.setBounds( GameConfiguration.X_ADD_LABEL, GameConfiguration.y_ADD_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
@@ -69,10 +76,14 @@ public class Hud implements Serializable {
 			home.addMouseListener(new MouseHud());
 			component.add(home, JLayeredPane.DRAG_LAYER);	
 			
-//			message = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"maintenance.png"));
-//			message.setBounds(100, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
-//			component.add(message , JLayeredPane.DRAG_LAYER);
-//			
+			message = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"message.png"));
+			message.setBounds(50, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+			component.add(message , JLayeredPane.DRAG_LAYER);
+			
+			statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
+			statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+			component.add(statistique , JLayeredPane.DRAG_LAYER);
+			
 			profile();
 		}
 		time();
@@ -95,6 +106,9 @@ public class Hud implements Serializable {
 		cancel.addMouseListener(new MouseHud());
 		cancel.setToolTipText("cancel l'operation");
 		component.add(cancel, JLayeredPane.DRAG_LAYER);
+		
+		component.remove(statistique);
+		component.remove(message);
 	
 	}
 	
@@ -134,7 +148,7 @@ public class Hud implements Serializable {
 	public void addingChoix() {
 		component.getChoix().init();
 		choixScroll = new ChoixPanel(component);
-		choixScroll.setBounds(50, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-170, 160);
+		choixScroll.setBounds(150, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-300, 160);
 		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
 	}
 	

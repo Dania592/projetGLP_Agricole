@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
 import gui.Farm.Hud;
+import process.action.TaskManager;
 import process.action.task.Task;
 
 public class TachePane extends JPanel{
@@ -44,14 +45,14 @@ public class TachePane extends JPanel{
 	}
 	
 	public void lunchTask() {
-		//TaskManager.getInstance().addToTaskToBeLaunched(task);
+		TaskManager.getInstance().addToTaskToBeLaunched(task);
 	}
 	
 	private class MouseTask implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//lunchTask();
+			lunchTask();
 			hud.removeActionPane();
 			
 			
