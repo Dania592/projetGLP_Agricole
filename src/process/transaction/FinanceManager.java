@@ -12,13 +12,13 @@ import process.time.TimeManager;
 
 public class FinanceManager {
 	
+	public static String EOL = System.getProperty("line.separator"); // end of line
 	public static int INTERVALLE_CHARGE = 20; // une charge de propriété chaque 20 jours;
 	private Clock clock = TimeManager.getInstance().getClock();
 	private ArrayList<Charge> charges = new ArrayList<>();
 	private int counter = 0;
 	
 	private FinanceManager() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static FinanceManager instance = new FinanceManager();
@@ -32,21 +32,25 @@ public class FinanceManager {
 	}
 	
 	public void generateCharge() {
-		if (counter % 5 == 0) {
+		if (counter % 2 == 0) {
 			Charge charge = new Charge(TypeCharge.ENERGIE);
-			//GestionnaireFinancier.getInstance().add(charge);
 			charges.add(charge);
-			Messagerie.getInstance().addMessage(new Message("Charge d'énergie, consultez Gestionnaire financier", clock.getHour().getValue() , clock.getMinute().getValue()));
-		} else if (counter % 10 == 0) {
+			Messagerie.getInstance().addMessage(new Message("Moment de payer " + EOL + "l'énergie!", clock.getHour().getValue() , clock.getMinute().getValue()));
+		}
+		if (counter % 5 == 0) {
+			Charge charge = new Charge(TypeCharge.SALAIRES);
+			charges.add(charge);
+			Messagerie.getInstance().addMessage(new Message("Payez les employés !", clock.getHour().getValue() , clock.getMinute().getValue()));
+		}
+		if (counter % 10 == 0) {
 			Charge charge = new Charge(TypeCharge.EAU);
-			//GestionnaireFinancier.getInstance().add(charge);
 			charges.add(charge);
-			Messagerie.getInstance().addMessage(new Message("Charge d'eau, consultez Gestionnaire financier", clock.getHour().getValue() , clock.getMinute().getValue()));
-		} else if (counter == 20) {
+			Messagerie.getInstance().addMessage(new Message("L'eau aussi est " + EOL + "payante!", clock.getHour().getValue() , clock.getMinute().getValue()));
+		}
+		if (counter == 20) {
 			Charge charge = new Charge(TypeCharge.PROPRIETE);
-			//GestionnaireFinancier.getInstance().add(charge);
 			charges.add(charge);
-			Messagerie.getInstance().addMessage(new Message("Charge de propriété, consultez Gestionnaire financier", clock.getHour().getValue() , clock.getMinute().getValue()));
+			Messagerie.getInstance().addMessage(new Message("Pour être propriétaire  " + EOL + "il faut payer!", clock.getHour().getValue() , clock.getMinute().getValue()));
 			counter = 0;
 		}
 	}
@@ -54,11 +58,15 @@ public class FinanceManager {
 	// à appeler une fois par jour
 	public void senctionner() {
 		if (charges != null ) {
-			for (Charge charge : charges) {
-				if (charge.getDelais() == 0 && !charge.isPaid()) {
+			for (int i = 0; i < charges.size(); i++) {
+				Charge charge = charges.get(i);
+				if ((charge.getDelais() == 0) && !charge.isPaid()) {
 					Banque.getInstance().debiter(charge.getMontant() + (0.1*charge.getMontant()));
 					charge.setPaid(true);
 					charges.remove(charge);
+					Messagerie.getInstance().addMessage(new Message("Pénalités pour retard  " + EOL + "de paiement", clock.getHour().getValue(), clock.getMinute().getValue()));
+				} else {
+					charge.setDelais(charge.getDelais() - 1);
 				}
 			}
 		}
@@ -72,8 +80,7 @@ public class FinanceManager {
 	
 	public void incrementCounter() {
 		counter++;
-		senctionner();
 		generateCharge();
-		System.out.println(charges.size());
+		senctionner();
 	}
 }

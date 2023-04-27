@@ -4,6 +4,7 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import data.finance.Banque;
 import gui.gestionnaire.keys.Keys;
 
 public class QuantityListener implements ChangeListener{
@@ -29,12 +30,18 @@ public class QuantityListener implements ChangeListener{
 				market.getBill().remove(key);
 				market.getAchat().removeFromCart(key);
 			}else{
-				market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
 				if ((newValue-lastValue)>0) {
-					market.getAchat().addToCart(key);
+					if(Banque.getInstance().getCompte().getSolde() >= market.getValidationPanel().getTotalCost()+((newValue-lastValue)*key.getPrixAchat())) {
+						market.getAchat().addToCart(key);
+					} else {
+						new InfosTransaction("Solde insuffisant", market.getFrame());
+						market.dispose();
+						newValue = lastValue;
+					}
 				}else {
 					market.getAchat().removeFromCart(key);
 				}
+				market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
 			}
 		}
 		lastValue = newValue;

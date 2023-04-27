@@ -1,5 +1,6 @@
-/data/
-/process/
-/gui/
 /ressources/
-/PanelFermier.class
+/data/
+/gui/
+/process/
+/test/
+/testing/

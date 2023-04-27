@@ -54,7 +54,7 @@ public class Achat extends Transaction{
 		key.accept(addKeyVisitor, entier);
 	}
 	
-	public void cancelOrder(Game game) {
+	public void cancelOrder() {
 		cart.clear();
 		setTotalCost(0);
 	}

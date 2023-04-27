@@ -3,6 +3,7 @@ package data.finance;
 public enum TypeCharge {
 	ENERGIE,
 	EAU,
+	SALAIRES,
 	PROPRIETE;
 	
 	TypeCharge() {}

@@ -3,15 +3,21 @@ package gui.gestionnaire;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.HashMap;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.SwingConstants;
 
+import data.finance.Banque;
+import data.finance.Compte;
 import gui.gestionnaire.keys.Keys;
 import process.transaction.Achat;
 
@@ -33,66 +39,75 @@ public class MarketGUI extends JFrame{
 	private JFrame frame;
 
 	public static Color MARKET_CARD_COLOR = GestionnaireStocksGUI.LIGHT_BROWN;
-
+	public final static Font LABEL_FONT = new Font("Monospaced", Font.PLAIN|Font.BOLD, 20);
 	private GeneralPaintStrategy gestionnairePaintStrategy = new GeneralPaintStrategy();
 	private HashMap<Keys, BillArticlePanel> bill = new HashMap<>();
-	private JPanel billContainer;
-	private JPanel billPanel;
+	private JPanel billPanel = new JPanel();
+	private BoxLayout boxLayout = new BoxLayout(billPanel, BoxLayout.Y_AXIS);
 	private ValidationPanel validationPanel;
+	private Compte compte = Banque.getInstance().getCompte();
+	private JPanel billContainer;
 	private Achat achat;
 
 	public void paintBill(int x, int y, int w, int h) {
-		billContainer = new JPanel();
+		billContainer = new RoundedPanel(20,GeneralPaintStrategy.MEDIUM_BROWN, false);
 		billContainer.setLayout(new BorderLayout());
 		billContainer.setBounds(x, y, w, h);
 		
 		JLabel name = new JLabel();
 		name.setText("Panier");
-		name.setHorizontalTextPosition(JLabel.CENTER);
-		name.setVerticalTextPosition(JLabel.CENTER);
+		name.setFont(LABEL_FONT);
+		name.setForeground(Color.WHITE);
+		name.setHorizontalAlignment(SwingConstants.CENTER);
 		billContainer.add(name,BorderLayout.NORTH);
 		
-		billPanel = new JPanel();
-		billPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+		billPanel.setLayout(boxLayout);
 		billPanel.setBackground(GestionnaireStocksGUI.MEDIUM_BROWN);
+		billPanel.add(Box.createRigidArea(new Dimension(0,5)));
 		
-		JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPane = new JScrollPane(billPanel);
+		scrollPane.setVerticalScrollBar(new CustomizedScrollBar());
+		scrollPane.setBorder(null);
+		scrollPane.setBackground(GeneralPaintStrategy.MEDIUM_BROWN);
 		scrollPane.setViewportView(billPanel);
 		
 		validationPanel = new ValidationPanel(0, this);
 		
-		billContainer.add(billPanel, BorderLayout.CENTER);
-		billContainer.add(validationPanel, BorderLayout.SOUTH);
-		
+		billContainer.add(scrollPane, BorderLayout.CENTER);
+		billContainer.add(validationPanel, BorderLayout.SOUTH);		
 	}
 	
 	public void addToBill(Keys key, int w, int h) {
-		if (!bill.containsKey(key)) {
-			BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
-			bill.put(key,panel);
-			billPanel.add(panel);
-			billPanel.revalidate();
-			billPanel.repaint();
-			AddToCart.posY++;
+		if (compte.getSolde() >= (validationPanel.getTotalCost() + key.getPrixAchat())) {
+			if (!bill.containsKey(key)) {	
+				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
+				bill.put(key,panel);
+				billPanel.add(panel);
+				billPanel.add(Box.createRigidArea(new Dimension(0,5)));
+				billPanel.revalidate();
+				billPanel.repaint();
+				billContainer.revalidate();
+				billContainer.repaint();
+				AddToCart.posY++;
+			} else {
+				JSpinner spinner = bill.get(key).getQuantitySpinner();
+				spinner.setValue(spinner.getNextValue());
+			}
 		} else {
-			JSpinner spinner = bill.get(key).getQuantitySpinner();
-			spinner.setValue(spinner.getNextValue());
+			new InfosTransaction("Solde insuffisant", this);
+			dispose();
 		}
 	}
 	
-	public void removeFromBill(Keys key, int w, int h) {
+	public void removeFromBill(Keys key) {
 		if (bill.containsKey(key)) {
-			BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
-			bill.put(key,panel);
-			billPanel.add(panel);
+			billPanel.remove(bill.get(key));
+			int quantity = (Integer) bill.get(key).getQuantitySpinner().getValue();
+			bill.remove(key);
 			billPanel.revalidate();
 			billPanel.repaint();
-			AddToCart.posY++;
-		} else {
-			JSpinner spinner = bill.get(key).getQuantitySpinner();
-			spinner.setValue(spinner.getPreviousValue());
+			validationPanel.updateTotalCost((-quantity)*key.getPrixAchat());
 		}
-		validationPanel.updateTotalCost(key.getPrixAchat());
 	}
 	
 	public String getName(Keys key) {

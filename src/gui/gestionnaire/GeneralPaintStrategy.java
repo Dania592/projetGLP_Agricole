@@ -124,46 +124,6 @@ public class GeneralPaintStrategy {
 	}
 	
 	//ok
-	/*public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,String type, Achat achat, MarketGUI market) {
-		int cardCount;
-		if (type.equals("Manager")) {
-			cardCount = key.getElements().size();
-		} else {
-			cardCount = key.getArticles().size();
-		}
-		counter = cardCount - 1;
-		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
-		JPanel innerContainer = paintNormalPanel(x, y, w, h, null);
-		if (cardCount > 0 ) {
-			if(cardCount <= (rowCount * columnCount)) {
-				innerContainer = fillCardContainer(innerContainer, cardCount, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market);
-				cardContainer.add(innerContainer);
-			} else {
-				// count le nombre de vues du cardLayout
-				int count = cardCount / (rowCount * columnCount);
-				
-				if ( cardCount % (rowCount * columnCount) != 0) {
-					count++;
-				}
-				// affecter le nombre de cartes par vue du cardLayout 
-				int set;
-				for ( int i = 0; i < count; i++) {
-					if (cardCount >= (rowCount * columnCount)) {
-						set = (rowCount * columnCount);
-					} else {
-						set = cardCount;
-					}
-					cardCount -= set;
-					innerContainer = paintNormalPanel(gap, gap, w - gap, h - columnCount, null);
-					innerContainer = fillCardContainer(innerContainer, set, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market);
-					cardContainer.add(innerContainer);
-				}
-			}
-		}
-		return cardContainer;
-	}*/
-	
-	
 	public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,PaintKeys type, Transaction achat, MarketGUI market) {
 		int cardCount = 0;
 		ArrayList<?> elements = getElements(type, key);
@@ -342,10 +302,10 @@ public class GeneralPaintStrategy {
 			case CHARGE:
 				ArrayList<Charge> charges = new ArrayList<>();
 				if (GestionnaireFinancier.getInstance().getCharges() != null) {
-					charges.addAll(charges.size(),GestionnaireFinancier.getInstance().getCharges());
+					charges.addAll(0,GestionnaireFinancier.getInstance().getCharges());
 				}
 				if (FinanceManager.getInstance().getCharges() != null) {
-					charges.addAll(0,FinanceManager.getInstance().getCharges());
+					charges.addAll(FinanceManager.getInstance().getCharges());
 				} 
 				return charges;
 			default: 
