@@ -15,10 +15,12 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
 import data.configuration.GameConfiguration;
+import data.notification.Messagerie;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.ChoixPanel;
+import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.MarketGUI;
 import process.action.task.Task;
 import process.game.SaveFarm;
@@ -41,10 +43,9 @@ public class Hud implements Serializable {
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
 	private MarketGUI market ;
+	private MessageriePanel messagerie ; 
 	
-	
-	
-	
+		
 	private JLabel time = new JLabel();
 		
 	
@@ -63,31 +64,51 @@ public class Hud implements Serializable {
 			
 		}
 		else {
-			adding.setBounds( GameConfiguration.X_ADD_LABEL, GameConfiguration.y_ADD_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
-			ImageIcon addIcon= new ImageIcon("src"+File.separator+"ressources"+File.separator+"add.png");
-			adding.setIcon(addIcon);
-			adding.addMouseListener(new MouseHud());
-			component.add(adding, JLayeredPane.DRAG_LAYER);
+			add_ADD();
 			
+			addHome();
+		
+			addMessage();
 			
-			home.setBounds( GameConfiguration.X_HOME_LABEL, GameConfiguration.Y_HOME_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
-			ImageIcon homeIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"home.png");
-			home.setIcon(homeIcone);	
-			home.addMouseListener(new MouseHud());
-			component.add(home, JLayeredPane.DRAG_LAYER);	
-			
-			message = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"message.png"));
-			message.setBounds(50, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
-			component.add(message , JLayeredPane.DRAG_LAYER);
-			
-			statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
-			statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
-			component.add(statistique , JLayeredPane.DRAG_LAYER);
+			addStat();
 			
 			profile();
 		}
 		time();
 
+	}
+	
+	public void add_ADD() {
+		adding.setBounds( GameConfiguration.X_ADD_LABEL, GameConfiguration.y_ADD_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		ImageIcon addIcon= new ImageIcon("src"+File.separator+"ressources"+File.separator+"add.png");
+		adding.setIcon(addIcon);
+		adding.addMouseListener(new MouseHud());
+		component.add(adding, JLayeredPane.DRAG_LAYER);
+	}
+	
+	public void addHome() {
+		home.setBounds( GameConfiguration.X_HOME_LABEL, GameConfiguration.Y_HOME_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		ImageIcon homeIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"home.png");
+		home.setIcon(homeIcone);	
+		home.addMouseListener(new MouseHud());
+		component.add(home, JLayeredPane.DRAG_LAYER);	
+	}
+	
+	public void addMessage() {
+		String path = GameConfiguration.IMAGE_PATH+"message.png";
+		if(Messagerie.getInstance().getMessages().size()>0) {
+			path = GameConfiguration.IMAGE_PATH+"nv_message.png";
+		}
+		message = new JLabel(new ImageIcon(path));
+		message.setBounds(50, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		message.addMouseListener(new MouseHudMessage());
+		component.add(message , JLayeredPane.DRAG_LAYER);
+	}
+	
+	public void addStat() {
+		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
+		statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		component.add(statistique , JLayeredPane.DRAG_LAYER);
 	}
 
 	public void addValidation() {
@@ -187,6 +208,10 @@ public class Hud implements Serializable {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource().equals(adding)) {
 				changeState();
+				if(Arrays.asList(component.getComponents()).contains(messagerie)) {
+					component.remove(messagerie);
+					addStat();
+				}
 			}
 			else {
 				if(e.getSource().equals(home)) {
@@ -232,6 +257,57 @@ public class Hud implements Serializable {
 			}
 			
 			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	public  void removeMessagerie() {
+		if (Arrays.asList(component.getComponents()).contains(messagerie)) {
+			addStat();
+			component.remove(messagerie);
+			component.remove(message);
+			addMessage();
+		}
+	}
+	
+	private class MouseHudMessage implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+				if (Arrays.asList(component.getComponents()).contains(messagerie)) {
+					addStat();
+					component.remove(messagerie);
+				} else {
+					messagerie = new MessageriePanel(Hud.this);
+					component.remove(statistique);
+					removeChoix();
+					component.add(messagerie , JLayeredPane.DEFAULT_LAYER);
+				}
+					
 		}
 
 		@Override

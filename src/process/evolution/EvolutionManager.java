@@ -7,6 +7,8 @@ import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.flore.terrains.Terrain;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.time.Clock;
@@ -52,8 +54,9 @@ public class EvolutionManager implements Serializable {
 
 
 	public void enclosEvolution() {
+		int x = 0;
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
-
+			
 			int delay = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS;
 			int dhour = clock.getMinute().getValue()- enclos.getLastDecrementation();
 
@@ -74,13 +77,29 @@ public class EvolutionManager implements Serializable {
 						enclos.setLastDecrementation(clock.getMinute().getValue());
 					}
 				}
+				x = 0;
 			}
+			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauEau()==FullLevel.EMPTY) {
+				Message message = new Message("Plus d'eau dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+				Messagerie.getInstance().addMessage(message);
+			}
+			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauNourriture()==FullLevel.EMPTY) {
+				Message message = new Message("Plus d'nourriture dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+				Messagerie.getInstance().addMessage(message);
+			}
+			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getAnimalsHungerLevel()!= HungerLevel.VERY_HUNGRY) {
+				Message message = new Message("les animaux vont biontôt mourir",clock.getHour().getValue(), clock.getMinute().getValue());
+				Messagerie.getInstance().addMessage(message);
+			}
+			x++;
 		}
 		int i = 0;
 		while(i < animalsToRemove.size()) {
 			if(deathIndex == 5) {
 				animalEvolution.killAnimal(animalsToRemove.get(0));
 				animalsToRemove.remove(0);
+				Message message = new Message("Un animal est mort",clock.getHour().getValue(),clock.getMinute().getValue());
+				Messagerie.getInstance().addMessage(message);
 				i = 0;
 				deathIndex = 0;
 			}

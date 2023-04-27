@@ -1,6 +1,7 @@
 package data.espece;
 
 import data.myExceptions.DyingOfHungerException;
+import data.notification.Messagerie;
 
 public interface FoodConsumer extends DomesticSpecie{
     public enum HungerLevel{
@@ -24,19 +25,6 @@ public interface FoodConsumer extends DomesticSpecie{
             }
         }
         
-        public HungerLevel decrease() throws DyingOfHungerException{
-            switch(this){
-                case VERY_HUNGRY :
-                    throw new DyingOfHungerException();
-                case HUNGRY:
-                    return VERY_HUNGRY;
-                case NORMAL:
-                    return HUNGRY;
-                case FULL:
-                default:
-                    return NORMAL;           
-            }
-        }
         
         public HungerLevel decrease_1() {
         	switch(this) {
