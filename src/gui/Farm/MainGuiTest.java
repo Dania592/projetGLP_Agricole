@@ -14,8 +14,11 @@ import data.configuration.GameConfiguration;
 import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import gui.gestionnaire.GestionnaireStocksGUI;
+import gui.gestionnaire.keys.Structures;
 import process.action.TaskManager;
 import process.action.task.Task;
+import process.game.Game;
 
 public class MainGuiTest  extends JFrame implements Runnable{
 
@@ -41,7 +44,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		
+
 		selected= farm.getManager().getMapManager().get("fermier");	
 
 		dashboard = new Board(farm, selected , taskManager, this);
@@ -66,17 +69,17 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			dashboard.repaint();
-			
-			
+
+
 		}
 	}
 
 	public Farm getFarm() {
 		return farm ;
 	}
-	
+
 	private class MouseControls implements MouseListener{
 
 		@Override
@@ -93,12 +96,22 @@ public class MainGuiTest  extends JFrame implements Runnable{
 					ArrayList<Task<?>> tasks = taskManager.getPossibleTaskToPerform(actionnable);
 					dashboard.getHud().add_Actions(x, y , tasks);					
 				}
+
+				if(selected.getClass().getSimpleName().equals("Entrepot")) {
+					System.out.println("entrepot");
+					Game game = new Game();
+					game.acheter(dashboard.getFarm().getManager().getMapManager().getMap());
+					GestionnaireStocksGUI.achat = game.getAchat();
+					new GestionnaireStocksGUI("Gestionnaire Stock ", MainGuiTest.this);
+					MainGuiTest.this.dispose();
+				}
+
 			}
 			else {
 				dashboard.getHud().remove_panels();
-				
+
 			}
-			
+
 		}
 
 		@Override

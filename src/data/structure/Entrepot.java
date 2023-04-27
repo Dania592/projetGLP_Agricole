@@ -25,7 +25,7 @@ public class Entrepot extends Structure{
 		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map);
 		this.produits = new ArrayList<>();
 		
-		setImage("src"+File.separator+"ressources"+File.separator+"minigrange.png");
+		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Entrepot1.png");
 		
 	}
 

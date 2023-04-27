@@ -15,7 +15,7 @@ public class Puit extends StructureAction {
 	public Puit(int ligne_init, int colonne_init, float prixAchat, String reference, Map map) {
 		super(ligne_init, colonne_init, prixAchat, reference, map);
 		
-		setImage("src"+File.separator+"ressources"+File.separator+"puit.png");
+		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Puit.png");
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
+import data.structure.Entrepot;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
@@ -50,11 +51,14 @@ public class GameBuilder {
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0).setStatique();
 		initisaliseFarmerPosition(farm, farmer);
 		
+		setEntrepotPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0).setStatique();
+		
 		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer); 
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
-		
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
 		return farm ;
 	}
 	
@@ -131,6 +135,9 @@ public class GameBuilder {
 		Puit puit = new Puit(0,0,0, "puit",map);
 		stock.getGestionnaireStructure().add(puit);
 		
+		Entrepot entrepot = new Entrepot(0,0,"entrepot", map);
+		stock.getGestionnaireStructure().add(entrepot);;
+		
 	}
 	
 	private static void sethousePosition(Farm farm , Structure maison ) {
@@ -139,6 +146,14 @@ public class GameBuilder {
 		maison.setPosition(ligne, colonne);
 				
 	}
+	private static void setEntrepotPosition(Farm farm , Structure entrepot ) {
+		int colonne = farm.getColonne()+2 ;
+		int ligne = farm.getLigne()+1;
+		entrepot.setPosition(ligne, colonne);
+				
+	}
+	
+	
 	
 	private static void initisaliseFarmerPosition(Farm farm , Fermier farmer) {
 		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
