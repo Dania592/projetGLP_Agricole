@@ -48,8 +48,6 @@ public abstract class GameConfiguration {
 	
 	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 60 ; // 1 animal => 25 min 
 	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 20 ; // 1 animal => 15 min 
-
-	public final static int FREQUENCE_DECREMENTATION_EAU_TERRAIN = (int)Produceur.TimeItTakes.TERRAIN.getTimeInSeconde()/240; // On arrosera 3 fois pour avant qu'il ne change d'état
 	
 	public final static String FILE_NAME_SAVE = "saved_farm.ser";
 	

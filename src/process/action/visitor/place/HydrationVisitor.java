@@ -1,5 +1,8 @@
 package process.action.visitor.place;
 
+import javax.swing.tree.AbstractLayoutCache.NodeDimensions;
+
+import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
@@ -17,6 +20,8 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
+import data.structure.hability.Hydratable;
+import data.structure.hability.Actionnable.ActionnableKey;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.evolution.FullLevel;
@@ -43,6 +48,14 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
 
     public boolean haveWater(){
         return GestionnaireStocks.getInstance().getProduits().get(Produits.WATER) != null;
+    }
+
+    public boolean needToBeHydrated(Hydratable hydratablePlace){
+        boolean needToBeHydrated = true;
+        if(hydratablePlace.getSpecificActionnableKey() == ActionnableKey.ENCLOS){
+            needToBeHydrated = ((Terrain)hydratablePlace).getProductifState() == ProductifState.PRODUCING;
+        }
+        return needToBeHydrated = needToBeHydrated && hydratablePlace.isNeedToBeHydrated() && haveWater();
     }
 
 

@@ -134,7 +134,7 @@ public class TaskFactory{
 
     private GiveWaterTask newGiveWaterTask(Activity activity, Hydratable hydratablePlace) throws UnableToGenerateNewTaskException, TaskNotNeededToBePerform{
         System.out.println("hydratablePlace.isNeedToBeHydrated() "+ hydratablePlace.isNeedToBeHydrated()+" : hydrationVisitor.haveWater() "+ hydrationVisitor.haveWater());
-        if(hydratablePlace.isNeedToBeHydrated() && hydrationVisitor.haveWater()){
+        if(hydrationVisitor.needToBeHydrated(hydratablePlace)){
             return new GiveWaterTask(activity, hydratablePlace, hydrationVisitor);
         }
         throw new TaskNotNeededToBePerform(activity, hydratablePlace);

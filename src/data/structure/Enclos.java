@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
@@ -49,7 +50,7 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	private FullLevel niveauEau ; 
 	private FullLevel niveauNourriture ;
 	private int dimension ; 
-		private FixableState state;
+	private FixableState state;
 	private HungerLevel animalsHungerLevel;
 	private HydrationLevel animalsHydrationLevel;
 	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
@@ -321,12 +322,9 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	@Override
 	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
 		if(activity == Activity.SHAVE_SHEEP){
-			boolean haveProducedWool = false;
-			Iterator<Mouton> mouton = animalStorage.getMoutons().iterator();
-			while(mouton.hasNext() && !haveProducedWool){
-				haveProducedWool = mouton.next().haveProduced();
-			}
-			return haveProducedWool;
+			if(production.get(Produits.LAINE) != null){
+				return production.get(Produits.LAINE) !=0;
+			} 	
 		}
 		throw new UnknownActivityException(activity);
 	}

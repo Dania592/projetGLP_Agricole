@@ -56,21 +56,12 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private Produceur.TimeItTakes timeItTakesToProduce = TimeItTakes.TERRAIN;
 	private CyclicCounter productifCycle = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde());
 	private FixableState fixableState = FixableState.USABLE;
-	private int index = 0;
-	private int count = 0;
+	private static int DEFAULT_PRODUCED_QUANTITY = 10;
 	private EvolutionTerrain evolution;
 	private Graine type;
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	private EtatSante etatSante = EtatSante.BONNE_SANTE;
-	private int lastDecrementationEau;
-
-	public int getLastDecrementationEau() {
-		return lastDecrementationEau;
-	}
-
-	public void setLastDecrementationEau(int lastDecrementationEau) {
-		this.lastDecrementationEau = lastDecrementationEau;
-	}
+	private CyclicCounter hydrationCounter = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde()/3);
 
 	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
@@ -156,7 +147,15 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 				+ production + ", hydrationLevel=" + hydrationLevel + ", produceurType=" + produceurType
 				+ ", timeItTakesToProduce=" + timeItTakesToProduce.getTimeInSeconde() + ", productifCycle=" + productifCycle.getValue()
 				+ ", fixableState=" + fixableState + ", evolution=" + evolution + ", type=" + type + ", etatSante="
-				+ etatSante + ", lastDecrementationEau=" + lastDecrementationEau + "]";
+				+ etatSante + ", CycleHydration = " +hydrationCounter+"]";
+	}
+
+	public CyclicCounter getHydrationCounter() {
+		return hydrationCounter;
+	}
+
+	public void setHydrationCounter(CyclicCounter hydrationCounter) {
+		this.hydrationCounter = hydrationCounter;
 	}
 
 	@Override
@@ -319,6 +318,11 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	@Override
 	public boolean needPlayerIntervention() {
 		return true;
+	}
+
+	@Override
+	public int getProcuedQuantity() {
+		return DEFAULT_PRODUCED_QUANTITY;
 	}
 
 

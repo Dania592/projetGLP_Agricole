@@ -23,7 +23,10 @@ public class GiveWaterTask extends Task<Hydratable>{
         super(activity, actionnableTarget);
         this.visitor = visitor;
     }
-
+    // public GiveWaterTask(Activity activity, Hydratable actionnableTarget, HydrationVisitor visitor, Personne personne) throws UnableToGenerateNewTaskException {
+    //     super(activity, actionnableTarget, personne);
+    //     this.visitor = visitor;
+    // }
     @Override
     protected void performAction()
             throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException,

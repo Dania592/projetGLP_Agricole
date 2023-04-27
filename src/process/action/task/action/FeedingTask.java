@@ -22,6 +22,13 @@ public class FeedingTask extends Task<Feedable> {
         this.visitor = visitor;
     }
 
+
+    
+    // public FeedingTask(Activity activity, Feedable actionnableTarget, FeedVisitor visitor, Personne personne)
+    // throws UnableToGenerateNewTaskException {
+    //     super(activity, actionnableTarget, personne);
+    //     this.visitor = visitor;
+    // }
     @Override
     protected synchronized void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         try {

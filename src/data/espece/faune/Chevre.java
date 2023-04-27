@@ -36,16 +36,11 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	
 	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, new Lait(), reference , map , SPEED_GROWTH);
+				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , map , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Chevre"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
 			setImage(imagePath);
-	}
-
-	@Override
-	public Produits collectProduction() {
-		return lait.getType(); 
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package process.action.task.action;
 
+import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.SpecialActionPerformer;
@@ -16,11 +17,19 @@ import process.action.visitor.place.SpecialActionVisitor;
 public class SpecialTask extends Task<SpecialActionPerformer> {
     private SpecialActionVisitor visitor; 
 
+    // public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, SpecialActionVisitor visitor, Personne personne)
+    //         throws UnableToGenerateNewTaskException {
+    //     super(activity, actionnableTarget, personne);
+    //     this.visitor = visitor;
+    // }
+
+    
     public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, SpecialActionVisitor visitor)
             throws UnableToGenerateNewTaskException {
         super(activity, actionnableTarget);
         this.visitor = visitor;
     }
+
 
     @Override
     protected void performAction()

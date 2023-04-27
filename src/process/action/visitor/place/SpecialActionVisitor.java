@@ -84,11 +84,11 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
             case LABOURE : 
                 terrain.setType(Graine.BLUEBERRY_SEED); 
                 terrain.setEvolution(EvolutionTerrain.PLANTE);
-                terrain.setLastDecrementationEau(TimeManager.getInstance().getClock().getMinute().getValue());
                 terrain.setProductifState(ProductifState.PRODUCING);
                 break;
             case POURRI:
                 terrain.setEvolution(EvolutionTerrain.VIERGE);
+                
                 break;
             default : 
                 throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
@@ -101,7 +101,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         if(terrain.getEvolution() == EvolutionTerrain.LABOURE){
             terrain.setType(type); 
             terrain.setEvolution(EvolutionTerrain.PLANTE);
-            terrain.setLastDecrementationEau(TimeManager.getInstance().getClock().getMinute().getValue());
             terrain.setProductifState(ProductifState.PRODUCING);
         }else{
             throw new UnableToPerformSuchActionWithCurrentActionnable();

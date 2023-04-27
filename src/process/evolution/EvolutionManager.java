@@ -21,10 +21,21 @@ import data.notion.Mortel.EtatSante;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.time.Clock;
+import data.time.CyclicCounter;
+import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.ProduceVisitor;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.ProductionPerformer;
 import process.game.ElementManager;
 
 public class EvolutionManager implements Serializable {
 
+	private ProductionPerformer productionPerformer = new ProductionPerformer();
 	private AnimalEvolution animalEvolution ;
 	private ElementManager elementManager ;
 	private Clock clock;
@@ -66,28 +77,30 @@ public class EvolutionManager implements Serializable {
 
 
 	private void manageEvolutionTerrain(Terrain terrain){
-		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE){
-			int dhourEau = clock.getMinute().getValue() - terrain.getLastDecrementationEau();
-			if(dhourEau >= GameConfiguration.FREQUENCE_DECREMENTATION_EAU_TERRAIN){
+		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!=EvolutionTerrain.POURRI ){
+			CyclicCounter hydrationCounter = terrain.getHydrationCounter();
+			hydrationCounter.increment();
+			if(hydrationCounter.getValue() == 0){
 				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
-				terrain.setLastDecrementationEau(clock.getMinute().getValue());
-			if(terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!= EvolutionTerrain.VIERGE && terrain.getProductifState() ==  ProductifState.UNABLE_TO_PRODUCE){
-				
-			}
+			}if(terrain.getProductifState() == ProductifState.PRODUCING){
+				try {
+					terrain.launchAction(productionPerformer);
+				} catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
+						| BeingCannotPerformSuchActionException | NotImplementYetException
+						| NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
+						| UnableToMakeTheTransfertException e) {
+					e.printStackTrace();
+				} 
 			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
 				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
 				terrain.setEtatSante(EtatSante.MALADE);
-				terrain.getProduction().clear();
 			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED){
 				terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
 				terrain.getProduction().clear();
 				terrain.setEvolution(EvolutionTerrain.POURRI ); //TODO decommenter
 			}
-
-			System.out.println(terrain);
 		}
-
-
+		System.out.println(terrain);
 	}
 
 	private void manageFoodLevelInEnclosure(Enclos enclos){

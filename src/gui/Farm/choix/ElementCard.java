@@ -149,12 +149,7 @@ public class ElementCard extends RoundedPanel{
 							enclos.setLastDecrementationNourriture(farm.getClock().getMinute().getValue());
 							farm.getManager().add(enclos);
 						}else{
-							farm.getManager().add(element);	
-							if(nameCard.equals("Terrain")){
-								Terrain terrain = (Terrain) element;
-								terrain.setLastDecrementationEau(farm.getClock().getMinute().getValue());
-							}						
-							
+							farm.getManager().add(element);						
 						}
 						
 						//removeOneElement(element);	

@@ -1,5 +1,6 @@
 package process.action.task.action.transfert;
 
+import data.acteur.Personne;
 import data.espece.Transportable;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import process.action.exception.NotImplementYetException;
@@ -17,11 +18,17 @@ import data.structure.hability.Distributor;
 public class SendToEnclosureTask extends Task<Distributor<?>>{
     EnclosureSenderVisitor visitor;
 
+    // public SendToEnclosureTask(Activity activity, Distributor<?> transportable, EnclosureSenderVisitor enclosureSender, Personne personne)
+    //         throws UnableToGenerateNewTaskException {
+    //     super(activity, transportable, personne);
+    //     this.visitor = enclosureSender;
+    // }
+
     public SendToEnclosureTask(Activity activity, Distributor<?> transportable, EnclosureSenderVisitor enclosureSender)
-            throws UnableToGenerateNewTaskException {
+    throws UnableToGenerateNewTaskException {
         super(activity, transportable);
         this.visitor = enclosureSender;
-    }
+        }
 
     @Override
     protected synchronized void performAction() throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {

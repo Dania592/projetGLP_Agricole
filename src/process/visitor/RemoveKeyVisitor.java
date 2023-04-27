@@ -4,13 +4,11 @@ import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
-import data.structure.Structure;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
-import process.GestionnaireFactory;
 
 public class RemoveKeyVisitor implements KeyVisitor<Void>{
 

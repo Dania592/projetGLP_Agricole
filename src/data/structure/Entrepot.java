@@ -14,7 +14,6 @@ public class Entrepot extends Structure{
 
 	private ArrayList<Produit> produits ;
 	private int capacite =100  ; 
-	private final static float PRIX_ACHAT = 50000 ;
 	private boolean usedForAnAction = false;
 	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
 		super(ligne_init, colonne_init, reference , map);

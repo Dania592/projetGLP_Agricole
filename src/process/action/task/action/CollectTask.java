@@ -23,6 +23,12 @@ public class CollectTask extends Task<ProductifPlace> {
         this.visitor = collector;
     }
 
+    
+    // public CollectTask(Activity activity, ProductifPlace producif, ProductionCollector collector, Personne personne) throws UnableToGenerateNewTaskException {
+    //     super(activity, producif, personne);
+    //     this.visitor = collector;
+    // }
+
     @Override
     protected synchronized void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
         try {

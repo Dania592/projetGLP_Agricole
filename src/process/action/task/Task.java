@@ -1,5 +1,6 @@
 package process.action.task;
 
+import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
@@ -63,11 +64,35 @@ public abstract class Task<T extends Actionnable> {
     private Activity activity; 
     private long totalTime;
     private long timeSpend = 0;
+    private Personne personne;
+    private boolean isAutomated;
+
+    public Task(Activity activity, T actionnableTarget, Personne personne, boolean isAutomated) throws UnableToGenerateNewTaskException{
+        this.actionnableTarget = actionnableTarget;
+        totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
+        this.activity = activity;
+        this.personne = personne;
+        this.isAutomated = isAutomated;
+    }
+
+
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
         this.actionnableTarget = actionnableTarget;
         totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
         this.activity = activity;
+        this.personne = personne;
+        this.isAutomated = isAutomated;
+    }
+
+    public Task(Activity activity, T actionnableTarget, Personne personne) throws UnableToGenerateNewTaskException{
+        this(activity, actionnableTarget, personne, false);
+    }
+
+
+
+    public Personne getPersonne() {
+        return personne;
     }
 
     public synchronized Activity getActivity() {
@@ -89,11 +114,9 @@ public abstract class Task<T extends Actionnable> {
     public void process() throws TaskCompleteException{
         timeSpend+= 1000;
         if(state == TaskState.WAITING_TO_BE_LANCHED){
-            System.out.println("Début de la tâche");
-            System.out.println("avant le set : "+ getActionnableTarget().isCurrentlyUsedForAnotherTask());
             getActionnableTarget().setStructureStatus(true);
-            System.out.println("avant après le set: "+ getActionnableTarget().isCurrentlyUsedForAnotherTask());
             performSpecialActionToInitTask();
+            // personne.setFree(false);
         }
         if(updateTaskStatus()){
             state = state.update();
@@ -109,6 +132,7 @@ public abstract class Task<T extends Actionnable> {
             }
             getActionnableTarget().setStructureStatus(false);
             performSpecialActionToTerminateTask();
+            // personne.setFree(!isAutomated);
             throw new TaskCompleteException(this);
         }
     }

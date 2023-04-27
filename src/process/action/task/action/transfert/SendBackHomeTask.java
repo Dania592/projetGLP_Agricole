@@ -11,15 +11,23 @@ import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPla
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.transfert.HomeSenderVisitor;
+import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 
 public class SendBackHomeTask extends Task<Distributor<?>> {
     HomeSenderVisitor visitor;
     
+    // public SendBackHomeTask (Activity activity, Distributor<?> transportable, HomeSenderVisitor homeSender, Personne personne) throws UnableToGenerateNewTaskException {
+    //     super(activity, transportable, personne);
+    //     this.visitor = homeSender;
+    // }
+
     public SendBackHomeTask (Activity activity, Distributor<?> transportable, HomeSenderVisitor homeSender) throws UnableToGenerateNewTaskException {
         super(activity, transportable);
         this.visitor = homeSender;
     }
+
+
 
     @Override
     protected synchronized void performAction() throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {

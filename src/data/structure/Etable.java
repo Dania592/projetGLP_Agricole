@@ -19,7 +19,6 @@ import process.action.visitor.place.PlaceVisitor;
 
 public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>{
 	private ArrayList<Slaughtable> animalToSlaughter = new ArrayList<>();
-	private final static float PRIX_ACHAT = 50000 ;
 	private static boolean usedForAnAction = false;
 
 	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {

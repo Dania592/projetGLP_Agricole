@@ -39,7 +39,7 @@ public class Poule extends AnimalProducteur{
 	public Poule(int ligne_init, int colonne_init,Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
 			 
 		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, new Oeuf(), reference , map , SPEED_GROWTH);
+				FREQUENCE_PRODUCTION, QUANTITE, oeuf, reference , map , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
@@ -48,10 +48,6 @@ public class Poule extends AnimalProducteur{
 		
 	}
 
-	@Override
-	public Produits collectProduction() {
-		return oeuf.getType();
-	}
 
 	@Override
 	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {

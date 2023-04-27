@@ -17,7 +17,6 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 	private ArrayList<Slaughtable> animaltoSlaughter = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private HashMap<Produits, Integer> production = new HashMap<>();
-	private final static float PRIX_ACHAT = 50000 ;
 	
 	public ArrayList<Slaughtable> getAnimaltoSlaughter() {
 		return animaltoSlaughter;
