@@ -87,8 +87,9 @@ public class MessageriePanel extends RoundedPanel {
 		int indexCard = 0 ;
 		int i =1;
 		RoundedPanel liste = new RoundedPanel(null , 20 ,GeneralPaintStrategy.MEDIUM_BROWN );
-				
-		for(Message message : messagerie.getMessages()) {
+		
+		for(int indice_message = messagerie.getMessages().size()-1 ; indice_message >=0 ; indice_message-- ) {
+			Message message = messagerie.getMessages().get(indice_message);
 			if(indexCard==3) {
 				indexCard = 0;
 				panel.add(liste);
@@ -96,13 +97,13 @@ public class MessageriePanel extends RoundedPanel {
 				y = 50 ; 
 			}
 			MessagePane pane = new MessagePane(message , hud);
-			pane.setBounds(x , y , 170 , 50);
+			pane.setBounds(x , y , 170 , 55);
 			liste.add(pane);
 			
 			if(i== messagerie.getMessages().size()) {
 				panel.add(liste);
 			}
-			y+=pane.getHeight()+15;
+			y+=pane.getHeight()+16;
 			indexCard++;
 			i++;
 		}
@@ -117,11 +118,11 @@ public class MessageriePanel extends RoundedPanel {
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if(e.getSource().equals(up)) {
+			if(e.getSource().equals(down)) {
 				MessageriePanel.this.getCardLayout().next(panel);				
 			}
 			else {
-				if(e.getSource().equals(down)) {
+				if(e.getSource().equals(up)) {
 					MessageriePanel.this.getCardLayout().previous(panel);
 				}
 				else {

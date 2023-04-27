@@ -21,9 +21,12 @@ import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
+import data.time.Clock;
 import gui.Farm.Board;
 import gui.gestionnaire.RoundedPanel;
 
@@ -132,7 +135,8 @@ public class ElementCard extends RoundedPanel{
 							animal.setNaissance(farm.getClock().getMinute().getValue());
 							addAnimalToMap(animal);
 						} catch (FullCapaciteException e1) {
-							System.err.println(e1.getLocalizedMessage());
+							Message message = new Message("Plus d'espace pour\n un autre animal" , Clock.getInstance().getHour().getValue(), Clock.getInstance().getMinute().getValue());
+							Messagerie.getInstance().addMessage(message);
 						}
 					}
 					else {

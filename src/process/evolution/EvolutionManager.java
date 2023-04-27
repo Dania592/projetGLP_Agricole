@@ -68,7 +68,7 @@ public class EvolutionManager implements Serializable {
 				}
 				else {
 					if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
-						enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
+						enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1() );
 						enclos.setLastDecrementation( clock.getMinute().getValue());
 					}
 					else {
@@ -77,27 +77,15 @@ public class EvolutionManager implements Serializable {
 						enclos.setLastDecrementation(clock.getMinute().getValue());
 					}
 				}
-				x = 0;
+				
 			}
-//			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauEau()==FullLevel.EMPTY) {
-//				Message message = new Message("Plus d'eau dans l'enclos"+x,clock.getHour(), clock.getMinute());
-//				Messagerie.getInstance().addMessage(message);
-//			}
-//			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauNourriture()==FullLevel.EMPTY) {
-//				Message message = new Message("Plus d'nourriture dans l'enclos"+x,clock.getHour(), clock.getMinute());
-//				Messagerie.getInstance().addMessage(message);
-//			}
-			if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getAnimalsHungerLevel()!= HungerLevel.VERY_HUNGRY) {
-				//Message message = new Message("les animaux vont \n biontôt mourir"+x,clock.getHour(), clock.getMinute());
-				//Messagerie.getInstance().addMessage(message);
-			}
-			x++;
+				
 		}
 		int i = 0;
 		while(i < animalsToRemove.size()) {
 			if(deathIndex == 5) {
 				animalEvolution.killAnimal(animalsToRemove.get(0));
-				Message message = new Message("Un animal"+animalsToRemove.get(0).getReference()+" est mort",clock.getHour(),clock.getMinute());
+				Message message = new Message("Un(e) "+animalsToRemove.get(0).getClass().getSimpleName()+" est mort \nde faim" , Clock.getInstance().getHour().getValue() , Clock.getInstance().getMinute().getValue());
 				Messagerie.getInstance().addMessage(message);
 				animalsToRemove.remove(0);
 				i = 0;

@@ -2,17 +2,18 @@ package data.notification;
 
 import java.io.Serializable;
 
+import data.time.Clock;
 import data.time.CyclicCounter;
 
 public class Message implements Serializable{
 	private String contenu ;
-	private CyclicCounter heure ; 
-	private CyclicCounter minute ; 
+	private int heure ; 
+	private int minute ; 
 	
-	public Message(String contenu , CyclicCounter heure , CyclicCounter minute ) {
+	public Message(String contenu , int heure , int minute ) {
 		this.contenu = contenu ;
 		this.heure = heure ;
-		this.minute = minute ;
+		this.minute = minute;
 	}
 
 	public String getContenu() {
@@ -20,12 +21,12 @@ public class Message implements Serializable{
 	}
 
 
-	public CyclicCounter getHeure() {
+	public int getHeure() {
 		return heure;
 	}
 
 
-	public CyclicCounter getMinute() {
+	public int getMinute() {
 		return minute;
 	}
 	

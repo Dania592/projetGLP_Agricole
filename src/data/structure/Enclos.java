@@ -14,6 +14,8 @@ import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.map.Case;
 import data.map.Map;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
 import data.structure.hability.Fixable;
@@ -21,6 +23,7 @@ import data.structure.hability.list.EnclosStorageStructure;
 import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
+import data.time.Clock;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.HaveNotProducedYetException;
@@ -68,10 +71,14 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		return animalsHungerLevel;
 	}
 
-	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel) {
+	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel ) {
 		this.animalsHungerLevel = animalsHungerLevel;
 		for(AnimalProducteur animal : getAnimals()) {
 			animal.setHungerLevel(animalsHungerLevel);
+		}
+		if(animalsHungerLevel==HungerLevel.VERY_HUNGRY) {
+			Message message = new Message("les animaux vont \n biontôt mourir" , Clock.getInstance().getHour().getValue() , Clock.getInstance().getMinute().getValue());
+			Messagerie.getInstance().addMessage(message);
 		}
 	}
 

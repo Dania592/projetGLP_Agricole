@@ -66,7 +66,10 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 			dashboard.repaint();
+			
+			
 		}
 	}
 
@@ -91,6 +94,11 @@ public class MainGuiTest  extends JFrame implements Runnable{
 					dashboard.getHud().add_Actions(x, y , tasks);					
 				}
 			}
+			else {
+				dashboard.getHud().remove_panels();
+				
+			}
+			
 		}
 
 		@Override

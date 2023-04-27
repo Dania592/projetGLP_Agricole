@@ -101,8 +101,13 @@ public class Board  extends JLayeredPane implements Serializable{
 		paintStrategy.paint(mapManager.getMap(), g);
 		paintStrategy.paint(farm, g);
 		
-		Iterator<Element> it = mapManager.getElements().values().iterator();	
-			
+		ArrayList<Element> test = new ArrayList<>();
+		for(Element element : mapManager.getElements().values()) {
+			test.add(element);
+		}
+		
+		Iterator<Element> it = test.iterator();
+		
 		while(it.hasNext() ) {
 			Element element = it.next();
 

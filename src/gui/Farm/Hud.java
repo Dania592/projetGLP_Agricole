@@ -38,7 +38,7 @@ public class Hud implements Serializable {
 	private JLabel cancel;
 	private JLabel farmer; 
 	private JLabel save;
-	private JLabel message;
+	private static JLabel message;
 	private JLabel statistique;
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
@@ -50,6 +50,12 @@ public class Hud implements Serializable {
 	
 	public  Hud(Board component) {
 		this.component=component;
+	}
+	
+	public void remove_panels() {
+		removeActionPane();
+		removeChoix();
+		removeMessagerie();
 	}
 	
 	public void build() {	
@@ -102,6 +108,10 @@ public class Hud implements Serializable {
 		message.setBounds(50, GameConfiguration.Y_HOME_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		message.addMouseListener(new MouseHudMessage());
 		component.add(message , JLayeredPane.DRAG_LAYER);
+	}
+	
+	public static void notification() {
+		message.setIcon(new ImageIcon(GameConfiguration.IMAGE_PATH+"nv_message.png"));
 	}
 	
 	public void addStat() {
@@ -197,7 +207,9 @@ public class Hud implements Serializable {
 	}
 	
 	public void removeActionPane() {
-		component.remove(actions);
+		if(Arrays.asList(component.getComponents()).contains(actions)) {
+			component.remove(actions);			
+		}
 	}
 	
 	

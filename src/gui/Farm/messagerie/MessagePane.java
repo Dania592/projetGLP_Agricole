@@ -36,16 +36,18 @@ public class MessagePane extends RoundedPanel{
 		text = new JTextArea(message.getContenu());
 		text.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 		text.setFont(new Font(Font.SANS_SERIF, Font.PLAIN,  13));
-		text.setBounds(10, 5, 130, 50);
+		text.setBounds(10, 3, 130, 35);
 		text.setEditable(false);
 		add(text);
 		
-		 time = new JLabel(message.getHeure()+":"+message.getMinute());
-		time.setBounds(125,60,40,10);
+		String heure = (message.getHeure()/10==0)? "0"+message.getHeure() : ""+message.getHeure();
+		String minute = (message.getMinute()/10==0)? "0"+message.getMinute() : ""+message.getMinute();
+		time = new JLabel(heure+":"+minute);
+		time.setBounds(125,37,40,10);
 		add(time);
 		
 		supp = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"supp.png"));
-		supp.setBounds(130,15,50, 50);
+		supp.setBounds(139,3,30, 30);
 		supp.addMouseListener(new MouseMessage());
 		add(supp);
 		

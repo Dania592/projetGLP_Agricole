@@ -1,6 +1,9 @@
 package process.action.visitor.place;
 
 import data.flore.terrains.Terrain;
+
+import java.time.Clock;
+
 import data.espece.FoodConsumer.HungerLevel;
 import data.flore.terrains.EvolutionTerrain;
 // import java.util.Iterator;
@@ -35,7 +38,7 @@ public class FeedVisitor implements PlaceVisitor<Void>{
     public Void action(Enclos enclos){
     	enclos.setNiveauEau(FullLevel.FULL);
     	enclos.setNiveauNourriture(FullLevel.FULL);
-    	enclos.setAnimalsHungerLevel(HungerLevel.FULL);
+    	enclos.setAnimalsHungerLevel(HungerLevel.FULL );
         System.out.println("Nourissant les animaux de mon enclos "+ enclos);
         return null;
     }

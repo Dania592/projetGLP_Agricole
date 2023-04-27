@@ -7,6 +7,7 @@ import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.flore.Saison;
 import data.gestion.RessourcesManager;
+import data.notification.Messagerie;
 import process.action.TaskManager;
 import data.time.Clock;
 import data.time.CyclicCounter;
@@ -28,12 +29,14 @@ public class Farm implements Serializable{
 	private Clock clock ; 
 	private TaskManager taskManager;
 	private EvolutionManager evolutionManager ;
+	private Messagerie messagerie ;
 	private int ligne ; 
 	private int colonne ; 
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
+		messagerie = Messagerie.getInstance();
 		this.fermier=fermier;
 		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile =0;

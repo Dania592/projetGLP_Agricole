@@ -9,6 +9,8 @@ import data.configuration.GameConfiguration;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.myExceptions.MortException;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.structure.Enclos;
 import data.time.Clock;
 import process.game.ElementManager;
@@ -63,7 +65,8 @@ public class AnimalEvolution implements Serializable{
 					
 					animal.setImage(imagePath);
 				} catch (MortException e ) {
-					System.out.println("animal mort : "+animal.getReference());
+					Message message = new Message("Un(e) "+animal.getClass().getSimpleName()+" est mort \nde vieillesse" , Clock.getInstance().getHour().getValue() , Clock.getInstance().getMinute().getValue());
+					Messagerie.getInstance().addMessage(message);
 					killAnimal(animal);
 				}
 			}

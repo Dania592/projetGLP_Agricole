@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.time.CyclicCounter;
+import gui.Farm.Hud;
 
 public class Messagerie implements Serializable{
 
@@ -22,6 +23,7 @@ public class Messagerie implements Serializable{
 	
 	public void addMessage(Message message ) {
 		messages.add(message);
+		Hud.notification();
 	}
 	
 	public ArrayList<Message> getMessages(){
@@ -33,13 +35,10 @@ public class Messagerie implements Serializable{
 	}
 	
 	private void init() {
-		Message message = new Message ("test de messagerie" , new CyclicCounter(10,10,0),new CyclicCounter(22,42,5));
+		Message message = new Message ("test de \nmessagerie" , 1 ,5);
 		messages.add(message);
 		
-		Message message1 = new Message ("test de messagerie 1" ,new CyclicCounter(12,10,0),new CyclicCounter(2,42,5));
-		messages.add(message1);
-		
-		Message message2 = new Message ("test de messagerie 2" , new CyclicCounter(0,10,0),new CyclicCounter(10,42,5));
+		Message message2 = new Message ("test de messagerie 2" ,22,5);
 		messages.add(message2);
 		
 	}
