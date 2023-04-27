@@ -27,7 +27,6 @@ public class Farm implements Serializable{
 	private int nbEtoile ;
 	private ElementManager elementManager ;
 	private Clock clock ; 
-	private TaskManager taskManager;
 	private EvolutionManager evolutionManager ;
 	private Messagerie messagerie ;
 	private int ligne ; 
@@ -148,9 +147,4 @@ public class Farm implements Serializable{
 			}
 		}
 	}
-
-	public TaskManager getTaskManager() {
-		return taskManager;
-	}
-	
 }

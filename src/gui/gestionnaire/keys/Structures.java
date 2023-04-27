@@ -12,7 +12,13 @@ public enum Structures implements Keys{
 	ENTREPOT(150),
 	SALLE_DE_TRAITE(400),
 	ABATTOIRE(400),
-	GARAGE(150);
+	GARAGE(150), 
+	BERGERIE_CHEVRE(130),
+	BERGERIE_MOUTON(160),
+	PUIT(100),
+	
+	
+	;
 	
 	private float prixAchat;
 	

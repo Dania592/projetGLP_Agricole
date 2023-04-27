@@ -18,5 +18,8 @@ public class UnableToGenerateNewTaskException extends Exception {
         super("Cannot perform "+activity+ " from "+ actionnable);
     }
 
+    public UnableToGenerateNewTaskException(Activity activity, Actionnable actionnable, String cause){
+        super("Cannot perform "+activity+ " from "+ actionnable+ " cause : "+ cause);
+    }
 
 }

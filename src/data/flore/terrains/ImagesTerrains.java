@@ -35,6 +35,7 @@ public class ImagesTerrains {
 		images0.put(EvolutionTerrain.PLANTE_3, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b3.png");
 		images0.put(EvolutionTerrain.PLANTE_4, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b4.png");
 		images0.put(EvolutionTerrain.PLANTE_5, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"b5.png");
+		images0.put(EvolutionTerrain.POURRI, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"toDELETE.png");
 		
 		images1.put(EvolutionTerrain.VIERGE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png");
 		images1.put(EvolutionTerrain.LABOURE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png");
@@ -44,6 +45,7 @@ public class ImagesTerrains {
 		images1.put(EvolutionTerrain.PLANTE_3, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"a3.png");
 		images1.put(EvolutionTerrain.PLANTE_4, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"a4.png");
 		images1.put(EvolutionTerrain.PLANTE_5, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"a5.png");
+		images1.put(EvolutionTerrain.POURRI, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"toDELETE.png");
 		
 		images2.put(EvolutionTerrain.VIERGE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png");
 		images2.put(EvolutionTerrain.LABOURE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png");
@@ -53,6 +55,7 @@ public class ImagesTerrains {
 		images2.put(EvolutionTerrain.PLANTE_3, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e3.png");
 		images2.put(EvolutionTerrain.PLANTE_4, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e4.png");
 		images2.put(EvolutionTerrain.PLANTE_5, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"e5.png");
+		images2.put(EvolutionTerrain.POURRI, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"toDELETE.png");
 		
 		images3.put(EvolutionTerrain.VIERGE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainVierge.png");
 		images3.put(EvolutionTerrain.LABOURE, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"terrainLaboure.png");
@@ -62,10 +65,13 @@ public class ImagesTerrains {
 		images3.put(EvolutionTerrain.PLANTE_3, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"h3.png");
 		images3.put(EvolutionTerrain.PLANTE_4, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"h4.png");
 		images3.put(EvolutionTerrain.PLANTE_5, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"h5.png");
+		images3.put(EvolutionTerrain.POURRI, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"toDELETE.png");
+
 		images.put(Graine.TOMATO_SEED, images0);
 		images.put(Graine.BROCCOLI_SEED, images1);
 		images.put(Graine.BOK_CHOY_SEED, images3);
 		images.put(Graine.CACTUS_SEED, images2);
+		
 	}
 	
 }

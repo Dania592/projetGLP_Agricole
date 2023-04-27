@@ -19,6 +19,7 @@ import javax.swing.JTextPane;
 
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
+import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
 import data.notification.Message;
@@ -144,11 +145,15 @@ public class ElementCard extends RoundedPanel{
 						element.setPosition(randomCase.getLigne(), randomCase.getColonne());
 						if(nameCard.equals("Enclos")) {
 							Enclos enclos = (Enclos) element ;
-							enclos.setLastDecrementation(farm.getClock().getMinute().getValue());
+							enclos.setLastDecrementationEau(farm.getClock().getMinute().getValue());
+							enclos.setLastDecrementationNourriture(farm.getClock().getMinute().getValue());
 							farm.getManager().add(enclos);
-						}
-						else {
-							farm.getManager().add(element);							
+						}else{
+							farm.getManager().add(element);	
+							if(nameCard.equals("Terrain")){
+								Terrain terrain = (Terrain) element;
+								terrain.setLastDecrementationEau(farm.getClock().getMinute().getValue());
+							}						
 							
 						}
 						
@@ -231,8 +236,8 @@ public class ElementCard extends RoundedPanel{
 					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
 					if(enclos.getAnimals().size()==0) {
-						enclos.setLastDecrementation(animal.getNaissance()
-								);
+						enclos.setLastDecrementationNourriture(animal.getNaissance());
+						enclos.setLastDecrementationEau(animal.getNaissance());
 					}
 					enclos.addAnimal(animal);
 					return block;

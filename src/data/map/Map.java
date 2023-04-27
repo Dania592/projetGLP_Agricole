@@ -3,7 +3,6 @@ package data.map;
 import java.io.Serializable;
 
 import data.configuration.GameConfiguration;
-import process.game.MapManager;
 
 public class Map implements Serializable{
 	
@@ -17,11 +16,7 @@ public class Map implements Serializable{
 	private int y ;
 	private static Map instance =  new Map(GameConfiguration.NB_LIGNE , GameConfiguration.NB_COLONNE , GameConfiguration.X_MAP, GameConfiguration.Y_MAP);
 
-	
-	public static Map getInstance() {
-		return instance ;
-	}
-	private Map( int nbLignes, int nbColones , int x , int y ) {
+	public Map( int nbLignes, int nbColones , int x , int y ) {
 	
 		// modification 
 		this.x = x;
@@ -86,6 +81,11 @@ public class Map implements Serializable{
 
 	public Case getCase(int ligne , int colonne) {
 		return cases[ligne][colonne];
+	}
+
+
+	public static Map getInstance() {
+		return instance;
 	}
 	
 }

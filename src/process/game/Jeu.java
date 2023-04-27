@@ -22,8 +22,6 @@ public class Jeu implements Runnable{
 		timeManager.start();
 				
 		taskManager = TaskManager.getInstance();
-		taskManager.start();
-		
 		frame = new MainGuiTest("test de la ferme", farm , taskManager);
 		
 		Thread thread = new Thread(frame);
@@ -38,9 +36,8 @@ public class Jeu implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 			frame.getFarm().getEvolutionManager().UpdateEvolution();
-			
+			taskManager.managingTask();
 		}
 		
 	}

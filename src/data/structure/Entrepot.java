@@ -1,13 +1,8 @@
 package data.structure;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
-import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Produit;
 import gui.gestionnaire.keys.Structures;
@@ -20,9 +15,9 @@ public class Entrepot extends Structure{
 	private ArrayList<Produit> produits ;
 	private int capacite =100  ; 
 	private final static float PRIX_ACHAT = 50000 ;
-	
+	private boolean usedForAnAction = false;
 	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
-		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map);
+		super(ligne_init, colonne_init, reference , map);
 		this.produits = new ArrayList<>();
 		
 		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Entrepot1.png");
@@ -57,4 +52,26 @@ public class Entrepot extends Structure{
 		return Structures.ENTREPOT;
 	}
 
+	@Override
+	public ActionnableKey getSpecificActionnableKey() {
+		return ActionnableKey.ENTREPOT;
+	}
+
+	@Override
+	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {
+		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
+		actionnableKeys.add(getSpecificActionnableKey());
+		return actionnableKeys;
+	}
+
+
+	@Override
+	public boolean isCurrentlyUsedForAnotherTask() {
+		return usedForAnAction;
+	}
+
+	@Override
+	public void setStructureStatus(boolean isCurrentlyUsedForAnotherTask) {
+		usedForAnAction = isCurrentlyUsedForAnotherTask;
+	}
 }

@@ -26,12 +26,12 @@ public class MouseHandler implements MouseListener,Serializable{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Element element = elementManager.search(e.getX(), e.getY());
-		if (element instanceof Terrain) {
-			Terrain terrain = (Terrain)element;
-			JPanel choixTerrain = farmPaintStrategy.paint(terrain, terrain.getActions(), board.getFarm().getManager().getMapManager().getMap());
-			board.setChoixTerrain(choixTerrain);
-		}
-		System.out.println("element séléctionnée "+ element);
+		// if (element instanceof Terrain) {
+		// 	Terrain terrain = (Terrain)element;
+		// 	JPanel choixTerrain = farmPaintStrategy.paint(terrain, terrain.getActions(), board.getFarm().getManager().getMapManager().getMap());
+		// 	board.setChoixTerrain(choixTerrain);
+		// }
+		// System.out.println("element séléctionnée "+ element);
 		board.setClicked(element);
 	}
 

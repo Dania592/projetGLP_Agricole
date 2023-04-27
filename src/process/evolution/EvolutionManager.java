@@ -1,14 +1,23 @@
 package process.evolution;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.Produceur.ProductifState;
+import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.faune.AnimalProducteur;
+import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireStocks;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.notion.Mortel.EtatSante;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.time.Clock;
@@ -44,43 +53,126 @@ public class EvolutionManager implements Serializable {
 
 
 	public void terrainEvolution() {
+		Terrain terrain;
 		for (Element element : elementManager.getMapManager().getElements().values()) {
 			if(element instanceof Terrain) {
-				((Terrain)element).evoluer();
+				// ((Terrain)element).evoluer();
+				terrain = (Terrain)element;
+				manageEvolutionTerrain(terrain);
 			}
 
 		}
 	}
 
 
-	public void enclosEvolution() {
-		int x = 0;
-		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
-			
-			int delay = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS;
-			int dhour = clock.getMinute().getValue()- enclos.getLastDecrementation();
-
-			if(dhour >= delay && enclos.getAnimals().size()!=0) {
-				if(enclos.getNiveauEau()!=FullLevel.EMPTY || enclos.getNiveauNourriture()!=FullLevel.EMPTY) {
-					enclos.setNiveauEau(enclos.getNiveauEau().getNextState(clock , "nourriture"));
-					enclos.setNiveauNourriture(enclos.getNiveauNourriture().getNextState(clock ,"eau"));
-					enclos.setLastDecrementation( clock.getMinute().getValue());
-				}
-				else {
-					if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
-						enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1() );
-						enclos.setLastDecrementation( clock.getMinute().getValue());
-					}
-					else {
-						// on peut tuer plusieurs d'un coup 
-						animalsToRemove.add(enclos.getAnimals().get(0));
-						enclos.setLastDecrementation(clock.getMinute().getValue());
-					}
-				}
+	private void manageEvolutionTerrain(Terrain terrain){
+		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE){
+			int dhourEau = clock.getMinute().getValue() - terrain.getLastDecrementationEau();
+			if(dhourEau >= GameConfiguration.FREQUENCE_DECREMENTATION_EAU_TERRAIN){
+				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
+				terrain.setLastDecrementationEau(clock.getMinute().getValue());
+			if(terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!= EvolutionTerrain.VIERGE && terrain.getProductifState() ==  ProductifState.UNABLE_TO_PRODUCE){
 				
 			}
-				
+			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
+				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
+				terrain.setEtatSante(EtatSante.MALADE);
+				terrain.getProduction().clear();
+			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED){
+				terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
+				terrain.getProduction().clear();
+				terrain.setEvolution(EvolutionTerrain.POURRI ); //TODO decommenter
+			}
+
+			System.out.println(terrain);
 		}
+
+
+	}
+
+	private void manageFoodLevelInEnclosure(Enclos enclos){
+	
+		int delayNourriture = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE;
+		int dhourNourriture = clock.getMinute().getValue()- enclos.getLastDecrementationNourriture();
+		if(dhourNourriture >= delayNourriture && enclos.getAnimals().size()!=0) {
+			if(enclos.getNiveauNourriture()!=FullLevel.EMPTY) {
+				enclos.setNiveauNourriture(enclos.getNiveauNourriture().getNextState(clock, "nourriture"));
+				enclos.setLastDecrementationNourriture( clock.getMinute().getValue());
+			}
+			else {
+				if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
+					enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
+					enclos.setLastDecrementationNourriture( clock.getMinute().getValue());
+				}
+				else {
+					animalsToRemove.add(enclos.getAnimals().get(0)); //TODO on peut en tue plusieurs d'un coup
+					enclos.setLastDecrementationNourriture(clock.getMinute().getValue());
+				}
+				// x = 0;
+			}
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauEau()==FullLevel.EMPTY) {
+			// 	Message message = new Message("Plus d'eau dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauNourriture()==FullLevel.EMPTY) {
+			// 	Message message = new Message("Plus d'nourriture dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getAnimalsHungerLevel()!= HungerLevel.VERY_HUNGRY) {
+			// 	Message message = new Message("les animaux vont biontôt mourir",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+		}
+	}
+
+	private void manageWaterLevelInEnclosure(Enclos enclos){
+		int delayEau = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU;
+		int dhourEau = clock.getMinute().getValue()- enclos.getLastDecrementationEau();
+		if(dhourEau >= delayEau && enclos.getAnimals().size()!=0) {
+			if(enclos.getNiveauEau()!=FullLevel.EMPTY) {
+				enclos.setNiveauEau(enclos.getNiveauEau().getNextState(clock, "eau"));
+				enclos.setLastDecrementationEau(clock.getMinute().getValue());
+			}
+			else {
+				if(enclos.getAnimalsHydrationLevel() != HydrationLevel.DESHYDRATED) {
+					enclos.setAnimalHydrationLevel(enclos.getAnimalsHydrationLevel().decrease());
+					enclos.setLastDecrementationEau(clock.getMinute().getValue());
+				}
+				else {
+					animalsToRemove.add(enclos.getAnimals().get(0)); //TODO on peut en tue plusieurs d'un coup
+					enclos.setLastDecrementationEau(clock.getMinute().getValue());
+				}
+				// x = 0;
+			}
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauEau()==FullLevel.EMPTY) {
+			// 	Message message = new Message("Plus d'eau dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getNiveauNourriture()==FullLevel.EMPTY) {
+			// 	Message message = new Message("Plus d'nourriture dans l'enclos",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+			// if(dhour==(delay+x) && enclos.getAnimals().size()!=0 && enclos.getAnimalsHungerLevel()!= HungerLevel.VERY_HUNGRY) {
+			// 	Message message = new Message("les animaux vont biontôt mourir",clock.getHour().getValue(), clock.getMinute().getValue());
+			// 	Messagerie.getInstance().addMessage(message);
+			// }
+			// x++;
+		}
+	}
+
+
+
+
+	public void enclosEvolution() {
+		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
+			manageFoodLevelInEnclosure(enclos);
+			manageWaterLevelInEnclosure(enclos);
+		}
+		killAnimalToRemove();
+	}
+
+
+	private void killAnimalToRemove(){
 		int i = 0;
 		while(i < animalsToRemove.size()) {
 			if(deathIndex == 5) {
@@ -96,12 +188,9 @@ public class EvolutionManager implements Serializable {
 				i++;
 				String imagePath =GameConfiguration.IMAGE_PATH +"nuage"+deathIndex+".png";
 				animalsToRemove.get(0).setImage(imagePath);
-								
+				BufferedImage image;		
 			}
 		}
-
-
-
 	}
 
 

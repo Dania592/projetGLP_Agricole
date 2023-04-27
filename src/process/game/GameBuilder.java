@@ -71,11 +71,11 @@ public class GameBuilder {
 	private static void initialize( RessourcesManager stock , Map map) {
 			
 		// initialisation du stock pour l'etat initial 
-		Vache vacheInitial = new Vache(0, 0, 0,"violette", "F", null, "v0", map);
-		Vache vache1 = new Vache(0, 0, 0,"violette", "F", null, "v1", map);
-		Vache vache2 = new Vache(0, 0, 0,"violette", "F", null, "v2", map);
-		Vache vache3 = new Vache(0, 0,0,"violette", "F", null, "v3", map);
-		Vache vache4 = new Vache(0, 0, 0,"violette", "F", null, "v4", map);
+		Vache vacheInitial = new Vache(0, 0, 0,"violette1", "F", null, "v0", map);
+		Vache vache1 = new Vache(0, 0, 0,"violette2", "F", null, "v1", map);
+		Vache vache2 = new Vache(0, 0, 0,"violette3", "F", null, "v2", map);
+		Vache vache3 = new Vache(0, 0,0,"violette4", "F", null, "v3", map);
+		Vache vache4 = new Vache(0, 0, 0,"violette5", "F", null, "v4", map);
 
 		stock.getGestionnaireAnimaux().add(vacheInitial);
 		stock.getGestionnaireAnimaux().add(vache1);
@@ -84,17 +84,17 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(vache4);
 
 		
-		Mouton mouton = new Mouton(0, 0, 0, null, null, null, "m1", map);
-		Mouton mouton1 = new Mouton(0, 0, 0, null, null, null, "m2", map);
-		Mouton mouton2 = new Mouton(0, 0, 0, null, null, null, "m3", map);
+		Mouton mouton = new Mouton(0, 0, 0, "Moumout1", null, null, "m1", map);
+		Mouton mouton1 = new Mouton(0, 0, 0,"Moumout2", null, null, "m2", map);
+		Mouton mouton2 = new Mouton(0, 0, 0,"Moumout3", null, null, "m3", map);
 		
 		stock.getGestionnaireAnimaux().add(mouton);
 		stock.getGestionnaireAnimaux().add(mouton1);
 		stock.getGestionnaireAnimaux().add(mouton2);
 	
-		Poule poule = new Poule(0, 0, null, 0, null, null, null, "p1", map);
-		Poule poule1 = new Poule(0, 0, null, 0, null, null, null, "p2", map);
-		Poule poule2 = new Poule(0, 0, null, 0, null, null, null, "p3", map);
+		Poule poule = new Poule(0, 0, null, 0, "Poupou1", null, null, "p1", map);
+		Poule poule1 = new Poule(0, 0, null, 0, "Poupou2", null, null, "p2", map);
+		Poule poule2 = new Poule(0, 0, null, 0, "Poupou3", null, null, "p3", map);
 		
 		
 		stock.getGestionnaireAnimaux().add(poule);
@@ -114,9 +114,9 @@ public class GameBuilder {
 		//stock.getGestionnaireTerrains().add(terrain3);
 		stock.getGestionnaireTerrains().add(terrain4);
 		
-		
-		Chevre chevre1 = new Chevre(0,0,0,null,null,null,"jd",map);
-		Chevre chevre2 = new Chevre(0,0,0,null,null,null,"jd2",map);
+
+		Chevre chevre1 = new Chevre(0,0,0,"sheshe1",null,null,"jd",map);
+		Chevre chevre2 = new Chevre(0,0,0,"sheshe2",null,null,"jd2",map);
 		stock.getGestionnaireAnimaux().add(chevre2);
 		stock.getGestionnaireAnimaux().add(chevre1);
 		
@@ -132,7 +132,7 @@ public class GameBuilder {
 		stock.getGestionnaireEnclos().add(enclos1);
 		stock.getGestionnaireEnclos().add(enclos2);
 		
-		Puit puit = new Puit(0,0,0, "puit",map);
+		Puit puit = new Puit(0,0,"puit",map);
 		stock.getGestionnaireStructure().add(puit);
 		
 		Entrepot entrepot = new Entrepot(0,0,"entrepot", map);

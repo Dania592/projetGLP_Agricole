@@ -2,9 +2,12 @@ package data.structure.hability.list;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
+import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -47,7 +50,21 @@ public class EnclosStorageStructure implements Serializable{
 		chevres.add(chevre);
 	}
 
-	public ArrayList<AnimalProducteur>  getAnimals() {
+	public void add(MilkProduceur milkProduceur){
+		switch (milkProduceur.getKey()) {
+			case CHEVRE:
+				chevres.add((Chevre)milkProduceur);
+				break;
+			case VACHE:
+				vaches.add((Vache)milkProduceur);
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	public ArrayList<AnimalProducteur> getAnimals() {
 		ArrayList<AnimalProducteur> animals = new ArrayList<>();
 		animals.addAll(vaches);
 		animals.addAll(moutons);
@@ -74,7 +91,13 @@ public class EnclosStorageStructure implements Serializable{
 		default:
 			break;
 		}
+	}
 
+	public void removeAll(ArrayList<AnimalProducteur> animal){
+		Iterator<AnimalProducteur> animalProducteurIter = animal.iterator();
+		while(animalProducteurIter.hasNext()){
+			remove(animalProducteurIter.next());
+		}
 	}
 	
 	public void add(AnimalProducteur animal){

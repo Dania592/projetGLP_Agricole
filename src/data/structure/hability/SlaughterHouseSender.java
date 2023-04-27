@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import data.espece.Slaughtable;
 
 public interface SlaughterHouseSender extends AbleToActOnInHabitant{
-    <T extends Slaughtable> void addToSlaughter(T animalToAdd);
-    ArrayList<?> getAnimalToSlaugther();
+    void addToSlaughter(Slaughtable slaughtable);
+    ArrayList<Slaughtable> getAnimalToSlaugther();
+    boolean isReadyToSendToSlaughterHouse();
 }

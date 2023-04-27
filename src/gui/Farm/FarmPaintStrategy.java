@@ -145,7 +145,7 @@ public class FarmPaintStrategy implements Serializable {
 		}
 		
 		String waterPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauEau()+"_W.png";
-		String foodPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauEau()+"_F.png";
+		String foodPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauNourriture()+"_F.png";
 		Image images ;
 		try {
 			images = ImageIO.read(new File(waterPath));
@@ -184,7 +184,13 @@ public class FarmPaintStrategy implements Serializable {
 		Position position = enclos.getPosition();
 		int y = (position.getLigne_init() - 1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
-		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
+		ImageIcon progressBar;
+
+		if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
+			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
+		}else{
+			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHydrationLevel()+".png");
+		}
 		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
 	}
 	

@@ -95,7 +95,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		setFocusable(true);
 	}
 	
-	public void paintComponent(Graphics g) {
+	public synchronized void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);
@@ -114,7 +114,7 @@ public class Board  extends JLayeredPane implements Serializable{
 			if(element instanceof Enclos) {
 				Enclos enclos = (Enclos)element;
 				paintStrategy.paint(enclos, g);
-				if(enclos.getNiveauEau()==FullLevel.EMPTY  && enclos.getAnimals().size()!=0) {
+				if((enclos.getNiveauEau()==FullLevel.EMPTY || enclos.getNiveauNourriture() == FullLevel.EMPTY) && enclos.getAnimals().size()!=0) {
 					paintStrategy.paintLevelHeart(enclos, g);
 				}
 			}
@@ -155,5 +155,19 @@ public class Board  extends JLayeredPane implements Serializable{
 		keys.setSelected(selected);
 	}
 	
+	
+	// public void paintProgressBar(Graphics g ) {
+	// 	ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
+	// 	//g.drawLine(0, 0, 300, 300);
+	// 	for(Task<?> task : tasks) {
+	// 		Position position =task.getActionnableTarget().getPosition();
+	// 		int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
+	// 		int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
+	// 		ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
+	// 		g.drawImage(bar.getImage(), x, y, 100,20, null);
+	// 	}
+	// }
+	
+
 	
 }
