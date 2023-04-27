@@ -35,6 +35,7 @@ public class Board  extends JLayeredPane implements Serializable{
 	private JPanel choixTerrain;
 	private TaskManager taskManager ;
 	private MouseHandler mouseHandler;
+	private MainGuiTest ferme;
 	//private ChoixPanel choixScroll;
 	//private ActionsPane actions;
 	private Choix choix ;
@@ -43,13 +44,14 @@ public class Board  extends JLayeredPane implements Serializable{
 
 	
  	
-	public Board(Farm farm  , Element selected , TaskManager taskManager ) {
+	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
 		this.farm = farm;
 		this.selected=selected;
 		this.taskManager = taskManager ;
 		keys = new KeyControls(farm.getManager() , selected); 
 		mouseHandler = new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
+		this.ferme = ferme;
 		choix.init();
 		init();
 	}
@@ -87,7 +89,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		addKeyListener(keys);
 		//addMouseListener(mouseHandler);
 		
-		hud = new Hud(this);
+		hud = new Hud(this,ferme);
 		hud.build();
 			
 		setBounds(0, 0, WIDTH, HEIGHT);

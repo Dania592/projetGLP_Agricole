@@ -38,13 +38,15 @@ public class Hud implements Serializable {
 	private JLabel save ;
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
+	private MainGuiTest ferme;
 	
 	
 	private JLabel time = new JLabel();
 		
 	
-	public  Hud(Board component) {
+	public  Hud(Board component, MainGuiTest ferme) {
 		this.component=component;
+		this.ferme = ferme;
 	}
 	
 	public void build() {	
@@ -169,9 +171,9 @@ public class Hud implements Serializable {
 			}
 			else {
 				if(e.getSource().equals(home)) {
-					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
-					new MarketGUI(frame);
-					frame.dispose();
+					//JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+					new MarketGUI(ferme);
+					ferme.dispose();
 				}
 				else {
 					if(e.getSource().equals(validate)) {

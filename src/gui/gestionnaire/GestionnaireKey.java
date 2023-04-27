@@ -27,6 +27,7 @@ public enum GestionnaireKey {
 	}
 	
 	public ArrayList<Keys> getArticles(){
+		System.out.println("You're getting the articles" + this.name());
 		return Market.getInstance().getArticles().get(this);
 	}
 }

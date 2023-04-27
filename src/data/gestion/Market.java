@@ -16,9 +16,10 @@ public class Market implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private HashMap<GestionnaireKey, ArrayList<Keys>> articles = new HashMap<>();
+	private HashMap<GestionnaireKey, ArrayList<Keys>> articles ;
 	
 	private Market() {
+		articles = new HashMap<>();
 		fillMarket();
 	}
 	

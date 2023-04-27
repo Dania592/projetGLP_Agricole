@@ -18,12 +18,14 @@ public class Achat extends Transaction{
 	}
 
 	public void addToCart(Keys element) {
-		if (cart.containsKey(element)){
-			incrementQuantity(element);
-		} else {
-			cart.put(element, 1);
+		if (getTotalCost() + element.getPrixAchat() < Banque.getInstance().getCompte().getSolde()) {
+			if (cart.containsKey(element)){
+				incrementQuantity(element);
+			} else {
+				cart.put(element, 1);
+			}
+			setTotalCost(getTotalCost() + element.getPrixAchat());
 		}
-		setTotalCost(getTotalCost() + element.getPrixAchat());
 	}
 	
 	public void removeFromCart(Keys element) {
@@ -45,6 +47,7 @@ public class Achat extends Transaction{
 			calculateTotalCost();
 			Banque.getInstance().debiter(getTotalCost());
 			GestionnaireFinancier.getInstance().getAchats().add(this);	
+			System.out.println(Banque.getInstance().getCompte().getSolde());
 		}
 	}
 	
