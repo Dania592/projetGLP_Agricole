@@ -2,11 +2,13 @@ package gui.gestionnaire;
 
 import java.util.ArrayList;
 import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireFinancier;
 import data.gestion.GestionnaireInterface;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
 import gui.gestionnaire.keys.Keys;
+import process.transaction.Achat;
 import data.gestion.Market;
 
 public enum GestionnaireKey {

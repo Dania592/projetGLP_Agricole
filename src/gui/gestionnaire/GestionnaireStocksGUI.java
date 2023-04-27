@@ -2,11 +2,8 @@ package gui.gestionnaire;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import process.game.Game;
@@ -38,7 +35,6 @@ public class GestionnaireStocksGUI extends JFrame {
 	private GeneralPaintStrategy paintStrategy = new GeneralPaintStrategy();
 
 	private static final long serialVersionUID = 1L;
-	//private static final Color WHITE = new Color(255,255,255);
 	
 	public GestionnaireStocksGUI(String title, JFrame container) {
 		super(title);
@@ -66,7 +62,7 @@ public class GestionnaireStocksGUI extends JFrame {
 		// 512
 		int height = GestionnairePaintStrategy.MANAGER_CARD_HEIGHT*GestionnairePaintStrategy.MANAGER_ROW_COUNT + ((GestionnairePaintStrategy.MANAGER_ROW_COUNT + 1 )*GestionnairePaintStrategy.MIN_SPACE_BETWEEN);
 		
-		return paintStrategy.paintGestionnaire(0,0, width, height, MANAGER_ROW_COUNT, MANAGER_COLUMN_COUNT, MIN_SPACE_BETWEEN, MANAGER_CARD_WIDTH, MANAGER_CARD_HEIGHT, MANAGER_CARD_COLOR, "Manager", null, null);			
+		return paintStrategy.paintGestionnaire(0,0, width, height, MANAGER_ROW_COUNT, MANAGER_COLUMN_COUNT, MIN_SPACE_BETWEEN, MANAGER_CARD_WIDTH, MANAGER_CARD_HEIGHT, MANAGER_CARD_COLOR, PaintKeys.STOCKS, null, null);			
 	}
 	
 

@@ -3,7 +3,6 @@ package data.gestion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.finance.Amende;
 import data.finance.Charge;
 import process.transaction.Achat;
 import process.transaction.Vente;
@@ -15,7 +14,6 @@ public class GestionnaireFinancier implements GestionnaireInterface, Serializabl
 	private ArrayList<Achat> achats = new ArrayList<Achat>();
 	private ArrayList<Vente> ventes = new ArrayList<Vente>();
 	private ArrayList<Charge> charges = new ArrayList<Charge>();
-	private ArrayList<Amende> amendes = new ArrayList<Amende>();
 	private static GestionnaireFinancier instance = new GestionnaireFinancier();
 	
 	public ArrayList<Achat> getAchats() {
@@ -24,6 +22,10 @@ public class GestionnaireFinancier implements GestionnaireInterface, Serializabl
 
 	public ArrayList<Vente> getVentes() {
 		return ventes;
+	}
+	
+	public ArrayList<Charge> getCharges() {
+		return charges;
 	}
 
 	private GestionnaireFinancier() {}
@@ -42,10 +44,6 @@ public class GestionnaireFinancier implements GestionnaireInterface, Serializabl
 	
 	public void add(Charge charge) {
 		charges.add(charge);
-	}
-	
-	public void add(Amende amende) {
-		amendes.add(amende);
 	}
 	
 	@Override

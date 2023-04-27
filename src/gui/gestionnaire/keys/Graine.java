@@ -67,20 +67,6 @@ public enum Graine implements Buyable, Keys{
 		return null;
 	}
 	
-	// Tomate, Aubergine, mirty, ananas, cactus, ail, green pepper, 
-	// choux fleur, radis, red pepper, potato, iceberg violet, pumpkin, strawberry, carotte 
-//	RADISH, RED_CABBAGE, TOMATO, WHEAT,	AMARANTH, ARTICHOKE, BEET, BOK_CHOY,
-//	BRUSSEL_SPROUTS, CRANBERRIES, EGGPLANT, PUMPKIN, YAM, CACTUS, CAULIFLOWER,
-//	GARLIC,	ZUCCHINI, KALE, GREEN_BEAN, PARSNIP, POTATO, RHUBARB, STRAWBERRY,
-//	BLUEBERRY, CORN, HOT_PEPPER, MELON, PINEAPPLE, GRAPE, SWISS_CHARD, CABBAGE,
-//	BROCCOLI, PEAS, JALEPENO, GREEN_PEPPER, RED_PEPPER, YELLOW_PEPPER,
-//	WATERMELON,	YELLOW_ONION, RED_ONION, CARROT;
-
-	public static void main(String[] args) {
-		Graine graine = GRAPE_SEED;
-		Graine graine2 = AMARANTH_SEED;
-	}
-
 	@Override
 	public Keys getKey() {
 		return this;

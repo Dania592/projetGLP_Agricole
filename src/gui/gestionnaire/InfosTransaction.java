@@ -29,7 +29,6 @@ public class InfosTransaction extends JFrame {
 		getContentPane().add(label);
 		
 		JButton gestFinancier = new JButton("Gestionnaire financier");
-		gestFinancier.setBounds(30, 220, 200, 30);
 		gestFinancier.addActionListener(new ActionListener() {
 			
 			@Override
@@ -38,20 +37,26 @@ public class InfosTransaction extends JFrame {
 				InfosTransaction.this.dispose();
 			}
 		});
-		getContentPane().add(gestFinancier);
 		
-		JButton retourJeu = new JButton("Retour au jeu");
-		retourJeu.setBounds(270, 220, 200, 30);
-		retourJeu.addActionListener(new ActionListener() {
+		if (frame!=null) {
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(true);
-				InfosTransaction.this.dispose();
-			}
-		});
-		getContentPane().add(retourJeu);
+			gestFinancier.setBounds(30, 220, 200, 30);
+			JButton retourJeu = new JButton("Retour au jeu");
+			retourJeu.setBounds(270, 220, 200, 30);
+			retourJeu.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					frame.setVisible(true);
+					InfosTransaction.this.dispose();
+				}
+			});
+			getContentPane().add(retourJeu);
+		} else {
+			gestFinancier.setBounds(150, 220, 200, 30);
+		}
 		
+		getContentPane().add(gestFinancier);
 		
 		setSize(500,300);
 		setLocationRelativeTo(null);

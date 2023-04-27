@@ -35,8 +35,6 @@ public class QuantityListener implements ChangeListener{
 				}else {
 					market.getAchat().removeFromCart(key);
 				}
-				//System.out.println(" Quantity listener : " + lastValue-newValue)*key.getPrixAchat());
-				//System.out.println("Added\n : " + market.getAchat().getCart());
 			}
 		}
 		lastValue = newValue;

@@ -26,7 +26,6 @@ public class Vente extends Transaction {
 	public void validateSale(Game game) {
 		RemoveVisitor removeVisitor = new RemoveVisitor();
 		setValidated(true);
-		System.out.println("Vente validée");
 		for (Saleable element : cart.values()) {
 			element.accept(removeVisitor);
 		}
