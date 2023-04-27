@@ -3,21 +3,19 @@ package data.finance;
 import java.io.Serializable;
 
 import process.game.Game;
+import process.transaction.FinanceManager;
 
 public abstract class Penalites implements Finance, Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private float montant;
+	private int montant;
 	private int delais;
-	private String type;
 	private boolean paid;
-	private String reference;
 	
-	public Penalites(float montant, int delais, String type) {
-		this.montant = montant;
-		this.delais = delais;
-		this.type = type;
+	public Penalites() {
+		this.montant = (int) ((Math.random() * (350 - 100)) + 100);
+		this.delais = (int) ((Math.random() * (8 - 3)) + 3);;
 		paid = false;
 	}
 	
@@ -25,7 +23,7 @@ public abstract class Penalites implements Finance, Serializable{
 		return montant;
 	}
 	
-	public void setMontant(float montant) {
+	public void setMontant(int montant) {
 		this.montant = montant;
 	}
 	
@@ -37,14 +35,6 @@ public abstract class Penalites implements Finance, Serializable{
 		this.delais = delais;
 	}
 	
-	public String getType() {
-		return type;
-	}
-	
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public boolean isPaid() {
 		return paid;
 	}
@@ -53,11 +43,8 @@ public abstract class Penalites implements Finance, Serializable{
 		this.paid = paid;
 	}
 	
-	public void payer(Game game) {
-		game.getBanque().debiter(montant);
-	}
-	
-	public String getReference() {
-		return reference;
+	public void payer() {
+		Banque.getInstance().debiter(montant);
+		paid = true;
 	}
 }

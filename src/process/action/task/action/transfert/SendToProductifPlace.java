@@ -1,6 +1,5 @@
 package process.action.task.action.transfert;
 
-import data.espece.Transportable;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
@@ -11,19 +10,32 @@ import process.action.task.Task;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.transfert.ProductifPlaceSender;
 
 public class SendToProductifPlace extends Task<Distributor<?>> {
+    ProductifPlaceSender visitor;
 
-    public SendToProductifPlace(Activity activity, Distributor<?> actionnableTarget)
+    // public SendToProductifPlace(Activity activity, Distributor<?> actionnableTarget, Personne personne)
+    //         throws UnableToGenerateNewTaskException {
+    //     super(activity, actionnableTarget, personne);
+    // }
+
+    public SendToProductifPlace(Activity activity, Distributor<?> actionnableTarget, ProductifPlaceSender productifSender)
             throws UnableToGenerateNewTaskException {
         super(activity, actionnableTarget);
+        visitor = productifSender;
     }
 
     @Override
     protected synchronized void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
-        throw new UnsupportedOperationException("Unimplemented method 'performAction'");
+        try {
+            getActionnableTarget().launchAction(visitor);
+        } catch (UnableToMakeTheTransfertException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

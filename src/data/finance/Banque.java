@@ -33,8 +33,8 @@ public class Banque implements Serializable{
 		compte.setSolde(compte.getSolde() + montant);
 	}
 	
-	public void debiter(float montant) {
-		compte.setSolde(compte.getSolde() - montant);
+	public void debiter(double d) {
+		compte.setSolde(compte.getSolde() - d);
 	}
 		
 }

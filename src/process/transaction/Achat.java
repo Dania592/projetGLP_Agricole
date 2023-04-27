@@ -47,7 +47,6 @@ public class Achat extends Transaction{
 			calculateTotalCost();
 			Banque.getInstance().debiter(getTotalCost());
 			GestionnaireFinancier.getInstance().getAchats().add(this);	
-			System.out.println(Banque.getInstance().getCompte().getSolde());
 		}
 	}
 	

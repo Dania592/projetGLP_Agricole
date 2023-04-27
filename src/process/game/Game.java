@@ -115,20 +115,6 @@ public class Game {
 		System.out.println(achat);
 		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
 		
-//		System.out.println("************************************************");
-//		vente.addToCart(vache.getKey());
-//		vente.addToCart(maison2.getKey());
-//		System.out.println(ressourcesManager);
-//		System.out.println(vente.isValidated());
-//		System.out.println(vente);
-//		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
-//		vente.validateSale(this);
-//		System.out.println(vente.isValidated());
-//		System.out.println(ressourcesManager);
-//		System.out.println(vente);
-//		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
-		
-		
 	}
 	
 	public static void main(String[] args) {

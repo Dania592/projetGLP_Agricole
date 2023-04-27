@@ -7,12 +7,14 @@ import data.stucture_base.Farm;
 import gui.Farm.MainGuiTest;
 import process.action.TaskManager;
 import process.time.TimeManager;
+import process.transaction.FinanceManager;
 
 public class Jeu implements Runnable{
 
 	private MainGuiTest frame ; 
 	private TimeManager timeManager;
 	private TaskManager taskManager; 
+	private FinanceManager financeManager;
 	
 	
 	public Jeu(Farm farm) {

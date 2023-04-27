@@ -24,7 +24,6 @@ public class AddToCart implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		market.addToBill(key, WIDTH, HEIGHT);
 		//market.getGame().getAchat().addToCart(key);
-		//System.out.println("Added\n : " + market.getGame().getAchat().getCart());
 	}
 
 }

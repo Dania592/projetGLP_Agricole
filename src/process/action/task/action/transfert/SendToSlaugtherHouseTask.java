@@ -1,5 +1,6 @@
 package process.action.task.action.transfert;
 
+import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.SlaughterHouseSender;
@@ -16,7 +17,12 @@ import process.action.visitor.place.transfert.SendToSlaughterHouseVisitor;
 public class SendToSlaugtherHouseTask extends Task<SlaughterHouseSender> {
     SendToSlaughterHouseVisitor visitor;
 
-    public SendToSlaugtherHouseTask(Activity activity, SlaughterHouseSender slaughtable, SendToSlaughterHouseVisitor slaughterHouseSender ) throws UnableToGenerateNewTaskException {
+    // public SendToSlaugtherHouseTask(Activity activity, SlaughterHouseSender slaughtable, SendToSlaughterHouseVisitor slaughterHouseSender, Personne personne) throws UnableToGenerateNewTaskException {
+    //     super(activity, slaughtable, personne);
+    //     this.visitor = slaughterHouseSender;
+    // }
+
+    public SendToSlaugtherHouseTask(Activity activity, SlaughterHouseSender slaughtable, SendToSlaughterHouseVisitor slaughterHouseSender) throws UnableToGenerateNewTaskException {
         super(activity, slaughtable);
         this.visitor = slaughterHouseSender;
     }

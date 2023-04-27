@@ -22,7 +22,6 @@ import process.action.visitor.place.PlaceVisitor;
 public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouton>, SlaughterHouseSender{
     private ArrayList<Produit> production =new ArrayList<>();
     private ArrayList<Slaughtable> moutonToSlaughter = new ArrayList<>();
-    private final static float PRIX_ACHAT = 50000 ;
     private boolean isUsedForATask= false;
 
     public BergerieMouton(int ligne_init, int colonne_init , String reference , Map map ) {

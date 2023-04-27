@@ -20,9 +20,10 @@ public interface Produceur extends DomesticSpecie{
     public enum Type{
         BAD_PRODUCEUR(1),
         AVERAGE_PRODUCEUR(2),
-        GOOD_PRODUCEUR(4),
+        GOOD_PRODUCEUR(3),
         FAST_PRODUCEUR(6),
         DOPED_PRODUCEUR(10),
+
         ;
 
         private int numberOfProductPerProductifCycle;
@@ -69,11 +70,11 @@ public interface Produceur extends DomesticSpecie{
     }
 
 	public enum TimeItTakes{
-        CHEVRE(250, Type.AVERAGE_PRODUCEUR),
-		MOUTON(300, Type.AVERAGE_PRODUCEUR),
-		POULE(200, Type.AVERAGE_PRODUCEUR),
-		VACHE(500, Type.AVERAGE_PRODUCEUR),
-        TERRAIN(500, Type.AVERAGE_PRODUCEUR),
+        CHEVRE(35, Type.AVERAGE_PRODUCEUR),
+		MOUTON(20, Type.AVERAGE_PRODUCEUR),
+		POULE(10, Type.AVERAGE_PRODUCEUR),
+		VACHE(50, Type.AVERAGE_PRODUCEUR),
+        TERRAIN(1000, Type.AVERAGE_PRODUCEUR),
 
         ;
         
@@ -108,6 +109,7 @@ public interface Produceur extends DomesticSpecie{
     boolean needSpecialActionToGetProduction();
     CyclicCounter getProductionCycle();
     EtatSante getEtatSante();
+    int getProcuedQuantity();
     
 
 }

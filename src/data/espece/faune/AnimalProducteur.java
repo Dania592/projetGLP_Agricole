@@ -8,6 +8,7 @@ import data.espece.Slaughtable;
 import data.espece.Transportable;
 import data.map.Map;
 import data.production.Produit;
+import data.production.Produits;
 import data.structure.Structure;
 import data.time.CyclicCounter;
 import gui.gestionnaire.keys.Animals;
@@ -23,7 +24,7 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	private CyclicCounter productionCycle;
 	private Produceur.Type produceurType;
 	private Produceur.TimeItTakes timeItTakesToProduce;
-	
+	private Produit produit;
 	
 	public Produceur.TimeItTakes getTimeItTakesToProduce() {
 		return timeItTakesToProduce;
@@ -35,6 +36,7 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
 				sexe, habitat ,reference ,map , speedGrowth);
 		this.quantiteProduction = quantiteProduction;
+		this.produit = produit;
 		produceurType = Type.AVERAGE_PRODUCEUR; 
 		productifState = ProductifState.UNABLE_TO_PRODUCE;
 		productionCycle = new CyclicCounter(getTimeItTakesToProduceInSeconde());
@@ -46,12 +48,12 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 				+ ", productionCycle=" + productionCycle + ", produceurType=" + produceurType + "nom :"+getNom()+"]";
 	}
 
-	public int getQuantiteProduction() {
+	public int getProcuedQuantity() {
 		return quantiteProduction;
 	}
 
-	public void setQuantiteProduction(int quantiteProduction) {
-		this.quantiteProduction = quantiteProduction;
+	public Produits collectProduction(){
+		return produit.getType();
 	}
 
 	public boolean haveProduced(){

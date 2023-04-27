@@ -30,7 +30,7 @@ public enum Activity  implements Serializable{
     
     
     // ---------------------- MAISON ---------------------- //
-    TO_REST(1, "Repos", Type.CARE, ActionnableKey.MAISON, 30),
+    TO_REST(1, "Repos", Type.CARE, ActionnableKey.MAISON, 1),
     // ------------------------------------------------------------------- //
     
     
@@ -38,10 +38,10 @@ public enum Activity  implements Serializable{
     FIX_ENCLOSURE(2, "Réparer", Type.FIX, ActionnableKey.ENCLOS, 1),
     SEND_BACK_HOME_ANIMALS(3, "Rentrer les animaux", Type.GO_BACK_HOME, ActionnableKey.ENCLOS, 10),
     FEED_ANIMAL_FROM_ENCLOSURE(1, "Nourrir", Type.FEED, ActionnableKey.ENCLOS, 5),
-    COLLECT_EGG_FROM_ENCLOSURE(3, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 20),
+    COLLECT_EGG_FROM_ENCLOSURE(3, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 4),
     GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GIVE_WATER, ActionnableKey.ENCLOS, 1),
     TRANSFERT_TO_PRODUCTION_ROOM(1, "Remplir l'abreuvoir", Type.SENT_SPECIAL_ACTION, ActionnableKey.ENCLOS, 1),
-    SHAVE_SHEEP(3, "Tondre Mouton", Type.SPECIAL, ActionnableKey.ENCLOS, 300),
+    SHAVE_SHEEP(3, "Tondre Mouton", Type.SPECIAL, ActionnableKey.ENCLOS, 3),
     // ------------------------------------------------------------------- //
     
     
@@ -93,8 +93,6 @@ public enum Activity  implements Serializable{
         SPECIAL,
     }
 
-
-    //TODO on conditionne l'action du joueur en fonction des outils qu'il possède !
     public enum GetNeededTool{
         NONE,
     }

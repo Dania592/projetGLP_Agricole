@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import data.structure.Abatoire;
@@ -20,6 +21,7 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.ProductifPlace;
+import data.structure.hability.Actionnable.ActionnableKey;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -39,7 +41,6 @@ public class ProductionCollector implements PlaceVisitor<Void> {
                 currentProduct = produitsIter.next();
                 GestionnaireStocks.getInstance().add(currentProduct, production.get(currentProduct));
             } 
-            System.out.println("EN tout on avait : "+productifPlace.getProduction().size()+" de produit");
             productifPlace.getProduction().clear();
             System.out.println(productifPlace.getProduction());
         }
@@ -50,10 +51,17 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     public boolean haveProduced(ProductifPlace productifPlace){
         Iterator<Integer> productionIter = productifPlace.getProduction().values().iterator();
         Integer productionCounter = 0;
-        while(productionIter.hasNext()){
-            productionCounter += productionIter.next();
+        if(productifPlace.getSpecificActionnableKey() == ActionnableKey.ENCLOS){
+            if(productifPlace.getProduction().get(Produits.OEUF) != null){
+                return productifPlace.getProduction().get(Produits.OEUF) != 0;
+            }
+            return false;
+        }else{
+            while(productionIter.hasNext()){
+                productionCounter += productionIter.next();
+            }
+            return productionCounter != 0 ;
         }
-        return productionCounter != 0 ;
     }
 
     @Override
@@ -98,7 +106,9 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     @Override
     public Void action(Terrain terrain)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException();
+        collectProduction(terrain);
+        terrain.setEvolution(EvolutionTerrain.VIERGE);
+        return null;
     }
 
 

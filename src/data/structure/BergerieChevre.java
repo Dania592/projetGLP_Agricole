@@ -19,7 +19,6 @@ import process.action.visitor.place.PlaceVisitor;
 
 public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender{
     private ArrayList<Slaughtable> chevreToKill = new ArrayList<>();
-    private final static float PRIX_ACHAT = 50000 ;
     private boolean isUsedForATask = false;
 
     public BergerieChevre(int ligne_init, int colonne_init, String reference , Map map ) {

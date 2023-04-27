@@ -10,7 +10,6 @@ import data.espece.faune.Chevre;
 import data.espece.faune.MilkProduceur;
 import data.espece.faune.Vache;
 import data.map.Map;
-import data.production.Produit;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import gui.gestionnaire.keys.Structures;
@@ -28,7 +27,6 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	private ArrayList<Vache> vaches = new ArrayList<>();
 	private ArrayList<Chevre> chevres = new ArrayList<>();
 	private HashMap<Produits, Integer> production = new HashMap<>();
-	private final static float PRIX_ACHAT = 50000;
 
 
 	public SalleDeTraite(int ligne_init, int colonne_init, String reference, Map map) {
@@ -58,7 +56,6 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 		return Structures.SALLE_DE_TRAITE;
 	}
 
-	
 	@Override
 	public boolean canLaunchProduction() {
 		return vaches.size()>0 || chevres.size()>0;
@@ -159,12 +156,6 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	@Override
 	public boolean needPlayerIntervention() {
 		return true;
-	}
-
-	@Override
-	public boolean isCurrentlyUsedForAnotherTask() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'isCurrentlyUsedForAnotherTask'");
 	}
 	
 }

@@ -2,13 +2,14 @@ package process.time;
 import data.configuration.GameConfiguration;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import data.time.Clock;
+import process.transaction.FinanceManager;
 public class TimeManager extends Thread{
     private Clock clock;
     private int dayCounter;
     private boolean isTimeRunning;
     private DayOfWeek day;
     private int timeSpeed = 1; 
-   private static TimeManager timeManager = new TimeManager();
+    private static TimeManager timeManager = new TimeManager();
 
     
     
@@ -39,6 +40,7 @@ public class TimeManager extends Thread{
             clock.increment();
             if (clock.getHour().getValue() == 24) {
                 dayCounter++;
+                FinanceManager.getInstance().incrementCounter();
                 clock.getHour().setValue(0);
                 day = day.next();
             }

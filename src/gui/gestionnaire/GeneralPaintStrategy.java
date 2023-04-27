@@ -3,24 +3,33 @@ package gui.gestionnaire;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
+import data.finance.Charge;
 import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireFinancier;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
+import gui.Farm.Hud;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
@@ -28,6 +37,9 @@ import gui.gestionnaire.keys.Keys;
 import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
 import process.transaction.Achat;
+import process.transaction.FinanceManager;
+import process.transaction.Transaction;
+import process.transaction.Vente;
 
 public class GeneralPaintStrategy {
 
@@ -42,6 +54,9 @@ public class GeneralPaintStrategy {
 	public static Color DARK_GREEN = new Color(82,121,112);
 	public static Color RED = new Color(158,36,19);
 	public static Color MEDIUM_GREEN = new Color(103,148,76);
+	public static int FINANCE_MANAGER_ROW_COUNT = 5;
+	public static int FINANCE_MANAGER_COLUMN_COUNT = 1;
+	private HashMap<String, JPanel> tabs = new HashMap<>();
 
 	private ArrayList<Container> containers = new ArrayList<>();
 	private HashMap<String, JPanel> toBuy = new HashMap<>();
@@ -109,7 +124,7 @@ public class GeneralPaintStrategy {
 	}
 	
 	//ok
-	public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,String type, Achat achat, MarketGUI market) {
+	/*public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,String type, Achat achat, MarketGUI market) {
 		int cardCount;
 		if (type.equals("Manager")) {
 			cardCount = key.getElements().size();
@@ -146,27 +161,54 @@ public class GeneralPaintStrategy {
 			}
 		}
 		return cardContainer;
+	}*/
+	
+	
+	public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,PaintKeys type, Transaction achat, MarketGUI market) {
+		int cardCount = 0;
+		ArrayList<?> elements = getElements(type, key);
+		if (elements != null) {
+			cardCount = elements.size();
+		}
+		counter = cardCount - 1;
+		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
+		JPanel innerContainer = paintNormalPanel(x, y, w, h, null);
+		if (cardCount > 0 ) {
+			if(cardCount <= (rowCount * columnCount)) {
+				innerContainer = fillCardContainer(innerContainer, cardCount, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market, elements);
+				cardContainer.add(innerContainer);
+			} else {
+				// count le nombre de vues du cardLayout
+				int count = cardCount / (rowCount * columnCount);
+				
+				if ( cardCount % (rowCount * columnCount) != 0) {
+					count++;
+				}
+				// affecter le nombre de cartes par vue du cardLayout 
+				int set;
+				for ( int i = 0; i < count; i++) {
+					if (cardCount >= (rowCount * columnCount)) {
+						set = (rowCount * columnCount);
+					} else {
+						set = cardCount;
+					}
+					cardCount -= set;
+					innerContainer = paintNormalPanel(gap, gap, w - gap, h - columnCount, null);
+					innerContainer = fillCardContainer(innerContainer, set, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market, elements);
+					cardContainer.add(innerContainer);
+				}
+			}
+		}
+		return cardContainer;
 	}
 	
-	// ok
-	public JPanel fillCardContainer(JPanel innerContainer, int cardCount, GestionnaireKey key, int cardWidth, int cardHeight, int columnCount, int gap, Color color,String type, Achat achat, MarketGUI market) {
-		ArrayList<Keys> elements;
-		if (type.equals("Manager")) {
-			elements = key.getElements();
-		} else {
-			elements = key.getArticles();
-		}
+	public JPanel fillCardContainer(JPanel innerContainer, int cardCount, GestionnaireKey key, int cardWidth, int cardHeight, int columnCount, int gap, Color color,PaintKeys type, Transaction achat, MarketGUI market, ArrayList<?> elements) {
 		if (elements != null ) {
 			int cpt = 0;
 			int posX = 0;
 			int posY = 0;
 			for (int i = 0; i < cardCount; i++) {
-				JPanel card;
-				if (type.equals("Manager")) {
-					card = paintManagerCard(posX, posY,cardWidth, cardHeight, gap, key, elements, color);
-				} else {
-					card = paintMarketCard(posX, posY,cardWidth, cardHeight, gap, key, elements, color,achat, market);
-				}
+				JPanel card = paintCard(posX, posY, cardWidth, cardHeight, gap, key, elements, color, type, achat, market);
 				if (card != null) {
 					innerContainer.add(card);
 					cpt++;
@@ -182,8 +224,138 @@ public class GeneralPaintStrategy {
 		return innerContainer;			
 	}
 	
+	public JPanel paintCard(int posX, int posY, int width, int height, int gap,GestionnaireKey key, ArrayList<?> elements, Color color, PaintKeys type, Transaction transaction, MarketGUI market) {
+		switch (type) {
+		case ACHAT:
+			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
+		case VENTE:
+			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
+		case ARTICLE: 
+			return paintMarketCard(posX, posY, width, height, gap, key, (ArrayList<Keys>) elements, color, (Achat) transaction, market);
+		case STOCKS:
+			return paintManagerCard(posX, posY, width, height, gap, key, (ArrayList<Keys>) elements, color);
+		case CHARGE: 
+			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
+		default:
+			return null;
+		}
+	}
+		
+	public JPanel paintTransactionCard(int posX, int posY, int width, int height, int gap, ArrayList<?> elements, Color color) {
+		String[] infos;
+		Object element = elements.get(counter);
+		infos = getFinancialInformation(element);
+		Float size = Float.valueOf(infos[2]);
+		if (size != 0) {
+			JPanel card = paintRoundedPanel(posX, posY, width, height, new FlowLayout(FlowLayout.LEADING, 10, 10), GeneralPaintStrategy.RADIUS, color);
+			
+			JLabel icone = new JLabel();
+			icone.setPreferredSize(new Dimension(40,40));
+			icone.setIcon(new ImageIcon(infos[1]));
+			icone.setHorizontalAlignment(JLabel.CENTER);
+						
+			JLabel amount = new JLabel();
+			amount.setPreferredSize(new Dimension(100, 40));
+			amount.setText(infos[2]);
+			amount.setHorizontalAlignment(JLabel.CENTER);
+			amount.setVerticalAlignment(JLabel.CENTER);
+			amount.setForeground(GeneralPaintStrategy.DARK_BROWN);
+			
+			JLabel doro = new JLabel();
+			doro.setPreferredSize(new Dimension(40,40));
+			doro.setIcon(new ImageIcon("src"+File.separator+"ressources"+File.separator+"doro.png"));
+			doro.setHorizontalAlignment(JLabel.CENTER);
+			doro.setVerticalAlignment(JLabel.CENTER);
+			
+			JLabel transactionType = new JLabel();
+			transactionType.setPreferredSize(new Dimension(100, 40));
+			transactionType.setText(infos[0]);
+			transactionType.setHorizontalAlignment(JLabel.CENTER);
+			transactionType.setVerticalAlignment(JLabel.CENTER);
+			transactionType.setForeground(GeneralPaintStrategy.DARK_BROWN);
+			
+			card.add(icone);
+			card.add(amount);
+			card.add(doro);
+			card.add(transactionType);
+			
+			if (!infos[0].equals("Achat") && !infos[0].equals("Vente")) {
+				Charge charge = (Charge) element;
+				if ( !charge.isPaid()) {
+					JLabel delais = new JLabel();
+					delais.setPreferredSize(new Dimension(100,40));
+					delais.setText(" Delais : " + String.valueOf(charge.getDelais()) + "j");
+					delais.setHorizontalAlignment(JLabel.CENTER);
+					delais.setVerticalAlignment(JLabel.CENTER);
+					JButton pay = paintButton(DARK_GREEN, Color.WHITE, null, "Payer");
+					pay.setPreferredSize(new Dimension(100,40));
+					pay.addActionListener(new Pay(charge, pay));
+					card.add(delais);
+					card.add(pay);
+				}
+			}
+			
+			return card;
+		}
+		return null;
+	}
+	
+	public String[] getFinancialInformation(Object element) {
+		String[] infos = new String[3];
+		infos[0] = element.getClass().getSimpleName();
+		switch (infos[0]) {
+			case "Achat":
+				Achat achat = (Achat) element;
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"-.png";
+				infos[2] = String.valueOf(achat.getTotalCost());
+				break;
+			case "Vente":
+				Vente vente = (Vente) element;
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"+.png";
+				infos[2] = String.valueOf(vente.getTotalCost());
+				break;
+			case "Charge":
+				Charge charge = (Charge) element;
+				infos[0] = charge.getType();
+				infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+".png";
+				infos[2] = String.valueOf(charge.getMontant());
+				break;
+			default:
+				infos[0] = "Non reconnu";
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"default-image.png";
+				infos[2] = "/";
+				break;
+		}
+		return infos;
+	}
+	
+	public ArrayList<?> getElements(PaintKeys type, GestionnaireKey key){
+		switch(type) {
+			case ACHAT:
+				return GestionnaireFinancier.getInstance().getAchats();
+			case VENTE:
+				return GestionnaireFinancier.getInstance().getVentes();
+			case STOCKS:
+				return key.getElements();
+			case ARTICLE:
+				return key.getArticles();
+			case CHARGE:
+				ArrayList<Charge> charges = new ArrayList<>();
+				if (GestionnaireFinancier.getInstance().getCharges() != null) {
+					charges.addAll(charges.size(),GestionnaireFinancier.getInstance().getCharges());
+				}
+				if (FinanceManager.getInstance().getCharges() != null) {
+					charges.addAll(0,FinanceManager.getInstance().getCharges());
+				} 
+				return charges;
+			default: 
+				return null;
+		}
+	}
+	
+	
 	public JPanel paintManagerCard(int posX, int posY, int width, int height, int gap, GestionnaireKey key, ArrayList<Keys> elements, Color color) {
-		Keys element = elements.get(0);
+		Keys element = (Keys) elements.get(0);
 		String[] infos = getInformation(element, key);
 		elements.remove(0);
 		String imagePath = infos[1];
@@ -344,6 +516,14 @@ public class GeneralPaintStrategy {
 		button.setFont(font);
 		return button;
 	}
+	
+	public JButton paintButton(Color bgColor, Color fgColor, Font font, String title) {
+		JButton button = new JButton(title);
+		button.setBackground(bgColor);
+		button.setForeground(fgColor);
+		button.setFont(font);
+		return button;
+	}
 		
 	public static String getName(Keys key) {
 		String title = key.name().replace('_', ' ');
@@ -377,14 +557,13 @@ public class GeneralPaintStrategy {
 	    return label;
 	}
 		
-	public JPanel paintGestionnaire(int x, int y, int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, String type, Achat achat, MarketGUI market) {
+	public JPanel paintGestionnaire(int x, int y, int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, PaintKeys type, Achat achat, MarketGUI market) {
 		JPanel principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
 		
 		CardLayout cardLayout = new CardLayout();
 		
-		// 20 
 		int radius = 20;
-		// 10
+
 		int posX = 10;
 		int posY = 10;
 		
@@ -454,36 +633,89 @@ public class GeneralPaintStrategy {
 		return principalPanel;
 	}
 	
-//	public void addToBill(Keys key, int x, int y, int w, int h, MarketGUI market) {
-//	JPanel panel = new BillArticlePanel(getName(key), MIN_SPACE_BETWEEN, MIN_SPACE_BETWEEN, 250, 50, null);
-//	market.getBill().put(key,panel);
-//	market.getBillPanel().add(panel);
-//}
+	public JPanel paintFinanceManger(int x, int y, int width, int height, int rowCount, int columnCount, int gap, Color cardColor) {
+		
+		JPanel principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
+		
+		CardLayout cardLayout = new CardLayout();
+		
+		// 20 
+		int radius = 20;
+		// 10
+		int posX = 10;
+		int posY = 11;
+		
+		int labelWidth = 40;
+		
+		int tabX = 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN + labelWidth;
+		int tabY = GeneralPaintStrategy.MIN_SPACE_BETWEEN;
+		
+		JPanel achatsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
+		JPanel ventesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+		JPanel chargesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+		
+		JTabbedPane tabbedPane = paintTabbedPane(tabX, tabY, width, height + 3*GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, GeneralPaintStrategy.DARK_BROWN);
+		
+		tabs.put("Achats", achatsPanel);
+		tabs.put("Ventes", ventesPanel);
+		tabs.put("Charges", chargesPanel);
+		
+		tabbedPane = paintTabs(tabbedPane, tabs);
+		
+		JLayeredPane achatsCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
+				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.ACHAT, null, null);
+		achatsPanel.add(achatsCards);
+		containers.add(achatsCards);	
+		
+		JLayeredPane ventesCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
+				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.VENTE, null, null);
+		ventesPanel.add(ventesCards);
+		containers.add(ventesCards);
+		
+		JLayeredPane chargesCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
+				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.CHARGE, null, null);
+		chargesPanel.add(chargesCards);
+		containers.add(chargesCards);
+		
+		JLabel next = new JLabel();
+		next.setBounds(posX + width + 2*gap + labelWidth, HEIGHT/2, labelWidth, labelWidth);
+		ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next.png");
+		next.setIcon(nextIcone);	
+		principalPanel.add(next);
+		next.addMouseListener(new Next(cardLayout, tabbedPane,containers));
+		
+		JLabel previous = new JLabel();
+		previous.setBounds(gap,HEIGHT/2,labelWidth,labelWidth);
+		ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous.png");
+		previous.setIcon(previousIcone);	
+		principalPanel.add(previous);
+		previous.addMouseListener(new Previous(cardLayout, tabbedPane, containers));
+		
+		principalPanel.add(tabbedPane);
+		
+		return principalPanel;
+	}
 	
-//	public JPanel paintMarketCard(int posX, int posY, int width, int height, int gap,GestionnaireKey key, ArrayList<?> elements, Color color) {
-//		Object element = elements.get(0);
-//		String[] infos = getInformation(element, key);
-//		elements.remove(0);
-//		String imagePath = infos[1];
-//		JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
-//
-//		JLabel icone = new JLabel();
-//		icone.setBounds(gap, gap, width - (2*gap), 100);
-//		ImageIcon elementImage= new ImageIcon(imagePath);
-//		icone.setIcon(elementImage);
-//		icone.setHorizontalAlignment(JLabel.CENTER);
-//
-//		JLabel name = new JLabel();
-//		name.setBounds(gap, 2 * gap + 100 , width - (2*gap), 50);
-//		name.setText(infos[0]);
-//		name.setHorizontalAlignment(JLabel.CENTER);
-//
-//		JButton acheter = paintButton(3*gap, 3 * gap + 150, width - (3*gap), 50, Gestionnaire.DARK_GREEN, Gestionnaire.MEDIUM_GREEN,null, "Ajouter au panier");
-//
-//		card.add(acheter);
-//		card.add(icone);
-//		card.add(name);
-//		return card;
-//	}
+	private class Pay implements ActionListener{
 
+		private Charge charge;
+		private JButton button;
+		
+		public Pay(Charge charge, JButton button) {
+			this.charge = charge;
+			this.button = button;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			charge.payer();
+			FinanceManager.getInstance().remove(charge);
+			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
+			frame.dispose();
+			new InfosTransaction("Charge payée", null);
+			GestionnaireFinancier.getInstance().add(charge);
+		}
+		
+	}
+	
 }

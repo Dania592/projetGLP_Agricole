@@ -5,9 +5,11 @@ import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
+import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
+import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.TaskCompleteException;
@@ -38,12 +40,15 @@ public class TaskManager{
     }
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
-            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException {
+            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException {
+        if(!isAnHourOfWork()){
+            throw new AskingToWorkAtIllegalHourException(currentHour);
+        }
         Task<?> generatedTask = taskFactory.newTask(activity, actionnable);
         taskToBeLaunched.add(generatedTask);
     }
 
-    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException{
+    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException{
         addNewTask(currentHour,activity, actionnable);
     }
 
@@ -84,11 +89,6 @@ public class TaskManager{
         addToTaskToinProcess();
         processingTaskInProgess();
         removeCompletedTask();
-        try {
-            Thread.sleep(GameConfiguration.GAME_SPEED);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -117,7 +117,10 @@ public class TaskManager{
         taskCompleted.clear();
     }
 
-    public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable){
+    public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable) throws AskingToWorkAtIllegalHourException{
+        if(!isAnHourOfWork()){
+            throw new AskingToWorkAtIllegalHourException(currentHour);
+        }
         ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
         ArrayList<Task<?>> possibleTaskToPerform= new ArrayList<>();
         Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
@@ -127,11 +130,16 @@ public class TaskManager{
                 task = taskFactory.newTask(activitiesIter.next(), actionnable);
                 possibleTaskToPerform.add(task);
             } catch (Exception e) {
-                //TODO
-                // System.err.println(e);
             }
         }
         return possibleTaskToPerform;
+    }
+
+
+
+    private boolean isAnHourOfWork(){
+        return true;
+        // return DailyPlanner.FIRST_HOUR_OF_WORK <= currentHour && currentHour <= DailyPlanner.LAST_HOUR_OF_WORK;
     }
 
     public int getCurrentHour() {

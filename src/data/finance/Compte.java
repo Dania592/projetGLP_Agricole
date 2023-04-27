@@ -6,7 +6,7 @@ public class Compte implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private float solde = 1000;
+	private double solde = 1000;
 	
 	public static Compte instance = new Compte();
 	
@@ -16,12 +16,12 @@ public class Compte implements Serializable{
 		return instance;
 	}
 
-	public float getSolde() {
+	public double getSolde() {
 		return solde;
 	}
 
-	public void setSolde(float solde) {
-		this.solde = solde;
+	public void setSolde(double d) {
+		this.solde = d;
 	}
 	
 }

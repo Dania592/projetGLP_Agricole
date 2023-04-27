@@ -64,8 +64,6 @@ public class MarketGUI extends JFrame{
 		billContainer.add(billPanel, BorderLayout.CENTER);
 		billContainer.add(validationPanel, BorderLayout.SOUTH);
 		
-		//billPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
-		//billPanel.setLayout(new BoxLayout(billPanel, BoxLayout.Y_AXIS));
 	}
 	
 	public void addToBill(Keys key, int w, int h) {
@@ -76,7 +74,6 @@ public class MarketGUI extends JFrame{
 			billPanel.revalidate();
 			billPanel.repaint();
 			AddToCart.posY++;
-			//billPanel.setPreferredSize(new Dimension(billPanel.getWidth() + panel.getWidth(), billPanel.getHeight() + panel.getHeight()));
 		} else {
 			JSpinner spinner = bill.get(key).getQuantitySpinner();
 			spinner.setValue(spinner.getNextValue());
@@ -130,9 +127,8 @@ public class MarketGUI extends JFrame{
 	}
 
 	public void init() {
-		// 599
+
 		int width = MARKET_CARD_WIDTH*MARKET_COLUMN_COUNT + ((MARKET_COLUMN_COUNT + 1)*MIN_SPACE_BETWEEN);
-		// 512
 		int height = MARKET_CARD_HEIGHT*MARKET_ROW_COUNT + ((MARKET_ROW_COUNT + 1 )*MIN_SPACE_BETWEEN);
 
 		BILL_HEIGHT = height;
@@ -143,7 +139,7 @@ public class MarketGUI extends JFrame{
 		paintBill(700, 40, BILL_WIDTH, BILL_HEIGHT);
 		contentPane.add(billContainer);
 
-		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, "Market", achat, this);
+		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, PaintKeys.ARTICLE, achat, this);
 		contentPane.add(principalPanel);
 
 	}
@@ -170,9 +166,6 @@ public class MarketGUI extends JFrame{
 	
 	public static void main(String[] args) {
 		MarketGUI market = new MarketGUI(null);
-//for(GestionnaireKey key : data.gestion.Market.getInstance().getArticles().keySet()) {
-//			//System.out.println(key.name() + " : " + data.gestion.Market.getInstance().getArticles().get(key).size() + "\n");
-//		}
 	}
 	
 }

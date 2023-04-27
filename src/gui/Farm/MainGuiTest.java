@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import data.configuration.GameConfiguration;
+import data.myExceptions.AskingToWorkAtIllegalHourException;
+import data.notification.Message;
+import data.notification.Messagerie;
+import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -18,6 +22,7 @@ import gui.gestionnaire.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Structures;
 import process.action.TaskManager;
 import process.action.task.Task;
+import process.time.TimeManager;
 import process.game.Game;
 
 public class MainGuiTest  extends JFrame implements Runnable{
@@ -93,8 +98,13 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				dashboard.setSelected(element);
 				if(selected instanceof Actionnable) {
 					Actionnable actionnable = (Actionnable)element;
-					ArrayList<Task<?>> tasks = taskManager.getPossibleTaskToPerform(actionnable);
-					dashboard.getHud().add_Actions(x, y , tasks);					
+					ArrayList<Task<?>> tasks;
+					try {
+						tasks = taskManager.getPossibleTaskToPerform(actionnable);
+						dashboard.getHud().add_Actions(x, y , tasks);					
+					} catch (AskingToWorkAtIllegalHourException e1) {
+						Messagerie.getInstance().addMessage(new Message("Heures de travai légales \n"+DailyPlanner.FIRST_HOUR_OF_WORK+"  -  "+ DailyPlanner.LAST_HOUR_OF_WORK, TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
+					}
 				}
 
 				if(selected.getClass().getSimpleName().equals("Entrepot")) {

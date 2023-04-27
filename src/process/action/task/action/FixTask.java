@@ -1,5 +1,6 @@
 package process.action.task.action;
 
+import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Fixable;
@@ -16,11 +17,16 @@ import process.action.visitor.place.FixVisitor;
 public class FixTask extends Task<Fixable> {
     FixVisitor visitor;
 
-    public FixTask(Activity activity, Fixable actionnableTarget, FixVisitor visitor) throws UnableToGenerateNewTaskException {
-        super(activity, actionnableTarget);
-        this.visitor = visitor;
-    }
+    // public FixTask(Activity activity, Fixable actionnableTarget, FixVisitor visitor, Personne personne) throws UnableToGenerateNewTaskException {
+    //     super(activity, actionnableTarget, personne);
+    //     this.visitor = visitor;
+    // }
 
+    public FixTask(Activity activity, Fixable actionnableTarget, FixVisitor visitor) throws UnableToGenerateNewTaskException {
+            super(activity, actionnableTarget);
+            this.visitor = visitor;
+    }
+ 
     @Override
     protected synchronized void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         try {
