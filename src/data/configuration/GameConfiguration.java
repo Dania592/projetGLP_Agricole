@@ -22,9 +22,9 @@ public abstract class GameConfiguration {
 	
 	public final static int TIME_SPEED = 3 ;
 	
-	public final static int X_MAP = -10*CASE_DIMENSION ;
+	public final static int X_MAP = 0;
 	
-	public final static int Y_MAP = -18*CASE_DIMENSION ;
+	public final static int Y_MAP = 0 ;
 	
 	public final static int X_ADD_LABEL = WINDOW_WIDTH-100;
 
@@ -48,6 +48,6 @@ public abstract class GameConfiguration {
 	
 	public final static String FILE_NAME_SAVE = "saved_farm.ser";
 	
-	public final static int NB_CARD_CHOIX = 6 ;
+	public final static int NB_CARD_CHOIX = 5 ;
 
 }

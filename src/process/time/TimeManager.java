@@ -8,20 +8,26 @@ public class TimeManager extends Thread{
     private boolean isTimeRunning;
     private DayOfWeek day;
     private int timeSpeed = 1; 
-   // private static TimeManager timeManager = new TimeManager();
+   private static TimeManager timeManager = new TimeManager();
 
     
     
     // doit etre modifier pour prendre en compte l'etat de la ferme == jour , semaine ...
-    public  TimeManager(Clock clock ){
-        this.clock = clock ; 
+    private  TimeManager(){ 
         dayCounter= 0;
         isTimeRunning = true;
         day = DayOfWeek.MONDAY;
     }
+    
+    public static TimeManager getInstance() {
+    	return timeManager;
+    }
 
     public Clock getClock() {
         return clock;
+    }
+    public void setClock(Clock clock) {
+    	this.clock=clock;
     }
     
     public void setTimeRunning(boolean isTimeRunning) {
@@ -29,7 +35,7 @@ public class TimeManager extends Thread{
     }
 
     public void run() {
-        while (isTimeRunning) {
+        while (isTimeRunning){
             clock.increment();
             if (clock.getHour().getValue() == 24) {
                 dayCounter++;

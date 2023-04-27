@@ -1,6 +1,7 @@
 
 package gui.Farm.choix;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,10 +25,11 @@ import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import gui.Farm.Board;
+import gui.gestionnaire.RoundedPanel;
 
 
 
-public class ElementCard extends JPanel{
+public class ElementCard extends RoundedPanel{
 	private ArrayList<Element> elements ;
 	private int nbElement ;
 	private int nbElementPresent ;
@@ -42,6 +44,7 @@ public class ElementCard extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public ElementCard(ArrayList<Element> elements , Farm farm , Board component ) {
+		super(null , 100 , Color.WHITE);
 		this.farm = farm;
 		this.component=component;
 		this.elements = elements ;
@@ -54,7 +57,7 @@ public class ElementCard extends JPanel{
 	
 	public void init() {
 		setSize(150, 140);
-		setLayout(null);
+		//setLayout(null);
 		
 		//BufferedImage imageElement = ImageIO.read(new File(elements.get(0).getImage()));
 		imageLabel= new JLabel(new ImageIcon(elements.get(0).getImage()));
@@ -64,8 +67,8 @@ public class ElementCard extends JPanel{
 		
 		nbElementPane = new JTextPane();
 		nbElementPane.setText(nameCard+" : "+nbElementPresent+"/"+nbElement);
+		nbElementPane.setBackground(Color.white);
 		nbElementPane.setFont(new Font("Serif",Font.BOLD,13));
-		nbElementPane.setBackground(getBackground());
 		nbElementPane.setBounds(40, 80, 100, 20);
 		nbElementPane.setEditable(false);
 		add(nbElementPane);
@@ -199,8 +202,8 @@ public class ElementCard extends JPanel{
 		Case block = new Case(true , 0 , 0);
 		Boolean libre = false ;
 		while( !libre) {	
-			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbLigne()-1));
-			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getDimension()-elements.get(0).getPosition().getNbColonne()-1));
+			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getHeight()-elements.get(0).getPosition().getNbLigne()-1));
+			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getWidth()-elements.get(0).getPosition().getNbColonne()-1));
 			block = new Case(true, ligneAleatoire, colonneAleatoire);
 		   libre = farm.getManager().getMapManager().verificationLiberte(element, block);
 		}

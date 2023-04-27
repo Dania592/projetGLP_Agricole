@@ -35,7 +35,6 @@ public class Board  extends JLayeredPane implements Serializable{
 	private JPanel choixTerrain;
 	private TaskManager taskManager ;
 	private MouseHandler mouseHandler;
-	private MainGuiTest ferme;
 	//private ChoixPanel choixScroll;
 	//private ActionsPane actions;
 	private Choix choix ;
@@ -51,7 +50,6 @@ public class Board  extends JLayeredPane implements Serializable{
 		keys = new KeyControls(farm.getManager() , selected); 
 		mouseHandler = new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
-		this.ferme = ferme;
 		choix.init();
 		init();
 	}
@@ -89,7 +87,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		addKeyListener(keys);
 		//addMouseListener(mouseHandler);
 		
-		hud = new Hud(this,ferme);
+		hud = new Hud(this);
 		hud.build();
 			
 		setBounds(0, 0, WIDTH, HEIGHT);
@@ -133,8 +131,8 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud.time();
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-		
-//		if(farm.getTimeManager().getClock().getMinute().getValue() == 2) {
+		//night mode 
+//		if(farm.getClock().getMinute().getValue() == 2) {
 //			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 //		}
 	}

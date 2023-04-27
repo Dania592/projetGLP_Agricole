@@ -134,7 +134,7 @@ public class GameBuilder {
 	}
 	
 	private static void sethousePosition(Farm farm , Structure maison ) {
-		int colonne = farm.getColonne()+1 + (farm.getDimension()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2 ;
+		int colonne = farm.getColonne()+1 + (farm.getWidth()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2 ;
 		int ligne = farm.getLigne()+1;
 		maison.setPosition(ligne, colonne);
 				
@@ -142,7 +142,7 @@ public class GameBuilder {
 	
 	private static void initisaliseFarmerPosition(Farm farm , Fermier farmer) {
 		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
-		int colonne = farm.getColonne()-1 + farm.getDimension()/2;
+		int colonne = farm.getColonne()-1 + farm.getWidth()/2;
 		farmer.setPosition(ligne, colonne);
 	}
 	

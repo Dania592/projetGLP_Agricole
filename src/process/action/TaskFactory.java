@@ -20,7 +20,6 @@ import process.action.task.action.FeedingTask;
 import process.action.task.action.FixTask;
 import process.action.task.action.transfert.SendBackHomeTask;
 import process.action.task.action.transfert.SendToEnclosureTask;
-import process.action.task.action.transfert.SendToSlaugtherHouseTask;
 import process.action.visitor.being.ProductCollectorVisitor;
 import process.action.visitor.being.DomesticSpeciesEnclosureSender;
 import process.action.visitor.being.DomesticSpeciesHomeSender;

@@ -17,11 +17,13 @@ public class Jeu implements Runnable{
 	
 	public Jeu(Farm farm) {
 		
-		timeManager = new TimeManager(farm.getClock());
+		timeManager = TimeManager.getInstance();
+		TimeManager.getInstance().setClock(farm.getClock());
 		timeManager.start();
 				
-		taskManager = new TaskManager(timeManager);
+		taskManager = TaskManager.getInstance();
 		taskManager.start();
+		
 		frame = new MainGuiTest("test de la ferme", farm , taskManager);
 		
 		Thread thread = new Thread(frame);

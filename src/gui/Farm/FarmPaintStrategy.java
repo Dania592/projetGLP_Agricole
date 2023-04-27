@@ -168,8 +168,8 @@ public class FarmPaintStrategy implements Serializable {
 	public void paint(Farm farm ,Graphics graphics) {
 		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+"buisson.png");
 		
-		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getDimension()+farm.getLigne() ; ligneIndex ++) {
-			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getDimension()+farm.getColonne() ; colonneIndex ++) {
+		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getHeight()+farm.getLigne() ; ligneIndex ++) {
+			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getWidth()+farm.getColonne() ; colonneIndex ++) {
 				if(farm.isOnborderFarm(ligneIndex, colonneIndex)) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
