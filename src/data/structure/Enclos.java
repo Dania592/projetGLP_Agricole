@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
+import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -16,50 +18,59 @@ import data.map.Case;
 import data.map.Map;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.myExceptions.UnknownActivityException;
+import data.planning.Activity;
+import data.production.Produit;
+import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
 import data.structure.hability.Fixable;
+import data.structure.hability.Hydratable;
+import data.structure.hability.ProductifPlace;
+import data.structure.hability.SpecialActionPerformer;
 import data.structure.hability.list.EnclosStorageStructure;
-import data.structure.hability.Productif;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
 import data.time.Clock;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
-import data.structure.hability.list.EnclosStorageStructure;;
 
-public class Enclos extends Element implements Fixable, Feedable, Productif, Distributor{
-	
-
-
-
+public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer{
 	private int capacite ;
-	private int lastDecrementation ; 
+	private int lastDecrementationNourriture ; 
+	private int lastDecrementationEau ; 
 	private FullLevel niveauEau ; 
 	private FullLevel niveauNourriture ;
 	private int dimension ; 
-	private FixableState state;
-	private HungerLevel animalsHungerLevel ;
+		private FixableState state;
+	private HungerLevel animalsHungerLevel;
+	private HydrationLevel animalsHydrationLevel;
 	private EnclosStorageStructure animalStorage = new EnclosStorageStructure();
-
+	private static boolean usedForAnAction = false;
+	private HashMap<Produits, Integer> production = new HashMap<>();
 	private HashMap<String, String > images = new HashMap<>();
 	
 	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
 		//animalProducteurs = new ArrayList<>();
 		state = FixableState.USABLE;
-		capacite = 10 ;
+		capacite = 20;
 		niveauEau = FullLevel.FULL ;
 		niveauNourriture = FullLevel.FULL;
 		dimension = 7 ;
-		lastDecrementation = 0 ; 
+		lastDecrementationNourriture = 0 ; 
+		lastDecrementationEau = 0 ; 
 		initImage();
 		setImage(images.get("entier"));
 		animalsHungerLevel = HungerLevel.FULL;
-		
+		animalsHydrationLevel = HydrationLevel.FULLY_HYDRATED;
 	}
 	
 	public EnclosStorageStructure getAnimalStorage() {
@@ -67,11 +78,19 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	}
 	
 
+	public HydrationLevel getAnimalsHydrationLevel() {
+		return animalsHydrationLevel;
+	}
+
+	public void setAnimalsHydrationLevel(HydrationLevel animalsHydrationLevel) {
+		this.animalsHydrationLevel = animalsHydrationLevel;
+	}
+
 	public HungerLevel getAnimalsHungerLevel() {
 		return animalsHungerLevel;
 	}
 
-	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel ) {
+	public void setAnimalsHungerLevel(HungerLevel animalsHungerLevel) {
 		this.animalsHungerLevel = animalsHungerLevel;
 		for(AnimalProducteur animal : getAnimals()) {
 			animal.setHungerLevel(animalsHungerLevel);
@@ -82,22 +101,36 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		}
 	}
 
-	public int getLastDecrementation() {
-		return lastDecrementation;
+
+	public void setAnimalHydrationLevel(HydrationLevel animalsHydrationLevel) {
+		this.animalsHydrationLevel = animalsHydrationLevel;
+		for(AnimalProducteur animal : getAnimals()) {
+			animal.setHydrationLevel(animalsHydrationLevel);
+		}
 	}
 
 
-	public void setLastDecrementation(int lastDecrementation) {
-		this.lastDecrementation = lastDecrementation;
+	public void setLastDecrementationNourriture(int lastDecrementationNourriture) {
+		this.lastDecrementationNourriture = lastDecrementationNourriture;
 	}
 
+	public void setLastDecrementationEau(int lastDecrementationEau) {
+		this.lastDecrementationEau = lastDecrementationEau;
+	}
+
+	public int getLastDecrementationNourriture() {
+		return lastDecrementationNourriture;
+	}
+
+	public int getLastDecrementationEau() {
+		return lastDecrementationEau;
+	}
 
 	public HashMap<String,  String> getImages(){
 		return images ;
 	}
 	
 	private void initImage() {
-		
 			images.put("bas_milieu","src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_m.png");
 			images.put("bas_gauche", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_g.png");
 			images.put("bas_droit", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_d.png");
@@ -110,7 +143,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		return capacite;
 	}
 	
-	public FullLevel getNiveauEau() {
+	public synchronized FullLevel getNiveauEau() {
 		return niveauEau;
 	}
 
@@ -130,7 +163,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		return dimension;
 	}
 
-	public ArrayList<AnimalProducteur> getAnimals() {
+	public synchronized ArrayList<AnimalProducteur> getAnimals() {
 		return animalStorage.getAnimals();
 	}
 
@@ -156,7 +189,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		}	
 		return bords;
 	}
-	
+
 	
 	
 	public boolean isOnBorderEnclos(int ligne , int colonne) {
@@ -166,11 +199,10 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	}
 
 	@Override
-	public ArrayList<ActionnableKey> getActionnableKey() {
+	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {
 		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
-		actionnableKeys.add(ActionnableKey.ENCLOS);
+		actionnableKeys.add(getSpecificActionnableKey());
 		return actionnableKeys;
-
 	}
 
 	@Override
@@ -179,13 +211,7 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	}
 
 	@Override
-	public boolean isNeedToBeFixed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
 		return visitor.action(this);
 	}
 
@@ -212,21 +238,6 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 	}
 
 	@Override
-	public ArrayList<?> getTarget() {
-		return getAnimals();
-	}
-
-	@Override
-	public boolean haveProduced() {
-		Iterator<Poule> poulesIter = animalStorage.getPoules().iterator();
-		boolean haveProduced = false;
-		while(poulesIter.hasNext() && !haveProduced){
-			haveProduced = poulesIter.next().haveProduced();
-		}
-		return haveProduced;
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return getAnimals().isEmpty();
 	}
@@ -241,14 +252,94 @@ public class Enclos extends Element implements Fixable, Feedable, Productif, Dis
 		return state;
 	}
 
-	
+	@Override
+	public boolean readyToSend() {
+		return true;
+	}
 
-	
-	
+	@Override
+	public boolean canLaunchProduction() {
+		return true;
+	}
 
+	@Override
+	public void addSpecialSenderElement(AnimalProducteur specialSenderElement) {
+		getAnimalStorage().add(specialSenderElement);
+	}
 
-	
+	public void addSpecialSenderElement(MilkProduceur specialSenderElement) {
+		getAnimalStorage().add(specialSenderElement);
+	}
 
-	
+	@Override
+	public void removeAll(ArrayList<AnimalProducteur> transportableToRemoveList) {
+		getAnimalStorage().removeAll(transportableToRemoveList);
+	}
+
+	@Override
+	public ActionnableKey getSpecificActionnableKey() {
+		return ActionnableKey.ENCLOS;
+	}
+
+	@Override
+	public boolean isCurrentlyUsedForAnotherTask() {
+		return usedForAnAction;
+	}
+
+	@Override
+	public void setStructureStatus(boolean isCurrentlyUsedForAnotherTask) {
+		usedForAnAction = isCurrentlyUsedForAnotherTask;
+	}
+
+	@Override
+	public HashMap<Produits, Integer> getProduction() {
+		return production;
+	}
+
+	@Override
+	public boolean isNeedToBeHydrated() {
+		return niveauEau == FullLevel.EMPTY || niveauEau == FullLevel.HALF_FULL || niveauEau == FullLevel.QUARTER_FULL;
+	}
+
+	@Override
+	public String toString() {
+		return "Enclos [lastDecrementationNourriture=" + lastDecrementationNourriture + ", lastDecrementationEau="
+				+ lastDecrementationEau + ", niveauEau=" + niveauEau + ", niveauNourriture=" + niveauNourriture
+				+ ", animalsHungerLevel=" + animalsHungerLevel + ", animalsHydrationLevel=" + animalsHydrationLevel
+				+ "]";
+	}
+
+    public static boolean isUsedForAnAction() {
+        return usedForAnAction;
+    }
+
+	@Override
+	public boolean isNeedToBeFixed() {
+		return state == FixableState.DAMAGED;
+	}
+
+	@Override
+	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
+		if(activity == Activity.SHAVE_SHEEP){
+			boolean haveProducedWool = false;
+			Iterator<Mouton> mouton = animalStorage.getMoutons().iterator();
+			while(mouton.hasNext() && !haveProducedWool){
+				haveProducedWool = mouton.next().haveProduced();
+			}
+			return haveProducedWool;
+		}
+		throw new UnknownActivityException(activity);
+	}
+
+	@Override
+	public int getNumberOfTarget() {
+		return getAnimals().size();
+	}
+
+	@Override
+	public boolean needPlayerIntervention() {
+		return false;
+	}
+
 
 }

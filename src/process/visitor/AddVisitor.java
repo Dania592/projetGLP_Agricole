@@ -2,7 +2,6 @@ package process.visitor;
 
 import data.acteur.Employee;
 import data.espece.faune.Animal;
-import data.flore.Culture;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireAnimaux;
 import data.gestion.GestionnaireMateriel;
@@ -13,6 +12,7 @@ import data.gestion.GestionnaireTerrains;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.production.Produit;
+import data.production.Produits;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Graine;
 
@@ -56,7 +56,12 @@ public class AddVisitor implements GestionVisitor<Void>{
 	
 	@Override
 	public Void visit(Produit product) {
-		GestionnaireStocks.getInstance().add(product);;
+		return visit(product.getType());
+
+	}
+
+	public Void visit(Produits productType) {
+		GestionnaireStocks.getInstance().add(productType);
 		return null;
 	}
 	

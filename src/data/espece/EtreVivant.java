@@ -1,13 +1,12 @@
 package data.espece;
 
-import java.io.Serializable;
 
 import data.map.Map;
 import data.myExceptions.MortException;
 import data.notion.Mortel;
 import data.stucture_base.Element;
 
-public abstract class EtreVivant extends Element implements Mortel, Serializable{
+public abstract class EtreVivant extends Element implements Mortel{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -58,6 +57,7 @@ public abstract class EtreVivant extends Element implements Mortel, Serializable
 				throw new MortException(this);	
 		}
 	}
+
     public void amelioreEtatSante(){
 		switch(etatSante){
 			case MALADE:

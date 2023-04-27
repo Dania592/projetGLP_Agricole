@@ -5,9 +5,9 @@ import data.espece.Milieu;
 import data.map.Map;
 import data.structure.Maison;
 import gui.gestionnaire.keys.Animals;
-import process.action.visitor.being.HaveNotProducedYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
 
 
 public class Chien extends AnimalCompagnie {

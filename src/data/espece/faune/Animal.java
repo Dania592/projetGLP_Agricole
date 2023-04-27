@@ -4,6 +4,8 @@ package data.espece.faune;
 import data.espece.EtreVivant;
 import data.espece.FoodConsumer;
 import data.espece.Milieu;
+import data.espece.WaterConsumer;
+import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.evolution.EvolutionAnimal;
 import data.gestion.Stockage;
 import data.map.Map;
@@ -19,7 +21,7 @@ import process.visitor.GestionVisitor;
 
 
 
-public abstract class Animal extends EtreVivant implements Stockage, Saleable, Buyable, FoodConsumer{
+public abstract class Animal extends EtreVivant implements Stockage, Saleable, Buyable, FoodConsumer, WaterConsumer{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,12 +34,14 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 	private EvolutionAnimal evolution ;
 	private Direction direction ;
 	private HungerLevel hungerLevel;
+	private HydrationLevel hydrationLevel;
+	
 	private int lastEvolutionHour ;
 	private int speedGrowth ; 
 	
 	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
 			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map  , int speedGrowth) {
-		super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,reference , map );
+				super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,reference , map );
 		this.naissance = naissance;
 		this.poids = poids;
 		this.nom = nom;
@@ -46,6 +50,7 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		this.habitat = habitat;
 		this.evolution = EvolutionAnimal.JEUNE;
 		hungerLevel = HungerLevel.FULL; 
+		hydrationLevel = HydrationLevel.FULLY_HYDRATED; 
 		lastEvolutionHour = naissance;
 		direction=Direction.STAND;
 		this.speedGrowth = speedGrowth;
@@ -60,6 +65,11 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 	}
 	public void setDirection(Direction new_direction) {
 		direction = new_direction;
+	}
+
+	@Override
+    public boolean isEnoughHydrated(){
+		return hydrationLevel == HydrationLevel.NORMAL || hydrationLevel == HydrationLevel.FULLY_HYDRATED;
 	}
 	
 	public int getLastEvolutionHour() {
@@ -78,11 +88,15 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
 		lastEvolutionHour = date ; 
 	}
 	
+	public HydrationLevel getHydrationLevel() {
+		return hydrationLevel;
+	}
+	public void setHydrationLevel(HydrationLevel hydrationLevel) {
+		this.hydrationLevel = hydrationLevel;
+	}
 	public float getPoids() {
 		return poids;
 	}
-
-
 
 	public String getNom() {
 		return nom;
@@ -135,5 +149,7 @@ public abstract class Animal extends EtreVivant implements Stockage, Saleable, B
     }
     
     public abstract Animals getKey();
+
+
 	
 }

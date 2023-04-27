@@ -42,7 +42,7 @@ public class TimeManager extends Thread{
                 dayCounter++;
                 FinanceManager.getInstance().incrementCounter();
                 clock.getHour().setValue(0);
-                //day = day.next();
+                day = day.next();
             }
             try {
                 sleep(GameConfiguration.GAME_SPEED*timeSpeed);

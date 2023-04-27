@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.configuration.GameConfiguration;
+import data.espece.ProductionManager;
+import data.espece.evolution.EvolutionAnimal;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.myExceptions.MortException;
@@ -49,7 +51,6 @@ public class AnimalEvolution implements Serializable{
 			if(enclos.getAnimals().contains(animal)) {
 				enclos.removeAnimal(animal);
 			}
-
 		}
 	}
 	
@@ -60,6 +61,9 @@ public class AnimalEvolution implements Serializable{
 				animal.setLastEvolutionHour(gameHour);
 				try {
 					animal.vieillir();
+					if(animal.getEvolution() == EvolutionAnimal.ADULTE){
+						ProductionManager.getInstance().setToAbleProduceur(animal);
+					}
 					String imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
 							+File.separator+animal.getEvolution()+File.separator+"STAND.png";
 					
@@ -86,7 +90,6 @@ public class AnimalEvolution implements Serializable{
 				switch(animal.getDirection()) {
 				case UP_1,UP_2:
 					elementManager.moveUp(animal);
-				
 				break;
 				case DOWN_1,DOWN_2 : 
 					elementManager.moveDown(animal);	

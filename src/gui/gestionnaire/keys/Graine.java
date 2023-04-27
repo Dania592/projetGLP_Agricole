@@ -1,5 +1,6 @@
 package gui.gestionnaire.keys;
 
+import data.espece.Produceur.Type;
 import data.production.Produits;
 import gui.gestionnaire.GestionnaireKey;
 import process.transaction.Buyable;
@@ -65,6 +66,10 @@ public enum Graine implements Buyable, Keys{
 	public <T> T accept(GestionVisitor<T> visitor) {
 		visitor.visit(this);
 		return null;
+	}
+
+	public Produits getProduits(){
+		return product;
 	}
 	
 	@Override

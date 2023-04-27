@@ -60,9 +60,9 @@ public class GestionnaireFactory {
 			case SALLE_DE_TRAITE:
 				return new SalleDeTraite(0, 0, null, map);
 			case GARAGE:
-				return new Garage(0, 0, 0, null, map);
+				return new Garage(0, 0, null, map);
 			case GRANGE:
-				return new Grange(0, 0, 0, null, map);
+				return new Grange(0, 0, null, map);
 			default:
 				return null;
 		}

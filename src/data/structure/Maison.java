@@ -12,15 +12,15 @@ import process.action.visitor.place.PlaceVisitor;
 public class Maison extends Refuge<Personne>{
 	
 	private final static float PRIX_ACHAT = 5000 ;
+
 	public Maison(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, PRIX_ACHAT , reference , map );
-		
+		super(ligne_init, colonne_init, reference , map );
 			setImage("src"+File.separator+"ressources"+File.separator+"minimaison.png");
-		
 	}
 	
+	
 	@Override
-	public ArrayList<ActionnableKey> getActionnableKey(){
+	public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){
 		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
 		actionnableKeys.add(ActionnableKey.STRUCTURE);
 		actionnableKeys.add(ActionnableKey.MAISON);
@@ -40,5 +40,13 @@ public class Maison extends Refuge<Personne>{
 	public Structures getKey() {
 		return Structures.MAISON;
 	}
+
+	@Override
+	public ActionnableKey getSpecificActionnableKey() {
+		return ActionnableKey.MAISON;
+	}
+
+
+
 	
 }

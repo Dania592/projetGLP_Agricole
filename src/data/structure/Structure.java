@@ -12,8 +12,8 @@ import gui.gestionnaire.keys.Structures;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public  abstract class Structure extends Element implements Buyable,Stockage, Fixable,Serializable{
-
+public  abstract class Structure extends Element implements Buyable,Stockage, Fixable, Serializable{
+	private boolean usedForAnAction = false;
 	private static final long serialVersionUID = 1L;
 	
 	private float prixAchat ;
@@ -28,9 +28,9 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 
 	private final static int  NB_CASE = 16;
 	
-	public Structure( int ligne_init, int colonne_init, float prixAchat , String reference , Map map  ) {
+	public Structure( int ligne_init, int colonne_init, String reference , Map map  ) {
 		super(reference ,false,NB_CASE, ligne_init, colonne_init , map);
-		this.prixAchat = prixAchat;
+		this.prixAchat = getKey().getPrixAchat();
 		state = FixableState.USABLE;
 		charges = new Charge[2];
 	}
@@ -66,12 +66,8 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 		return null;
 	}
 
-	public boolean isNeedToBeFixed(){
-		return state == FixableState.DAMAGED;
-	}
 
-
-	public ArrayList<ActionnableKey> getActionnableKey() {
+	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {
 		ArrayList<ActionnableKey> actionnableKeys = new ArrayList<>();
 		actionnableKeys.add(ActionnableKey.STRUCTURE);
 		return actionnableKeys;
@@ -84,7 +80,22 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 	public GestionnaireKey getGestionnaireKey() {
 		return GestionnaireKey.STRUCTURES;
 	}
+
+	public boolean isNeedToBeFixed(){
+		return state == FixableState.DAMAGED;
+	}
+
+
+	@Override
+	public boolean isCurrentlyUsedForAnotherTask() {
+		return usedForAnAction;
+	}
 	
+	@Override
+	public void setStructureStatus(boolean isCurrentlyUsedForAnotherTask) {
+		usedForAnAction = isCurrentlyUsedForAnotherTask;
+	}
+
 	public abstract Structures getKey();
 
 }

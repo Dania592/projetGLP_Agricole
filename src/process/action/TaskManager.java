@@ -6,6 +6,7 @@ import java.util.Iterator;
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
 import process.action.exception.NotImplementYetException;
@@ -14,13 +15,13 @@ import process.action.exception.structure.TaskNotNeededToBePerform;
 import process.action.task.Task;
 import process.time.TimeManager;
 
-public class TaskManager extends Thread {
+public class TaskManager{
     private ArrayList<Task<?>> taskToBeLaunched = new ArrayList<>();
     private ArrayList<Task<?>> inProcess = new ArrayList<>();
     private ArrayList<Task<?>> taskCompleted = new ArrayList<>();
     private int currentHour;
     private static TaskFactory taskFactory = TaskFactory.getInstance();
-    private TimeManager timeManager ;
+    private TimeManager timeManager = TimeManager.getInstance();
     
     private static TaskManager taskManager = new TaskManager();
     
@@ -37,12 +38,12 @@ public class TaskManager extends Thread {
     }
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
-            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform {
+            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException {
         Task<?> generatedTask = taskFactory.newTask(activity, actionnable);
         taskToBeLaunched.add(generatedTask);
     }
 
-    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform{
+    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException{
         addNewTask(currentHour,activity, actionnable);
     }
 
@@ -75,20 +76,18 @@ public class TaskManager extends Thread {
         return false;
     }
 
-    public void run(){
-        while(true){
-            ProductionManager.getInstance().manageProduction();
-            if(hourHaveChanged()){
-                currentHour = timeManager.getClock().getHour().getValue();
-            }
-            addToTaskToinProcess();
-            processingTaskInProgess();
-            removeCompletedTask();
-            try {
-                Thread.sleep(GameConfiguration.GAME_SPEED);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public void managingTask(){
+        ProductionManager.getInstance().manageProduction();
+        if(hourHaveChanged()){
+            currentHour = timeManager.getClock().getHour().getValue();
+        }
+        addToTaskToinProcess();
+        processingTaskInProgess();
+        removeCompletedTask();
+        try {
+            Thread.sleep(GameConfiguration.GAME_SPEED);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -119,7 +118,7 @@ public class TaskManager extends Thread {
     }
 
     public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable){
-        ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getActionnableKey());
+        ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
         ArrayList<Task<?>> possibleTaskToPerform= new ArrayList<>();
         Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
         Task<?> task;

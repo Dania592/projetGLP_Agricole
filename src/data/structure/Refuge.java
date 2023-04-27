@@ -2,7 +2,6 @@ package data.structure;
 
 import java.util.ArrayList;
 
-import data.espece.faune.Animal;
 import data.map.Map;
 
 public abstract class Refuge<T> extends Structure {
@@ -14,6 +13,8 @@ public abstract class Refuge<T> extends Structure {
 		MAX_CAPACITE_POULAILLER(30),
 		MAX_CAPACITE_MAISON(40),
 		MAX_CAPACITE_ETABLE(40),
+		MAX_CAPACITE_BERGERIE_MOUTON(40),
+		MAX_CAPACITE_BERGERIE_CHEVRE(40),
 		;
 		int capacity;
 		
@@ -26,8 +27,8 @@ public abstract class Refuge<T> extends Structure {
 		}
 	}
 
-	public Refuge(int ligne_init, int colonne_init, float prixAchat, String reference, Map map) {
-		super(ligne_init, colonne_init, prixAchat, reference, map);
+	public Refuge(int ligne_init, int colonne_init, String reference, Map map) {
+		super(ligne_init, colonne_init, reference, map);
 		this.inHabitant = new ArrayList<>();
 		currentNumberOfInhabitant = 0;
 	}
@@ -37,10 +38,10 @@ public abstract class Refuge<T> extends Structure {
 	}
 
 	public void addInHabitant(T animal) {
-		if(ableToAcceptInhabitant()){
-			inHabitant.add(animal);
-			currentNumberOfInhabitant++;
-		}
+		// if(ableToAcceptInhabitant()){
+		// 	currentNumberOfInhabitant++;
+		// }
+		inHabitant.add(animal);
 	}
 
 	public void removeAnimal(T animal) {
@@ -49,7 +50,7 @@ public abstract class Refuge<T> extends Structure {
 	}
 
 	public ArrayList<ActionnableKey> getActionnableKey() {
-		ArrayList<ActionnableKey> actionnableKeys = super.getActionnableKey();
+		ArrayList<ActionnableKey> actionnableKeys = super.getASetOfAllActionnableKey();
 		actionnableKeys.add(ActionnableKey.REFUGE);
 		return actionnableKeys;
 	}

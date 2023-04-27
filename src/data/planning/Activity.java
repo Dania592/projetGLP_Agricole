@@ -9,7 +9,7 @@ import data.structure.hability.Actionnable.ActionnableKey;
 public enum Activity  implements Serializable{
     // ---------------------- ABATOIRE ---------------------- //
     COLLECT_MEAT(2, "Récupérer la viande", Type.GET_PRODUCTION, ActionnableKey.ABATOIRE, 2),
-    SLAUGHTER(4, "Abattre", Type.SPECIAL, ActionnableKey.ABATOIRE, 30),
+    SLAUGHTER(1, "Abattre", Type.SPECIAL, ActionnableKey.ABATOIRE, 30),
     // ------------------------------------------------------------------- //
 
 
@@ -32,20 +32,28 @@ public enum Activity  implements Serializable{
     // ---------------------- MAISON ---------------------- //
     TO_REST(1, "Repos", Type.CARE, ActionnableKey.MAISON, 30),
     // ------------------------------------------------------------------- //
-
-
+    
+    
     // ---------------------- ENCLOS ---------------------- //
     FIX_ENCLOSURE(2, "Réparer", Type.FIX, ActionnableKey.ENCLOS, 1),
     SEND_BACK_HOME_ANIMALS(3, "Rentrer les animaux", Type.GO_BACK_HOME, ActionnableKey.ENCLOS, 10),
     FEED_ANIMAL_FROM_ENCLOSURE(1, "Nourrir", Type.FEED, ActionnableKey.ENCLOS, 5),
-    COLLECT_EGG_FROM_ENCLOSURE(1, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 2),
-    GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 1),
+    COLLECT_EGG_FROM_ENCLOSURE(3, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 20),
+    GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GIVE_WATER, ActionnableKey.ENCLOS, 1),
+    TRANSFERT_TO_PRODUCTION_ROOM(1, "Remplir l'abreuvoir", Type.SENT_SPECIAL_ACTION, ActionnableKey.ENCLOS, 1),
+    SHAVE_SHEEP(3, "Tondre Mouton", Type.SPECIAL, ActionnableKey.ENCLOS, 300),
     // ------------------------------------------------------------------- //
     
     
     // ---------------------- ENTREPOT ---------------------- //
     // ------------------------------------------------------------------- //
     
+    // ---------------------- PUIT ---------------------- //
+    DRAW_WATER(2, "Puiser", Type.SPECIAL, ActionnableKey.PUIT, 2),
+    COLLECT_WATER(2, "Récupere Eau", Type.GET_PRODUCTION, ActionnableKey.PUIT, 2),
+    // ------------------------------------------------------------------- //
+
+
     
     // ---------------------- REFUGE ---------------------- //
     SEND_TO_ENCLOSURE(1, "Envoyer à l'enclos", Type.SEND_TO_ENCLOSURE, ActionnableKey.REFUGE, 5),
@@ -54,23 +62,21 @@ public enum Activity  implements Serializable{
     
     
     // ---------------------- STRUCTURE ---------------------- //
-    FIX_STRUCTURE(6, "Réparer", Type.FIX, ActionnableKey.STRUCTURE, 2),
+    FIX_STRUCTURE(2, "Réparer", Type.FIX, ActionnableKey.STRUCTURE, 2),
     // ------------------------------------------------------------------- //
     
     
     // ---------------------- TERRAIN ---------------------- //
-    DIG_OVER(2, "Labourer",Type.SPECIAL, ActionnableKey.TERRAIN, 45),
-    PLANT(3, "Planter", Type.SPECIAL, ActionnableKey.TERRAIN, 30),
-    TO_WATER(2, "Arroser", Type.FEED, ActionnableKey.TERRAIN, 5),
-    FERTILIZE_GROUND(2, "Mettre de l'engrais", Type.CARE, ActionnableKey.TERRAIN, 20),
-    HARVEST(4, "Récolter", Type.GET_PRODUCTION, ActionnableKey.TERRAIN, 20),
-    REMOVE_ROTTEN_PLANT(3, "Retirer plantes pourries", Type.FIX, ActionnableKey.TERRAIN, 10),
+    DIG_OVER(2, "Labourer",Type.SPECIAL, ActionnableKey.TERRAIN, 3),
+    PLANT(3, "Planter", Type.SPECIAL, ActionnableKey.TERRAIN, 3),
+    TO_WATER(2, "Arroser", Type.GIVE_WATER, ActionnableKey.TERRAIN, 2),
+    FERTILIZE_GROUND(2, "Mettre de l'engrais", Type.CARE, ActionnableKey.TERRAIN, 2),
+    HARVEST(3, "Récolter", Type.GET_PRODUCTION, ActionnableKey.TERRAIN, 2),
+    REMOVE_ROTTEN_PLANT(3, "Retirer plantes pourries", Type.SPECIAL, ActionnableKey.TERRAIN, 1),
     // ------------------------------------------------------------------- //
     
 
 
-    // COLLECT_WOOL(2, "Récupérer la laine", Type.GET_PRODUCTION, ActionnableKey.SALLE_DE_TONTE, 3),
-    // SEND_TO_SHEARING_ROOM(4, "Envoyer à la salle de tonte", Type.SENT_SPECIAL_ACTION, ActionnableKey.SHEEP_HOUSE, 4),
     
     ;
 
@@ -81,6 +87,7 @@ public enum Activity  implements Serializable{
         SENT_SPECIAL_ACTION,    
         GET_PRODUCTION,
         FEED,
+        GIVE_WATER,
         CARE,
         FIX,
         SPECIAL,
@@ -96,27 +103,27 @@ public enum Activity  implements Serializable{
     private String label;
     private Type type;
     private ActionnableKey target;
-    private int timeItTakesProduceAUnitInMinutes;
+    private int timeItTakes;
     
 
-    private Activity(int numberOfHourNeeded, String label, Type type, ActionnableKey target, int timeItTakesProduceAUnitInMinutes){
+    private Activity(int numberOfHourNeeded, String label, Type type, ActionnableKey target, int timeItTakes){
         this.numberOfHourIfPlanned = numberOfHourNeeded;
         this.label = label;
         this.type = type;
         this.target = target;
-        this.timeItTakesProduceAUnitInMinutes = timeItTakesProduceAUnitInMinutes;
+        this.timeItTakes = timeItTakes;
     }   
 
 
 
     public int getTimeItTakesProduceAUnitInMinutes() {
-        return timeItTakesProduceAUnitInMinutes;
+        return timeItTakes;
     }
 
 
 
     public int getDuration() {
-        return numberOfHourIfPlanned;
+        return timeItTakes;
     }
 
     public ActionnableKey getTarget() {
@@ -127,10 +134,6 @@ public enum Activity  implements Serializable{
         return label;
     }
 
-//    public String toString(){
-//        return getLabel();
-//    }
-
     public int getNumberOfHourIfPlanned() {
         return numberOfHourIfPlanned;
     }
@@ -140,7 +143,7 @@ public enum Activity  implements Serializable{
     }
 
     public int getNumberOfUnitDoneDuringRecommendedTime(){
-        return numberOfHourIfPlanned*60/timeItTakesProduceAUnitInMinutes;
+        return numberOfHourIfPlanned*60/timeItTakes;
     }
 
     public Activity getActivityAssociateToLabel(String label) throws UnknownActivityException{
@@ -155,7 +158,7 @@ public enum Activity  implements Serializable{
         return activities[indexActivity];
     }
 
-    public static ArrayList<Activity> getPossibleActivity(ArrayList<ActionnableKey> actionnableKeys){
+    public synchronized static ArrayList<Activity> getPossibleActivity(ArrayList<ActionnableKey> actionnableKeys){
         ArrayList<Activity> possibleActionsToPerform = new ArrayList<>();
         Activity[] possibleActivities = Activity.values();
         ActionnableKey currentActionnableKey;

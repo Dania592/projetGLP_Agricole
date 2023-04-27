@@ -6,15 +6,22 @@ import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.production.Lait;
+import data.production.Meat;
 import data.production.Produit;
+import data.production.Produits;
 import data.structure.Etable;
+import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
-import process.action.visitor.being.HaveNotProducedYetException;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 
 
-public class Chevre extends AnimalProducteur{
+public class Chevre extends AnimalProducteur implements MilkProduceur{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,6 +31,8 @@ public class Chevre extends AnimalProducteur{
 	private final static float POIDS = 40 ;
 	private final static int QUANTITE = 20 ;
 	private final static int SPEED_GROWTH = 1 ; 
+	private final static Lait lait = new Lait();
+	private final static Meat equivalentInMeat = new Meat();
 	
 	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
@@ -35,12 +44,12 @@ public class Chevre extends AnimalProducteur{
 	}
 
 	@Override
-	public Produit collectProduction() {
-		return new Lait(); 
+	public Produits collectProduction() {
+		return lait.getType(); 
 	}
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
 	}
 
@@ -52,5 +61,26 @@ public class Chevre extends AnimalProducteur{
 	public Animals getKey() {
 		return Animals.CHEVRE;
 	}
+
+	@Override
+	public boolean needSpecialPlaceToGetProduction() {
+		return true;
+	}
+
+	@Override
+	public Structures getHomeLabel() {
+		return Structures.BERGERIE_CHEVRE;
+	}
+
+	@Override
+	public Meat getEquivalentInMeat() {
+		return equivalentInMeat;
+	}
+
+	@Override
+	public boolean needSpecialActionToGetProduction() {
+		return true;
+	}
+
 	
 }
