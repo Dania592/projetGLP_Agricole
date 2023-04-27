@@ -95,7 +95,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		setFocusable(true);
 	}
 	
-	public synchronized void paintComponent(Graphics g) {
+	public  void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);

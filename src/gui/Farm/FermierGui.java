@@ -1,44 +1,48 @@
 package gui.Farm;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.io.File;
+import java.awt.Graphics;
+import java.util.Date;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import data.configuration.GameConfiguration;
+import data.acteur.Fermier;
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.WindowDispose;
+import process.game.GameBuilder;
 
 public class FermierGui extends JFrame {
+	private PanelFermier panelPrincipale ;
+	private Fermier fermier ;
+	private JFrame frame ; 
 	
-	
-	public FermierGui() {
+	public FermierGui(JFrame frame , Fermier fermier) {
 		super("Mon fermier");
+		 addWindowListener(new WindowDispose(this, frame));
+		 this.fermier = fermier;
 		init();
 	}
 	
 	public void init() {
 		Container contentPane = getContentPane();
-		contentPane.setLayout(null);
-		contentPane.setBackground(new Color(255, 231, 171));
-		
-		JLabel nom = new JLabel("fermier");
-		nom.setBounds(200, 200, 100, 50);
-		nom.setBackground(new Color(103, 148, 76));
-		//nom.setIcon(new ImageIcon(GameConfiguration.IMAGE_PATH+"fermier_gui"+File.separator+"label_vert.png"));
-		contentPane.add(nom);
-		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		contentPane.setLayout(new BorderLayout());
+		panelPrincipale = new PanelFermier(fermier , frame , this);
+		contentPane.add(panelPrincipale );
+	
+		setBackground(GeneralPaintStrategy.LIGHT_BROWN);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		pack();
 		setVisible(true);
-		setSize(500 , 500);
+		setSize(920 , 700);
 		setResizable(false);
+		setLocationRelativeTo(null);
 	}
+	
+	
 
 	public static void main(String[] args) {
-		new FermierGui();
+		new FermierGui(null , new Fermier("Saadi", 0, 0, new Date(), " ", GameBuilder.MapBuilder().getMap()));
 
 	}
 	

@@ -20,7 +20,7 @@ public abstract class GameConfiguration {
 	
 	public final static int NB_COLONNE = 60;
 	
-	public final static int GAME_SPEED = 30;
+	public final static int GAME_SPEED = 100;
 	
 	public final static int TIME_SPEED = 3 ;
 	

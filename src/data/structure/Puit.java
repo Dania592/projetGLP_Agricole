@@ -32,8 +32,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Productif
     public Puit(int ligne_init, int colonne_init,String reference , Map map ) {
 		super(ligne_init, colonne_init, reference , map);
 		production.put(Produits.WATER, GameConfiguration.START_WATER_LEVEL);
-		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Puit.png");
-		setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");	
+		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
     public Seau getSeau() {

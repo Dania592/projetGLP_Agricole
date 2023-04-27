@@ -98,10 +98,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				}
 
 				if(selected.getClass().getSimpleName().equals("Entrepot")) {
-					System.out.println("entrepot");
-					Game game = new Game();
-					game.acheter(dashboard.getFarm().getManager().getMapManager().getMap());
-					GestionnaireStocksGUI.achat = game.getAchat();
+					
 					new GestionnaireStocksGUI("Gestionnaire Stock ", MainGuiTest.this);
 					MainGuiTest.this.dispose();
 				}

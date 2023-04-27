@@ -252,13 +252,9 @@ public class Hud implements Serializable {
 							}
 							else {
 								if(e.getSource().equals(farmer)) {
-									ArrayList<Task<?>> taches = new ArrayList<>();
-									//taches.add("Arroser");
-									//taches.add("Nourrir");
-									int x = e.getX();
-									int y = e.getY();
-									actions = new ActionsPane(taches, x , y , Hud.this);
-									component.add(actions);
+									JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+									frame.dispose();
+									new FermierGui(frame , component.getFarm().getFermier());
 								}
 								
 							}

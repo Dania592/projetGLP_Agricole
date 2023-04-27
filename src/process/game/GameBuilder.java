@@ -37,7 +37,7 @@ public class GameBuilder {
 	public static Farm buildinFarm() {
 		
 		ElementManager elementManager = new ElementManager(MapBuilder());
-		Fermier farmer = new Fermier("pierre",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
+		Fermier farmer = new Fermier("Asalas",20,10,new Date(),"fermier",elementManager.getMapManager().getMap());
 		
 		Farm farm = new Farm( elementManager , farmer );
 		farm.reservePlaceToFarm();
