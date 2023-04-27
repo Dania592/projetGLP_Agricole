@@ -119,6 +119,8 @@ public class MarketGUI extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
+		System.out.println("***********************************");
+		
 	}
 
 	public JPanel getBillPanel() {
@@ -143,6 +145,7 @@ public class MarketGUI extends JFrame{
 		paintBill(700, 40, BILL_WIDTH, BILL_HEIGHT);
 		contentPane.add(billContainer);
 		
+		System.out.println("call to gestionnairePaintStrategy.paintGestionnaire");
 		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, "Market", achat, this);
 		contentPane.add(principalPanel);
 

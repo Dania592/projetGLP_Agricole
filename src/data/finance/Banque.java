@@ -9,7 +9,7 @@ public class Banque implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Compte compte = new Compte();
+	private Compte compte = Compte.getInstance();
 	private HashMap<String, Transaction> historique = new HashMap<>();
 	
 	private static Banque instance = new Banque();

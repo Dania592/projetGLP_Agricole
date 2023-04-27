@@ -9,11 +9,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class RoundedPanel extends JPanel
-{
-	/**
-	 * 
-	 */
+public class RoundedPanel extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	private Color backgroundColor;
 	private int cornerRadius = 15;
@@ -24,6 +21,7 @@ public class RoundedPanel extends JPanel
 		setOpaque(false);
 		cornerRadius = radius;
 		backgroundColor = color;
+		setOpaque(false);
 	}
 	
 	public RoundedPanel(LayoutManager layout, int radius) {
@@ -37,12 +35,14 @@ public class RoundedPanel extends JPanel
 		cornerRadius = radius;
 		setOpaque(false);
 		backgroundColor = bgColor;
+		setOpaque(false);
 	}
 
 	public RoundedPanel(int radius) {
 		super();
 		setOpaque(false);
 		cornerRadius = radius;
+		setOpaque(false);
 	}
 
 	public RoundedPanel(int radius, Color bgColor) {
@@ -50,6 +50,7 @@ public class RoundedPanel extends JPanel
 		setOpaque(false);
 		cornerRadius = radius;
 		backgroundColor = bgColor;
+		setOpaque(false);
 	}
 
 	@Override

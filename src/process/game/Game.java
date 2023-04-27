@@ -56,6 +56,9 @@ public class Game {
 		Animal vache4 = new Vache(0, 0, 0, null, null, null, "v2", map);
 		Animal vache5 = new Vache(0, 0, 0, null, null, null, "v2", map);
 		Animal vache6 = new Vache(0, 0, 0, null, null, null, "v2", map);
+		Animal vache7 = new Vache(0, 0, 0, null, null, null, "v2", map);
+		Animal vache8 = new Vache(0, 0, 0, null, null, null, "v2", map);
+		Animal vache9 = new Vache(0, 0, 0, null, null, null, "v2", map);
 		Animal mouton = new Mouton(0, 0, 0, null, null, null, "m11",map);
 		Animal mouton0 = new Mouton(0, 0, 0, null, null, null, "m11",map);
 		Animal mouton1 = new Mouton(0, 0, 0, null, null, null, "m11",map);
@@ -96,8 +99,12 @@ public class Game {
 		achat.addToCart(maison5.getKey());
 		achat.addToCart(maison6.getKey());
 		achat.addToCart(maison7.getKey());
+		
+		achat.addToCart(vache7.getKey());
+		achat.addToCart(vache8.getKey());
+		achat.addToCart(vache9.getKey());
 		//achat.addToCart(arbre.getKey());
-		 
+		
 		System.out.println("************************************************");
 		System.out.println(ressourcesManager);
 		System.out.println(achat.isValidated());

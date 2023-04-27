@@ -45,9 +45,11 @@ public class GeneralPaintStrategy {
 
 	private ArrayList<Container> containers = new ArrayList<>();
 	private HashMap<String, JPanel> toBuy = new HashMap<>();
+	private int counter = 0;
 	
 	//ok
 	public JPanel paintNormalPanel(int x, int y, int w, int h, Color color) {
+		System.out.println("Normal Pane");
 		JPanel panel = new JPanel();
 		panel.setBounds(x,y,w,h);
 		panel.setBackground(color);
@@ -57,6 +59,7 @@ public class GeneralPaintStrategy {
 	
 	//ok
 	public JLayeredPane paintLayeredPane(int x, int y, int w, int h, LayoutManager layout) {
+		System.out.println("Layered Pane");
 		JLayeredPane jLayeredPane = new JLayeredPane();
 		jLayeredPane.setBounds(x, y, w, h);
 		jLayeredPane.setLayout(layout);
@@ -113,11 +116,15 @@ public class GeneralPaintStrategy {
 		if (type.equals("Manager")) {
 			cardCount = key.getElements().size();
 		} else {
+			System.out.println("inside paintCardsContainer");
 			cardCount = key.getArticles().size();
+			System.out.println("card count getArticles: " + cardCount);
 		}
+		counter = cardCount - 1;
 		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
 		JPanel innerContainer = paintNormalPanel(x, y, w, h, null);
 		if (cardCount > 0 ) {
+			System.out.println("card count sup a 0");
 			if(cardCount <= (rowCount * columnCount)) {
 				innerContainer = fillCardContainer(innerContainer, cardCount, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market);
 				cardContainer.add(innerContainer);
@@ -174,6 +181,7 @@ public class GeneralPaintStrategy {
 						posY += gap + cardHeight;
 					}	
 				}
+				counter--;
 			}
 		}
 		return innerContainer;			
@@ -305,9 +313,8 @@ public class GeneralPaintStrategy {
 	}
 	
 	public JPanel paintMarketCard(int posX, int posY, int width, int height, int gap,GestionnaireKey key, ArrayList<Keys> elements, Color color, Achat achat, MarketGUI market) {
-		Keys element = elements.get(0);
+		Keys element = elements.get(counter);
 		String[] infos = getArticleInformation(element, key,achat);
-		elements.remove(0);
 		String imagePath = infos[1];
 		JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
 		
@@ -408,11 +415,13 @@ public class GeneralPaintStrategy {
 		
 		tabbedPane = paintTabs(tabbedPane, toBuy);
 				
+		System.out.println("call to paintCardsContainer plants");
 		JLayeredPane plantsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
 				cardLayout, radius, cardColor, GestionnaireKey.SEEDS, gap, type, achat, market);
 		plantsPanel.add(plantsCards);
 		containers.add(plantsCards);
 		
+		System.out.println("call to paintCardsContainer animals");
 		JLayeredPane animalsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
 				cardLayout, radius, cardColor, GestionnaireKey.ANIMALS, gap, type, achat, market);
 		animalsPanel.add(animalsCards);

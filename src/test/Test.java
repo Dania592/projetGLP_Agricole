@@ -1,7 +1,6 @@
 package test;
 
 import data.stucture_base.Farm;
-import gui.Farm.MainGuiTest;
 import process.game.GameBuilder;
 import process.game.Jeu;
 

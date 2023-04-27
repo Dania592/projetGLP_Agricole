@@ -44,7 +44,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		
 		selected= farm.getManager().getMapManager().get("fermier");	
 
-		dashboard = new Board(farm, selected , taskManager);
+		dashboard = new Board(farm, selected , taskManager, this);
 
 		contentPane.add(dashboard);
 
@@ -66,9 +66,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 			dashboard.repaint();
-
 		}
 	}
 
@@ -93,15 +91,12 @@ public class MainGuiTest  extends JFrame implements Runnable{
 					dashboard.getHud().add_Actions(x, y , tasks);					
 				}
 			}
-			
-
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			x = e.getX() ;
-			y = e.getY() ;
-			
+			y = e.getY() ;	
 		}
 
 		@Override
@@ -109,23 +104,14 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			int dx = e.getX() ;
 			int dy = e.getY() ;
 			farm.getManager().getMapManager().movingMap(dx - x, dy - y );
-
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			
-
-		}
+		public void mouseExited(MouseEvent e) {}
 
 	}
-
-
-
 
 }

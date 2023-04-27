@@ -17,6 +17,8 @@ import process.action.task.Task;
 
 public class TachePane extends JPanel{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Task task ;
 	private Hud hud ;
 	

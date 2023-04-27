@@ -43,7 +43,7 @@ public class Board  extends JLayeredPane implements Serializable{
 
 	
  	
-	public Board(Farm farm  , Element selected , TaskManager taskManager ) {
+	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
 		this.farm = farm;
 		this.selected=selected;
 		this.taskManager = taskManager ;

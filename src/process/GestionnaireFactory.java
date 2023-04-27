@@ -12,6 +12,8 @@ import data.materiel.Outil;
 import data.structure.Abatoire;
 import data.structure.Entrepot;
 import data.structure.Etable;
+import data.structure.Garage;
+import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.SalleDeTraite;
@@ -58,9 +60,9 @@ public class GestionnaireFactory {
 			case SALLE_DE_TRAITE:
 				return new SalleDeTraite(0, 0, null, map);
 			case GARAGE:
-				return null;
+				return new Garage(0, 0, 0, null, map);
 			case GRANGE:
-				return null;
+				return new Grange(0, 0, 0, null, map);
 			default:
 				return null;
 		}

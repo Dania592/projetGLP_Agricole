@@ -34,16 +34,15 @@ public class Hud implements Serializable {
 	private JLabel adding = new JLabel();
 	private JLabel home = new JLabel();
 	
-	private JLabel validate ;
-	private JLabel cancel ;
-	private JLabel farmer ; 
-	private JLabel save ;
-	private JLabel message ;
-	private JLabel statistique ;
+	private JLabel validate;
+	private JLabel cancel;
+	private JLabel farmer; 
+	private JLabel save;
+	private JLabel message;
+	private JLabel statistique;
 	private ChoixPanel choixScroll;
 	private ActionsPane actions;
-	private MarketGUI market ;
-	private MessageriePanel messagerie ; 
+	private MessageriePanel messagerie; 
 	
 		
 	private JLabel time = new JLabel();
