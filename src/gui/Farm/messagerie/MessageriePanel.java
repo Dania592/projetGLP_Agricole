@@ -89,19 +89,20 @@ public class MessageriePanel extends RoundedPanel {
 		RoundedPanel liste = new RoundedPanel(null , 20 ,GeneralPaintStrategy.MEDIUM_BROWN );
 				
 		for(Message message : messagerie.getMessages()) {
-			if(indexCard==2) {
+			if(indexCard==3) {
 				indexCard = 0;
 				panel.add(liste);
 				liste =  new RoundedPanel(null , 20 ,GeneralPaintStrategy.MEDIUM_BROWN );
 				y = 50 ; 
 			}
 			MessagePane pane = new MessagePane(message , hud);
-			pane.setBounds(x , y , 170 , 80);
+			pane.setBounds(x , y , 170 , 50);
 			liste.add(pane);
+			
 			if(i== messagerie.getMessages().size()) {
 				panel.add(liste);
 			}
-			y+=pane.getHeight()+20;
+			y+=pane.getHeight()+15;
 			indexCard++;
 			i++;
 		}
