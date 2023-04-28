@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import data.espece.Produceur;
 import data.espece.WaterConsumer;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
@@ -61,7 +62,12 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private Graine type;
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	private EtatSante etatSante = EtatSante.BONNE_SANTE;
-	private CyclicCounter hydrationCounter = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde()/3);
+	private CyclicCounter hydrationCounter = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde()/3); 
+	private CyclicCounter timeBeforeProductionExpires = new CyclicCounter(hydrationCounter.getMax()*4); 
+
+	public CyclicCounter getTimeBeforeProductionExpires() {
+		return timeBeforeProductionExpires;
+	}
 
 	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
@@ -137,17 +143,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	public <T> T accept(GestionVisitor<T> visitor) {
 		visitor.visit(this);
 		return null;
-	}
-
-	
-
-	@Override
-	public String toString() {
-		return "Terrain [isUsedForATask=" + isUsedForATask + ", productifState=" + productifState + ", production="
-				+ production + ", hydrationLevel=" + hydrationLevel + ", produceurType=" + produceurType
-				+ ", timeItTakesToProduce=" + timeItTakesToProduce.getTimeInSeconde() + ", productifCycle=" + productifCycle.getValue()
-				+ ", fixableState=" + fixableState + ", evolution=" + evolution + ", type=" + type + ", etatSante="
-				+ etatSante + ", CycleHydration = " +hydrationCounter+"]";
 	}
 
 	public CyclicCounter getHydrationCounter() {
@@ -299,7 +294,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		if(activity == Activity.DIG_OVER){
 			return evolution == EvolutionTerrain.VIERGE;
 		}else if(activity == Activity.PLANT){
-			return evolution == EvolutionTerrain.LABOURE;
+			return evolution == EvolutionTerrain.LABOURE && hydrationLevel == HydrationLevel.FULLY_HYDRATED;
 		}else if(activity == Activity.REMOVE_ROTTEN_PLANT){
 			return evolution == EvolutionTerrain.POURRI;
 		}throw new UnknownActivityException(activity);
@@ -323,6 +318,20 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	@Override
 	public int getProcuedQuantity() {
 		return DEFAULT_PRODUCED_QUANTITY;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+		return visitor.action(this, activity);
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException {
+		return visitor.action(this, activity, graine);
 	}
 
 

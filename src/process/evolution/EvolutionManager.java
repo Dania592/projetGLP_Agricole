@@ -25,7 +25,6 @@ import data.time.CyclicCounter;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.ProduceVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
@@ -79,7 +78,14 @@ public class EvolutionManager implements Serializable {
 	private void manageEvolutionTerrain(Terrain terrain){
 		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!=EvolutionTerrain.POURRI ){
 			CyclicCounter hydrationCounter = terrain.getHydrationCounter();
-			hydrationCounter.increment();
+			if(!(terrain.haveProduced())){
+				hydrationCounter.increment();
+			}else{
+				terrain.getTimeBeforeProductionExpires().increment();
+				if(terrain.getTimeBeforeProductionExpires().getValue() == 0){
+					terrain.setEvolution(EvolutionTerrain.POURRI);
+				}
+			}
 			if(hydrationCounter.getValue() == 0){
 				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
 			}if(terrain.getProductifState() == ProductifState.PRODUCING){
@@ -94,13 +100,12 @@ public class EvolutionManager implements Serializable {
 			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
 				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
 				terrain.setEtatSante(EtatSante.MALADE);
-			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED){
+			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED && !(terrain.isCurrentlyUsedForAnotherTask())){
 				terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
 				terrain.getProduction().clear();
 				terrain.setEvolution(EvolutionTerrain.POURRI ); //TODO decommenter
 			}
 		}
-		System.out.println(terrain);
 	}
 
 	private void manageFoodLevelInEnclosure(Enclos enclos){

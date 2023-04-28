@@ -57,7 +57,7 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	}
 
 	public boolean haveProduced(){
-		return productifState == ProductifState.HAVE_PRODUCE;
+		return productifState == ProductifState.IN_WAIT;
 	}
 	
 	public void setProductifState(ProductifState productifState) {

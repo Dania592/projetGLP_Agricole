@@ -107,7 +107,7 @@ public abstract class Task<T extends Actionnable> {
         return actionnableTarget;
     }
 
-    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
+    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     protected abstract void performSpecialActionToInitTask();
     protected abstract void performSpecialActionToTerminateTask();
 
@@ -128,6 +128,9 @@ public abstract class Task<T extends Actionnable> {
         | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException temp) {
                 temp.printStackTrace();
             } catch (UnableToMakeTheTransfertException e) {
+                e.printStackTrace();
+            } catch (UnableToGenerateNewTaskException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             getActionnableTarget().setStructureStatus(false);

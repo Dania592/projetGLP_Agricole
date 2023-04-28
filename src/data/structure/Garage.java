@@ -3,10 +3,16 @@ package data.structure;
 import java.util.ArrayList;
 
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class Garage extends Structure{
@@ -37,5 +43,14 @@ public class Garage extends Structure{
 	public ActionnableKey getSpecificActionnableKey() {
 		return ActionnableKey.GARAGE;
 	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+		return visitor.action(this, activity); 
+			}
 
 }

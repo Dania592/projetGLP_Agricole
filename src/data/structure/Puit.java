@@ -6,12 +6,14 @@ import java.util.HashMap;
 
 import data.configuration.GameConfiguration;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Fixable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
+import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -116,6 +118,20 @@ public class Puit extends Structure implements SpecialActionPerformer, Productif
     @Override
     public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
         return canLaunchProduction();
+    }
+
+    @Override
+    public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+            BeingCannotPerformSuchActionException, NotImplementYetException,
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+            UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+        return visitor.action(this, activity);
+    }
+
+    @Override
+    public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) {
+		throw new UnsupportedOperationException("Utilisé seulement par les terrains");
     }
     
 

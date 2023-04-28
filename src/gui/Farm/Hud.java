@@ -24,6 +24,7 @@ import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.MarketGUI;
 import process.action.task.Task;
 import process.game.SaveFarm;
+import process.time.TimeManager;
 
 public class Hud implements Serializable {
 
@@ -169,9 +170,9 @@ public class Hud implements Serializable {
 		Clock clock = component.getFarm().getClock();
 		CyclicCounter hour = clock.getHour();
 		CyclicCounter minute = clock.getMinute();
-		CyclicCounter second = clock.getSecond();
+		// CyclicCounter second = clock.getSecond();
 		
-		time.setText(hour.toString()+" : "+minute.toString()+" : "+second.toString());
+		time.setText(hour.toString()+" : "+minute.toString()+""+TimeManager.getInstance().getDay()); //+" : "+second.toString());
 		
 	}
 	

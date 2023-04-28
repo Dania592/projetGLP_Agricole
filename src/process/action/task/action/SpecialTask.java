@@ -1,9 +1,12 @@
 package process.action.task.action;
 
 import data.acteur.Personne;
+import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.SpecialActionPerformer;
+import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -23,21 +26,33 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
     //     this.visitor = visitor;
     // }
 
+    private Graine graine;
     
     public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, SpecialActionVisitor visitor)
             throws UnableToGenerateNewTaskException {
+        this(activity, actionnableTarget, Graine.AMARANTH_SEED, visitor);
+    }
+
+    public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, Graine graine, SpecialActionVisitor visitor)
+    throws UnableToGenerateNewTaskException {
         super(activity, actionnableTarget);
         this.visitor = visitor;
+        this.graine = graine;
     }
+
 
 
     @Override
     protected void performAction()
             throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException,
             UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException,
-            ProblemOccursInProductionException, UnableToMakeTheTransfertException {
+            ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
                 try {
-                    getActionnableTarget().launchAction(visitor);
+                    if(getActivity() == Activity.PLANT){
+                        getActionnableTarget().launchAction(visitor, getActivity(), graine);
+                    }else{
+                        getActionnableTarget().launchAction(visitor);
+                    }
                 } catch (UnableToPerformSuchActionWithCurrentActionnable e) {
                     e.printStackTrace();
                 }
@@ -49,6 +64,9 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
 
     @Override
     protected void performSpecialActionToTerminateTask() {
+        if(getActivity()==Activity.DRAW_WATER){
+            System.out.println(GestionnaireStocks.getInstance());
+        }
     }
     
 }

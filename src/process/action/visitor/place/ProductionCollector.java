@@ -7,6 +7,8 @@ import java.util.Set;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
@@ -21,6 +23,7 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.ProductifPlace;
+import gui.gestionnaire.keys.Graine;
 import data.structure.hability.Actionnable.ActionnableKey;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -33,7 +36,6 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     public Void collectProduction(ProductifPlace productifPlace){
         if(haveProduced(productifPlace)){
             HashMap<Produits, Integer> production = productifPlace.getProduction();
-            System.out.println(production);
             Set<Produits> productionsKey = production.keySet(); 
             Produits currentProduct;
             Iterator<Produits> produitsIter = productionsKey.iterator();
@@ -42,7 +44,6 @@ public class ProductionCollector implements PlaceVisitor<Void> {
                 GestionnaireStocks.getInstance().add(currentProduct, production.get(currentProduct));
             } 
             productifPlace.getProduction().clear();
-            System.out.println(productifPlace.getProduction());
         }
         return null;
     }
@@ -63,6 +64,9 @@ public class ProductionCollector implements PlaceVisitor<Void> {
             return productionCounter != 0 ;
         }
     }
+
+  
+
 
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable,
@@ -111,6 +115,13 @@ public class ProductionCollector implements PlaceVisitor<Void> {
         return null;
     }
 
+    @Override
+    public Void action(Terrain terrain, Activity activity, Graine graine)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            UnableToGenerateNewTaskException {
+        return action(terrain); 
+    }
+
 
     @Override
     public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,
@@ -129,11 +140,9 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     @Override
     public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
         if(GestionnaireStocks.getInstance().getProduits().containsKey(Produits.WATER)){
-            System.out.println("Avant :"+GestionnaireStocks.getInstance().getProduits().get(Produits.WATER));
         }
         collectProduction(puit); 
         if(GestionnaireStocks.getInstance().getProduits().containsKey(Produits.WATER)){
-            System.out.println("Avant :"+GestionnaireStocks.getInstance().getProduits().get(Produits.WATER));
         }
         return null;
     }
@@ -147,5 +156,82 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
     }
+
+    @Override
+    public Void action(Etable etable, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException{
+        return action(etable);
+    }
+
+    @Override
+    public Void action(Poulallier poulallier, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException{
+        return action(poulallier);
+    }
+
+    @Override
+    public Void action(Enclos enclos, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+            BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException, NotImplementYetException {
+        return action(enclos);
+    }
+
+    @Override
+    public Void action(Abatoire abatoire, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
+            return action(abatoire);
+    }
+
+    @Override
+    public Void action(Maison maison, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(maison);
+    }
+
+    @Override
+    public Void action(SalleDeTraite salleDeTraite, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            HaveNotProducedYetException, BeingCannotPerformSuchActionException,
+            UnableToMakeTheTransfertException {
+        return action(salleDeTraite);
+    }
+
+    @Override
+    public Void action(Entrepot entrepot, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(entrepot);
+    }
+
+    @Override
+    public Void action(Terrain terrain, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+        return action(terrain);
+    }
+
+    @Override
+    public Void action(BergerieChevre bergerieChevre, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            UnableToMakeTheTransfertException {
+            return action(bergerieChevre);
+    }
+
+    @Override
+    public Void action(BergerieMouton bergerieMouton, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            UnableToMakeTheTransfertException {
+        return action(bergerieMouton);
+    }
+
+    @Override
+    public Void action(Puit puit, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(puit);
+    }
+
+    @Override
+    public Void action(Garage garage, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(garage);
+    }
+
+    @Override
+    public Void action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(grange);
+    }
+
     
 }
