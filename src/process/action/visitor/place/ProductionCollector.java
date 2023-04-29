@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import data.espece.Produceur.ProductifState;
+import data.espece.Produceur.Type;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
@@ -111,6 +113,10 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     public Void action(Terrain terrain)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
         collectProduction(terrain);
+        if(terrain.getProduceurType()!= Type.AVERAGE_PRODUCEUR && terrain.getProduceurType()!= Type.BAD_PRODUCEUR){
+            terrain.setProduceurType(Type.AVERAGE_PRODUCEUR);
+        }
+        terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
         terrain.setEvolution(EvolutionTerrain.VIERGE);
         return null;
     }

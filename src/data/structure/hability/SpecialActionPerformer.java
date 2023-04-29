@@ -9,7 +9,5 @@ import process.action.exception.structure.UnableToPerformSuchActionWithCurrentAc
 import process.action.visitor.place.PlaceVisitor;
 
 public interface SpecialActionPerformer extends Actionnable{
-    boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException;
     <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException;
-
 }

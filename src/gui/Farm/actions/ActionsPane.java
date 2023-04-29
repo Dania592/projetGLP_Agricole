@@ -35,7 +35,6 @@ public class ActionsPane extends JLayeredPane {
 		for(Task<?> tache : taches ) {
 			TachePane pane = new TachePane(tache , hud );
 			add(pane);
-		}
-		
+		}	
 	}
 }

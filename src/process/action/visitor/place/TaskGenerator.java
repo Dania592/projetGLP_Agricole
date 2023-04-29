@@ -2,11 +2,16 @@ package process.action.visitor.place;
 
 
 import process.action.task.Task;
+import process.action.task.action.CareTask;
 import process.action.task.action.CollectTask;
 import process.action.task.action.FeedingTask;
 import process.action.task.action.FixTask;
 import process.action.task.action.GiveWaterTask;
 import process.action.task.action.SpecialTask;
+import process.action.task.action.transfert.SendBackHomeTask;
+import process.action.task.action.transfert.SendToEnclosureTask;
+import process.action.task.action.transfert.SendToProductifPlaceTask;
+import process.action.task.action.transfert.SendToSlaugtherHouseTask;
 import data.structure.Garage;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import data.espece.faune.Chevre;
@@ -59,6 +64,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
     private static HomeSenderVisitor homeSender = new HomeSenderVisitor();
     private static SendToSlaughterHouseVisitor slaughterHouseSender = new SendToSlaughterHouseVisitor();
     private static SpecialActionVisitor specialTaskVisitor = new SpecialActionVisitor();
+    private static CareVisitor careVisitor = new CareVisitor();
     private static ConditionTester conditionTester = new ConditionTester();
 
     @Override
@@ -151,9 +157,11 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     case FIX_STRUCTURE:
                         return new FixTask(activity, etable, fixer);
                     case SEND_TO_ENCLOSURE:
+                        return new SendToEnclosureTask(activity, etable, enclosureSender); 
                     case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
+                        return new SendToSlaugtherHouseTask(activity, etable, slaughterHouseSender);
                     case SEND_TO_MILKING_PARLOUR:
-                        throw new NotImplementYetException(activity);
+                        return new SendToProductifPlaceTask(activity, etable, placeSender);
                     default:            
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, etable);
                 }
@@ -167,11 +175,13 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             if(conditionTester.action(poulallier, activity)){
                 switch(activity){
                     case FIX_STRUCTURE:
-                        return new CollectTask(activity, poulallier, collector);
+                        return new FixTask(activity, poulallier, fixer);
                     case COLLECT_EGG:
+                        return new CollectTask(activity, poulallier, collector);
                     case SEND_TO_ENCLOSURE:
+                        return new SendToEnclosureTask(activity, poulallier, enclosureSender);
                     case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
-                        throw new NotImplementYetException(activity);
+                        return new SendToSlaugtherHouseTask(activity, poulallier, slaughterHouseSender);
                     default:            
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, poulallier);
                 }
@@ -195,8 +205,9 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             case SHAVE_SHEEP : 
                 return new SpecialTask(activity, enclos, specialTaskVisitor);
             case SEND_BACK_HOME_ANIMALS : 
+                return new SendBackHomeTask(activity, enclos, homeSender);
             case TRANSFERT_TO_PRODUCTION_ROOM : 
-                throw new NotImplementYetException(activity);
+                return new SendToProductifPlaceTask(activity, enclos, placeSender);
             default:            
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, enclos);
             }
@@ -213,7 +224,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             case COLLECT_MEAT:
                 return new CollectTask(activity, abatoire, collector); 
             case SLAUGHTER:
-                return new SpecialTask(activity, null, specialTaskVisitor);
+                return new SpecialTask(activity, abatoire, specialTaskVisitor);
             default:            
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, abatoire);
             }
@@ -240,13 +251,13 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             if(conditionTester.action(salleDeTraite, activity)){
                 switch(activity){
                 case FIX_STRUCTURE:
-                return new FixTask(activity, salleDeTraite, fixer);
+                    return new FixTask(activity, salleDeTraite, fixer);
                 case COLLECT_MILK:
                     return new CollectTask(activity, salleDeTraite, collector);
                 case MILK:
                     return new SpecialTask(activity, null, specialTaskVisitor);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return new SendToEnclosureTask(activity, salleDeTraite, enclosureSender);
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, salleDeTraite);
                 }
@@ -287,8 +298,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     case REMOVE_ROTTEN_PLANT:
                         return new SpecialTask(activity, terrain, specialTaskVisitor);
                     case FERTILIZE_GROUND:
-                        // return;
-                        throw new NotImplementYetException(activity);
+                        return new CareTask(activity, terrain, careVisitor);
                     default:
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, terrain);
                     }
@@ -304,7 +314,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                 case FIX_STRUCTURE:
                     return new FixTask(activity, bergerieChevre, fixer);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return new SendToEnclosureTask(activity, bergerieChevre, enclosureSender);
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieChevre);
             }
@@ -320,7 +330,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                 case FIX_STRUCTURE:
                     return new FixTask(activity, bergerieMouton, fixer);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return new SendToEnclosureTask(activity, bergerieMouton, enclosureSender);
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieMouton);
             }

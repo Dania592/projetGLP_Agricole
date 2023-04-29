@@ -96,14 +96,16 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				//System.out.println(element.getReference());
 				selected = element ;
 				dashboard.setSelected(element);
-				if(selected instanceof Actionnable) {
+				if(selected instanceof Actionnable && selected.isStatique()) {
 					Actionnable actionnable = (Actionnable)element;
-					ArrayList<Task<?>> tasks;
-					try {
-						tasks = taskManager.getPossibleTaskToPerform(actionnable);
-						dashboard.getHud().add_Actions(x, y , tasks);					
-					} catch (AskingToWorkAtIllegalHourException e1) {
-						Messagerie.getInstance().addMessage(new Message("Heures de travai légales \n"+DailyPlanner.FIRST_HOUR_OF_WORK+"  -  "+ DailyPlanner.LAST_HOUR_OF_WORK, TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
+					if(!(actionnable.isCurrentlyUsedForAnotherTask())){
+						ArrayList<Task<?>> tasks;
+						try {
+							tasks = taskManager.getPossibleTaskToPerform(actionnable);
+							dashboard.getHud().add_Actions(x, y , tasks);					
+						} catch (AskingToWorkAtIllegalHourException e1) {
+							Messagerie.getInstance().addMessage(new Message("Heures de travai légales \n"+DailyPlanner.FIRST_HOUR_OF_WORK+"  -  "+ DailyPlanner.LAST_HOUR_OF_WORK, TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
+						}
 					}
 				}
 

@@ -1,10 +1,9 @@
 package process.action.task.action;
 
-import data.gestion.GestionnaireStocks;
+import data.espece.Produceur;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.production.Produits;
-import data.structure.hability.Hydratable;
+import data.structure.hability.ProductifPlace;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -13,35 +12,30 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
-import process.action.visitor.place.HydrationVisitor;
+import process.action.visitor.place.CareVisitor;
 
-public class GiveWaterTask extends Task<Hydratable>{
-    HydrationVisitor visitor;
-
-    public GiveWaterTask(Activity activity, Hydratable actionnableTarget, HydrationVisitor visitor) throws UnableToGenerateNewTaskException {
+public class CareTask extends Task<ProductifPlace> {
+    private CareVisitor visitor;
+    
+    public CareTask(Activity activity, ProductifPlace actionnableTarget, CareVisitor careVisitor) throws UnableToGenerateNewTaskException {
         super(activity, actionnableTarget);
-        this.visitor = visitor;
+        visitor = careVisitor;
     }
-    // public GiveWaterTask(Activity activity, Hydratable actionnableTarget, HydrationVisitor visitor, Personne personne) throws UnableToGenerateNewTaskException {
-    //     super(activity, actionnableTarget, personne);
-    //     this.visitor = visitor;
-    // }
+    
     @Override
     protected void performAction()
             throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException,
             UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException,
-            ProblemOccursInProductionException, UnableToMakeTheTransfertException {
+            ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         getActionnableTarget().launchAction(visitor);
     }
 
     @Override
-    protected void performSpecialActionToInitTask(){}
-
-    @Override
-    protected void performSpecialActionToTerminateTask(){
-        Integer oldWaterQuantity =GestionnaireStocks.getInstance().getProduits().get(Produits.WATER); 
-        GestionnaireStocks.getInstance().getProduits().replace(Produits.WATER, oldWaterQuantity-1);
+    protected void performSpecialActionToInitTask() {
     }
 
+    @Override
+    protected void performSpecialActionToTerminateTask() {
+    }
     
 }

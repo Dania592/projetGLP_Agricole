@@ -20,8 +20,4 @@ public class CyclicCounter extends BoundedCounter {
 		}
 	}
 
-	public void reset(){
-		setValue(getMin());
-	}
-	
 }

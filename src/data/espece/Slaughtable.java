@@ -6,6 +6,5 @@ import gui.gestionnaire.keys.Animals;
 public interface Slaughtable extends Transportable{ 
     Animals getTypeOfAnimal();
     float getPoids();
-    Meat getEquivalentInMeat();
-    
+    Meat getEquivalentInMeat();    
 }

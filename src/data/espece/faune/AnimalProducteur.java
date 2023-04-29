@@ -10,12 +10,13 @@ import data.map.Map;
 import data.production.Produit;
 import data.production.Produits;
 import data.structure.Structure;
+import data.time.BoundedCounter;
 import data.time.CyclicCounter;
 import gui.gestionnaire.keys.Animals;
 
 
 
-public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
+public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,27 +26,30 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	private Produceur.Type produceurType;
 	private Produceur.TimeItTakes timeItTakesToProduce;
 	private Produit produit;
-	
-	public Produceur.TimeItTakes getTimeItTakesToProduce() {
-		return timeItTakesToProduce;
-	}
 
+	
+	
 	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
 			Structure habitat, int frequenceProduction, int quantiteProduction,
 			Produit produit , String reference , Map map ,int speedGrowth ) {
-		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
+				super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
 				sexe, habitat ,reference ,map , speedGrowth);
-		this.quantiteProduction = quantiteProduction;
-		this.produit = produit;
-		produceurType = Type.AVERAGE_PRODUCEUR; 
-		productifState = ProductifState.UNABLE_TO_PRODUCE;
-		productionCycle = new CyclicCounter(getTimeItTakesToProduceInSeconde());
+				this.quantiteProduction = quantiteProduction;
+				this.produit = produit;
+				produceurType = Type.AVERAGE_PRODUCEUR; 
+				productifState = ProductifState.UNABLE_TO_PRODUCE;
+				productionCycle = new CyclicCounter(getTimeItTakesToProduceInSeconde());
+				timeItTakesToProduce = getTimeItTakes();
 	}
 
 	@Override
 	public String toString() {
 		return "AnimalProducteur [quantiteProduction=" + quantiteProduction + ", productifState=" + productifState
-				+ ", productionCycle=" + productionCycle + ", produceurType=" + produceurType + "nom :"+getNom()+"]";
+		+ ", productionCycle=" + productionCycle + ", produceurType=" + produceurType + "nom :"+getNom()+"]";
+	}
+	
+	public Produceur.TimeItTakes getTimeItTakesToProduce() {
+		return timeItTakesToProduce;
 	}
 
 	public int getProcuedQuantity() {
@@ -54,10 +58,6 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 
 	public Produits collectProduction(){
 		return produit.getType();
-	}
-
-	public boolean haveProduced(){
-		return productifState == ProductifState.IN_WAIT;
 	}
 	
 	public void setProductifState(ProductifState productifState) {
@@ -87,7 +87,5 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	public Animals getTypeOfAnimal() {
 		return getKey();
 	}
-
-
 
 }

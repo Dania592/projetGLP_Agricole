@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.myExceptions.UnknownActivityException;
-import data.structure.Enclos;
 import data.structure.hability.Actionnable.ActionnableKey;
 
 public enum Activity  implements Serializable{
@@ -77,11 +76,9 @@ public enum Activity  implements Serializable{
     REMOVE_ROTTEN_PLANT(3, "Retirer plantes pourries", Type.SPECIAL, ActionnableKey.TERRAIN, 1),
     // ------------------------------------------------------------------- //
     
-
-
-    
     ;
 
+    
     public enum Type{
         SEND_TO_ENCLOSURE, 
         SEND_TO_SLAUGHTERHOUSE,

@@ -57,13 +57,13 @@ public class ProductionManager {
         }
     }
 
+    public boolean cointains(ProductifPlace productifPlace){
+        return productifList.contains(productifPlace);
+    }
+
 
     public void addToProductifList(ProductifPlace productifPlace){
         productifList.add(productifPlace);
-    }
-
-    public void addToProductifList(Enclos enclos){
-        productifList.add(enclos);
     }
 
     public void setToAbleProduceur(Produceur produceur){

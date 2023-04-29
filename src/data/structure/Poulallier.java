@@ -24,8 +24,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distributor<Poule>, SlaughterHouseSender{
-	private ArrayList<Slaughtable> animalToKill = new ArrayList<>(); 
+public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distributor<Poule>, SlaughterHouseSender<Poule>{
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	
 	
@@ -61,16 +60,6 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	}
 
 	@Override
-	public void addToSlaughter(Slaughtable slaughtable) {
-		animalToKill.add(slaughtable);
-		getInHabitant().remove(slaughtable);
-	}
-	@Override
-	public ArrayList<Slaughtable> getAnimalToSlaugther() {
-		return animalToKill;
-	}
-
-	@Override
 	public boolean readyToSend() {
 		return true;
 	}
@@ -83,11 +72,6 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	@Override
 	public void addSpecialSenderElement(Poule specialSenderElement) {
 		addInHabitant(specialSenderElement);
-	}
-
-	@Override
-	public boolean isReadyToSendToSlaughterHouse() {
-		return !animalToKill.isEmpty();
 	}
 
 	@Override
@@ -122,8 +106,22 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 			BeingCannotPerformSuchActionException, NotImplementYetException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
-		// TODO Auto-generated method stub
-		return null;
+		return visitor.action(this, activity);
+	}
+
+	@Override
+	public ArrayList<Poule> getAnimalToTransfert() {
+		return getInHabitant();
+	}
+
+	@Override
+	public ArrayList<Poule> getAnimalToSlaugther() {
+		return getInHabitant();
+	}
+
+	@Override
+	public void removeAll() {
+		getInHabitant().clear();
 	}
 
 

@@ -135,7 +135,6 @@ public abstract class Task<T extends Actionnable> {
             }
             getActionnableTarget().setStructureStatus(false);
             performSpecialActionToTerminateTask();
-            // personne.setFree(!isAutomated);
             throw new TaskCompleteException(this);
         }
     }

@@ -13,7 +13,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.transfert.ProductifPlaceSender;
 
-public class SendToProductifPlace extends Task<Distributor<?>> {
+public class SendToProductifPlaceTask extends Task<Distributor<?>> {
     ProductifPlaceSender visitor;
 
     // public SendToProductifPlace(Activity activity, Distributor<?> actionnableTarget, Personne personne)
@@ -21,7 +21,7 @@ public class SendToProductifPlace extends Task<Distributor<?>> {
     //     super(activity, actionnableTarget, personne);
     // }
 
-    public SendToProductifPlace(Activity activity, Distributor<?> actionnableTarget, ProductifPlaceSender productifSender)
+    public SendToProductifPlaceTask(Activity activity, Distributor<?> actionnableTarget, ProductifPlaceSender productifSender)
             throws UnableToGenerateNewTaskException {
         super(activity, actionnableTarget);
         visitor = productifSender;

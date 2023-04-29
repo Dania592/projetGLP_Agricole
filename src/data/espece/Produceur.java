@@ -1,7 +1,10 @@
 package data.espece;
 
+import data.flore.terrains.EvolutionTerrain;
+import data.flore.terrains.Terrain;
 import data.notion.Mortel.EtatSante;
 import data.production.Produits;
+import data.time.BoundedCounter;
 import data.time.CyclicCounter;
 
 
@@ -12,9 +15,7 @@ public interface Produceur extends DomesticSpecie{
         HAVE_PRODUCE,
         IN_WAIT_TO_BE_TRANSPORTED,
         IN_WAIT,
-        ;
-        //TODO A absoluement faire QUAND L'EVOLUTION PASSE EN MODE ADULTE il faut se la productivité
-        
+        ;        
     }
 
     public enum Type{
@@ -23,7 +24,6 @@ public interface Produceur extends DomesticSpecie{
         GOOD_PRODUCEUR(3),
         FAST_PRODUCEUR(6),
         DOPED_PRODUCEUR(10),
-
         ;
 
         private int numberOfProductPerProductifCycle;
@@ -33,8 +33,10 @@ public interface Produceur extends DomesticSpecie{
         }
 
         public int getNumberOfProductPerProductifCycle() {
+            System.out.println("COLLECT : "+numberOfProductPerProductifCycle);
             return numberOfProductPerProductifCycle;
         }
+
 
 
         public Type upgradeProduceurType(){
@@ -54,16 +56,16 @@ public interface Produceur extends DomesticSpecie{
 
         public Type downgradeProduceurType(){
             switch(this){
-                case BAD_PRODUCEUR : 
-                case AVERAGE_PRODUCEUR : 
-                default :
-                    return BAD_PRODUCEUR;
                 case GOOD_PRODUCEUR : 
                     return AVERAGE_PRODUCEUR;
                 case FAST_PRODUCEUR : 
                     return GOOD_PRODUCEUR;
                 case DOPED_PRODUCEUR: 
                     return FAST_PRODUCEUR;
+                case BAD_PRODUCEUR : 
+                case AVERAGE_PRODUCEUR : 
+                default :
+                    return BAD_PRODUCEUR;
             }
         }
         
@@ -74,9 +76,10 @@ public interface Produceur extends DomesticSpecie{
 		MOUTON(200, Type.AVERAGE_PRODUCEUR),
 		POULE(10, Type.AVERAGE_PRODUCEUR),
 		VACHE(50, Type.AVERAGE_PRODUCEUR),
-        TERRAIN(1000, Type.AVERAGE_PRODUCEUR),
+        TERRAIN(500, Type.AVERAGE_PRODUCEUR),
 
         ;
+    
         
 		private int timeInSeconde;
         private Type produceurType;
@@ -110,6 +113,6 @@ public interface Produceur extends DomesticSpecie{
     CyclicCounter getProductionCycle();
     EtatSante getEtatSante();
     int getProcuedQuantity();
-    
+    void setProduceurType(Type produceurType);
 
 }

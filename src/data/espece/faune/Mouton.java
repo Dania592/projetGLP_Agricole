@@ -46,7 +46,7 @@ public class Mouton extends AnimalProducteur{
 	
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException, NoNeedToSendToAProductifPlace {
 		return visitor.action(this); 
 	}
 
@@ -59,7 +59,6 @@ public class Mouton extends AnimalProducteur{
 	public Animals getKey() {
 		return Animals.MOUTON;
 	}
-
 
 	@Override
 	public boolean needSpecialPlaceToGetProduction() {
@@ -78,11 +77,29 @@ public class Mouton extends AnimalProducteur{
 		return equivalentInMeat;
 	}
 
+	public boolean haveProduced(){
+		return getProductifState() == ProductifState.IN_WAIT;
+	}
 
+	
 	@Override
+    public boolean haveToBeTranposted() throws NoNeedToSendToAProductifPlace {
+        return haveProduced();
+    }
+
+
+    @Override
 	public boolean needSpecialActionToGetProduction() {
 		return true;
 	}
+
+
+	@Override
+	public Structures getProductifPlaceLabel() throws NoNeedToSendToAProductifPlace {
+		throw new NoNeedToSendToAProductifPlace(this);
+	}
+
+	
 
 
 

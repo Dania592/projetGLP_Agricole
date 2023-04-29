@@ -116,11 +116,6 @@ public class Puit extends Structure implements SpecialActionPerformer, Productif
     }
 
     @Override
-    public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
-        return canLaunchProduction();
-    }
-
-    @Override
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
             BeingCannotPerformSuchActionException, NotImplementYetException,

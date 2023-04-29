@@ -37,6 +37,12 @@ public class BoundedCounter extends Counter {
 	public int getMin() {
 		return min;
 	}
+
+	
+	public void reset(){
+		setValue(getMin());
+	}
+	
 	
 
 }

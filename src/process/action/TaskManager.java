@@ -11,6 +11,7 @@ import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
+import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskCompleteException;
@@ -21,6 +22,7 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.ConditionTester;
 import process.action.visitor.place.TaskGenerator;
 import process.time.TimeManager;
 
@@ -32,7 +34,7 @@ public class TaskManager{
     // private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager = TimeManager.getInstance();
     private static TaskGenerator taskGenerator = new TaskGenerator();
-
+    private static ConditionTester conditionTester = new ConditionTester(); 
     private static TaskManager taskManager = new TaskManager();
     
     
@@ -142,6 +144,33 @@ public class TaskManager{
         }
         return possibleTaskToPerform;
     }
+
+
+    
+    // public ArrayList<Activity> getPossibleTaskToPerform(Actionnable actionnable) throws AskingToWorkAtIllegalHourException{
+    //     if(!isAnHourOfWork()){
+    //         throw new AskingToWorkAtIllegalHourException(currentHour);
+    //     }
+    //     ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
+    //     ArrayList<Activity> actualpossibleActivitiesToPerform= new ArrayList<>();
+    //     Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
+    //     Activity currentActivity;
+    //     Task<?> task;
+    //     while(activitiesIter.hasNext()){
+    //         try {
+    //                 currentActivity =  activitiesIter.next();
+    //                 if(actionnable.launchAction(conditionTester, currentActivity)){
+    //                     actualpossibleActivitiesToPerform.add(currentActivity);
+    //                 }
+    //             } catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
+    //                     | BeingCannotPerformSuchActionException | NotImplementYetException
+    //                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
+    //                     | UnableToMakeTheTransfertException | UnableToGenerateNewTaskException e) {
+    //             }
+    //     }
+    //     return actualpossibleActivitiesToPerform;
+    // }
+
 
 
 

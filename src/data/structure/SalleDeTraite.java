@@ -156,5 +156,10 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);
 	}
+
+	@Override
+	public ArrayList<MilkProduceur> getAnimalToTransfert() {
+		return getMilkProduceur();
+	}
 	
 }

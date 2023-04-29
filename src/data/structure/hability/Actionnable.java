@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.structure.hability.Fixable.FixableState;
 import data.stucture_base.Position;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -45,5 +46,6 @@ public interface Actionnable{
     public Position getPosition();
     boolean isNeedToBeFixed();
     boolean isStatique();
+    void setFixableState(FixableState fixableState);
 
 }   

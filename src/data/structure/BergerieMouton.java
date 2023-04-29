@@ -23,9 +23,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouton>, SlaughterHouseSender{
-    private ArrayList<Produit> production =new ArrayList<>();
-    private ArrayList<Slaughtable> moutonToSlaughter = new ArrayList<>();
+public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouton>, SlaughterHouseSender<Mouton>{
     private boolean isUsedForATask= false;
 
     public BergerieMouton(int ligne_init, int colonne_init , String reference , Map map ) {
@@ -52,17 +50,6 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     }
 
     @Override
-    public void addToSlaughter(Slaughtable slaughtable) {
-        moutonToSlaughter.add(slaughtable);
-        getInHabitant().remove(slaughtable);
-    }
-
-    @Override
-    public ArrayList<Slaughtable> getAnimalToSlaugther() {
-        return moutonToSlaughter;
-    }
-
-    @Override
     public boolean isEmpty() {
         return getInHabitant().isEmpty();
     }
@@ -80,11 +67,6 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     @Override
     public void addSpecialSenderElement(Mouton specialSenderElement) {
         addInHabitant(specialSenderElement);
-    }
-
-    @Override
-    public boolean isReadyToSendToSlaughterHouse() {
-        return !moutonToSlaughter.isEmpty();
     }
 
     @Override
@@ -122,6 +104,21 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     @Override
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException{
         return visitor.action(this, activity);
+    }
+
+    @Override
+    public ArrayList<Mouton> getAnimalToTransfert() {
+        return getInHabitant();
+    }
+
+    @Override
+    public ArrayList<Mouton> getAnimalToSlaugther() {
+        return getInHabitant();
+    }
+
+    @Override
+    public void removeAll() {
+        getInHabitant().clear();
     }
 
 
