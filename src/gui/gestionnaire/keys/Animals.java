@@ -5,16 +5,18 @@ import process.visitor.KeyVisitor;
 
 public enum Animals implements Keys{
 
-	VACHE(100),
-	MOUTON(70),
-	CHEVRE(70),
-	CHIEN(50),
-	POULE(20);
+	VACHE(100,150),
+	MOUTON(70,100),
+	CHEVRE(70,100),
+	CHIEN(50,70),
+	POULE(20,30);
 	
 	private float prixAchat;
+	private float prixVente;
 	
-	Animals(float prix){
+	Animals(float prix, float prixVente){
 		prixAchat = prix;
+		this.prixVente = prixVente;
 	}
 	
 	public float getPrixAchat() {
@@ -30,6 +32,11 @@ public enum Animals implements Keys{
 	@Override
 	public GestionnaireKey getGestionnaireKey() {
 		return GestionnaireKey.ANIMALS;
+	}
+
+	@Override
+	public float getPrixVente() {
+		return prixVente;
 	}
 	
 }

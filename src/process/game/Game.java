@@ -47,7 +47,7 @@ public class Game {
 	
 	public void acheter(Map map ) {
 		
-	
+		Banque.getInstance().getCompte().setSolde(10000);
 		//Animal vache3 = new Vache(0, 0, null, null, null, null, "v3");
 		Animal vache = new Vache(0, 0, 0, null, null, null, "v11" , map);
 		Animal vache1 = new Vache(0, 0, 0, null, null, null, "v2", map);
@@ -66,6 +66,16 @@ public class Game {
 		Animal mouton3 = new Mouton(0, 0, 0, null, null, null, "m11",map);
 		Animal mouton4 = new Mouton(0, 0, 0, null, null, null, "m11",map);
 		Terrain plante1 = new Terrain("p15", false, 0,0, map, Graine.TOMATO_SEED);
+		Terrain plante2 = new Terrain("p15", false, 0,0, map, Graine.AMARANTH_SEED);
+		Terrain plante3 = new Terrain("p15", false, 0,0, map, Graine.ARTICHOKE_SEED);
+		Terrain plante4 = new Terrain("p15", false, 0,0, map, Graine.BEET_SEED);
+		Terrain plante5 = new Terrain("p15", false, 0,0, map, Graine.BLUEBERRY_SEED);
+		Terrain plante6 = new Terrain("p15", false, 0,0, map, Graine.BOK_CHOY_SEED);
+		Terrain plante7 = new Terrain("p15", false, 0,0, map, Graine.BROCCOLI_SEED);
+		Terrain plante8 = new Terrain("p15", false, 0,0, map, Graine.BRUSSEL_SPROUTS_SEED);
+		Terrain plante9 = new Terrain("p15", false, 0,0, map, Graine.CABBAGE_SEED);
+		Terrain plante10 = new Terrain("p15", false, 0,0, map, Graine.CACTUS_SEED);
+		Terrain plante11 = new Terrain("p15", false, 0,0, map, Graine.CARROT_SEED);
 		//TODO changer la structure de traitement des plantes et arbres (classes de données)
 		Culture arbre = new Pommier(0, 0, Milieu.PLAINE, "pm1", map);
 		Structure maison = new Maison(0, 0, "ld" , map);
@@ -92,24 +102,24 @@ public class Game {
 		//achat.addToCart(vache3.getKey());
 	
 		achat.addToCart(plante1.getKey()); 
-		achat.addToCart(maison.getKey());
-		achat.addToCart(maison2.getKey());
-		achat.addToCart(maison3.getKey());
-		achat.addToCart(maison4.getKey());
-		achat.addToCart(maison5.getKey());
-		achat.addToCart(maison6.getKey());
-		achat.addToCart(maison7.getKey());
+		achat.addToCart(plante2.getKey());
+		achat.addToCart(plante3.getKey());
+		achat.addToCart(plante4.getKey());
+		achat.addToCart(plante5.getKey());
+		achat.addToCart(plante6.getKey());
+		achat.addToCart(plante7.getKey());
+		achat.addToCart(plante8.getKey());
 		
-		achat.addToCart(vache7.getKey());
-		achat.addToCart(vache8.getKey());
-		achat.addToCart(vache9.getKey());
+		achat.addToCart(plante9.getKey());
+		achat.addToCart(plante10.getKey());
+		achat.addToCart(plante11.getKey());
 		//achat.addToCart(arbre.getKey());
 		
 		System.out.println("************************************************");
 		System.out.println(ressourcesManager);
 		System.out.println(achat.isValidated());
 		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
-		achat.validateOrder();
+		achat.validate();
 		System.out.println(achat.isValidated());
 		System.out.println(ressourcesManager);
 		System.out.println(achat);

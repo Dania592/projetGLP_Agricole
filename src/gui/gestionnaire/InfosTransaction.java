@@ -28,41 +28,27 @@ public class InfosTransaction extends JFrame {
 		label.setFont(font);
 		getContentPane().add(label);
 		
-		JButton gestFinancier = new JButton("Gestionnaire financier");
+		JButton gestFinancier = new JButton("Retour au jeu");
 		gestFinancier.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new GestionnaireFinancierGUI(InfosTransaction.this);
+				if (frame != null) {
+					frame.setVisible(true);
+				}
 				InfosTransaction.this.dispose();
 			}
-		});
-		
-		if (frame!=null) {
 			
-			gestFinancier.setBounds(30, 220, 200, 30);
-			JButton retourJeu = new JButton("Retour au jeu");
-			retourJeu.setBounds(270, 220, 200, 30);
-			retourJeu.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					frame.setVisible(true);
-					InfosTransaction.this.dispose();
-				}
-			});
-			getContentPane().add(retourJeu);
-		} else {
-			gestFinancier.setBounds(150, 220, 200, 30);
-		}
+		});
+		gestFinancier.setBounds(150, 220, 200, 30);
 		
 		getContentPane().add(gestFinancier);
 		
 		setSize(500,300);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		addWindowListener(new WindowDispose(this, frame));
 	}
 	
 }

@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import process.transaction.FinanceManager;
+
 public class ValidationPanel extends RoundedPanel{
 
 	private static final long serialVersionUID = 1L;
@@ -58,16 +60,16 @@ public class ValidationPanel extends RoundedPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			market.getAchat().validateOrder();
+			market.getTransaction().validate();
 			market.getBillPanel().removeAll();
 			market.getBill().clear();
 			totalCostLabel.setText("0");
 			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(totalCostLabel);
 			String info;
-			if (market.getAchat().isValidated()) {
-				info = "Commande validée!";
+			if (market.getTransaction().isValidated()) {
+				info = "Transaction validée!";
 			} else {
-				info = "La commande ne peut pas être validée!";
+				info = "La transaction ne " + FinanceManager.EOL+ "peut pas être effectuée!";
 			}
 			new InfosTransaction(info, market.getFrame());
 			frame.dispose();
@@ -79,15 +81,15 @@ public class ValidationPanel extends RoundedPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			market.getAchat().cancelOrder();
+			market.getTransaction().cancel();
 			market.getBillPanel().removeAll();
 			market.getBill().clear();
 			totalCostLabel.setText("0");
 			String info;
-			if (market.getAchat().isValidated()) {
-				info = "Commande annulée!";
+			if (market.getTransaction().isValidated()) {
+				info = "Transaction annulée!" + market.getTransaction().getClass().getSimpleName();
 			} else {
-				info = "La commande ne peut pas être annulée!";
+				info = "La transaction ne " + FinanceManager.EOL+ "peut pas être annulée!";
 			}
 			market.getFrame().setVisible(true);
 			market.dispose();

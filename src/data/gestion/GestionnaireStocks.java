@@ -49,17 +49,14 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 		graines.put(graine, graines.get(graine) + 1);
 	}
 
-	public void add(Produits produit, int nombreToAddTo) {
+	public void add(Produits produit, int quantity) {
 		if(produits.containsKey(produit)){
-			int oldPRoduction = produits.get(produit);
-			produits.replace(produit, oldPRoduction+nombreToAddTo);
+			produits.replace(produit, produits.get(produit) + quantity);
 		}else{
-			produits.put(produit, nombreToAddTo);
+			produits.put(produit, quantity);
 		}
-
 	}
-
-
+	
 	public void add(Produits produit) {
 		add(produit,1);
 	}
@@ -68,6 +65,7 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 		int i = 0;
 		while (i < quantity) {
 			remove(key);
+			i++;
 		}
 	}
 
@@ -90,15 +88,14 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 		}
 	}
 	
-
 	public void remove(Produits produit) {
 		remove(produit,1);
 	}
 
 	public void remove(Produits key, int quantity) {
 		int oldQuantity = produits.get(key);
-		if(oldQuantity>0){
-			produits.replace(key, oldQuantity-quantity);
+		if(oldQuantity > 0){
+			produits.replace(key, oldQuantity - quantity);
 		}
 		
 	}

@@ -2,41 +2,87 @@ package process.transaction;
 
 import java.util.HashMap;
 
+import data.finance.Banque;
 import data.gestion.GestionnaireFinancier;
-import process.game.Game;
+import gui.gestionnaire.keys.Keys;
+import process.visitor.AddKeyVisitor;
+import process.visitor.RemoveKeyVisitor;
 import process.visitor.RemoveVisitor;
 
 public class Vente extends Transaction {
-	private HashMap<String, Saleable> cart = new HashMap<>();
-		
-	public HashMap<String, Saleable> getCart() {
+	
+	private HashMap<Keys,Integer> cart = new HashMap<Keys, Integer>();
+	private RemoveKeyVisitor removeVisitor = new RemoveKeyVisitor();
+
+	public HashMap<Keys, Integer> getCart() {
 		return cart;
 	}
 	
-	public void addToCart(Saleable element) {
-		cart.put(element.getReference(), element);
+	public void addToCart(Keys element, int quantity) {
+		for (int i = 0; i < quantity; i++) {
+			if (cart.containsKey(element)){
+				incrementQuantity(element);
+			} else {
+				cart.put(element, 1);
+			}
+			setTotalCost(getTotalCost() + element.getPrixVente());
+		}
+	}
+	
+	public void removeFromCart(Keys element, int quantity) {
+		for (int i =0; i < quantity; i++) {
+			if (cart.get(element) != 1){
+				decrementQuantity(element);
+			} else {
+				cart.remove(element);
+			}
+			setTotalCost(getTotalCost() - element.getPrixVente());
+		}
+	}
+	
+	public void addToCart(Keys element) {
+		if (cart.containsKey(element)){
+			incrementQuantity(element);
+		} else {
+			cart.put(element, 1);
+		}
 		setTotalCost(getTotalCost() + element.getPrixVente());
 	}
 	
-	public void removeFromCart(Saleable element) {
-		cart.remove(element.getReference());
+	public void removeFromCart(Keys element) {
+		if (cart.get(element) != 1){
+			decrementQuantity(element);
+		} else {
+			cart.remove(element);
+		}
 		setTotalCost(getTotalCost() - element.getPrixVente());
 	}
-		
-	public void validateSale(Game game) {
-		RemoveVisitor removeVisitor = new RemoveVisitor();
-		setValidated(true);
-		for (Saleable element : cart.values()) {
-			element.accept(removeVisitor);
+	
+	public void incrementQuantity(Keys key) {
+		cart.put(key, cart.get(key) + 1);
+	}
+	
+	public void decrementQuantity(Keys key) {
+		cart.put(key, cart.get(key) - 1);
+	}
+	
+	
+	public void validate() {
+		if (cart!=null && cart.size()!=0) {
+			setValidated(true);
+			for (Keys key : cart.keySet()) {
+				key.accept(removeVisitor,cart.get(key));
+			}
+			calculateTotalCost();
+			Banque.getInstance().accrediter(getTotalCost());
+			GestionnaireFinancier.getInstance().getVentes().add(this);	
 		}
-		game.getBanque().accrediter(getTotalCost());
-		GestionnaireFinancier.getInstance().getVentes().add(this);
 	}
 	
 	public void calculateTotalCost() {
 		setTotalCost(0);
-		for(Saleable element : cart.values()) {
-			setTotalCost( getTotalCost() + element.getPrixVente());
+		for(Keys key : cart.keySet()) {
+			setTotalCost(getTotalCost() + (key.getPrixVente()*cart.get(key)));
 		}
 	}
 	
@@ -44,7 +90,7 @@ public class Vente extends Transaction {
 		StringBuffer vente = new StringBuffer("Votre vente : ");
 		if (isValidated()) {
 			vente.append("\n + montant : " + getTotalCost());
-			for (Saleable element : cart.values()) {
+			for (Keys element : cart.keySet()) {
 				vente.append("\n\t - " + element.toString());
 			}
 		} else {
@@ -52,4 +98,12 @@ public class Vente extends Transaction {
 		}
 		return vente.toString();
 	}
+
+
+	@Override
+	public void cancel() {
+		cart.clear();
+		setTotalCost(0);
+	}
+
 }

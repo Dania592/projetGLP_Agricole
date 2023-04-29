@@ -19,7 +19,12 @@ import javax.swing.SwingConstants;
 import data.finance.Banque;
 import data.finance.Compte;
 import gui.gestionnaire.keys.Keys;
+import process.game.Game;
+import process.game.GameBuilder;
+import process.game.MapManager;
 import process.transaction.Achat;
+import process.transaction.Transaction;
+import process.transaction.Vente;
 
 
 public class MarketGUI extends JFrame{
@@ -47,7 +52,7 @@ public class MarketGUI extends JFrame{
 	private ValidationPanel validationPanel;
 	private Compte compte = Banque.getInstance().getCompte();
 	private JPanel billContainer;
-	private Achat achat;
+	private Transaction transaction;
 
 	public void paintBill(int x, int y, int w, int h) {
 		billContainer = new RoundedPanel(20,GeneralPaintStrategy.MEDIUM_BROWN, false);
@@ -77,8 +82,8 @@ public class MarketGUI extends JFrame{
 		billContainer.add(validationPanel, BorderLayout.SOUTH);		
 	}
 	
-	public void addToBill(Keys key, int w, int h) {
-		if (compte.getSolde() >= (validationPanel.getTotalCost() + key.getPrixAchat())) {
+	public void addToBill(Keys key, int w, int h, PaintKeys type) {
+		if (type.equals(PaintKeys.BUY) && compte.getSolde() >= (validationPanel.getTotalCost() + key.getPrixAchat()) || type.equals(PaintKeys.SELL)) {
 			if (!bill.containsKey(key)) {	
 				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
 				bill.put(key,panel);
@@ -106,7 +111,11 @@ public class MarketGUI extends JFrame{
 			bill.remove(key);
 			billPanel.revalidate();
 			billPanel.repaint();
-			validationPanel.updateTotalCost((-quantity)*key.getPrixAchat());
+			if (transaction.getClass().getSimpleName().equals("Achat")) {
+				validationPanel.updateTotalCost((-quantity)*key.getPrixAchat());
+			}else {
+				validationPanel.updateTotalCost((-quantity)*key.getPrixVente());
+			}
 		}
 	}
 	
@@ -116,10 +125,14 @@ public class MarketGUI extends JFrame{
 		return title;
 	}
 
-	public MarketGUI(JFrame frame) {
+	public MarketGUI(JFrame frame, PaintKeys type, int tab) {
 		this.frame = frame;
-		achat = new Achat();
-		init();
+		if (type.equals(PaintKeys.BUY)) {
+			transaction = new Achat();
+		} else {
+			transaction = new Vente();
+		}
+		init(type, tab);
 		
 	    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -141,7 +154,7 @@ public class MarketGUI extends JFrame{
 		return bill;
 	}
 
-	public void init() {
+	public void init(PaintKeys type, int tab) {
 
 		int width = MARKET_CARD_WIDTH*MARKET_COLUMN_COUNT + ((MARKET_COLUMN_COUNT + 1)*MIN_SPACE_BETWEEN);
 		int height = MARKET_CARD_HEIGHT*MARKET_ROW_COUNT + ((MARKET_ROW_COUNT + 1 )*MIN_SPACE_BETWEEN);
@@ -154,7 +167,8 @@ public class MarketGUI extends JFrame{
 		paintBill(700, 40, BILL_WIDTH, BILL_HEIGHT);
 		contentPane.add(billContainer);
 
-		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, PaintKeys.ARTICLE, achat, this);
+		//JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, PaintKeys.BUY, achat, this);
+		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, type, transaction, this, tab);
 		contentPane.add(principalPanel);
 
 	}
@@ -171,8 +185,8 @@ public class MarketGUI extends JFrame{
 		return billContainer;
 	}
 
-	public Achat getAchat() {
-		return achat;
+	public Transaction getTransaction() {
+		return transaction;
 	}
 
 	public JFrame getFrame() {
@@ -180,7 +194,11 @@ public class MarketGUI extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		MarketGUI market = new MarketGUI(null);
+		Game game = new Game();
+		MapManager manager = GameBuilder.MapBuilder();
+		game.acheter(manager.getMap());
+		GestionnaireStocksGUI.achat = game.getAchat();
+		MarketGUI market = new MarketGUI(null,PaintKeys.SELL,0);
 	}
 	
 }

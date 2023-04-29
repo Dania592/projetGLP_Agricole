@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 
 import data.finance.Banque;
 import gui.gestionnaire.keys.Keys;
+import process.transaction.Transaction;
 
 public class QuantityListener implements ChangeListener{
 
@@ -23,25 +24,37 @@ public class QuantityListener implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent e) {
+		Transaction transaction = market.getTransaction();
+		String type = transaction.getClass().getSimpleName();
 		Integer newValue = Integer.valueOf(String.valueOf(spinner.getValue()));
 		if (spinner.equals(e.getSource()) && lastValue != null && !newValue.equals(lastValue)) {
 			if (newValue == 0) {
 				market.getBillPanel().remove(market.getBill().get(key));
 				market.getBill().remove(key);
-				market.getAchat().removeFromCart(key);
+				transaction.removeFromCart(key,(newValue-lastValue));
 			}else{
 				if ((newValue-lastValue)>0) {
-					if(Banque.getInstance().getCompte().getSolde() >= market.getValidationPanel().getTotalCost()+((newValue-lastValue)*key.getPrixAchat())) {
-						market.getAchat().addToCart(key);
+					if(type.equals("Achat")) {
+						if (Banque.getInstance().getCompte().getSolde() >= (market.getValidationPanel().getTotalCost()+((newValue-lastValue)*key.getPrixAchat()))) {
+							transaction.addToCart(key,(newValue-lastValue));
+							market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
+						} else {
+							new InfosTransaction("Solde insuffisant", market.getFrame());
+							market.dispose();
+							newValue = lastValue;
+						}
 					} else {
-						new InfosTransaction("Solde insuffisant", market.getFrame());
-						market.dispose();
-						newValue = lastValue;
+						transaction.addToCart(key,(newValue-lastValue));
+						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixVente());
 					}
 				}else {
-					market.getAchat().removeFromCart(key);
+					transaction.removeFromCart(key,(newValue-lastValue));
+					if(type.equals("Achat")) {
+						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
+					} else {
+						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixVente());
+					}
 				}
-				market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
 			}
 		}
 		lastValue = newValue;

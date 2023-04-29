@@ -13,15 +13,17 @@ public class AddToCart implements ActionListener{
 
 	private Keys key;
 	private MarketGUI market;
+	private PaintKeys type;
 	
-	public AddToCart(Keys key, MarketGUI market) {
+	public AddToCart(Keys key, MarketGUI market,PaintKeys type) {
 		this.key = key;
 		this.market = market;
+		this.type = type;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		market.addToBill(key, WIDTH, HEIGHT);
+		market.addToBill(key, WIDTH, HEIGHT,type);
 		//market.getGame().getAchat().addToCart(key);
 	}
 

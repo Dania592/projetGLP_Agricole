@@ -1,12 +1,8 @@
 package data.flore.terrains;
 
-import java.awt.Taskbar.State;
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
-
-import javax.swing.JLabel;
 
 import data.espece.Produceur;
 import data.espece.WaterConsumer;
@@ -14,9 +10,7 @@ import data.map.Map;
 import data.myExceptions.UnknownActivityException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
-import data.production.Produit;
 import data.production.Produits;
-import data.structure.hability.Actionnable;
 import data.structure.hability.Fixable;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
@@ -67,9 +61,14 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
-		images = ImagesTerrains.getInstance().getImages().get(type);
+		if (type != null) {
+			images = ImagesTerrains.getInstance().getImages().get(type);
+			setImage(images.get(evolution));
+		} else {
+			images.put(EvolutionTerrain.VIERGE, "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
+			setImage("src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
+		}
 		// timeItTakesToProduce = 
-		setImage(images.get(evolution));
 		// randomQuantity();
 	}
 	
@@ -138,8 +137,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		visitor.visit(this);
 		return null;
 	}
-
-	
 
 	@Override
 	public String toString() {

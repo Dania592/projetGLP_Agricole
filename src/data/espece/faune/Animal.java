@@ -5,7 +5,6 @@ import data.espece.EtreVivant;
 import data.espece.FoodConsumer;
 import data.espece.Milieu;
 import data.espece.WaterConsumer;
-import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.evolution.EvolutionAnimal;
 import data.gestion.Stockage;
 import data.map.Map;
@@ -15,13 +14,9 @@ import gui.gestionnaire.GestionnaireKey;
 import gui.gestionnaire.keys.Animals;
 import process.evolution.Direction;
 import process.transaction.Buyable;
-import process.transaction.Saleable;
 import process.visitor.GestionVisitor;
 
-
-
-
-public abstract class Animal extends EtreVivant implements Stockage, Saleable, Buyable, FoodConsumer, WaterConsumer{
+public abstract class Animal extends EtreVivant implements Stockage, Buyable, FoodConsumer, WaterConsumer{
 
 	private static final long serialVersionUID = 1L;
 	

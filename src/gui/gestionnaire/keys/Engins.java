@@ -5,13 +5,20 @@ import process.visitor.KeyVisitor;
 
 public enum Engins implements Keys{
 
-	TRACTEUR(400),
-	TONDEUSE(200);
+	TRACTEUR(400, 420),
+	TONDEUSE(200, 250);
 	
 	private float prixAchat;
+	private float prixVente;
 	
-	Engins(float prixAchat) {
+	Engins(float prixAchat, float prixVente) {
 		this.prixAchat = prixAchat;
+		this.prixVente = prixVente;
+	}
+	
+	@Override
+	public float getPrixVente() {
+		return prixVente;
 	}
 	
 	@Override
@@ -29,5 +36,7 @@ public enum Engins implements Keys{
 	public GestionnaireKey getGestionnaireKey() {
 		return GestionnaireKey.ENGINS;
 	}
+	
+
 	
 }

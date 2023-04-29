@@ -42,6 +42,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
+import process.visitor.GestionVisitor;
 
 public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer{
 	private int capacite ;
@@ -102,7 +103,11 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 		}
 	}
 
-
+	public <T> T accept(GestionVisitor<T> visitor) {
+		visitor.visit(this);
+		return null;
+	}
+	
 	public void setAnimalHydrationLevel(HydrationLevel animalsHydrationLevel) {
 		this.animalsHydrationLevel = animalsHydrationLevel;
 		for(AnimalProducteur animal : getAnimals()) {

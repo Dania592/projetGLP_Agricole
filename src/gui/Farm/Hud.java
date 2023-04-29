@@ -21,7 +21,9 @@ import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.ChoixPanel;
 import gui.Farm.messagerie.MessageriePanel;
+import gui.gestionnaire.Home;
 import gui.gestionnaire.MarketGUI;
+import gui.gestionnaire.PaintKeys;
 import process.action.task.Task;
 import process.game.SaveFarm;
 
@@ -228,7 +230,7 @@ public class Hud implements Serializable {
 				if(e.getSource().equals(home)) {
 					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
 					removeChoix();
-					new MarketGUI(frame);
+					new Home(frame);
 					frame.dispose();
 				}
 				else {

@@ -5,19 +5,26 @@ import process.visitor.KeyVisitor;
 
 public enum Outils implements Keys{
 	
-	PELE(10),
-	ARROSOIR(10),
-	TRANSPLANTOIR(10);
+	PELE(10, 12),
+	ARROSOIR(10, 12),
+	TRANSPLANTOIR(10, 12);
 
 	private float prixAchat;
+	private float prixVente;
 	
-	private Outils(float prixAchat) {
+	private Outils(float prixAchat, float prixVente) {
 		this.prixAchat = prixAchat;
+		this.prixVente = prixVente;
 	}
 	
 	@Override
 	public float getPrixAchat() {
 		return prixAchat;
+	}
+	
+	@Override
+	public float getPrixVente() {
+		return prixVente;
 	}
 	
 	@Override
