@@ -4,6 +4,7 @@ import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireEnclos;
 import data.gestion.GestionnaireMateriel;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
@@ -12,6 +13,7 @@ import data.gestion.GestionnaireTerrains;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.production.Produit;
+import data.structure.Enclos;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Graine;
 
@@ -62,6 +64,12 @@ public class RemoveVisitor implements GestionVisitor<Void>{
 	@Override
 	public Void visit(Terrain terrain) {
 		GestionnaireTerrains.getInstance().remove(terrain);
+		return null;
+	}
+
+	@Override
+	public Void visit(Enclos enclos) {
+		GestionnaireEnclos.getInstance().remove(enclos);
 		return null;
 	}
 

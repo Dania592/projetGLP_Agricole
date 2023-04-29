@@ -22,12 +22,12 @@ public class GestionnaireFinancierGUI extends JFrame{
 	
 	private GeneralPaintStrategy generalPaintStrategy = new GeneralPaintStrategy();
 	
-	public GestionnaireFinancierGUI(JFrame parent) {
+	public GestionnaireFinancierGUI(JFrame parent, int tab) {
 		
 		int width = 600;
 		int height = 450;
 		
-		JPanel principalPanel = generalPaintStrategy.paintFinanceManger(GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.MIN_SPACE_BETWEEN, width, height,ROW_COUNT, COLUMN_COUNT, GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN);
+		JPanel principalPanel = generalPaintStrategy.paintGestionnaire(0, 0, width, height,ROW_COUNT, COLUMN_COUNT, GeneralPaintStrategy.MIN_SPACE_BETWEEN, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, PaintKeys.FINANCE, null, null,tab);
 		
 		Container container = getContentPane();
 		container.setLayout(null);
@@ -54,7 +54,7 @@ public class GestionnaireFinancierGUI extends JFrame{
 		vente.setValidated(true);
 		GestionnaireFinancier.getInstance().add(new Charge(TypeCharge.ENERGIE));
 		GestionnaireFinancier.getInstance().add(vente);
-		GestionnaireFinancierGUI financierGUI = new GestionnaireFinancierGUI(null);
+		GestionnaireFinancierGUI financierGUI = new GestionnaireFinancierGUI(null,0);
 	}
 	
 }

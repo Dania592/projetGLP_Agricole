@@ -21,21 +21,20 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import data.finance.Charge;
 import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireEnclos;
 import data.gestion.GestionnaireFinancier;
 import data.gestion.GestionnaireMateriel;
+import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
-import gui.Farm.Hud;
-import gui.gestionnaire.keys.Animals;
-import gui.gestionnaire.keys.Engins;
-import gui.gestionnaire.keys.Graine;
-import gui.gestionnaire.keys.Keys;
-import gui.gestionnaire.keys.Outils;
-import gui.gestionnaire.keys.Structures;
+import data.gestion.GestionnaireTerrains;
+import data.production.Produits;
+import gui.gestionnaire.keys.*;
 import process.transaction.Achat;
 import process.transaction.FinanceManager;
 import process.transaction.Transaction;
@@ -61,8 +60,11 @@ public class GeneralPaintStrategy {
 	private ArrayList<Color> statColors = new ArrayList<>();
 
 	private ArrayList<Container> containers = new ArrayList<>();
-	private HashMap<String, JPanel> toBuy = new HashMap<>();
 	private int counter = 0;
+	
+	private JPanel principalPanel;
+	private JPanel terrainsPanel = new JPanel();
+	private JPanel enclosPanel = new JPanel();
 	
 	//ok
 	public JPanel paintNormalPanel(int x, int y, int w, int h, Color color) {
@@ -141,46 +143,6 @@ public class GeneralPaintStrategy {
 	}
 	
 	//ok
-	/*public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,String type, Achat achat, MarketGUI market) {
-		int cardCount;
-		if (type.equals("Manager")) {
-			cardCount = key.getElements().size();
-		} else {
-			cardCount = key.getArticles().size();
-		}
-		counter = cardCount - 1;
-		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
-		JPanel innerContainer = paintNormalPanel(x, y, w, h, null);
-		if (cardCount > 0 ) {
-			if(cardCount <= (rowCount * columnCount)) {
-				innerContainer = fillCardContainer(innerContainer, cardCount, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market);
-				cardContainer.add(innerContainer);
-			} else {
-				// count le nombre de vues du cardLayout
-				int count = cardCount / (rowCount * columnCount);
-				
-				if ( cardCount % (rowCount * columnCount) != 0) {
-					count++;
-				}
-				// affecter le nombre de cartes par vue du cardLayout 
-				int set;
-				for ( int i = 0; i < count; i++) {
-					if (cardCount >= (rowCount * columnCount)) {
-						set = (rowCount * columnCount);
-					} else {
-						set = cardCount;
-					}
-					cardCount -= set;
-					innerContainer = paintNormalPanel(gap, gap, w - gap, h - columnCount, null);
-					innerContainer = fillCardContainer(innerContainer, set, key, cardWidth, cardHeight, columnCount, gap, color,type, achat, market);
-					cardContainer.add(innerContainer);
-				}
-			}
-		}
-		return cardContainer;
-	}*/
-	
-	
 	public JLayeredPane paintCardsContainer(int x, int y, int w, int h,int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color color, GestionnaireKey key, int gap,PaintKeys type, Transaction achat, MarketGUI market) {
 		int cardCount = 0;
 		ArrayList<?> elements = getElements(type, key);
@@ -238,26 +200,27 @@ public class GeneralPaintStrategy {
 				counter--;
 			}
 		}
-		return innerContainer;			
+		return innerContainer;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public JPanel paintCard(int posX, int posY, int width, int height, int gap,GestionnaireKey key, ArrayList<?> elements, Color color, PaintKeys type, Transaction transaction, MarketGUI market) {
 		switch (type) {
-		case ACHAT:
+		case FINANCE:
 			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
-		case VENTE:
-			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
-		case ARTICLE: 
-			return paintMarketCard(posX, posY, width, height, gap, key, (ArrayList<Keys>) elements, color, (Achat) transaction, market);
-		case STOCKS:
+		case BUY: 
+			return paintMarketCard(posX, posY, width, height, gap,type, key, (ArrayList<Keys>) elements, color, (Achat) transaction, market);
+		case STOCK:
 			return paintManagerCard(posX, posY, width, height, gap, key, (ArrayList<Keys>) elements, color);
-		case CHARGE: 
-			return paintTransactionCard(posX, posY, width, height, gap, elements, color);
+		case EMPLOY:
+			return paintMarketCard(posX, posY, width, height, gap,type, key, (ArrayList<Keys>) elements, color, (Achat) transaction, market);
+		case SELL:
+			return paintMarketCard(posX, posY, width, height, gap,type, key, (ArrayList<Keys>) elements, color, (Vente) transaction, market);
 		default:
 			return null;
 		}
 	}
-		
+	
 	public JPanel paintTransactionCard(int posX, int posY, int width, int height, int gap, ArrayList<?> elements, Color color) {
 		String[] infos;
 		Object element = elements.get(counter);
@@ -348,28 +311,31 @@ public class GeneralPaintStrategy {
 	
 	public ArrayList<?> getElements(PaintKeys type, GestionnaireKey key){
 		switch(type) {
-			case ACHAT:
-				return GestionnaireFinancier.getInstance().getAchats();
-			case VENTE:
-				return GestionnaireFinancier.getInstance().getVentes();
-			case STOCKS:
-				return key.getElements();
-			case ARTICLE:
-				return key.getArticles();
-			case CHARGE:
-				ArrayList<Charge> charges = new ArrayList<>();
-				if (GestionnaireFinancier.getInstance().getCharges() != null) {
-					charges.addAll(charges.size(),GestionnaireFinancier.getInstance().getCharges());
+			case FINANCE:
+				if (key.equals(GestionnaireKey.CHARGE)) {
+					ArrayList<Charge> charges = new ArrayList<>();
+					if (GestionnaireFinancier.getInstance().getCharges() != null) {
+						charges.addAll(0,GestionnaireFinancier.getInstance().getCharges());
+					}
+					if (FinanceManager.getInstance().getCharges() != null) {
+						charges.addAll(FinanceManager.getInstance().getCharges());
+					} 
+					return charges;
+				} else {
+					return key.getElements();
 				}
-				if (FinanceManager.getInstance().getCharges() != null) {
-					charges.addAll(0,FinanceManager.getInstance().getCharges());
-				} 
-				return charges;
+			case STOCK:
+				return key.getElements();
+			case BUY:
+				return key.getArticles();		
+			case SELL:
+				return key.getElements();	
+			case EMPLOY:
+				return key.getElements();	
 			default: 
 				return null;
 		}
 	}
-	
 	
 	public JPanel paintManagerCard(int posX, int posY, int width, int height, int gap, GestionnaireKey key, ArrayList<Keys> elements, Color color) {
 		Keys element = (Keys) elements.get(0);
@@ -439,6 +405,16 @@ public class GeneralPaintStrategy {
 				infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"standAdulte.png";
 				infos[2] = String.valueOf(GestionnaireAnimaux.getInstance().getAnimaux().get(animal).size());	
 				break;
+			case "TERRAINS":
+				infos[0] = "Terrain";
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png";
+				infos[2] = String.valueOf(GestionnaireTerrains.getInstance().getSize());	
+				break;
+			case "ENCLOS":
+				infos[0] = "Enclos";
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Enclos"+File.separator+"entier.png";
+				infos[2] = String.valueOf(GestionnaireEnclos.getInstance().getSize());	
+				break;
 			default:
 				infos[0] = "Non reconnu";
 				infos[1] = "src"+File.separator+"ressources"+File.separator+"default-image.png";
@@ -448,7 +424,7 @@ public class GeneralPaintStrategy {
 		return infos;
 	}
 	
-	public String[] getArticleInformation(Keys element, GestionnaireKey key, Achat achat) {
+	public String[] getArticleInformation(Keys element, GestionnaireKey key, PaintKeys type) {
 		String name = key.name();
 		String[] infos = new String[4];
 		switch (name) {
@@ -456,36 +432,81 @@ public class GeneralPaintStrategy {
 				Outils outil = (Outils)element;
 				infos[0] = getName(outil);
 				infos[1] = "src"+File.separator+"ressources"+File.separator+"Outils"+File.separator+outil.name()+".png";
-				infos[2] = String.valueOf(achat.getCart().get(outil));
-				infos[3] = String.valueOf(outil.getPrixAchat());
+				if (type.equals(PaintKeys.BUY)) {
+					infos[2] = String.valueOf(outil.getPrixAchat());
+				} else {
+					infos[2] = String.valueOf(outil.getPrixVente());
+				}
 				break;
 			case "ENGINS":
 				Engins engin = (Engins)element;
 				infos[0] = getName(engin);
 				infos[1] = "src"+File.separator+"ressources"+File.separator+"Engins"+File.separator+engin.name()+".png";
-				infos[2] = String.valueOf(achat.getCart().get(engin));
-				infos[3] = String.valueOf(engin.getPrixAchat());
+				if (type.equals(PaintKeys.BUY)) {
+					infos[2] = String.valueOf(engin.getPrixAchat());
+				} else {
+					infos[2] = String.valueOf(engin.getPrixVente());
+				}
 				break;
 			case "SEEDS":
 				Graine graine = (Graine)element;
 				infos[0] = getName(graine);
 				infos[1] = "src"+File.separator+"ressources"+File.separator+"Graine"+File.separator+graine.name()+".png"; 
-				infos[2] = String.valueOf(achat.getCart().get(graine));
-				infos[3] = String.valueOf(graine.getPrixAchat());
+				if (type.equals(PaintKeys.BUY)) {
+					infos[2] = String.valueOf(graine.getPrixAchat());
+				} else {
+					infos[2] = String.valueOf(graine.getPrixVente());
+				}
 				break;
 			case "STRUCTURES":
 				Structures structure = (Structures)element;
 				infos[0] = getName(structure);
-				infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+infos[0]+".png";
-				infos[2] = String.valueOf(achat.getCart().get(structure));	
-				infos[3] = String.valueOf(structure.getPrixAchat());
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+infos[0]+".png";	
+				infos[2] = String.valueOf(structure.getPrixAchat());
 				break;
 			case "ANIMALS":
 				Animals animal = (Animals)element;
 				infos[0] = getName(animal);
 				infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"standJeune.png";
-				infos[2] = String.valueOf(achat.getCart().get(animal));
-				infos[3] = String.valueOf(animal.getPrixAchat());
+				if (type.equals(PaintKeys.BUY)) {
+					infos[2] = String.valueOf(animal.getPrixAchat());
+				} else {
+					infos[2] = String.valueOf(animal.getPrixVente());
+				}
+				break;
+			case "TERRAINS":
+				Terrains terrain = (Terrains)element;
+				infos[0] = "Terrain";
+				infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"terrain.png";
+				infos[2] = String.valueOf(terrain.getPrixAchat());
+				break;
+			case "ENCLOS":
+				Encloss enclos = (Encloss)element;
+				infos[0] = "Enclos";
+				infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"entier.png";
+				infos[2] = String.valueOf(enclos.getPrixAchat());
+				break;
+			case "EMPLOYE":
+				Employees employee = (Employees)element;
+				infos[0] = employee.toString();
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Employee"+File.separator+infos[0]+".png";
+				infos[2] = String.valueOf(employee.getPrixAchat());
+				break;
+			case "RECRUT":
+				Employees employe = (Employees)element;
+				infos[0] = employe.toString();
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Employee"+File.separator+infos[0]+".png";
+				infos[2] = String.valueOf(employe.getPrixAchat());
+				break;
+			case "PRODUIT":
+				Produits produit = (Produits)element;
+				infos[0] = produit.toString();
+				infos[1] = "src"+File.separator+"ressources"+File.separator+"Employee"+File.separator+infos[0]+".png";
+				if (type.equals(PaintKeys.BUY)) {
+					infos[2] = String.valueOf(produit.getPrixAchat());
+				} else {
+					infos[2] = String.valueOf(produit.getPrixVente());
+				}
 				break;
 			default:
 				infos[0] = "Non reconnu";
@@ -496,9 +517,9 @@ public class GeneralPaintStrategy {
 		return infos;
 	}
 	
-	public JPanel paintMarketCard(int posX, int posY, int width, int height, int gap,GestionnaireKey key, ArrayList<Keys> elements, Color color, Achat achat, MarketGUI market) {
+	public JPanel paintMarketCard(int posX, int posY, int width, int height, int gap,PaintKeys type, GestionnaireKey key, ArrayList<Keys> elements, Color color, Transaction achat, MarketGUI market) {
 		Keys element = elements.get(counter);
-		String[] infos = getArticleInformation(element, key,achat);
+		String[] infos = getArticleInformation(element, key, type);
 		String imagePath = infos[1];
 		JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
 		
@@ -513,10 +534,24 @@ public class GeneralPaintStrategy {
 		name.setText(infos[0]);
 		name.setHorizontalAlignment(JLabel.CENTER);
 		
-		JLabel price = paintPriceLabel(infos[3], 5*gap, 2 * gap + 125, width - (8*gap), 25);
-		
-		JButton acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Ajouter au panier");
-		acheter.addActionListener(new AddToCart(element, market));
+		JButton acheter;
+		String image = "src"+File.separator+"ressources"+File.separator+"price.png";
+		JLabel price = printImageLabel(infos[2], 5*gap, 2 * gap + 125, width - (8*gap), 25, image);
+		if (!type.equals(PaintKeys.SELL)) {
+			if (key.equals(GestionnaireKey.RECRUT)) {
+				acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Recruter");
+				acheter.addActionListener(new Recruter((Employees) element, acheter));
+			}else if (key.equals(GestionnaireKey.EMPLOYE)){
+				acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Consulter");
+				acheter.addActionListener(new Consulter((Employees) element));
+			} else {
+				acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Ajouter au panier");
+				acheter.addActionListener(new AddToCart(element, market,type));
+			}	
+		}else {
+			acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Vendre");
+			acheter.addActionListener(new AddToCart(element, market,type));
+		}
 		
 		card.add(icone);
 		card.add(name);
@@ -556,8 +591,8 @@ public class GeneralPaintStrategy {
 		}
 	}
 	
-	public JLabel paintPriceLabel(String price, int x, int y, int w, int h) {
-	    ImageIcon icon = new ImageIcon("src"+File.separator+"ressources"+File.separator+"price.png");
+	public JLabel printImageLabel(String price, int x, int y, int w, int h, String imagePath) {
+	    ImageIcon icon = new ImageIcon(imagePath);
 
 	    JLabel label= new JLabel() {
 			private static final long serialVersionUID = 1L;
@@ -568,14 +603,15 @@ public class GeneralPaintStrategy {
 	    };
 
 		label.setBounds(x, y, w, h);
-		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setVerticalAlignment(SwingConstants.CENTER);
 	    label.setOpaque(false);
 	    label.setText(price);
 	    return label;
 	}
 		
-	public JPanel paintGestionnaire(int x, int y, int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, PaintKeys type, Achat achat, MarketGUI market) {
-		JPanel principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
+	public JPanel paintGestionnaire(int x, int y, int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, PaintKeys type, Transaction transaction, MarketGUI market, int tab) {
+		principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
 		
 		CardLayout cardLayout = new CardLayout();
 		
@@ -589,128 +625,150 @@ public class GeneralPaintStrategy {
 		int tabX = 2*MIN_SPACE_BETWEEN + labelWidth;
 		int tabY = MIN_SPACE_BETWEEN;
 		
-		
-		JPanel animalsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel plantsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel outilsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel enginsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel structuresPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		
+		fillTabs(type);
+			
 		JTabbedPane tabbedPane = paintTabbedPane(tabX, tabY, width, height + 3*MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, GeneralPaintStrategy.DARK_BROWN);
+		tabbedPane = paintTabs(tabbedPane, tabs);
 
-		toBuy.put("Plantes", plantsPanel);
-		toBuy.put("Animaux", animalsPanel);
-		toBuy.put("Outils", outilsPanel);
-		toBuy.put("Structures", structuresPanel);
-		toBuy.put("Engins", enginsPanel);
+		fillContainers(type, posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, cardLayout, radius, cardColor, gap, transaction, market);
 		
-		tabbedPane = paintTabs(tabbedPane, toBuy);
-
-		JLayeredPane plantsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
-				cardLayout, radius, cardColor, GestionnaireKey.SEEDS, gap, type, achat, market);
-		plantsPanel.add(plantsCards);
-		containers.add(plantsCards);
-
-		JLayeredPane animalsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
-				cardLayout, radius, cardColor, GestionnaireKey.ANIMALS, gap, type, achat, market);
-		animalsPanel.add(animalsCards);
-		containers.add(animalsCards);
-		
-		JLayeredPane outilsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
-				cardLayout, radius, cardColor, GestionnaireKey.OUTILS, gap, type, achat, market);
-		outilsPanel.add(outilsCards);
-		containers.add(outilsCards);
-		
-		JLayeredPane structuresCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
-				cardLayout, radius, cardColor, GestionnaireKey.STRUCTURES, gap, type, achat, market);
-		structuresPanel.add(structuresCards);
-		containers.add(structuresCards);
-		
-		JLayeredPane enginsCards = paintCardsContainer(posX, posY, width, height, cardWidth, cardHeight, rowCount, columnCount, 
-				cardLayout, radius, cardColor, GestionnaireKey.ENGINS, gap, type, achat, market);
-		enginsPanel.add(enginsCards);
-		containers.add(enginsCards);	
-		
-		JLabel next = new JLabel();
-		next.setBounds(posX + width + 2*gap + labelWidth, HEIGHT/2, labelWidth, labelWidth);
-		ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next.png");
-		next.setIcon(nextIcone);	
-		principalPanel.add(next);
-		next.addMouseListener(new Next(cardLayout, tabbedPane,containers));
-		
-		JLabel previous = new JLabel();
-		previous.setBounds(gap,HEIGHT/2,labelWidth,labelWidth);
-		ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous.png");
-		previous.setIcon(previousIcone);	
-		principalPanel.add(previous);
-		previous.addMouseListener(new Previous(cardLayout, tabbedPane, containers));
+		if (!type.equals(PaintKeys.EMPLOY)) {
+			JLabel next = new JLabel();
+			next.setBounds(posX + width + 2*gap + labelWidth, HEIGHT/2, labelWidth, labelWidth);
+			ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next.png");
+			next.setIcon(nextIcone);	
+			principalPanel.add(next);
+			next.addMouseListener(new Next(cardLayout, tabbedPane,containers));
+			
+			JLabel previous = new JLabel();
+			previous.setBounds(gap,HEIGHT/2,labelWidth,labelWidth);
+			ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous.png");
+			previous.setIcon(previousIcone);	
+			principalPanel.add(previous);
+			previous.addMouseListener(new Previous(cardLayout, tabbedPane, containers));	
+		}
 		
 		principalPanel.add(tabbedPane);
+		tabbedPane.setSelectedIndex(tab);
 		
 		return principalPanel;
 	}
 	
-	public JPanel paintFinanceManger(int x, int y, int width, int height, int rowCount, int columnCount, int gap, Color cardColor) {
-		
-		JPanel principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
-		
-		CardLayout cardLayout = new CardLayout();
-		
-		// 20 
-		int radius = 20;
-		// 10
-		int posX = 10;
-		int posY = 11;
-		
-		int labelWidth = 40;
-		
-		int tabX = 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN + labelWidth;
-		int tabY = GeneralPaintStrategy.MIN_SPACE_BETWEEN;
-		
-		JPanel achatsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel ventesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		JPanel chargesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
-		
-		JTabbedPane tabbedPane = paintTabbedPane(tabX, tabY, width, height + 3*GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, GeneralPaintStrategy.DARK_BROWN);
-		
-		tabs.put("Achats", achatsPanel);
-		tabs.put("Ventes", ventesPanel);
-		tabs.put("Charges", chargesPanel);
-		
-		tabbedPane = paintTabs(tabbedPane, tabs);
-		
-		JLayeredPane achatsCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
-				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.ACHAT, null, null);
-		achatsPanel.add(achatsCards);
-		containers.add(achatsCards);	
-		
-		JLayeredPane ventesCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
-				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.VENTE, null, null);
-		ventesPanel.add(ventesCards);
-		containers.add(ventesCards);
-		
-		JLayeredPane chargesCards = paintCardsContainer(posX, posY, width, height, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/FINANCE_MANAGER_ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, FINANCE_MANAGER_ROW_COUNT,FINANCE_MANAGER_COLUMN_COUNT, 
-				cardLayout, radius, GeneralPaintStrategy.LIGHT_BROWN, null, GeneralPaintStrategy.MIN_SPACE_BETWEEN, PaintKeys.CHARGE, null, null);
-		chargesPanel.add(chargesCards);
-		containers.add(chargesCards);
-		
-		JLabel next = new JLabel();
-		next.setBounds(posX + width + 2*gap + labelWidth, HEIGHT/2, labelWidth, labelWidth);
-		ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next.png");
-		next.setIcon(nextIcone);	
-		principalPanel.add(next);
-		next.addMouseListener(new Next(cardLayout, tabbedPane,containers));
-		
-		JLabel previous = new JLabel();
-		previous.setBounds(gap,HEIGHT/2,labelWidth,labelWidth);
-		ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous.png");
-		previous.setIcon(previousIcone);	
-		principalPanel.add(previous);
-		previous.addMouseListener(new Previous(cardLayout, tabbedPane, containers));
-		
-		principalPanel.add(tabbedPane);
-		
-		return principalPanel;
+	public void fillTabs(PaintKeys key) {
+		if (key.equals(PaintKeys.EMPLOY)){
+			JPanel recruterPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
+			JPanel mesEmployesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+
+			tabs.put("Recrutement", recruterPanel);
+			tabs.put("Mes Employes", mesEmployesPanel);
+		} else if (key.equals(PaintKeys.FINANCE)){
+			JPanel achatsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
+			JPanel ventesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+			JPanel chargesPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+
+			tabs.put("Achats", achatsPanel);
+			tabs.put("Ventes", ventesPanel);
+			tabs.put("Charges", chargesPanel);
+		} else {
+				JPanel animalsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT,GeneralPaintStrategy.MEDIUM_BROWN);
+				JPanel plantsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+				JPanel outilsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+				JPanel enginsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+				tabs.put("Plantes", plantsPanel);
+				tabs.put("Animaux", animalsPanel);
+				tabs.put("Outils", outilsPanel);
+				tabs.put("Engins", enginsPanel);
+				
+				if (!key.equals(PaintKeys.SELL)) {
+					JPanel structuresPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+					tabs.put("Structures", structuresPanel);
+				} else {
+					JPanel productsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+					tabs.put("Produits", productsPanel);
+				}
+				
+				if (key.equals(PaintKeys.BUY)) {
+					terrainsPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+					tabs.put("Terrains", terrainsPanel);
+					
+					enclosPanel = paintNormalPanel(10, 10, GeneralPaintStrategy.WIDTH, GeneralPaintStrategy.HEIGHT, GeneralPaintStrategy.MEDIUM_BROWN);
+					tabs.put("Enclos", enclosPanel);
+				}
+		}
+	}
+	
+	public void fillContainers(PaintKeys key, int x, int y, int w, int h, int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color cardColor,int gap, Transaction achat, MarketGUI market ) {
+		if (key.equals(PaintKeys.EMPLOY)){
+			JLayeredPane recruterCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.RECRUT, gap, key, achat, market);
+			tabs.get("Recrutement").add(recruterCards);
+			containers.add(recruterCards);
+			
+			JLayeredPane mesEmployesCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.EMPLOYE, gap, key, achat, null);
+			tabs.get("Mes Employes").add(mesEmployesCards);
+			containers.add(mesEmployesCards);
+			
+		} else if (key.equals(PaintKeys.FINANCE)) {
+			JLayeredPane achatsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.ACHAT, gap, key, achat, null);
+			tabs.get("Achats").add(achatsCards);
+			containers.add(achatsCards);	
+			
+			JLayeredPane ventesCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.VENTE, gap, key, achat, null);
+			tabs.get("Ventes").add(ventesCards);
+			containers.add(ventesCards);
+			
+			JLayeredPane chargesCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.CHARGE, gap, key, achat, null);
+			tabs.get("Charges").add(chargesCards);
+			containers.add(chargesCards);
+		} else {
+			JLayeredPane plantsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.SEEDS, gap, key, achat, market);
+			tabs.get("Plantes").add(plantsCards);
+			containers.add(plantsCards); 
+
+			JLayeredPane animalsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.ANIMALS, gap, key, achat, market);
+			tabs.get("Animaux").add(animalsCards);
+			containers.add(animalsCards);
+			
+			JLayeredPane outilsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.OUTILS, gap, key, achat, market);
+			tabs.get("Outils").add(outilsCards);
+			containers.add(outilsCards);
+			
+			if (!key.equals(PaintKeys.SELL)) {
+				JLayeredPane structuresCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+						cardLayout, radius, cardColor, GestionnaireKey.STRUCTURES, gap, key, achat, market);
+				tabs.get("Structures").add(structuresCards);
+				containers.add(structuresCards);	
+			} else {
+				JLayeredPane productsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+						cardLayout, radius, cardColor, GestionnaireKey.PRODUIT, gap, key, achat, market);
+				tabs.get("Produits").add(productsCards);
+				containers.add(productsCards);	
+			}
+			
+			JLayeredPane enginsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+					cardLayout, radius, cardColor, GestionnaireKey.ENGINS, gap, key, achat, market);
+			tabs.get("Engins").add(enginsCards);
+			containers.add(enginsCards);	
+			
+			if (key.equals(PaintKeys.BUY)) {
+				JLayeredPane terrainsCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+						cardLayout, radius, cardColor, GestionnaireKey.TERRAINS, gap, key, achat, market);
+				tabs.get("Terrains").add(terrainsCards);
+				containers.add(terrainsCards);
+
+				JLayeredPane enclosCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
+						cardLayout, radius, cardColor, GestionnaireKey.ENCLOS, gap, key, achat, market);
+				tabs.get("Enclos").add(enclosCards);
+				containers.add(enclosCards);
+			}	
+		}
 	}
 	
 	private class Pay implements ActionListener{
@@ -731,6 +789,42 @@ public class GeneralPaintStrategy {
 			frame.dispose();
 			new InfosTransaction("Charge payée", null);
 			GestionnaireFinancier.getInstance().add(charge);
+		}
+		
+	}
+	
+	private class Recruter implements ActionListener{
+
+		private Employees employee;
+		private JButton button;
+		private GestionnaireRH gestionnaireRH = GestionnaireRH.getInstance();
+		
+		public Recruter(Employees key, JButton button) {
+			this.button = button;
+			employee = key;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
+			gestionnaireRH.recruter(gestionnaireRH.getARecruter().get(employee));
+			frame.dispose();
+			new InfosTransaction(employee.toString() + " recruté !", frame);
+		}
+		
+	}
+	
+	private class Consulter implements ActionListener{
+
+		private Employees employee;
+		
+		public Consulter(Employees key) {
+			employee = key;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new InfosTransaction(employee.toString() + " infos !", null);
 		}
 		
 	}

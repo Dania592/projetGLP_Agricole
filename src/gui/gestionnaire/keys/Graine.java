@@ -51,12 +51,16 @@ public enum Graine implements Buyable, Keys{
 	RED_ONION_SEED(Produits.RED_ONION),
 	CARROT_SEED(Produits.CARROT);
 
-	private float prixAchat = 0;
 	private Produits product;
+	@Override
+	public float getPrixVente() {
+		return 6;
+	}
 	
 	private Graine(Produits product) {
 		this.product = product;
 	}
+	
 	
 	@Override
 	public float getPrixAchat() {

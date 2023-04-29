@@ -94,6 +94,11 @@ public class FarmPaintStrategy implements Serializable {
 			panelChoixTerrain.add(titre, actions.get(titre));
 			y += 30;
 		}
+		if(!(terrain.isEnoughHydrated())){
+
+		}
+
+
 		return panelChoixTerrain;
 	}
 	
@@ -185,13 +190,26 @@ public class FarmPaintStrategy implements Serializable {
 		int y = (position.getLigne_init() - 1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar;
-
-		if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
-			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
-		}else{
-			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHydrationLevel()+".png");
+		if(enclos.isNeedToBeFeed() || enclos.isNeedToBeHydrated()){
+			if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
+				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
+			}else{
+				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHydrationLevel()+".png");
+			}		
+			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
 		}
-		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+	}
+
+
+	public void paintLevelHeart(Terrain terrain , Graphics graphics ) {
+		Position position = terrain.getPosition();
+		int y = (position.getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY() ;
+		int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION +map.getX();
+		ImageIcon progressBar;
+		if(!(terrain.isEnoughHydrated())){
+			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+terrain.getHydrationLevel()+".png");
+			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+		}
 	}
 	
 	public void paintNight( Map map ,Graphics graphics ) {

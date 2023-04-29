@@ -14,11 +14,11 @@ public class RoundedPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Color backgroundColor;
 	private int cornerRadius = 15;
+	private boolean border = true;
 
 	public RoundedPanel(int x, int y, int w, int h, LayoutManager layout, int radius, Color color) {
 		super(layout);
 		setBounds(x, y, w, h);
-		setOpaque(false);
 		cornerRadius = radius;
 		backgroundColor = color;
 		setOpaque(false);
@@ -33,23 +33,28 @@ public class RoundedPanel extends JPanel {
 	public RoundedPanel(LayoutManager layout, int radius, Color bgColor) {
 		super(layout);
 		cornerRadius = radius;
-		setOpaque(false);
 		backgroundColor = bgColor;
 		setOpaque(false);
 	}
 
 	public RoundedPanel(int radius) {
 		super();
-		setOpaque(false);
 		cornerRadius = radius;
 		setOpaque(false);
 	}
 
 	public RoundedPanel(int radius, Color bgColor) {
 		super();
-		setOpaque(false);
 		cornerRadius = radius;
 		backgroundColor = bgColor;
+		setOpaque(false);
+	}
+	
+	public RoundedPanel(int radius, Color bgColor, boolean border) {
+		super();
+		cornerRadius = radius;
+		backgroundColor = bgColor;
+		this.border = border;
 		setOpaque(false);
 	}
 
@@ -70,8 +75,9 @@ public class RoundedPanel extends JPanel {
 		}
 		graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
 		graphics.setColor(getForeground());
-		graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
-		
+		if (border) {
+			graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border	
+		}
 	}
 
 

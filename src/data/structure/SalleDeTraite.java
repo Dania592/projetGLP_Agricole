@@ -10,6 +10,8 @@ import data.espece.faune.Chevre;
 import data.espece.faune.MilkProduceur;
 import data.espece.faune.Vache;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import gui.gestionnaire.keys.Structures;
@@ -125,18 +127,6 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 		return chevres;
 	}
 
-	public boolean inHabitantHaveProduced() {
-		Iterator<Vache> vacheIter = vaches.iterator();
-		Iterator<Chevre> chevreIter = chevres.iterator();
-		boolean haveProduced = false;
-		while(vacheIter.hasNext() && !haveProduced){
-			haveProduced = vacheIter.next().haveProduced(); 
-		}while(chevreIter.hasNext() && !haveProduced){
-			haveProduced = chevreIter.next().haveProduced(); 
-		}
-		return haveProduced;
-	}
-
 	@Override
 	public ActionnableKey getSpecificActionnableKey() {
 		return ActionnableKey.SALLE_TRAITE;
@@ -156,6 +146,15 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	@Override
 	public boolean needPlayerIntervention() {
 		return true;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+		return visitor.action(this, activity);
 	}
 	
 }

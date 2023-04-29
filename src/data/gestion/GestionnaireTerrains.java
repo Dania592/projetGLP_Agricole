@@ -16,7 +16,7 @@ public class GestionnaireTerrains implements GestionnaireInterface, Serializable
 	public HashMap<Graine, ArrayList<Terrain>> getTerrains() {
 		return terrains;
 	}
-
+	
 	private static GestionnaireTerrains instance = new GestionnaireTerrains();
 	
 	private GestionnaireTerrains(){}
@@ -50,6 +50,14 @@ public class GestionnaireTerrains implements GestionnaireInterface, Serializable
 				terrains.get(type).remove(terrain);
 			}
 		}
+	}
+	
+	public int getSize() {
+		int size = 0;
+		for(ArrayList<Terrain> terr : terrains.values()) {
+			size += terr.size();
+		}
+		return size;
 	}
 	
 	public String toString() {

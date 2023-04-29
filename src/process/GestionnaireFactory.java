@@ -6,10 +6,12 @@ import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
+import data.flore.terrains.Terrain;
 import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.structure.Abatoire;
+import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Etable;
 import data.structure.Garage;
@@ -19,16 +21,18 @@ import data.structure.Poulallier;
 import data.structure.SalleDeTraite;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Encloss;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
+import gui.gestionnaire.keys.Terrains;
 
 public class GestionnaireFactory {
 	
 	public GestionnaireFactory() {
 	}
 	
-	public Animal createElement(Animals key, Map map) {
+	public static Animal createElement(Animals key, Map map) {
 		switch (key) {
 			case VACHE:
 				return new Vache(0, 0, 0, null, null, null, null, map);
@@ -45,7 +49,7 @@ public class GestionnaireFactory {
 		}
 	}
 	
-	public Structure createElement(Structures key, Map map) {
+	public static Structure createElement(Structures key, Map map) {
 		switch (key) {
 			case ABATTOIRE:
 				return new Abatoire(0, 0, null, map);
@@ -67,13 +71,20 @@ public class GestionnaireFactory {
 				return null;
 		}
 	}
-
-	public Outil createElement(Outils outil, Map map) {
-		return null;
+	
+	public static Terrain createElement(Terrains terrain, Map map) {
+		return new Terrain(null, false, 0, 0, map, null);
 	}
-
-	public Engin createElement(Engins engin, Map map) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public static Outil createElement(Outils outil, Map map) {
+		return new Outil(null, false, 0, 0, 0, map, outil);
+	}
+	
+	public static Engin createElement(Engins engin, Map map) {
+		return new Engin(null, false, 0, 0, 0, map, engin);
+	}
+	
+	public static Enclos createElement(Encloss enclos, Map map) {
+		return new Enclos(0, 0, null, map);
 	}
 }

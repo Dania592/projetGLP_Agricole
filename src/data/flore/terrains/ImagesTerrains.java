@@ -71,6 +71,13 @@ public class ImagesTerrains {
 		images.put(Graine.BROCCOLI_SEED, images1);
 		images.put(Graine.BOK_CHOY_SEED, images3);
 		images.put(Graine.CACTUS_SEED, images2);
+		images.put(Graine.AMARANTH_SEED, images2);
+		images.put(Graine.CARROT_SEED, images2);
+		images.put(Graine.CABBAGE_SEED, images2);
+		images.put(Graine.BRUSSEL_SPROUTS_SEED, images2);
+		images.put(Graine.BLUEBERRY_SEED, images2);
+		images.put(Graine.BEET_SEED, images2);
+		images.put(Graine.ARTICHOKE_SEED, images2);
 		
 	}
 	

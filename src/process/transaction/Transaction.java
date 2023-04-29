@@ -1,6 +1,7 @@
 package process.transaction;
 
 import data.finance.Finance;
+import gui.gestionnaire.keys.Keys;
 
 public abstract class Transaction implements Finance{
 	
@@ -27,5 +28,13 @@ public abstract class Transaction implements Finance{
 	public String getReference() {
 		return reference;
 	}
+
+	public abstract void validate();
+	
+	public abstract void cancel();
+	
+	public abstract void removeFromCart(Keys key, int quantity);
+
+	public abstract void addToCart(Keys key,int quantity);
 	
 }

@@ -1,21 +1,24 @@
 package process.visitor;
 
+import data.gestion.GestionnaireRH;
+import data.gestion.GestionnaireStocks;
 import data.gestion.RessourcesManager;
-import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
+import data.production.Produits;
 import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Employees;
+import gui.gestionnaire.keys.Encloss;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
+import gui.gestionnaire.keys.Terrains;
 
 public class RemoveKeyVisitor implements KeyVisitor<Void>{
 
 	private RessourcesManager ressourcesManager = RessourcesManager.getInstance();
-	private Map map;
-	private RemoveVisitor removeVisitor = new RemoveVisitor();
-
+	
 	@Override
 	public Void visit(Animals animal, int quantity) {
 		for (int i=0; i<quantity; i++) {
@@ -54,7 +57,30 @@ public class RemoveKeyVisitor implements KeyVisitor<Void>{
 		Engin newEngin;
 		for (int i=0; i<quantity; i++) {
 			ressourcesManager.getGestionnaireMateriel().remove(engin, quantity);;
-		}		return null;
+		}		
+		return null;
+	}
+
+	@Override
+	public Void visit(Terrains terrain, int quantity) {
+		return null;
+	}
+	
+	@Override
+	public Void visit(Encloss terrain, int quantity) {
+		return null;
+	}
+
+	@Override
+	public Void visit(Employees employee, int quantity) {
+		GestionnaireRH.getInstance().getEmployees().remove(employee);
+		return null;
+	}
+
+	@Override
+	public Void visit(Produits produit, int quantity) {
+		GestionnaireStocks.getInstance().getProduits().remove(produit);
+		return null;
 	}
 
 }

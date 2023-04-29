@@ -23,10 +23,13 @@ import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.ChoixPanel;
 import gui.Farm.farmer.FermierGui;
 import gui.Farm.messagerie.MessageriePanel;
+import gui.gestionnaire.Home;
 import gui.gestionnaire.MarketGUI;
+import gui.gestionnaire.PaintKeys;
 import gui.statistique.TestStat;
 import process.action.task.Task;
 import process.game.SaveFarm;
+import process.time.TimeManager;
 
 public class Hud implements Serializable {
 
@@ -175,7 +178,7 @@ public class Hud implements Serializable {
 		CyclicCounter minute = clock.getMinute();
 		CyclicCounter second = clock.getSecond();
 		
-		time.setText(hour.toString()+" : "+minute.toString()+" : "+second.toString());
+		time.setText(hour.toString()+" : "+minute.toString() /*+""+TimeManager.getInstance().getDay()); */+" : "+second.toString());
 		
 	}
 	
@@ -232,7 +235,7 @@ public class Hud implements Serializable {
 			if(e.getSource().equals(home)) {
 					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
 					removeChoix();
-					new MarketGUI(frame);
+					new Home(frame);
 					frame.dispose();
 				}
 				

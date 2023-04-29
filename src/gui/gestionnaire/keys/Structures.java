@@ -15,10 +15,7 @@ public enum Structures implements Keys{
 	GARAGE(150), 
 	BERGERIE_CHEVRE(130),
 	BERGERIE_MOUTON(160),
-	PUIT(100),
-	
-	
-	;
+	PUIT(100);
 	
 	private float prixAchat;
 	
@@ -32,6 +29,11 @@ public enum Structures implements Keys{
 	}
 	
 	@Override
+	public float getPrixVente() {
+		return 0;
+	}
+	
+	@Override
 	public <T> T accept(KeyVisitor<T> visitor, int quantity) {
 		visitor.visit(this, quantity);
 		return null;
@@ -41,5 +43,7 @@ public enum Structures implements Keys{
 	public GestionnaireKey getGestionnaireKey() {
 		return GestionnaireKey.STRUCTURES;
 	}
+	
+	
 
 }

@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import data.espece.Slaughtable;
 import data.espece.faune.Vache;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.structure.hability.Distributor;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
@@ -104,6 +107,15 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	@Override
 	public int getNumberOfTarget() {
 		return getInHabitant().size();
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+			return visitor.action(this, activity); 
 	}
 
 

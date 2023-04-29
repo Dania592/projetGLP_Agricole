@@ -109,7 +109,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 
 				if(selected.getClass().getSimpleName().equals("Entrepot")) {
 					
-					new GestionnaireStocksGUI("Gestionnaire Stock ", MainGuiTest.this);
+					new GestionnaireStocksGUI("Gestionnaire Stock ", MainGuiTest.this,0);
 					MainGuiTest.this.dispose();
 				}
 

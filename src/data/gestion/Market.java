@@ -6,11 +6,13 @@ import java.util.HashMap;
 
 import gui.gestionnaire.GestionnaireKey;
 import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Encloss;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Keys;
 import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
+import gui.gestionnaire.keys.Terrains;
 
 public class Market implements Serializable{
 
@@ -63,6 +65,14 @@ public class Market implements Serializable{
 			structures.add(structure);
 		}
 		articles.put(GestionnaireKey.STRUCTURES, structures);
+		
+		ArrayList<Keys> terrains = new ArrayList<>();
+		terrains.add(Terrains.TERRAIN);
+		articles.put(GestionnaireKey.TERRAINS, terrains);
+		
+		ArrayList<Keys> enclos = new ArrayList<>();
+		enclos.add(Encloss.ENCLOS);
+		articles.put(GestionnaireKey.ENCLOS, enclos);
 	}
 
 }

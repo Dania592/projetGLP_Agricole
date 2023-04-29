@@ -93,6 +93,7 @@ public class TaskFactory{
             throw new NotImplementYetException(activity);
             // return newSendToSlaughterHouseTask(activity, slaughtable);
         }else if(activityType == Type.GIVE_WATER && actionnable instanceof Hydratable){
+            System.out.println("Activité"+ activity+ "Actionnable sur qui perform : "+ actionnable.getSpecificActionnableKey());
             Hydratable hydratablePlace = (Hydratable)actionnable;
             return newGiveWaterTask(activity, hydratablePlace);
         }else if(activityType == Type.SPECIAL && actionnable instanceof SpecialActionPerformer){
@@ -107,7 +108,6 @@ public class TaskFactory{
 
     private SpecialTask newSpecialAction(Activity activity, SpecialActionPerformer specialActionnable) throws UnknownActivityException, UnableToGenerateNewTaskException {
         if(specialActionnable.canPerformSpecialAction(activity)){
-            System.out.println("On peut faire Action special aussi Terrain.evolution = DIG_OVER || Terrain.evolution = PLANT ;;:: "+  specialActionnable);
             return new SpecialTask(activity, specialActionnable, specialTaskVisitor);
         }
         throw new UnableToGenerateNewTaskException();
@@ -133,7 +133,6 @@ public class TaskFactory{
     }
 
     private GiveWaterTask newGiveWaterTask(Activity activity, Hydratable hydratablePlace) throws UnableToGenerateNewTaskException, TaskNotNeededToBePerform{
-        System.out.println("hydratablePlace.isNeedToBeHydrated() "+ hydratablePlace.isNeedToBeHydrated()+" : hydrationVisitor.haveWater() "+ hydrationVisitor.haveWater());
         if(hydrationVisitor.needToBeHydrated(hydratablePlace)){
             return new GiveWaterTask(activity, hydratablePlace, hydrationVisitor);
         }

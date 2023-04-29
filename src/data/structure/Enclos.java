@@ -15,10 +15,12 @@ import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
+import data.flore.Saison;
 import data.map.Case;
 import data.map.Map;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.production.Produit;
@@ -33,6 +35,7 @@ import data.structure.hability.list.EnclosStorageStructure;
 import data.stucture_base.Element;
 import data.stucture_base.Position;
 import data.time.Clock;
+import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -42,6 +45,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
+import process.visitor.GestionVisitor;
 
 public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer{
 	private int capacite ;
@@ -102,7 +106,11 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 		}
 	}
 
-
+	public <T> T accept(GestionVisitor<T> visitor) {
+		visitor.visit(this);
+		return null;
+	}
+	
 	public void setAnimalHydrationLevel(HydrationLevel animalsHydrationLevel) {
 		this.animalsHydrationLevel = animalsHydrationLevel;
 		for(AnimalProducteur animal : getAnimals()) {
@@ -299,7 +307,7 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 
 	@Override
 	public boolean isNeedToBeHydrated() {
-		return niveauEau == FullLevel.EMPTY || niveauEau == FullLevel.HALF_FULL || niveauEau == FullLevel.QUARTER_FULL;
+		return niveauEau != FullLevel.FULL;
 	}
 
 	@Override
@@ -322,9 +330,12 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	@Override
 	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
 		if(activity == Activity.SHAVE_SHEEP){
-			if(production.get(Produits.LAINE) != null){
-				return production.get(Produits.LAINE) !=0;
-			} 	
+			boolean haveProduced = false;
+			Iterator<Mouton> moutons = getAnimalStorage().getMoutons().iterator();
+			while(moutons.hasNext() && !haveProduced){
+				haveProduced = moutons.next().getProductifState() == ProductifState.IN_WAIT;
+			}
+		return haveProduced;
 		}
 		throw new UnknownActivityException(activity);
 	}
@@ -338,6 +349,23 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	public boolean needPlayerIntervention() {
 		return false;
 	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+		return visitor.action(this, activity);
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) {
+		throw new UnsupportedOperationException("Utilisé seulement par les terrains");
+	}
+	
+
+
 
 
 }

@@ -1,12 +1,11 @@
 package process.action.visitor.place;
 
-import javax.swing.tree.AbstractLayoutCache.NodeDimensions;
-
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
-import data.production.Produit;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Produits;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
@@ -21,6 +20,7 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Hydratable;
+import gui.gestionnaire.keys.Graine;
 import data.structure.hability.Actionnable.ActionnableKey;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -42,7 +42,6 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     public Void action(Enclos enclos){
         enclos.setNiveauEau(FullLevel.FULL);
         enclos.setAnimalHydrationLevel(HydrationLevel.FULLY_HYDRATED);
-        System.out.println("on a set le niveau d'eau : " + ( enclos.getAnimalsHydrationLevel() ==  HydrationLevel.FULLY_HYDRATED ));
         return null;
     }
 
@@ -52,12 +51,24 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
 
     public boolean needToBeHydrated(Hydratable hydratablePlace){
         boolean needToBeHydrated = true;
-        if(hydratablePlace.getSpecificActionnableKey() == ActionnableKey.ENCLOS){
+        if(hydratablePlace.getSpecificActionnableKey() == ActionnableKey.TERRAIN){
             needToBeHydrated = ((Terrain)hydratablePlace).getProductifState() == ProductifState.PRODUCING;
         }
-        return needToBeHydrated = needToBeHydrated && hydratablePlace.isNeedToBeHydrated() && haveWater();
+        System.out.println(needToBeHydrated +"&&"+ hydratablePlace.isNeedToBeHydrated() +"&&"+ haveWater());
+        needToBeHydrated = needToBeHydrated && hydratablePlace.isNeedToBeHydrated() && haveWater();
+        return needToBeHydrated;
     }
 
+
+    
+
+
+    @Override
+    public Void action(Terrain terrain, Activity activity, Graine graine)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            UnableToGenerateNewTaskException {
+        return action(terrain, activity);
+    }
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
@@ -109,5 +120,79 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
     }
-    
+
+
+    @Override
+    public Void action(Etable etable, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable{
+        return action(etable);
+    }
+
+    @Override
+    public Void action(Poulallier poulallier, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+        return action(poulallier);
+    }
+
+    @Override
+    public Void action(Enclos enclos, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+        return action(enclos);
+    }
+
+    @Override
+    public Void action(Abatoire abatoire, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable{
+            return action(abatoire);
+    }
+
+    @Override
+    public Void action(Maison maison, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(maison);
+    }
+
+    @Override
+    public Void action(SalleDeTraite salleDeTraite, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+        return action(salleDeTraite);
+    }
+
+    @Override
+    public Void action(Entrepot entrepot, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(entrepot);
+    }
+
+    @Override
+    public Void action(Terrain terrain, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+        return action(terrain);
+    }
+
+    @Override
+    public Void action(BergerieChevre bergerieChevre, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+            return action(bergerieChevre);
+    }
+
+    @Override
+    public Void action(BergerieMouton bergerieMouton, Activity activity)
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+        return action(bergerieMouton);
+    }
+
+    @Override
+    public Void action(Puit puit, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(puit);
+    }
+
+    @Override
+    public Void action(Garage garage, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(garage);
+    }
+
+    @Override
+    public Void action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
+        return action(grange);
+    }
+
 }

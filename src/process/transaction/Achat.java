@@ -17,6 +17,30 @@ public class Achat extends Transaction{
 		return cart;
 	}
 
+	public void addToCart(Keys element, int quantity) {
+		for (int i = 0; i < quantity; i++) {
+			if (getTotalCost() + element.getPrixAchat() < Banque.getInstance().getCompte().getSolde()) {
+				if (cart.containsKey(element)){
+					incrementQuantity(element);
+				} else {
+					cart.put(element, 1);
+				}
+				setTotalCost(getTotalCost() + element.getPrixAchat());
+			}	
+		}
+	}
+	
+	public void removeFromCart(Keys element, int quantity) {
+		for (int i = 0; i < quantity; i++) {
+			if (cart.get(element) != 1){
+				decrementQuantity(element);
+			} else {
+				cart.remove(element);
+			}
+			setTotalCost(getTotalCost() - element.getPrixAchat());
+		}
+	}
+	
 	public void addToCart(Keys element) {
 		if (getTotalCost() + element.getPrixAchat() < Banque.getInstance().getCompte().getSolde()) {
 			if (cart.containsKey(element)){
@@ -25,7 +49,7 @@ public class Achat extends Transaction{
 				cart.put(element, 1);
 			}
 			setTotalCost(getTotalCost() + element.getPrixAchat());
-		}
+		}	
 	}
 	
 	public void removeFromCart(Keys element) {
@@ -37,12 +61,11 @@ public class Achat extends Transaction{
 		setTotalCost(getTotalCost() - element.getPrixAchat());
 	}
 
-	public void validateOrder() {
+	public void validate() {
 		if (cart!=null && cart.size()!=0) {
 			setValidated(true);
 			for (Keys key : cart.keySet()) {
 				addToGestionnaire(key,cart.get(key));
-				
 			}
 			calculateTotalCost();
 			Banque.getInstance().debiter(getTotalCost());
@@ -54,7 +77,8 @@ public class Achat extends Transaction{
 		key.accept(addKeyVisitor, entier);
 	}
 	
-	public void cancelOrder(Game game) {
+	@Override
+	public void cancel() {
 		cart.clear();
 		setTotalCost(0);
 	}
@@ -86,5 +110,6 @@ public class Achat extends Transaction{
 		}
 		return achats.toString();
 	}
+
 
 }
