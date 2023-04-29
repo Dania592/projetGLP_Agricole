@@ -57,6 +57,8 @@ public class GeneralPaintStrategy {
 	public static int FINANCE_MANAGER_ROW_COUNT = 5;
 	public static int FINANCE_MANAGER_COLUMN_COUNT = 1;
 	private HashMap<String, JPanel> tabs = new HashMap<>();
+	
+	private ArrayList<Color> statColors = new ArrayList<>();
 
 	private ArrayList<Container> containers = new ArrayList<>();
 	private HashMap<String, JPanel> toBuy = new HashMap<>();
@@ -69,6 +71,21 @@ public class GeneralPaintStrategy {
 		panel.setBackground(color);
 		panel.setLayout(null);
 		return panel;
+	}
+	
+	public ArrayList<Color> getStatColors(){
+		initStatColors();
+		return statColors;
+	}
+	
+	public void initStatColors() {
+		statColors.add(LIGHT_BROWN);
+		statColors.add(MEDIUM_GREEN);
+		statColors.add(new Color(82, 121, 112));
+		statColors.add(new Color(133, 69, 144 ));
+		statColors.add(new Color(255, 195, 0 ));				
+		statColors.add(DARK_BROWN);
+		statColors.add(RED);
 	}
 	
 	//ok

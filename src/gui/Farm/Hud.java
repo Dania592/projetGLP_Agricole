@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,8 +21,10 @@ import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.ChoixPanel;
+import gui.Farm.farmer.FermierGui;
 import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.MarketGUI;
+import gui.statistique.TestStat;
 import process.action.task.Task;
 import process.game.SaveFarm;
 
@@ -118,6 +121,7 @@ public class Hud implements Serializable {
 		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
 		statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		component.add(statistique , JLayeredPane.DRAG_LAYER);
+		statistique.addMouseListener(new MouseHud());
 	}
 
 	public void addValidation() {
@@ -224,14 +228,14 @@ public class Hud implements Serializable {
 					addStat();
 				}
 			}
-			else {
-				if(e.getSource().equals(home)) {
+		
+			if(e.getSource().equals(home)) {
 					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
 					removeChoix();
 					new MarketGUI(frame);
 					frame.dispose();
 				}
-				else {
+				
 					if(e.getSource().equals(validate)) {
 						component.getChoix().removeElement(component.getSelected());
 						component.getHud().build();
@@ -244,8 +248,8 @@ public class Hud implements Serializable {
 							component.setSelected(component.getFarm().getFermier());
 							component.getHud().build();
 						}
-						else {
-							if(e.getSource().equals(save)) {
+					
+						if(e.getSource().equals(save)) {
 								SaveFarm save = new SaveFarm();
 								save.serializationSave(GameConfiguration.FILE_NAME_SAVE, component.getFarm());
 								new PopupSave(component);
@@ -256,9 +260,14 @@ public class Hud implements Serializable {
 									frame.dispose();
 									new FermierGui(frame , component.getFarm().getFermier());
 								}
-								
+								else {
+									if(e.getSource().equals(statistique)) {
+										JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+										frame.setVisible(false);
+										new TestStat(frame);
+										
 							}
-						}
+						
 					}
 				}
 			}

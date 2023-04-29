@@ -9,6 +9,7 @@ import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireStocks;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
@@ -138,6 +139,10 @@ public class GameBuilder {
 		Entrepot entrepot = new Entrepot(0,0,"entrepot", map);
 		stock.getGestionnaireStructure().add(entrepot);;
 		
+		
+		GestionnaireStocks.getInstance().getGraines().put(Graine.BROCCOLI_SEED, new Integer(5));
+		GestionnaireStocks.getInstance().getGraines().put(Graine.CACTUS_SEED, new Integer(2));
+		GestionnaireStocks.getInstance().getGraines().put(Graine.CORN_SEED, new Integer(10));
 	}
 	
 	private static void sethousePosition(Farm farm , Structure maison ) {

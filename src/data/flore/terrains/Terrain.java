@@ -1,12 +1,7 @@
 package data.flore.terrains;
 
-import java.awt.Taskbar.State;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
-
-import javax.swing.JLabel;
 
 import data.espece.Produceur;
 import data.espece.WaterConsumer;
@@ -14,9 +9,7 @@ import data.map.Map;
 import data.myExceptions.UnknownActivityException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
-import data.production.Produit;
 import data.production.Produits;
-import data.structure.hability.Actionnable;
 import data.structure.hability.Fixable;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;

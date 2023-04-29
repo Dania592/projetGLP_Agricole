@@ -41,6 +41,7 @@ public class TimeManager extends Thread{
             if (clock.getHour().getValue() == 24) {
                 dayCounter++;
                 FinanceManager.getInstance().incrementCounter();
+                
                 clock.getHour().setValue(0);
                 day = day.next();
             }
