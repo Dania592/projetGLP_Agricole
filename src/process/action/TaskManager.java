@@ -12,9 +12,16 @@ import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskCompleteException;
 import process.action.exception.structure.TaskNotNeededToBePerform;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.task.Task;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.TaskGenerator;
 import process.time.TimeManager;
 
 public class TaskManager{
@@ -22,9 +29,10 @@ public class TaskManager{
     private ArrayList<Task<?>> inProcess = new ArrayList<>();
     private ArrayList<Task<?>> taskCompleted = new ArrayList<>();
     private int currentHour;
-    private static TaskFactory taskFactory = TaskFactory.getInstance();
+    // private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager = TimeManager.getInstance();
-    
+    private static TaskGenerator taskGenerator = new TaskGenerator();
+
     private static TaskManager taskManager = new TaskManager();
     
     
@@ -40,15 +48,15 @@ public class TaskManager{
     }
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
-            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException {
+            throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         if(!isAnHourOfWork()){
             throw new AskingToWorkAtIllegalHourException(currentHour);
         }
-        Task<?> generatedTask = taskFactory.newTask(activity, actionnable);
+        Task<?> generatedTask = actionnable.launchAction(taskGenerator, activity);
         taskToBeLaunched.add(generatedTask);
     }
 
-    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException{
+    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
         addNewTask(currentHour,activity, actionnable);
     }
 
@@ -127,7 +135,7 @@ public class TaskManager{
         Task<?> task;
         while(activitiesIter.hasNext()){
             try {
-                task = taskFactory.newTask(activitiesIter.next(), actionnable);
+                task = actionnable.launchAction(taskGenerator,  activitiesIter.next());
                 possibleTaskToPerform.add(task);
             } catch (Exception e) {
             }
@@ -154,7 +162,7 @@ public class TaskManager{
         return taskToBeLaunched;
     }
 
-    public ArrayList<Task<?>> getinProcess() {
+    public synchronized ArrayList<Task<?>> getinProcess() {
         return inProcess;
     }
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.myExceptions.UnknownActivityException;
+import data.structure.Enclos;
 import data.structure.hability.Actionnable.ActionnableKey;
 
 public enum Activity  implements Serializable{
@@ -49,6 +50,7 @@ public enum Activity  implements Serializable{
     // ------------------------------------------------------------------- //
     
     // ---------------------- PUIT ---------------------- //
+    // `DRAW_WATER` is an activity that allows the player to draw water from a well.
     DRAW_WATER(2, "Puiser", Type.SPECIAL, ActionnableKey.PUIT, 2),
     COLLECT_WATER(2, "Récupere Eau", Type.GET_PRODUCTION, ActionnableKey.PUIT, 2),
     // ------------------------------------------------------------------- //

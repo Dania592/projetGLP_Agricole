@@ -30,7 +30,7 @@ public class Mouton extends AnimalProducteur{
 	private final static int PRIX_ACHAT = 100 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
-	private final static int QUANTITE = 10 ;
+	private final static int QUANTITE = 1 ;
 	private final static int SPEED_GROWTH = 2; 
 	private final static Laine laine = new Laine();
 	private final static Meat equivalentInMeat = new Meat();
@@ -81,7 +81,7 @@ public class Mouton extends AnimalProducteur{
 
 	@Override
 	public boolean needSpecialActionToGetProduction() {
-		return false;
+		return true;
 	}
 
 

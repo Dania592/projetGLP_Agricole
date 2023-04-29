@@ -7,6 +7,8 @@ import java.util.Iterator;
 import data.espece.Slaughtable;
 import data.espece.faune.Mouton;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Produit;
 import data.structure.hability.Distributor;
 import data.structure.hability.ProductifPlace;
@@ -16,6 +18,8 @@ import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
@@ -114,5 +118,12 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     public int getNumberOfTarget() {
         return getInHabitant().size();
     }
+
+    @Override
+    public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException{
+        return visitor.action(this, activity);
+    }
+
+
 
 }

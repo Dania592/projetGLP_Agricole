@@ -36,7 +36,6 @@ public class CollectTask extends Task<ProductifPlace> {
         } catch (UnableToPerformSuchActionWithCurrentActionnable e) {
             e.printStackTrace();
         }
-        System.out.println("Produits du gestionnaire : " + GestionnaireStocks.getInstance().toString());
     }
 
     @Override
@@ -45,6 +44,7 @@ public class CollectTask extends Task<ProductifPlace> {
 
     @Override
     protected void performSpecialActionToTerminateTask() {
+        System.out.println("Produits du gestionnaire : " + GestionnaireStocks.getInstance().toString());
     }
 
 

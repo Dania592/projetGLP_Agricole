@@ -2,6 +2,8 @@ package data.structure.hability;
 
 import java.util.ArrayList;
 
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.stucture_base.Position;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -39,6 +41,7 @@ public interface Actionnable{
     boolean isCurrentlyUsedForAnotherTask();
     void setStructureStatus(boolean isCurrentlyUsedForAnotherTask);
     <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
+    <T> T launchAction(PlaceVisitor<T> visitor, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     public Position getPosition();
     boolean isNeedToBeFixed();
     boolean isStatique();

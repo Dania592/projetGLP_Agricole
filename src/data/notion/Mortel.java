@@ -10,10 +10,6 @@ public interface Mortel{
         MOURANT;
     }
 
-    void empireEtatSante() throws MortException;
-    void amelioreEtatSante() throws EstDejaEnBonneSanteException;
-    void guerir() throws EstDejaEnBonneSanteException;
-
 
 
 

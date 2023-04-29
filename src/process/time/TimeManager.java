@@ -6,6 +6,10 @@ import process.transaction.FinanceManager;
 public class TimeManager extends Thread{
     private Clock clock;
     private int dayCounter;
+    public DayOfWeek getDay() {
+        return day;
+    }
+
     private boolean isTimeRunning;
     private DayOfWeek day;
     private int timeSpeed = 1; 

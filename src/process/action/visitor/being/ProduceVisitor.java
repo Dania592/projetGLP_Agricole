@@ -34,13 +34,10 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits> {
             if(productifCycle.getValue() == 0 && animal.getProductifState()!= ProductifState.UNABLE_TO_PRODUCE){
                 if(animal.needSpecialPlaceToGetProduction()){
                     animal.setProductifState(ProductifState.IN_WAIT_TO_BE_TRANSPORTED);
-                    System.out.println("ADD IN_WAIT_TO_BE_TRANSPORTED :  "+ animal);
                 }else if(animal.needSpecialActionToGetProduction()){
                     animal.setProductifState(ProductifState.IN_WAIT);
-                    System.out.println("ADD IN_WAIT_FOR_SPECIAL_ACTION :  "+ animal);
                 }else{
                     animal.setProductifState(ProductifState.HAVE_PRODUCE);
-                    System.out.println("A produit  : \n Nombre de producteur : ");
                 }
             }
         }

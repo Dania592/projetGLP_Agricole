@@ -8,6 +8,8 @@ import java.util.Iterator;
 import data.espece.Slaughtable;
 import data.espece.faune.Poule;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.ProductifPlace;
@@ -112,6 +114,16 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	@Override
 	public boolean needPlayerIntervention() {
 		return false;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
+			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
+			BeingCannotPerformSuchActionException, NotImplementYetException,
+			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

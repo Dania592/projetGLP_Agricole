@@ -13,7 +13,6 @@ public enum EvolutionTerrain {
 	;
 	
 	public EvolutionTerrain evolue(){
-		System.out.println("ON EVOLUE");
 		switch (this) {
 			case VIERGE : 
 				return LABOURE;

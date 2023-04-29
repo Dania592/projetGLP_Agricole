@@ -74,7 +74,7 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 
 	@Override
 	public boolean needSpecialActionToGetProduction() {
-		return true;
+		return false;
 	}
 
 	
