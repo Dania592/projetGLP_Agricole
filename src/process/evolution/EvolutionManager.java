@@ -87,10 +87,8 @@ public class EvolutionManager implements Serializable {
 		}if(haveToUpdateProducingStateOfCurrentlyUnabledProduceur(terrain)){
 			terrain.setProductifState(ProductifState.PRODUCING);
 		}
-		System.out.println(terrain);
 		}
 	}
-
 
 	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){
 		return terrain.getEvolution() == EvolutionTerrain.PLANTE && terrain.getProductifState()==ProductifState.UNABLE_TO_PRODUCE &&

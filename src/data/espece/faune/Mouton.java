@@ -99,6 +99,12 @@ public class Mouton extends AnimalProducteur{
 		throw new NoNeedToSendToAProductifPlace(this);
 	}
 
+
+	@Override
+	public String toString() {
+		return "Mouton [productif stat="+getProductifState()+"productionCycle"+getProductionCycle()+"]";
+	}
+
 	
 
 

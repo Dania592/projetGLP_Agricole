@@ -34,12 +34,10 @@ public class CareVisitor implements PlaceVisitor<Void>{
         while(produceurIt.hasNext()){
             currentProduceur =  produceurIt.next();
             currentProduceur.setProduceurType(currentProduceur.getProduceurType().upgradeProduceurType());
+            currentProduceur.setDoped(true);
         }
         return null;
     }
-
-
-
 
     @Override
     public Void action(Etable etable)
@@ -92,8 +90,9 @@ public class CareVisitor implements PlaceVisitor<Void>{
     public Void action(Terrain terrain)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
         terrain.setProduceurType(terrain.getProduceurType().upgradeProduceurType());
+        terrain.setDoped(true);
         return null;
-    }
+        }
 
     @Override
     public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,

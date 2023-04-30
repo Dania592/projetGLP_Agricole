@@ -14,6 +14,7 @@ import data.espece.faune.Poule;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.production.exception.NonExistantProduceException;
@@ -50,7 +51,8 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
             currentProduceur =  produceurIter.next(); 
             try {
                 production = currentProduceur.launchAction(producer);
-                addToProduction(productifPlace, production, currentProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
+                addToProduction(productifPlace, production,  currentProduceur.getProcuedQuantity());
+                // addToProduction(productifPlace, production, currentProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
             } catch (HaveNotProducedYetException  e) {
             } catch (BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException e) {
@@ -115,10 +117,9 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         Produits production;
         if(terrain.canLaunchProduction()){
             try {
-                production = terrain.launchAction(producer);
+                terrain.launchAction(producer);
                 if(terrain.getProductifState()==ProductifState.HAVE_PRODUCE){
-                    System.out.println("ONNNNNNNNNNNNNNNNNN EST DANS LA CONDITION");
-                    addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle()*terrain.getProcuedQuantity());
+                    addToProductionAccordingToProduceurType(terrain, terrain);
                     terrain.setProductifState(ProductifState.IN_WAIT); 
                 }
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
@@ -128,6 +129,16 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         }
         return null;
     }
+
+    public void addToProductionAccordingToProduceurType(ProductifPlace productifPlace, Produceur produceur){
+        if(produceur.isDoped() && (produceur.getEtatSante() != EtatSante.GRAVEMENT_MALADE || produceur.getEtatSante() != EtatSante.MALADE) ){
+            addToProduction(productifPlace, produceur.collectProduction(), Produceur.Type.DOPED_PRODUCEUR.getNumberOfProductPerProductifCycle()*produceur.getProcuedQuantity());
+            produceur.setDoped(false);
+        }else{
+            addToProduction(productifPlace, produceur.collectProduction(), produceur.getProduceurType().getNumberOfProductPerProductifCycle()*produceur.getProcuedQuantity());
+        }
+    }
+
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)

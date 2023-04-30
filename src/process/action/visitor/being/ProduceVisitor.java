@@ -83,6 +83,7 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits> {
 
     @Override
     public Produits action(Mouton mouton) throws HaveNotProducedYetException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+        System.out.println(mouton);
         return getAnimalToProduce(mouton);
 
     }

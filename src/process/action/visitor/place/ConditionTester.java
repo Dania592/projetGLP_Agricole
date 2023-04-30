@@ -215,6 +215,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
 			while(moutons.hasNext() && !haveProduced){
 				haveProduced = moutons.next().getProductifState() == ProductifState.IN_WAIT;
 			}
+        System.out.println(haveProduced);
 		return haveProduced;
     } 
 
@@ -325,7 +326,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
 
     private boolean canFertilise(Terrain terrain){
         return terrain.getProductifState() == ProductifState.PRODUCING && !(terrain.getEtatSante() == EtatSante.GRAVEMENT_MALADE) &&
-        !(terrain.getEtatSante() == EtatSante.MOURANT) && !(terrain.getProduceurType() == Produceur.Type.DOPED_PRODUCEUR) && terrain.getHydrationLevel() != HydrationLevel.IN_DANGER && terrain.getHydrationLevel() != HydrationLevel.DESHYDRATED;
+        !(terrain.getEtatSante() == EtatSante.MOURANT) && terrain.isDoped() ==  false && terrain.getHydrationLevel() != HydrationLevel.IN_DANGER && terrain.getHydrationLevel() != HydrationLevel.DESHYDRATED;
         //TODO on doit acheter donc vérifier qu'il y en a dans le gestionnaire
     }
 

@@ -32,7 +32,7 @@ public class Poule extends AnimalProducteur{
 	private final static int PRIX_ACHAT = 1000 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
-	private final static int QUANTITE = 10 ;
+	private final static int QUANTITE = 1 ;
 	private final static int SPEED_GROWTH = 5 ; 
 	private static Oeuf oeuf = new Oeuf();
 	private static Meat equivalentInMeat = new Meat();
@@ -98,5 +98,13 @@ public class Poule extends AnimalProducteur{
 	public boolean haveToBeTranposted() throws NoNeedToSendToAProductifPlace {
 		return haveProduced();
 	}
+
+
+	@Override
+	public String toString() {
+		return "Poule ["+"producueur typ = "+getProduceurType()+"cycle prod"+getProductionCycle()+"productif state"+getProductifState()+"]";
+	}
+
+	
 	
 }

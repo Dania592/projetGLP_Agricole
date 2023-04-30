@@ -51,8 +51,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         while(moutonIter.hasNext()){
             currentMouton = moutonIter.next();
             if(currentMouton.haveProduced()){
-                System.out.println("C'est ça production :"+currentMouton.collectProduction());
-                GestionnaireStocks.getInstance().add(currentMouton.collectProduction(),currentMouton.getProcuedQuantity());
+                GestionnaireStocks.getInstance().add(currentMouton.collectProduction(),currentMouton.getProcuedQuantity()*currentMouton.getProduceurType().getNumberOfProductPerProductifCycle());
                 currentMouton.setProductifState(ProductifState.PRODUCING);
                 currentMouton.getProductionCycle().reset();
             }
