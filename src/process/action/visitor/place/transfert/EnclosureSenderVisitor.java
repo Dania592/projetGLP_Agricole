@@ -55,6 +55,8 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
                 avalableEnclosures.add(currentEnclosure);
                 numberOfPlacesToLookFor-= currentEnclosureCapacity;
             }
+        }if(numberOfPlacesToLookFor>0){
+            throw new UnableToMakeTheTransfertException("No enclosure left");
         }
         return avalableEnclosures;
     }

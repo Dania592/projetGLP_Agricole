@@ -31,13 +31,13 @@ public class GestionnaireStocksGUI extends JFrame {
 	public static int WIDTH = 895;
 	public static int HEIGHT = 530;
 
-	private GeneralPaintStrategy paintStrategy = new GeneralPaintStrategy();
+	private GeneralPaintStrategy paintStrategy;
 
 	private static final long serialVersionUID = 1L;
 	
 	public GestionnaireStocksGUI(String title, JFrame container, int tab) {
 		super(title);
-
+		paintStrategy  = new GeneralPaintStrategy();
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(paint(tab));	
@@ -59,7 +59,7 @@ public class GestionnaireStocksGUI extends JFrame {
 		int width = GestionnairePaintStrategy.MANAGER_CARD_WIDTH*GestionnairePaintStrategy.MANAGER_COLUMN_COUNT + ((GestionnairePaintStrategy.MANAGER_COLUMN_COUNT + 1)*GestionnairePaintStrategy.MIN_SPACE_BETWEEN);
 		int height = GestionnairePaintStrategy.MANAGER_CARD_HEIGHT*GestionnairePaintStrategy.MANAGER_ROW_COUNT + ((GestionnairePaintStrategy.MANAGER_ROW_COUNT + 1 )*GestionnairePaintStrategy.MIN_SPACE_BETWEEN);
 		
-		return paintStrategy.paintGestionnaire(0,0, width, height, MANAGER_ROW_COUNT, MANAGER_COLUMN_COUNT, MIN_SPACE_BETWEEN, MANAGER_CARD_WIDTH, MANAGER_CARD_HEIGHT, MANAGER_CARD_COLOR, PaintKeys.STOCK, null, null,tab);			
+		return paintStrategy.paintGestionnaire(width, height, MANAGER_ROW_COUNT, MANAGER_COLUMN_COUNT, MIN_SPACE_BETWEEN, MANAGER_CARD_WIDTH, MANAGER_CARD_HEIGHT, MANAGER_CARD_COLOR, PaintKeys.STOCK, null, null,tab);			
 	}
 	
 

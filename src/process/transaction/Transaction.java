@@ -1,9 +1,8 @@
 package process.transaction;
 
-import data.finance.Finance;
 import gui.gestionnaire.keys.Keys;
 
-public abstract class Transaction implements Finance{
+public abstract class Transaction{
 	
 	private boolean validated = false;
 	private float totalCost;

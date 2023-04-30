@@ -49,6 +49,19 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
         return GestionnaireStocks.getInstance().getProduits().get(Produits.WATER) != null;
     }
 
+    public boolean needToBeHydrated(Hydratable hydratablePlace){
+        boolean needToBeHydrated = true;
+        if(hydratablePlace.getSpecificActionnableKey() == ActionnableKey.TERRAIN){
+            needToBeHydrated = ((Terrain)hydratablePlace).getProductifState() == ProductifState.PRODUCING;
+        }
+        System.out.println(needToBeHydrated +"&&"+ hydratablePlace.isNeedToBeHydrated() +"&&"+ haveWater());
+        needToBeHydrated = needToBeHydrated && hydratablePlace.isNeedToBeHydrated() && haveWater();
+        return needToBeHydrated;
+    }
+
+
+    
+
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
@@ -80,7 +93,6 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Terrain terrain) {
         terrain.setHydrationLevel(HydrationLevel.FULLY_HYDRATED);
-        terrain.getHydrationCounter().reset();
         return null;
     }
 

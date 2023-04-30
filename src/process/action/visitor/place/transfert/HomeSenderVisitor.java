@@ -8,9 +8,6 @@ import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
 import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
-import data.espece.faune.NoNeedToSendToAProductifPlace;
-import data.espece.faune.Poule;
-import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -53,9 +50,6 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException| NotImplementYetException e) {
                 e.printStackTrace();
-            } catch (NoNeedToSendToAProductifPlace e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
         }
         distributor.removeAll(tranportableToRemove);
@@ -81,8 +75,8 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Enclos enclos){
-        Iterator<AnimalProducteur> animIterator = enclos.getAnimals().iterator();
-        return sendHome(enclos, animIterator);
+        Iterator<AnimalProducteur> animalProducteurIter = enclos.getAnimalStorage().getAnimals().iterator();
+        return sendHome(enclos , animalProducteurIter);
     }
 
     @Override

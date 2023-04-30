@@ -1,20 +1,19 @@
 package process.action.visitor.place;
 
+import java.io.Serializable;
 import java.util.HashMap;
 // import java.util.Iterator;
 import java.util.Iterator;
 
 import data.espece.Produceur;
 import data.espece.Slaughtable;
-import data.espece.Produceur.ProductifState;
+    import data.espece.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.MilkProduceur;
-import data.espece.faune.NoNeedToSendToAProductifPlace;
 import data.espece.faune.Poule;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
-import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.production.exception.NonExistantProduceException;
@@ -40,8 +39,9 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.transfert.EnclosureSenderVisitor;
 
-public class ProductionPerformer implements PlaceVisitor<Void>{
+public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     ProduceVisitor producer = new ProduceVisitor();
     
     private <T extends AnimalProducteur> Void performProduction(ProductifPlace productifPlace, Iterator<T> produceurIter) throws NotImplementYetException{
@@ -51,13 +51,12 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
             currentProduceur =  produceurIter.next(); 
             try {
                 production = currentProduceur.launchAction(producer);
-                addToProduction(productifPlace, production,  currentProduceur.getProcuedQuantity());
-                // addToProduction(productifPlace, production, currentProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
+                addToProduction(productifPlace, production, currentProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
             } catch (HaveNotProducedYetException  e) {
             } catch (BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException e) {
             } catch (UnableToMakeTheTransfertException e) {
-            } catch (NoNeedToSendToAProductifPlace e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -94,7 +93,15 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable(abatoire);
+        Iterator<Slaughtable> slaughtablesIter = abatoire.getAnimaltoSlaughter().iterator(); 
+        Slaughtable currentSlaughtable;
+        while(slaughtablesIter.hasNext()){
+            currentSlaughtable = slaughtablesIter.next();
+            addToProduction(abatoire, currentSlaughtable.getEquivalentInMeat().getType(), 1);
+        }
+        abatoire.getAnimaltoSlaughter().clear();
+        return null;
+
     }
 
     @Override
@@ -104,7 +111,18 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable{
-        throw new UnableToPerformSuchActionWithCurrentActionnable(salleDeTraite);
+        Iterator<MilkProduceur> milkProduceurIter = salleDeTraite.getMilkProduceur().iterator();
+        MilkProduceur currentMilkProduceur;
+        while(milkProduceurIter.hasNext()){
+            currentMilkProduceur = milkProduceurIter.next();
+            currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
+            if(currentMilkProduceur.haveProduced()){
+                addToProduction(salleDeTraite, currentMilkProduceur.collectProduction(), currentMilkProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
+                currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
+                
+            }
+        }
+        return null;
     }
 
     @Override
@@ -117,11 +135,8 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         Produits production;
         if(terrain.canLaunchProduction()){
             try {
-                terrain.launchAction(producer);
-                if(terrain.getProductifState()==ProductifState.HAVE_PRODUCE){
-                    addToProductionAccordingToProduceurType(terrain, terrain);
-                    terrain.setProductifState(ProductifState.IN_WAIT); 
-                }
+                production = terrain.launchAction(producer);
+                addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle());
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
@@ -129,16 +144,6 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         }
         return null;
     }
-
-    public void addToProductionAccordingToProduceurType(ProductifPlace productifPlace, Produceur produceur){
-        if(produceur.isDoped() && (produceur.getEtatSante() != EtatSante.GRAVEMENT_MALADE || produceur.getEtatSante() != EtatSante.MALADE) ){
-            addToProduction(productifPlace, produceur.collectProduction(), Produceur.Type.DOPED_PRODUCEUR.getNumberOfProductPerProductifCycle()*produceur.getProcuedQuantity());
-            produceur.setDoped(false);
-        }else{
-            addToProduction(productifPlace, produceur.collectProduction(), produceur.getProduceurType().getNumberOfProductPerProductifCycle()*produceur.getProcuedQuantity());
-        }
-    }
-
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)

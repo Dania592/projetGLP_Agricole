@@ -25,6 +25,10 @@ public class GestionnaireAnimaux implements GestionnaireInterface, Serializable{
 		return animaux;
 	}
 	
+	public void reset() {
+		animaux.clear();
+	}
+	
 	public void add(Animal animal) {
 		Animals key = animal.getKey();
 		if (animaux.containsKey(key)) {

@@ -46,7 +46,7 @@ public class GeneralPaintStrategy {
 	public static int WIDTH = 1000;
 	public static int HEIGHT = 620;
 	public static int RADIUS = 20;
-	
+
 	public static Color DARK_BROWN = new Color(68,40,24);
 	public static Color MEDIUM_BROWN = new Color(188,149,88);
 	public static Color LIGHT_BROWN = new Color(255,231,171);
@@ -56,24 +56,16 @@ public class GeneralPaintStrategy {
 	public static int FINANCE_MANAGER_ROW_COUNT = 5;
 	public static int FINANCE_MANAGER_COLUMN_COUNT = 1;
 	private HashMap<String, JPanel> tabs = new HashMap<>();
-	
-	private ArrayList<Color> statColors = new ArrayList<>();
 
+	public static Font font = new Font("Sans serif", Font.BOLD, 16);
 	private ArrayList<Container> containers = new ArrayList<>();
 	private int counter = 0;
 	
 	private JPanel principalPanel;
 	private JPanel terrainsPanel = new JPanel();
 	private JPanel enclosPanel = new JPanel();
-	
-	//ok
-	public JPanel paintNormalPanel(int x, int y, int w, int h, Color color) {
-		JPanel panel = new JPanel();
-		panel.setBounds(x,y,w,h);
-		panel.setBackground(color);
-		panel.setLayout(null);
-		return panel;
-	}
+		
+	private ArrayList<Color> statColors = new ArrayList<>();
 	
 	public ArrayList<Color> getStatColors(){
 		initStatColors();
@@ -88,6 +80,15 @@ public class GeneralPaintStrategy {
 		statColors.add(new Color(255, 195, 0 ));				
 		statColors.add(DARK_BROWN);
 		statColors.add(RED);
+	}
+	
+	//ok
+	public JPanel paintNormalPanel(int x, int y, int w, int h, Color color) {
+		JPanel panel = new JPanel();
+		panel.setBounds(x,y,w,h);
+		panel.setBackground(color);
+		panel.setLayout(null);
+		return panel;
 	}
 	
 	//ok
@@ -187,6 +188,8 @@ public class GeneralPaintStrategy {
 			int posX = 0;
 			int posY = 0;
 			for (int i = 0; i < cardCount; i++) {
+				System.out.println(cardCount);
+				System.out.println(key + " " + type);
 				JPanel card = paintCard(posX, posY, cardWidth, cardHeight, gap, key, elements, color, type, achat, market);
 				if (card != null) {
 					innerContainer.add(card);
@@ -518,7 +521,9 @@ public class GeneralPaintStrategy {
 	}
 	
 	public JPanel paintMarketCard(int posX, int posY, int width, int height, int gap,PaintKeys type, GestionnaireKey key, ArrayList<Keys> elements, Color color, Transaction achat, MarketGUI market) {
+		System.out.println(counter);
 		Keys element = elements.get(counter);
+		System.out.println(element.name());
 		String[] infos = getArticleInformation(element, key, type);
 		String imagePath = infos[1];
 		JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
@@ -536,7 +541,7 @@ public class GeneralPaintStrategy {
 		
 		JButton acheter;
 		String image = "src"+File.separator+"ressources"+File.separator+"price.png";
-		JLabel price = printImageLabel(infos[2], 5*gap, 2 * gap + 125, width - (8*gap), 25, image);
+		JLabel price = printImageLabel(infos[2], 5*gap, 2 * gap + 125, width - (8*gap), 25, image, null);
 		if (!type.equals(PaintKeys.SELL)) {
 			if (key.equals(GestionnaireKey.RECRUT)) {
 				acheter = paintButton(2*gap, 2 * gap + 160, width - (4*gap), 30, GestionnaireStocksGUI.DARK_GREEN, Color.WHITE,null, "Recruter");
@@ -591,7 +596,7 @@ public class GeneralPaintStrategy {
 		}
 	}
 	
-	public JLabel printImageLabel(String price, int x, int y, int w, int h, String imagePath) {
+	public JLabel printImageLabel(String price, int x, int y, int w, int h, String imagePath, Font font) {
 	    ImageIcon icon = new ImageIcon(imagePath);
 
 	    JLabel label= new JLabel() {
@@ -599,6 +604,11 @@ public class GeneralPaintStrategy {
 			public void paintComponent(Graphics g) {
 		        g.drawImage(icon.getImage(), 0, 0, null);
 		        super.paintComponent(g);
+		        if (font == null) {
+		        	setFont(getFont());
+		        } else {
+		        	setFont(font);
+		        }
 		    }
 	    };
 
@@ -610,8 +620,8 @@ public class GeneralPaintStrategy {
 	    return label;
 	}
 		
-	public JPanel paintGestionnaire(int x, int y, int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, PaintKeys type, Transaction transaction, MarketGUI market, int tab) {
-		principalPanel = paintNormalPanel(x, y, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
+	public JPanel paintGestionnaire(int width, int height, int rowCount, int columnCount, int gap, int cardWidth, int cardHeight, Color cardColor, PaintKeys type, Transaction transaction, MarketGUI market, int tab) {
+		principalPanel = paintNormalPanel(0, 0, WIDTH, HEIGHT, GeneralPaintStrategy.LIGHT_BROWN);
 		
 		CardLayout cardLayout = new CardLayout();
 		
@@ -634,15 +644,15 @@ public class GeneralPaintStrategy {
 		
 		if (!type.equals(PaintKeys.EMPLOY)) {
 			JLabel next = new JLabel();
-			next.setBounds(posX + width + 2*gap + labelWidth, HEIGHT/2, labelWidth, labelWidth);
-			ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next.png");
+			next.setBounds(posX + width + 2*gap + labelWidth, (HEIGHT - tabX - labelWidth)/2, labelWidth, labelWidth);
+			ImageIcon nextIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"next0.png");
 			next.setIcon(nextIcone);	
 			principalPanel.add(next);
 			next.addMouseListener(new Next(cardLayout, tabbedPane,containers));
 			
 			JLabel previous = new JLabel();
-			previous.setBounds(gap,HEIGHT/2,labelWidth,labelWidth);
-			ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous.png");
+			previous.setBounds(gap,(HEIGHT - tabX - labelWidth)/2,labelWidth,labelWidth);
+			ImageIcon previousIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"previous0.png");
 			previous.setIcon(previousIcone);	
 			principalPanel.add(previous);
 			previous.addMouseListener(new Previous(cardLayout, tabbedPane, containers));	
@@ -806,8 +816,16 @@ public class GeneralPaintStrategy {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println(employee);
+			gestionnaireRH.recruter(employee);
+//			gestionnaireRH.printEmployees();
 			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
-			gestionnaireRH.recruter(gestionnaireRH.getARecruter().get(employee));
+//			Container panel = button.getParent().getParent();
+//			//panel.remove(button.getParent());
+//			panel.revalidate();
+//			panel.repaint();
+//						
+//			gestionnaireRH.printRecruts();
 			frame.dispose();
 			new InfosTransaction(employee.toString() + " recruté !", frame);
 		}

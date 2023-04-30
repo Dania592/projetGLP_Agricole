@@ -1,5 +1,6 @@
 package gui.gestionnaire;
 
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -18,10 +19,12 @@ public class Home extends JFrame{
 	private JLabel stocks;
 	private JLabel finances;
 	private JLabel recruter;
-	private GeneralPaintStrategy generalPaintStrategy = new GeneralPaintStrategy(); 
+	private GeneralPaintStrategy generalPaintStrategy; 
+	private Font font = new Font(Font.SANS_SERIF,  Font.BOLD, 12);
 	
 	public Home(JFrame frame) {
 		Action action = new Action();
+		generalPaintStrategy  = new GeneralPaintStrategy();
 		
 		getContentPane().setLayout(null);
 		
@@ -30,7 +33,7 @@ public class Home extends JFrame{
 		avatar.setBounds(39, 10, 127, 170);
 		getContentPane().add(avatar);
 		
-		JLabel message = generalPaintStrategy.printImageLabel("Message par défaut à modifier", 10, 167, 215, 100, "src"+File.separator+"ressources"+File.separator+"homeMessage.png");
+		JLabel message = generalPaintStrategy.printImageLabel("Message par défaut à modifier", 10, 167, 215, 100, "src"+File.separator+"ressources"+File.separator+"homeMessage.png",font);
 		getContentPane().add(message);
 		
 		panel = new RoundedPanel(30, GeneralPaintStrategy.MEDIUM_BROWN);
@@ -42,19 +45,19 @@ public class Home extends JFrame{
 		int height = 35;
 		int gap = GeneralPaintStrategy.MIN_SPACE_BETWEEN;
 		int cpt = 0;
-		acheter = generalPaintStrategy.printImageLabel("Acheter", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"acheter.png");
+		acheter = generalPaintStrategy.printImageLabel("Acheter", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"acheter.png",font);
 		acheter.addMouseListener(action);
 		cpt++;
-		vendre = generalPaintStrategy.printImageLabel("Vendre", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"vendre.png");
+		vendre = generalPaintStrategy.printImageLabel("Vendre", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"vendre.png",font);
 		vendre.addMouseListener(action);
 		cpt++;
-		stocks = generalPaintStrategy.printImageLabel("Consulter le stock", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"stocks.png");
+		stocks = generalPaintStrategy.printImageLabel("Consulter le stock", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"stocks.png",font);
 		stocks.addMouseListener(action);
 		cpt++;
-		finances = generalPaintStrategy.printImageLabel("Gérer les finances", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"finances.png");
+		finances = generalPaintStrategy.printImageLabel("Gérer les finances", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"finances.png",font);
 		finances.addMouseListener(action);
 		cpt++;
-		recruter = generalPaintStrategy.printImageLabel("Recruter", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"vendre.png");
+		recruter = generalPaintStrategy.printImageLabel("Recruter", 10, gap + (cpt * (gap + height)), width, height, "src"+File.separator+"ressources"+File.separator+"vendre.png",font);
 		recruter.addMouseListener(action);
 		
 		panel.add(vendre);

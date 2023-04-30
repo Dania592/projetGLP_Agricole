@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import data.finance.Banque;
 import data.finance.Charge;
 import data.finance.TypeCharge;
+import data.gestion.GestionnaireRH;
 import data.notification.Message;
 import data.notification.Messagerie;
 import data.time.Clock;
+import process.game.Jeu;
 import process.time.TimeManager;
 
 public class FinanceManager {
@@ -17,6 +19,7 @@ public class FinanceManager {
 	private Clock clock = TimeManager.getInstance().getClock();
 	private ArrayList<Charge> charges = new ArrayList<>();
 	private int counter = 0;
+	private Jeu jeu;
 	
 	private FinanceManager() {
 	}
@@ -25,6 +28,15 @@ public class FinanceManager {
 	
 	public static FinanceManager getInstance() {
 		return instance;
+	}
+	
+	public void reset() {
+		charges.clear();
+		counter = 0;
+	}
+	
+	public void setJeu(Jeu jeu) {
+		this.jeu = jeu;
 	}
 	
 	public ArrayList<Charge> getCharges(){
@@ -61,10 +73,17 @@ public class FinanceManager {
 			for (int i = 0; i < charges.size(); i++) {
 				Charge charge = charges.get(i);
 				if ((charge.getDelais() == 0) && !charge.isPaid()) {
-					Banque.getInstance().debiter(charge.getMontant() + (0.1*charge.getMontant()));
-					charge.setPaid(true);
-					charges.remove(charge);
-					Messagerie.getInstance().addMessage(new Message("Pénalités pour retard  " + EOL + "de paiement", clock.getHour().getValue(), clock.getMinute().getValue()));
+					if ((Banque.getInstance().getCompte().getSolde() - charge.getMontant() - (0.1*charge.getMontant()) > 0)){
+						Banque.getInstance().debiter((float)(charge.getMontant() + (0.1*charge.getMontant())));
+						charge.setPaid(true);
+						charges.remove(charge);
+						if (charge.getType().equals("Salaires")) {
+							GestionnaireRH.getInstance().licencier();
+						}
+						Messagerie.getInstance().addMessage(new Message("Pénalités pour retard  " + EOL + "de paiement", clock.getHour().getValue(), clock.getMinute().getValue()));	
+					} else {
+						jeu.GameOver();
+					}
 				} else {
 					charge.setDelais(charge.getDelais() - 1);
 				}

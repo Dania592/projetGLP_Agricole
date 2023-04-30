@@ -1,6 +1,7 @@
 package data.gestion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.acteur.Employee;
@@ -20,6 +21,11 @@ public class GestionnaireRH implements GestionnaireInterface, Serializable{
 	}
 	
 	private static GestionnaireRH instance = new GestionnaireRH();
+	
+	public void reset() {
+		employees.clear();
+		initialize();
+	}
 	
 	public HashMap<Employees, Employee> getAll(){
 		HashMap<Employees, Employee> newHashMap = new HashMap<>();
@@ -48,19 +54,37 @@ public class GestionnaireRH implements GestionnaireInterface, Serializable{
 		return aRecruter.size();
 	}
 	
-	public void recruter(Employee employee) {
-		if (!employee.getRecrute()) {
-			employee.settRecrute(true);
-			employees.put(employee.getNom(), employee);	
-			aRecruter.remove(employee.getNom());
+	public void recruter(Employees employee) {
+		Employee recrut = aRecruter.get(employee);
+		if (!recrut.getRecrute()) {
+			employees.put(employee, recrut);	
+			aRecruter.remove(employee, recrut);
+			recrut.settRecrute(true);
+		}
+	}
+	
+	public void licencier(Employees employee) {
+		Employee recrut = aRecruter.get(employee);
+		if (recrut.getRecrute()) {
+			recrut.settRecrute(false);
+			aRecruter.put(recrut.getNom(), recrut);	
+			employees.remove(recrut.getNom());
 		}
 	}
 	
 	public void licencier(Employee employee) {
 		if (employee.getRecrute()) {
-			employee.settRecrute(true);
+			employee.settRecrute(false);
 			aRecruter.put(employee.getNom(), employee);	
 			employees.remove(employee.getNom());
+		}
+	}
+	
+	public void licencier() {
+		ArrayList<Employee> aLicencier = new ArrayList<Employee>(employees.values());
+		int i = (int) (Math.random() * aLicencier.size());
+		if (aLicencier.size() > i) {
+			licencier(aLicencier.get(i));
 		}
 	}
 	
@@ -81,5 +105,18 @@ public class GestionnaireRH implements GestionnaireInterface, Serializable{
 		aRecruter.put(Employees.HARRY, new Employee(Employees.HARRY, 0, 0,Employees.HARRY.getPrixAchat() , null, map));
 	}
 	
+	public void printEmployees() {
+		System.out.println("Employeeeeeeeee *********************************");
+		for (Employees employee : employees.keySet()) {
+			System.out.println(employee.toString());
+		}
+	}
+	
+	public void printRecruts() {
+		System.out.println("Recruts *********************************");
+		for (Employees employee : aRecruter.keySet()) {
+			System.out.println(employee.toString());
+		}
+	}
 	
 }

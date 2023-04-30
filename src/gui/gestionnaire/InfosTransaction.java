@@ -36,6 +36,7 @@ public class InfosTransaction extends JFrame {
 				if (frame != null) {
 					frame.setVisible(true);
 				}
+				//new RHManagerGUI(frame, 0);
 				InfosTransaction.this.dispose();
 			}
 			

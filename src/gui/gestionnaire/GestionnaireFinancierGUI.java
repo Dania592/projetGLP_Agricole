@@ -20,14 +20,14 @@ public class GestionnaireFinancierGUI extends JFrame{
 	public static int ROW_COUNT = 5;
 	public static int COLUMN_COUNT = 1;
 	
-	private GeneralPaintStrategy generalPaintStrategy = new GeneralPaintStrategy();
+	private GeneralPaintStrategy generalPaintStrategy;
 	
 	public GestionnaireFinancierGUI(JFrame parent, int tab) {
-		
+		generalPaintStrategy  = new GeneralPaintStrategy();
 		int width = 600;
 		int height = 450;
 		
-		JPanel principalPanel = generalPaintStrategy.paintGestionnaire(0, 0, width, height,ROW_COUNT, COLUMN_COUNT, GeneralPaintStrategy.MIN_SPACE_BETWEEN, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, PaintKeys.FINANCE, null, null,tab);
+		JPanel principalPanel = generalPaintStrategy.paintGestionnaire(width, height,ROW_COUNT, COLUMN_COUNT, GeneralPaintStrategy.MIN_SPACE_BETWEEN, width - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, (height/ROW_COUNT) - 2*GeneralPaintStrategy.MIN_SPACE_BETWEEN, GeneralPaintStrategy.LIGHT_BROWN, PaintKeys.FINANCE, null, null,tab);
 		
 		Container container = getContentPane();
 		container.setLayout(null);

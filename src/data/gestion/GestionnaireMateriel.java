@@ -33,6 +33,11 @@ public class GestionnaireMateriel implements GestionnaireInterface, Serializable
 		return instance;
 	}
 	
+	public void reset() {
+		outils.clear();
+		engins.clear();
+	}
+	
 	public void add(Outil outil) {
 		Outils type = outil.getType();
 		if (outils.containsKey(type)) {

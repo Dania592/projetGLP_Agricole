@@ -26,7 +26,7 @@ public class CareTask extends Task<ProductifPlace> {
     protected void performAction()
             throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException,
             UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException,
-            ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
+            ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         getActionnableTarget().launchAction(visitor);
     }
 

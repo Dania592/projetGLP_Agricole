@@ -20,7 +20,8 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Etable extends Refuge<Vache> implements SlaughterHouseSender<Vache>, Distributor<Vache>{
+public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>{
+	private ArrayList<Slaughtable> animalToSlaughter = new ArrayList<>();
 	private static boolean usedForAnAction = false;
 
 	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {
@@ -58,6 +59,17 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender<Vache>
 	}
 
 	@Override
+	public void addToSlaughter(Slaughtable slaughtable) {
+		animalToSlaughter.add(slaughtable);
+		getInHabitant().remove(slaughtable);
+	}
+
+	@Override
+	public ArrayList<Slaughtable> getAnimalToSlaugther() {
+		return animalToSlaughter;
+	}
+
+	@Override
 	public boolean readyToSend() {
 		return true; 
 	}
@@ -65,6 +77,11 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender<Vache>
 	@Override
 	public void addSpecialSenderElement(Vache specialSenderElement) {
 		addInHabitant(specialSenderElement);
+	}
+
+	@Override
+	public boolean isReadyToSendToSlaughterHouse() {
+		return !animalToSlaughter.isEmpty();
 	}
 
 	@Override
@@ -99,21 +116,6 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender<Vache>
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 			return visitor.action(this, activity); 
-	}
-
-	@Override
-	public ArrayList<Vache> getAnimalToTransfert() {
-		return getInHabitant();
-	}
-
-	@Override
-	public ArrayList<Vache> getAnimalToSlaugther() {
-		return getInHabitant();
-	}
-
-	@Override
-	public void removeAll() {
-		getInHabitant().clear();
 	}
 
 

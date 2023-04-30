@@ -66,8 +66,6 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
     protected void performSpecialActionToTerminateTask() {
         if(getActivity()==Activity.DRAW_WATER){
             System.out.println(GestionnaireStocks.getInstance());
-        }if(getActivity() == Activity.SHAVE_SHEEP){
-            System.out.println(GestionnaireStocks.getInstance());
         }
     }
     

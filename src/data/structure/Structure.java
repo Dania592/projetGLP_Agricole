@@ -35,9 +35,6 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 		charges = new Charge[2];
 	}
 
-	public void setFixableState(FixableState fixableState){
-		state = fixableState;
-	}
 
 	public float getPrixAchat() {
 		return prixAchat;

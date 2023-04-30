@@ -45,7 +45,7 @@ public class MarketGUI extends JFrame{
 
 	public static Color MARKET_CARD_COLOR = GestionnaireStocksGUI.LIGHT_BROWN;
 	public final static Font LABEL_FONT = new Font("Monospaced", Font.PLAIN|Font.BOLD, 20);
-	private GeneralPaintStrategy gestionnairePaintStrategy = new GeneralPaintStrategy();
+	private GeneralPaintStrategy gestionnairePaintStrategy;
 	private HashMap<Keys, BillArticlePanel> bill = new HashMap<>();
 	private JPanel billPanel = new JPanel();
 	private BoxLayout boxLayout = new BoxLayout(billPanel, BoxLayout.Y_AXIS);
@@ -127,6 +127,7 @@ public class MarketGUI extends JFrame{
 
 	public MarketGUI(JFrame frame, PaintKeys type, int tab) {
 		this.frame = frame;
+		gestionnairePaintStrategy  = new GeneralPaintStrategy();
 		if (type.equals(PaintKeys.BUY)) {
 			transaction = new Achat();
 		} else {
@@ -168,7 +169,7 @@ public class MarketGUI extends JFrame{
 		contentPane.add(billContainer);
 
 		//JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, PaintKeys.BUY, achat, this);
-		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, type, transaction, this, tab);
+		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, type, transaction, this, tab);
 		contentPane.add(principalPanel);
 
 	}
@@ -198,7 +199,7 @@ public class MarketGUI extends JFrame{
 		MapManager manager = GameBuilder.MapBuilder();
 		game.acheter(manager.getMap());
 		GestionnaireStocksGUI.achat = game.getAchat();
-		MarketGUI market = new MarketGUI(null,PaintKeys.SELL,0);
+		MarketGUI market = new MarketGUI(null,PaintKeys.BUY,0);
 	}
 	
 }

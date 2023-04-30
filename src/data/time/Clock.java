@@ -44,9 +44,7 @@ public class Clock implements Serializable{
     	return hour.toString() + " : " + minute.toString() + " : " + second.toString();
     }
 
-    
-
-    private void init() {
+    public void init() {
         hour.setValue(0);
         minute.setValue(0);
         second.setValue(0);

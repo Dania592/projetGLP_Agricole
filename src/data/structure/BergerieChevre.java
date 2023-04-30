@@ -20,7 +20,8 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender<Chevre>{
+public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender{
+    private ArrayList<Slaughtable> chevreToKill = new ArrayList<>();
     private boolean isUsedForATask = false;
 
     public BergerieChevre(int ligne_init, int colonne_init, String reference , Map map ) {
@@ -47,6 +48,18 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
         return visitor.action(this);
     }
 
+
+    @Override
+    public void addToSlaughter(Slaughtable slaughtable) {
+        chevreToKill.add(slaughtable);
+        getInHabitant().remove(slaughtable);
+    }
+
+    @Override
+    public ArrayList<Slaughtable> getAnimalToSlaugther() {
+        return chevreToKill;
+    }
+
     @Override
     public boolean isEmpty() {
        return getInHabitant().isEmpty();
@@ -66,6 +79,11 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     @Override
     public void addSpecialSenderElement(Chevre specialSenderElement) {
         getInHabitant().add(specialSenderElement);
+    }
+
+    @Override
+    public boolean isReadyToSendToSlaughterHouse() {
+        return !chevreToKill.isEmpty();
     }
 
     @Override
@@ -108,21 +126,6 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         return visitor.action(this, activity);
-    }
-
-    @Override
-    public ArrayList<Chevre> getAnimalToTransfert() {
-        return getInHabitant();
-    }
-
-    @Override
-    public ArrayList<Chevre> getAnimalToSlaugther() {
-        return getInHabitant();
-    }
-
-    @Override
-    public void removeAll() {
-        getInHabitant().clear();
     }
     
 }

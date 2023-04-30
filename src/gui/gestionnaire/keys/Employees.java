@@ -5,10 +5,10 @@ import process.visitor.KeyVisitor;
 
 public enum Employees implements Keys{
 	
-	PAUL(100),
-	JULIE(100),
-	HARRY(100),
-	JEAN(100);
+	PAUL(50),
+	JULIE(50),
+	HARRY(50),
+	JEAN(50);
 
 	private float salaire;
 	
@@ -39,6 +39,14 @@ public enum Employees implements Keys{
 	@Override
 	public float getPrixVente() {
 		return 0;
+	}
+	
+	public static float getTotalSalaryToPay() {
+		float montant = 0;
+		for (Employees employee : values()) {
+			montant += employee.getPrixAchat();
+		}
+		return montant;
 	}
 
 }

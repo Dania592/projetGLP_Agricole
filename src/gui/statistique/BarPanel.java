@@ -74,7 +74,7 @@ public class BarPanel extends StatPanel{
 			HashMap<Animals, ArrayList<Animal>> animals = GestionnaireAnimaux.getInstance().getAnimaux();
 			HashMap<String, Integer> donnees = new HashMap<>();
 			for(Animals animal : animals.keySet()) {
-				donnees.put(animal.name(),new Integer( animals.get(animal).size()));
+				donnees.put(animal.name(),Integer.valueOf( animals.get(animal).size()));
 			}
 			this.donnees=donnees;
 			initBar();			

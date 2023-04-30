@@ -10,7 +10,6 @@ import data.gestion.Stockage;
 import data.map.Map;
 import data.myExceptions.MortException;
 import data.structure.Structure;
-import data.time.BoundedCounter;
 import gui.gestionnaire.GestionnaireKey;
 import gui.gestionnaire.keys.Animals;
 import process.evolution.Direction;

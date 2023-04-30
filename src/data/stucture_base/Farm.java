@@ -1,3 +1,4 @@
+
 package data.stucture_base;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import data.time.Clock;
 import data.time.CyclicCounter;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
+import process.transaction.FinanceManager;
 
 public class Farm implements Serializable{
 
@@ -19,7 +21,7 @@ public class Farm implements Serializable{
 
 	private int height = 22; 
 	private int width = 38;
-	private int cptJour ;
+	private int cptJour;
 	private Saison saisonActuelle ;
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
@@ -31,13 +33,13 @@ public class Farm implements Serializable{
 	private int ligne ; 
 	private int colonne ; 
 	
-	public Farm(ElementManager manager, Fermier fermier ) {
+	public Farm( ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
 		messagerie = Messagerie.getInstance();
 		this.fermier=fermier;
 		ressourcesManager = RessourcesManager.getInstance();
-		nbEtoile =0;
+		nbEtoile = 0;
 		cptJour = 0;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager , clock);
@@ -96,6 +98,7 @@ public class Farm implements Serializable{
 		}
 		else{
 			cptJour ++;
+			FinanceManager.getInstance().incrementCounter();
 		}
 		setSaisonActuelle();
 	}
@@ -122,6 +125,7 @@ public class Farm implements Serializable{
 			}
 		}
 	}
+	
 	public ElementManager getManager() {
 		return elementManager;
 	}
@@ -137,6 +141,7 @@ public class Farm implements Serializable{
 	public Boolean isOnborderFarm(int ligne , int colonne  ) {
 		return ( this.ligne ==ligne) || (this.colonne == colonne) || ( ligne == (this.ligne+height-1)) || (colonne == (this.colonne+width-1)) ;
 	}
+	
 	public void reservePlaceToFarm() {
 		for(int ligneIndex = ligne ; ligneIndex < height+ligne ; ligneIndex ++) {
 			for(int colonneIndex = colonne ; colonneIndex < width+colonne; colonneIndex ++) {

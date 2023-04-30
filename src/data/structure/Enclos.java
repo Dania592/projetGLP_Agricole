@@ -328,6 +328,19 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 
 	@Override
+	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
+		if(activity == Activity.SHAVE_SHEEP){
+			boolean haveProduced = false;
+			Iterator<Mouton> moutons = getAnimalStorage().getMoutons().iterator();
+			while(moutons.hasNext() && !haveProduced){
+				haveProduced = moutons.next().getProductifState() == ProductifState.IN_WAIT;
+			}
+		return haveProduced;
+		}
+		throw new UnknownActivityException(activity);
+	}
+
+	@Override
 	public int getNumberOfTarget() {
 		return getAnimals().size();
 	}
@@ -349,16 +362,6 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) {
 		throw new UnsupportedOperationException("Utilisé seulement par les terrains");
-	}
-
-	@Override
-	public ArrayList<AnimalProducteur> getAnimalToTransfert() {
-		return animalStorage.getAnimals();
-	}
-
-	@Override
-	public void setFixableState(FixableState fixableState) {
-		this.state = fixableState;  
 	}
 	
 
