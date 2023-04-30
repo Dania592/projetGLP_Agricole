@@ -139,9 +139,10 @@ public class Board  extends JLayeredPane implements Serializable{
 		paintStrategy.paintProgressBar(g, taskManager);
 				
 		//night mode 
-//		if(farm.getClock().getMinute().getValue() == 2) {
-//			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
-//		}
+		if(!farm.getJourMode()) {
+			hud.remove_panels();
+			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
+		}
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

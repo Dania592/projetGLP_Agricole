@@ -220,7 +220,10 @@ public class FarmPaintStrategy implements Serializable {
 		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
 		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
 		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
-		graphics.drawImage(night.getImage(), x, y, dx, dy, null);	
+		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
+		
+		ImageIcon notif = new ImageIcon(GameConfiguration.IMAGE_PATH+"nightdraw.png");
+		graphics.drawImage(notif.getImage(), (GameConfiguration.WINDOW_WIDTH-300)/2, (GameConfiguration.WINDOW_HEIGHT-300)/2, 300, 300, null);
 	}
 	
 	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {

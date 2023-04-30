@@ -13,7 +13,7 @@ public class TimeManager extends Thread{
     private boolean gameOver = false;
     private boolean isTimeRunning;
     private DayOfWeek day;
-    private int timeSpeed = 1; 
+    private int timeSpeed = 10; 
     private static TimeManager timeManager = new TimeManager();
 
     // doit etre modifier pour prendre en compte l'etat de la ferme == jour , semaine ...
@@ -54,7 +54,7 @@ public class TimeManager extends Thread{
         		}
         	}
             try {
-                sleep(GameConfiguration.GAME_SPEED*timeSpeed);
+                sleep(GameConfiguration.GAME_SPEED/timeSpeed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -79,6 +79,10 @@ public class TimeManager extends Thread{
 
     public void stopTime(){
         isTimeRunning = false;
+    }
+    
+    public void setTimeSpeed(int coef) {
+    	timeSpeed=coef;
     }
 
 }

@@ -338,6 +338,13 @@ public class EvolutionManager implements Serializable {
 			}
 		}
 	}
+	
+	
+	public void switchNight() {
+		if(Clock.getInstance().getMinute().getValue()==10) {
+			
+		}
+	}
 
 
 }

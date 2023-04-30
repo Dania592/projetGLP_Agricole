@@ -6,7 +6,11 @@ import data.configuration.GameConfiguration;
 import data.finance.Banque;
 import data.gestion.RessourcesManager;
 import data.map.Map;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.stucture_base.Farm;
+import data.time.Clock;
+import gui.Farm.Hud;
 import gui.Farm.MainGuiTest;
 import gui.gestionnaire.GameOver;
 import process.action.TaskManager;
@@ -27,8 +31,9 @@ public class Jeu implements Runnable{
 	public Jeu(Farm farm,String title) {
 		this.farm = farm;
 		financeManager.setJeu(this);
-		timeManager = TimeManager.getInstance();
+		timeManager = TimeManager.getInstance();	
 		TimeManager.getInstance().setClock(farm.getClock());
+		TimeManager.getInstance().start();
 		taskManager = TaskManager.getInstance();
 		frame = new MainGuiTest(title, farm , taskManager);
 
@@ -57,6 +62,7 @@ public class Jeu implements Runnable{
 		Jeu jeu = new Jeu(ferme, "Nouvelle partie");
 		Thread gameThread = new Thread(jeu);
 		TimeManager.getInstance().reset();
+		//TimeManager.getInstance().start();
 		TimeManager.getInstance().gameOver(false);
 		gameThread.start();
 	}
@@ -69,8 +75,37 @@ public class Jeu implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			frame.getFarm().getEvolutionManager().UpdateEvolution();
-			taskManager.managingTask();
+			if(nightNotif()) {
+				Message message = new Message("La nuit arrive !", Clock.getInstance().getHour().getValue() , Clock.getInstance().getMinute().getValue());
+				Messagerie.getInstance().addMessage(message);
+			}
+			if(!isNight()) {
+				frame.getFarm().setJourMode(true);
+				TimeManager.getInstance().setTimeSpeed(20);
+				frame.getFarm().getEvolutionManager().UpdateEvolution();
+				taskManager.managingTask();				
+			}
+			else {
+				nightMode();	
+			}
 		}
+	}
+	
+	public boolean nightNotif() {
+		Clock clock =Clock.getInstance(); 
+		return clock.getHour().getValue()==10 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
+	}
+	
+	public boolean isNight() {
+		return TimeManager.getInstance().getClock().getHour().getValue()>=20 
+				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
+	}
+	
+	public void nightMode() {
+		if(isNight()) {
+			frame.getFarm().setJourMode(false);
+			TimeManager.getInstance().setTimeSpeed(50);
+		}
+		
 	}
 }

@@ -24,27 +24,35 @@ public class Farm implements Serializable{
 	private int cptJour;
 	private Saison saisonActuelle ;
 	private Fermier fermier ; 
+	private Boolean jour ;
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;
 	private ElementManager elementManager ;
 	private Clock clock ; 
 	private EvolutionManager evolutionManager ;
-	private Messagerie messagerie ;
 	private int ligne ; 
 	private int colonne ; 
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
-		messagerie = Messagerie.getInstance();
 		this.fermier=fermier;
 		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile = 0;
 		cptJour = 0;
+		jour = true ;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager , clock);
 		ligne = 2 ;
 		colonne = 5 ;
+	}
+	
+	public void setJourMode(Boolean switched) {
+		jour = switched ;
+	}
+	
+	public Boolean getJourMode() {
+		return jour;
 	}
 		
 	public ElementManager getElementManager() {

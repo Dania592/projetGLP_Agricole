@@ -17,7 +17,6 @@ import javax.swing.SwingUtilities;
 
 import data.configuration.GameConfiguration;
 import data.finance.Banque;
-import data.gestion.GestionnaireStocks;
 import data.notification.Messagerie;
 import data.time.Clock;
 import data.time.CyclicCounter;
@@ -28,8 +27,6 @@ import gui.Farm.messagerie.AlertPane;
 import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
-import gui.gestionnaire.gestionnairesGUI.MarketGUI;
-import gui.gestionnaire.keys.PaintKeys;
 import gui.statistique.TestStat;
 import process.action.task.Task;
 import process.game.SaveFarm;
@@ -119,7 +116,8 @@ public class Hud implements Serializable {
 		home.addMouseListener(new MouseHud());
 		component.add(home, JLayeredPane.DRAG_LAYER);	
 	}
-
+		
+	
 	public void addExtend() {
 		extend.setBounds(GameConfiguration.X_EXTEND_LABEL, GameConfiguration.Y_EXTEND_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		ImageIcon homeIcone= new ImageIcon("src"+File.separator+"ressources"+File.separator+"extend.png");
@@ -163,6 +161,7 @@ public class Hud implements Serializable {
 	public  void addStat() {
 		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"statistiques.png"));
 		statistique.setBounds(10, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		statistique.addMouseListener(new MouseHud());
 		component.add(statistique , JLayeredPane.DRAG_LAYER);
 	}
 
@@ -235,13 +234,16 @@ public class Hud implements Serializable {
 	}
 
 	public void addingChoix() {
-		component.getChoix().init();
-		choixScroll = new ChoixPanel(component);
-		choixScroll.setBounds(150, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-300, 160);
-		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
-		removeAlert();
-		if(!Arrays.asList(component.getComponents()).contains(statistique)) {
-			component.add(statistique , JLayeredPane.DRAG_LAYER);
+		if(component.getFarm().getJourMode()) {
+			component.getChoix().init();
+			choixScroll = new ChoixPanel(component);
+			choixScroll.setBounds(150, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-300, 160);
+			component.add(choixScroll, JLayeredPane.DRAG_LAYER);
+			removeAlert();
+			if(!Arrays.asList(component.getComponents()).contains(statistique)) {
+				component.add(statistique , JLayeredPane.DRAG_LAYER);
+			}
+			
 		}
 	}
 	
@@ -358,7 +360,6 @@ public class Hud implements Serializable {
 		messagerie = new MessageriePanel(Hud.this);
 		removeChoix();
 		removeAlert();
-		//messagerie.setBounds(10, GameConfiguration.WINDOW_HEIGHT-300, 200, 300);
 		component.add(messagerie , JLayeredPane.DRAG_LAYER);
 		component.remove(statistique);
 	}
