@@ -21,8 +21,6 @@ public interface Produceur extends DomesticSpecie{
     public enum Type{
         BAD_PRODUCEUR(1),
         AVERAGE_PRODUCEUR(2),
-        GOOD_PRODUCEUR(3),
-        FAST_PRODUCEUR(6),
         DOPED_PRODUCEUR(10),
         ;
 
@@ -44,10 +42,7 @@ public interface Produceur extends DomesticSpecie{
                 case BAD_PRODUCEUR : 
                     return AVERAGE_PRODUCEUR;
                 case AVERAGE_PRODUCEUR : 
-                    return GOOD_PRODUCEUR;
-                case GOOD_PRODUCEUR : 
-                    return FAST_PRODUCEUR;
-                case FAST_PRODUCEUR : 
+                    return DOPED_PRODUCEUR;
                 case DOPED_PRODUCEUR : 
                 default: 
                     return DOPED_PRODUCEUR;
@@ -56,12 +51,8 @@ public interface Produceur extends DomesticSpecie{
 
         public Type downgradeProduceurType(){
             switch(this){
-                case GOOD_PRODUCEUR : 
+                case DOPED_PRODUCEUR :
                     return AVERAGE_PRODUCEUR;
-                case FAST_PRODUCEUR : 
-                    return GOOD_PRODUCEUR;
-                case DOPED_PRODUCEUR: 
-                    return FAST_PRODUCEUR;
                 case BAD_PRODUCEUR : 
                 case AVERAGE_PRODUCEUR : 
                 default :
@@ -76,7 +67,7 @@ public interface Produceur extends DomesticSpecie{
 		MOUTON(200, Type.AVERAGE_PRODUCEUR),
 		POULE(10, Type.AVERAGE_PRODUCEUR),
 		VACHE(50, Type.AVERAGE_PRODUCEUR),
-        TERRAIN(500, Type.AVERAGE_PRODUCEUR),
+        TERRAIN(1000, Type.AVERAGE_PRODUCEUR),
 
         ;
     
@@ -114,5 +105,7 @@ public interface Produceur extends DomesticSpecie{
     EtatSante getEtatSante();
     int getProcuedQuantity();
     void setProduceurType(Type produceurType);
+    boolean isDoped();
+    void setDoped(boolean isDoped);
 
 }

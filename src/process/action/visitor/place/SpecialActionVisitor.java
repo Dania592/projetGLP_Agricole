@@ -106,6 +106,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                 break;
             case LABOURE : 
                 terrain.setType(Graine.BLUEBERRY_SEED); 
+                System.out.println("On a bien planter "+ terrain.getType()!= null);
                 terrain.setEvolution(EvolutionTerrain.PLANTE);
                 terrain.setProductifState(ProductifState.PRODUCING);
                 break;

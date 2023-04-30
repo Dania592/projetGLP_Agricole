@@ -30,5 +30,4 @@ public enum EvolutionAnimal{
 		return dureeEvolution;
 	}
 
-
 }

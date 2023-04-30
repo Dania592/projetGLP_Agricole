@@ -290,7 +290,8 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     case DIG_OVER:
                         return new SpecialTask(activity, terrain, specialTaskVisitor);
                     case PLANT:
-                        return new SpecialTask(activity, terrain, graine, specialTaskVisitor);
+                        // return new SpecialTask(activity, terrain, graine, specialTaskVisitor); TODO to change quand on aura la possibilité de séléctionner le type de graine
+                        return new SpecialTask(activity, terrain, specialTaskVisitor);
                     case TO_WATER:
                         return new GiveWaterTask(activity, terrain, hydrationVisitor);
                     case HARVEST:

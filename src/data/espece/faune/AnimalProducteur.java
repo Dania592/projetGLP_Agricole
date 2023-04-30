@@ -26,7 +26,7 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	private Produceur.Type produceurType;
 	private Produceur.TimeItTakes timeItTakesToProduce;
 	private Produit produit;
-
+	private boolean isDoped= false;
 	
 	
 	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
@@ -88,4 +88,15 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		return getKey();
 	}
 
+
+	@Override
+    public boolean isDoped() {
+        return isDoped;
+    }
+
+    @Override
+    public void setDoped(boolean isDoped) {
+		this.isDoped = isDoped;
+		
+    }
 }

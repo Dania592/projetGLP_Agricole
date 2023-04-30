@@ -1,4 +1,3 @@
-
 package data.stucture_base;
 
 import java.io.Serializable;
@@ -32,7 +31,7 @@ public class Farm implements Serializable{
 	private int ligne ; 
 	private int colonne ; 
 	
-	public Farm( ElementManager manager, Fermier fermier ) {
+	public Farm(ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
 		messagerie = Messagerie.getInstance();

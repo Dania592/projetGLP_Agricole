@@ -95,6 +95,7 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 		return Structures.SALLE_DE_TRAITE;
 	}
 
+	
 
 	
 }

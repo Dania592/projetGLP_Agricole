@@ -309,7 +309,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             case TO_WATER:
                 return canWaterField(terrain);
             case HARVEST:
-                return defaultConditionForCheckingProduction(terrain);
+                return canCollectPlant(terrain);
             case REMOVE_ROTTEN_PLANT:
                 return canRemoveRottenPlant(terrain);
             case FERTILIZE_GROUND:
@@ -319,9 +319,13 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
         }
     }
 
+    private boolean canCollectPlant(Terrain terrain){
+        return terrain.haveProduced();
+    }
+
     private boolean canFertilise(Terrain terrain){
         return terrain.getProductifState() == ProductifState.PRODUCING && !(terrain.getEtatSante() == EtatSante.GRAVEMENT_MALADE) &&
-        !(terrain.getEtatSante() == EtatSante.MOURANT) && !(terrain.getProduceurType() == Produceur.Type.DOPED_PRODUCEUR);
+        !(terrain.getEtatSante() == EtatSante.MOURANT) && !(terrain.getProduceurType() == Produceur.Type.DOPED_PRODUCEUR) && terrain.getHydrationLevel() != HydrationLevel.IN_DANGER && terrain.getHydrationLevel() != HydrationLevel.DESHYDRATED;
         //TODO on doit acheter donc vérifier qu'il y en a dans le gestionnaire
     }
 
@@ -343,7 +347,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     }
 
     private boolean canPlant(Terrain terrain){
-        return terrain.getEvolution() == EvolutionTerrain.LABOURE && terrain.getHydrationLevel() == HydrationLevel.FULLY_HYDRATED;
+        return terrain.getEvolution() == EvolutionTerrain.LABOURE && terrain.getHydrationLevel() == HydrationLevel.FULLY_HYDRATED && terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE;
     }
 
     private boolean canRemoveRottenPlant(Terrain terrain){

@@ -39,7 +39,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	// private static int SPEED = 10;// vitesse d'évolution
 	private static int DIMENSION = 16; // C'est un carré donc une seule dimension
 	private static float PRIX_ACHAT = 100;
-	private static int DEFAULT_PRODUCED_QUANTITY = 10;
+	private static int DEFAULT_PRODUCED_QUANTITY = 25;
 	private boolean isUsedForATask = false; 
 	private ProductifState productifState = ProductifState.UNABLE_TO_PRODUCE;
 	private HashMap<Produits, Integer> production = new HashMap<>();
@@ -53,7 +53,8 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	private EtatSante etatSante = EtatSante.BONNE_SANTE;
 	private CyclicCounter hydrationCounter = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde()/3); 
-	
+	private boolean isDoped = false;
+
 	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
 		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
 		evolution = EvolutionTerrain.VIERGE;
@@ -62,11 +63,10 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 			images = ImagesTerrains.getInstance().getImages().get(type);
 			setImage(images.get(evolution));
 		} else {
+			
 			images.put(EvolutionTerrain.VIERGE, "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
 			setImage("src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
 		}
-		// timeItTakesToProduce = 
-		// randomQuantity();
 	}
 
 	public void setType(Graine type) {
@@ -114,15 +114,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	public <T> T accept(GestionVisitor<T> visitor) {
 		visitor.visit(this);
 		return null;
-	}
-
-	@Override
-	public String toString() {
-		return "Terrain [isUsedForATask=" + isUsedForATask + ", productifState=" + productifState + ", production="
-				+ production + ", hydrationLevel=" + hydrationLevel + ", produceurType=" + produceurType
-				+ ", timeItTakesToProduce=" + timeItTakesToProduce.getTimeInSeconde() + ", productifCycle=" + productifCycle.getValue()
-				+ ", fixableState=" + fixableState + ", evolution=" + evolution + ", type=" + type + ", etatSante="
-				+ etatSante + ", CycleHydration = " +hydrationCounter+"]";
 	}
 
 	public CyclicCounter getHydrationCounter() {
@@ -194,7 +185,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 
 	@Override()
 	public boolean haveProduced() {
-		return evolution ==  EvolutionTerrain.PLANTE_5;
+		return productifState == ProductifState.IN_WAIT;
 	}
 
 	@Override
@@ -320,6 +311,17 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity, graine);
 	}
+
+	@Override
+	public boolean isDoped() {
+		return isDoped;
+	}
+
+    @Override
+    public void setDoped(boolean isDoped) {
+        this.isDoped = isDoped;
+    }
+
 
 
 

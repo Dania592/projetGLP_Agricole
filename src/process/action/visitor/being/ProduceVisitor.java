@@ -2,6 +2,7 @@ package process.action.visitor.being;
 
 import data.time.BoundedCounter;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import data.espece.Produceur;
@@ -17,6 +18,7 @@ import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.notion.Mortel.EtatSante;
 import data.production.Produits;
+import data.structure.hability.ProductifPlace;
 import data.time.CyclicCounter;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -101,8 +103,6 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits> {
     }
 
 
-
-
     @Override
     public Produits action(Terrain terrain) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
@@ -110,21 +110,21 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits> {
         updateProducingAbilityOfTerrain(terrain);
         CyclicCounter productifCycle = terrain.getProductionCycle(); 
         productifCycle.increment();
-        if(productifCycle.getValue() == 0 && (terrain.getProductifState()==ProductifState.PRODUCING || terrain.getProductifState()==ProductifState.IN_WAIT)){
+        if(terrain.getProductifState()==ProductifState.HAVE_PRODUCE){
+            return terrain.collectProduction();
+        }if(productifCycle.getValue() == 0 && (terrain.getProductifState()==ProductifState.PRODUCING || terrain.getProductifState()==ProductifState.IN_WAIT)){
             terrain.evoluer();
             terrain.getProductionCycle().setMax(terrain.getTimeItTakesToProduceInSeconde()*terrain.getEvolution().getDurationMultiplier());
+            if(terrain.getEvolution() == EvolutionTerrain.PLANTE_5){
+                terrain.setProductifState(ProductifState.HAVE_PRODUCE);
+            }
         }
-        if(terrain.getProductifState()==ProductifState.HAVE_PRODUCE){
-            terrain.setProductifState(ProductifState.IN_WAIT);
-            return terrain.collectProduction();
-        }else{
-            throw new HaveNotProducedYetException(terrain);
-        }
+        throw new HaveNotProducedYetException(terrain);
     }
 
 
     private void updateProducingAbilityOfTerrain(Terrain terrain){
-        if(terrain.getProductifState() != ProductifState.HAVE_PRODUCE && terrain.getEtatSante()!=  EtatSante.MALADE && terrain.getEtatSante()!=  EtatSante.GRAVEMENT_MALADE && terrain.getEvolution() == EvolutionTerrain.PLANTE_5){
+        if(terrain.getProductifState() != ProductifState.HAVE_PRODUCE && terrain.getEtatSante()!=  EtatSante.MALADE && terrain.getEtatSante()!=  EtatSante.GRAVEMENT_MALADE && terrain.getEvolution() == EvolutionTerrain.PLANTE_5 &&  terrain.getProductifState() != ProductifState.IN_WAIT){
             terrain.setProductifState(ProductifState.HAVE_PRODUCE);
         }if(terrain.getEtatSante() == EtatSante.MALADE || terrain.getEtatSante() == EtatSante.GRAVEMENT_MALADE ){
             terrain.setProduceurType(Produceur.Type.BAD_PRODUCEUR);

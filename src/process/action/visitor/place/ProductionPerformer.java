@@ -116,7 +116,11 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         if(terrain.canLaunchProduction()){
             try {
                 production = terrain.launchAction(producer);
-                addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle()*terrain.getProduction().get(production));
+                if(terrain.getProductifState()==ProductifState.HAVE_PRODUCE){
+                    System.out.println("ONNNNNNNNNNNNNNNNNN EST DANS LA CONDITION");
+                    addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle()*terrain.getProcuedQuantity());
+                    terrain.setProductifState(ProductifState.IN_WAIT); 
+                }
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
