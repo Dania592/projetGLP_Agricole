@@ -34,6 +34,12 @@ public class GestionnaireFinancier implements GestionnaireInterface, Serializabl
 		return instance;
 	}
 	
+	public void reset() {
+		achats.clear();
+		ventes.clear();
+		charges.clear();
+	}
+	
 	public void add(Achat achat) {
 		achats.add(achat);
 	}

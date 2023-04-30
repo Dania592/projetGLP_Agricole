@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import gui.gestionnaire.MarketGUI;
+import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 
 public class RemoveFromCart implements MouseListener{
 

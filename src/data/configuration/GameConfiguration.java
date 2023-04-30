@@ -28,17 +28,21 @@ public abstract class GameConfiguration {
 	
 	public final static int Y_MAP = 0 ;
 	
-	public final static int X_ADD_LABEL = WINDOW_WIDTH-100;
+	public final static int X_ADD_LABEL = WINDOW_WIDTH-70;
 
-	public final static int y_ADD_LABEL = WINDOW_HEIGHT-180;
+	public final static int y_ADD_LABEL = WINDOW_HEIGHT-140;
 	
-	public final static int X_HOME_LABEL = WINDOW_WIDTH-100;
+	public final static int X_HOME_LABEL = WINDOW_WIDTH-70;
 	
-	public final static int Y_HOME_LABEL = WINDOW_HEIGHT-110;
+	public final static int Y_HOME_LABEL = WINDOW_HEIGHT-70;
 	
-	public final static int HEIGHT_LABEL = 80 ;
+	public final static int HEIGHT_LABEL = 60 ;
 	
 	public final static int WIDHT_LABEL = 60 ;
+	
+	public final static int X_EXTEND_LABEL = 15;
+	
+	public final static int Y_EXTEND_LABEL = 20 + HEIGHT_LABEL;
 	
 	public final static int DIMENSION_STRUCUTRE = 4; 
 	

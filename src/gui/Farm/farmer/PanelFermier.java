@@ -3,26 +3,23 @@ package gui.Farm.farmer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
-import gui.gestionnaire.WindowDispose;
+import gui.gestionnaire.contolleurs.WindowDispose;
 
 public class PanelFermier extends JPanel{
 
@@ -36,11 +33,11 @@ public class PanelFermier extends JPanel{
 	private JFrame frame ;
 	private FermierGui fermierGui ;
 	 
-	public PanelFermier(Fermier fermier , JFrame frame , FermierGui fermierGui) {
+	public PanelFermier(Fermier fermier , JFrame frame , FermierGui fermierGui2) {
 		super();
 		this.frame=frame;
-		this.fermierGui=fermierGui;
-		this.fermier= fermier ;
+		this.fermierGui=fermierGui2;
+		this.fermier= fermier;
 		init();
 	}
 	

@@ -1,41 +1,17 @@
 package data.flore.terrains;
 
 public enum EvolutionTerrain {
-	VIERGE(1),
-	LABOURE(1),
-	PLANTE(3),
-	PLANTE_1(3),
-	PLANTE_2(3),
-	PLANTE_3(3),
-	PLANTE_4(3),
-	PLANTE_5(10),
-	POURRI(1)
+	VIERGE,
+	LABOURE,
+	PLANTE,
+	PLANTE_1,
+	PLANTE_2,
+	PLANTE_3,
+	PLANTE_4,
+	PLANTE_5,
+	POURRI//TODO trouver img terrain pourri
 	;
 	
-	int durationMultiplier;
-
-	private EvolutionTerrain(int durationMultiplier) {
-		this.durationMultiplier = durationMultiplier;
-	}
-
-
-
-
-	public int getDurationMultiplier() {
-		return durationMultiplier;
-	}
-
-	public static int getCompleteCycleDurationMultiplier(){
-		return PLANTE.durationMultiplier
-		+ PLANTE_1.durationMultiplier
-		+ PLANTE_2.durationMultiplier
-		+ PLANTE_3.durationMultiplier
-		+ PLANTE_4.durationMultiplier
-		+ PLANTE_5.durationMultiplier;
-	}
-
-
-
 	public EvolutionTerrain evolue(){
 		switch (this) {
 			case VIERGE : 

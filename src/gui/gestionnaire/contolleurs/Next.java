@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.contolleurs;
 
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.JTabbedPane;
 
-public class Previous implements MouseListener{
+public class Next implements MouseListener{
 	
 	private CardLayout layout;
 	private JTabbedPane container;
 	private ArrayList<Container> containers;
 	
-	Previous(CardLayout layout,JTabbedPane container,ArrayList<Container> containers){
+	public Next(CardLayout layout,JTabbedPane container,ArrayList<Container> containers){
 		this.layout = layout;
 		this.container = container;
 		this.containers = containers;
@@ -22,8 +22,7 @@ public class Previous implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		layout.previous(containers.get(container.getSelectedIndex()));
-		System.out.println("Previous clicked");
+		layout.next(containers.get(container.getSelectedIndex()));
 	}
 
 	@Override

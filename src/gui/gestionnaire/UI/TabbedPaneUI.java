@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.UI;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
+
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 
 public class TabbedPaneUI extends BasicTabbedPaneUI {
     private FontMetrics boldFontMetrics;

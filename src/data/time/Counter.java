@@ -31,7 +31,6 @@ public class Counter implements Serializable{
 			return ""+value;			
 		}
 	}
-
 	
 
 }

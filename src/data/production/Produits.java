@@ -1,6 +1,6 @@
 package data.production;
 
-import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Keys;
 import process.visitor.KeyVisitor;
 

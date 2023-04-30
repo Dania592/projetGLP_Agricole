@@ -1,6 +1,6 @@
 package process.transaction;
 
-import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Keys;
 import process.visitor.GestionVisitor;
 

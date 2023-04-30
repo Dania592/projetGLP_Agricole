@@ -60,6 +60,10 @@ public class GestionnaireTerrains implements GestionnaireInterface, Serializable
 		return size;
 	}
 	
+	public void reset() {
+		terrains.clear();
+	}
+	
 	public String toString() {
 		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
 		gestionnaire.append("\n\t\t Terrains :");

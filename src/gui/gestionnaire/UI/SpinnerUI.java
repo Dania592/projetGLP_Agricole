@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.UI;
 
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicSpinnerUI;

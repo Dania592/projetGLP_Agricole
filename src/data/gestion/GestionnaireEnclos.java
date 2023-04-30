@@ -23,6 +23,10 @@ public class GestionnaireEnclos implements GestionnaireInterface, Serializable{
 		return enclos;
 	}
 	
+	public void reset() {
+		enclos.clear();
+	}
+	
 	public void add(Enclos enclos) {
 		this.enclos.add(enclos);
 	}

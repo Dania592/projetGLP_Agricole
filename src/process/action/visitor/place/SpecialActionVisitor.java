@@ -3,9 +3,7 @@ package process.action.visitor.place;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.Slaughtable;
 import data.espece.Produceur.ProductifState;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
@@ -63,15 +61,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
-        Iterator<Slaughtable> slaughtablesIter = abatoire.getAnimaltoSlaughter().iterator(); 
-        Slaughtable currentSlaughtable;
-        while(slaughtablesIter.hasNext()){
-            currentSlaughtable = slaughtablesIter.next();
-            productionPerformer.addToProduction(abatoire, currentSlaughtable.getEquivalentInMeat().getType(), 1);
-        }
-        abatoire.getAnimaltoSlaughter().clear();
-        return null;
-
+        throw new UnableToPerformSuchActionWithCurrentActionnable();    
     }
 
     @Override
@@ -81,16 +71,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable {
-        Iterator<MilkProduceur> milkProduceurIter = salleDeTraite.getMilkProduceur().iterator();
-        MilkProduceur currentMilkProduceur;
-        while(milkProduceurIter.hasNext()){
-            currentMilkProduceur = milkProduceurIter.next();
-            if(currentMilkProduceur.haveProduced()){
-                productionPerformer.addToProduction(salleDeTraite, currentMilkProduceur.collectProduction(), currentMilkProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
-                currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
-            }
-        }
-        return null; 
+        throw new UnableToPerformSuchActionWithCurrentActionnable();
     }
 
     @Override
@@ -111,7 +92,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                 break;
             case POURRI:
                 terrain.setEvolution(EvolutionTerrain.VIERGE);
-                terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
+                
                 break;
             default : 
                 throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);

@@ -88,4 +88,14 @@ public class Map implements Serializable{
 		return instance;
 	}
 	
+	public void reset() {	
+		cases = new Case[nbLignes][nbColones];
+		for(int indexLigne=0 ; indexLigne <nbLignes ; indexLigne++) {
+			for(int indexColonne=0 ; indexColonne <nbColones;indexColonne++) {
+				cases[indexLigne][indexColonne]= new Case(true ,indexLigne , indexColonne);
+			}
+		}
+		case_inital = cases[0][0]; 
+	}
+	
 }

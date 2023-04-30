@@ -8,7 +8,6 @@ public interface Distributor<T extends Transportable> extends AbleToActOnInHabit
     boolean isEmpty(); 
     boolean readyToSend(); //MEthode  will be called to check if ready to send to place not excluding enclosure
     void addSpecialSenderElement(T specialSenderElement);
-    ArrayList<T> getAnimalToTransfert();
     void removeAll(ArrayList<T> transportableToRemoveList);
 
 }

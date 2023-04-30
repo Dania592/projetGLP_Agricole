@@ -30,6 +30,10 @@ public class GestionnaireStructures implements GestionnaireInterface, Serializab
 		return instance;
 	}
 	
+	public void reset() {
+		structures.clear();
+	}
+	
 	public void add(Structure structure) {
 		Structures key = structure.getKey();
 		if (structures.containsKey(key)) {

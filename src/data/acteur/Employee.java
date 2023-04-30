@@ -1,11 +1,11 @@
 package data.acteur;
 
-import data.gestion.GestionnaireRH;
 import data.map.Map;
 import gui.gestionnaire.keys.Employees;
 
 public class Employee extends Personne  {
 
+	private static final long serialVersionUID = 1L;
 	private float salaire;
 	private Employees nom;
 	private boolean recrute = false;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.espece.Transportable;
-import data.espece.faune.NoNeedToSendToAProductifPlace;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -41,18 +40,13 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
         while(iterator.hasNext()){
             currentTransportable = iterator.next();
             try {
-                if(currentTransportable.haveToBeTranposted()){
-                    currentTransportable.launchAction(productifPlaceSender);
-                    tranportableToRemove.add(currentTransportable);
-                }
-            }catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
+                currentTransportable.launchAction(productifPlaceSender);
+                tranportableToRemove.add(currentTransportable);
+            } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
                 e.printStackTrace();
             } catch (NotImplementYetException e) {
-                e.printStackTrace();
-            } catch (NoNeedToSendToAProductifPlace e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

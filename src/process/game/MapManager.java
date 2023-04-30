@@ -140,11 +140,14 @@ public class MapManager implements Serializable{
 	 * @return
 	 * @throws NoSuchElementException
 	 */
-	public Element get(String element) throws NoSuchElementException{
+	public Element get(String element) { //throws NoSuchElementException{
 		if(composants.containsKey(element)) {
 			return composants.get(element);
+		} else {
+			System.out.println("l'element à deplacer n'existe pas");
+			return null;
 		}
-		throw new NoSuchElementException("l'element à deplacer n'existe pas");
+		//throw new NoSuchElementException("l'element à deplacer n'existe pas");
 	}
 	
 	public Map getMap() {

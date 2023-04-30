@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.gestionnairesGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,7 +18,16 @@ import javax.swing.SwingConstants;
 
 import data.finance.Banque;
 import data.finance.Compte;
+import gui.gestionnaire.BillArticlePanel;
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.InfosTransaction;
+import gui.gestionnaire.RoundedPanel;
+import gui.gestionnaire.ValidationPanel;
+import gui.gestionnaire.UI.CustomizedScrollBar;
+import gui.gestionnaire.contolleurs.AddToCart;
+import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.Keys;
+import gui.gestionnaire.keys.PaintKeys;
 import process.game.Game;
 import process.game.GameBuilder;
 import process.game.MapManager;
@@ -45,7 +54,7 @@ public class MarketGUI extends JFrame{
 
 	public static Color MARKET_CARD_COLOR = GestionnaireStocksGUI.LIGHT_BROWN;
 	public final static Font LABEL_FONT = new Font("Monospaced", Font.PLAIN|Font.BOLD, 20);
-	private GeneralPaintStrategy gestionnairePaintStrategy = new GeneralPaintStrategy();
+	private GeneralPaintStrategy gestionnairePaintStrategy;
 	private HashMap<Keys, BillArticlePanel> bill = new HashMap<>();
 	private JPanel billPanel = new JPanel();
 	private BoxLayout boxLayout = new BoxLayout(billPanel, BoxLayout.Y_AXIS);
@@ -85,7 +94,7 @@ public class MarketGUI extends JFrame{
 	public void addToBill(Keys key, int w, int h, PaintKeys type) {
 		if (type.equals(PaintKeys.BUY) && compte.getSolde() >= (validationPanel.getTotalCost() + key.getPrixAchat()) || type.equals(PaintKeys.SELL)) {
 			if (!bill.containsKey(key)) {	
-				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
+				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null, type);
 				bill.put(key,panel);
 				billPanel.add(panel);
 				billPanel.add(Box.createRigidArea(new Dimension(0,5)));
@@ -127,6 +136,7 @@ public class MarketGUI extends JFrame{
 
 	public MarketGUI(JFrame frame, PaintKeys type, int tab) {
 		this.frame = frame;
+		gestionnairePaintStrategy  = new GeneralPaintStrategy();
 		if (type.equals(PaintKeys.BUY)) {
 			transaction = new Achat();
 		} else {
@@ -168,7 +178,7 @@ public class MarketGUI extends JFrame{
 		contentPane.add(billContainer);
 
 		//JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, PaintKeys.BUY, achat, this);
-		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(0,0, width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, type, transaction, this, tab);
+		JPanel principalPanel = gestionnairePaintStrategy.paintGestionnaire(width, height, MARKET_ROW_COUNT, MARKET_COLUMN_COUNT, MIN_SPACE_BETWEEN, MARKET_CARD_WIDTH, MARKET_CARD_HEIGHT, MARKET_CARD_COLOR, type, transaction, this, tab);
 		contentPane.add(principalPanel);
 
 	}
@@ -198,7 +208,7 @@ public class MarketGUI extends JFrame{
 		MapManager manager = GameBuilder.MapBuilder();
 		game.acheter(manager.getMap());
 		GestionnaireStocksGUI.achat = game.getAchat();
-		MarketGUI market = new MarketGUI(null,PaintKeys.SELL,0);
+		MarketGUI market = new MarketGUI(null,PaintKeys.BUY,0);
 	}
 	
 }

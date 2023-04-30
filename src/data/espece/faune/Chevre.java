@@ -11,7 +11,6 @@ import data.production.Produit;
 import data.production.Produits;
 import data.structure.Etable;
 import data.structure.Refuge;
-import data.time.BoundedCounter;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -25,6 +24,7 @@ import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 public class Chevre extends AnimalProducteur implements MilkProduceur{
 
 	private static final long serialVersionUID = 1L;
+	
 	private final static int DUREE_VIE = 500 ;
 	private final static int PRIX_ACHAT = 500 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
@@ -33,8 +33,7 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	private final static int SPEED_GROWTH = 1 ; 
 	private final static Lait lait = new Lait();
 	private final static Meat equivalentInMeat = new Meat();
-	private boolean isDoped = false; 
-
+	
 	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
 		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , map , SPEED_GROWTH);
@@ -68,18 +67,6 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 		return Structures.BERGERIE_CHEVRE;
 	}
 
-		
-	@Override
-    public boolean haveToBeTranposted() throws NoNeedToSendToAProductifPlace {
-        return haveProduced();
-    }
-
-    @Override
-	public boolean haveProduced() {
-		return getProductifState() == ProductifState.IN_WAIT_TO_BE_TRANSPORTED;
-	}
-
-
 	@Override
 	public Meat getEquivalentInMeat() {
 		return equivalentInMeat;
@@ -89,12 +76,6 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	public boolean needSpecialActionToGetProduction() {
 		return false;
 	}
-
-	@Override
-	public Structures getProductifPlaceLabel() {
-		return Structures.SALLE_DE_TRAITE;
-	}
-
 
 	
 }

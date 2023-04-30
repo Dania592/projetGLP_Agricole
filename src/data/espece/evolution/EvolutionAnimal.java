@@ -3,15 +3,9 @@ package data.espece.evolution;
 import data.myExceptions.MortException;
 
 public enum EvolutionAnimal{
-	JEUNE(2), 
-	ADULTE(10), 
-	VIEUX(5);
-
-	int dureeEvolution;
-	
-	private EvolutionAnimal(int dureeEvolution) {
-		this.dureeEvolution = dureeEvolution;
-	}
+	JEUNE, 
+	ADULTE, 
+	VIEUX;
 
 	public EvolutionAnimal evolue() throws MortException {
 		switch(this){
@@ -27,7 +21,16 @@ public enum EvolutionAnimal{
 	}
 
 	public int getDureeEvolution() {
-		return dureeEvolution;
+		switch(this) {
+		case JEUNE :
+			return 2;
+		case ADULTE : 
+			return 10 ;
+		case VIEUX : 
+			return 5 ;
+		default:
+			return 1 ;
+		}
 	}
 
 

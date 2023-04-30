@@ -81,7 +81,7 @@ public class ChoixFerme extends JFrame{
 			if(e.getSource().equals(lastFarme)) {
 				SaveFarm save = new SaveFarm();
 				Farm farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
-				Jeu jeu = new Jeu(farm);
+				Jeu jeu = new Jeu(farm, "Reprenez votre monde où vous l'avez laissé !");
 				Thread gameThread = new Thread(jeu);
 				gameThread.start();				
 				ChoixFerme.this.dispose();
@@ -89,7 +89,7 @@ public class ChoixFerme extends JFrame{
 			else {
 				if(e.getSource().equals(newFarme)) {
 					Farm farm=GameBuilder.buildinFarm();	
-					Jeu jeu = new Jeu(farm);
+					Jeu jeu = new Jeu(farm, "Nouvelle partie");
 					Thread game = new Thread(jeu);
 					game.start();						
 				}

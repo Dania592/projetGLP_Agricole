@@ -135,6 +135,7 @@ public class Board  extends JLayeredPane implements Serializable{
 			
 		}
 		hud.time();
+		hud.solde();
 		paintStrategy.paintProgressBar(g, taskManager);
 				
 		//night mode 

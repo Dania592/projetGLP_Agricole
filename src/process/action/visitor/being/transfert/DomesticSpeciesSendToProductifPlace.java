@@ -6,7 +6,6 @@ import java.util.Iterator;
 import data.espece.faune.Chevre;
 import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
-import data.espece.faune.NoNeedToSendToAProductifPlace;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
@@ -34,7 +33,7 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
         boolean isAvalable = false;
         Iterator<Structure> structureIter = potencielStructure.iterator();
         int index=-1;
-        while(structureIter.hasNext() && !isAvalable){
+        while(structureIter.hasNext() && isAvalable){
             isAvalable = structureIter.next().isStatique(); //TODO prendreen compte la  capacité ???
             index++;
         }if(isAvalable){
@@ -45,20 +44,20 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
 
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
-            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NotImplementYetException, NoNeedToSendToAProductifPlace {
-        throw new NoNeedToSendToAProductifPlace(mouton);
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NotImplementYetException {
+        throw new NotImplementYetException();
     }
 
     @Override
     public Void action(Poule poule) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
-            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NoNeedToSendToAProductifPlace {
-        throw new NoNeedToSendToAProductifPlace(poule);
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+        throw new BeingCannotPerformSuchActionException(poule);
     }
 
     @Override
     public Void action(Vache vache) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
-            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NoNeedToSendToAProductifPlace {
-        SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(vache.getProductifPlaceLabel());
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
+        SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
         avalableSalleDeTraite.addSpecialSenderElement(vache);
         return null;
     }
@@ -66,7 +65,7 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
     @Override
     public Void action(Chevre chevre) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
-            SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(chevre.getProductifPlaceLabel());
+            SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
             avalableSalleDeTraite.addSpecialSenderElement(chevre);
             return null;
     }

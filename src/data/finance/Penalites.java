@@ -5,17 +5,17 @@ import java.io.Serializable;
 import process.game.Game;
 import process.transaction.FinanceManager;
 
-public abstract class Penalites implements Finance, Serializable{
+public abstract class Penalites implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int montant;
+	private float montant;
 	private int delais;
 	private boolean paid;
 	
 	public Penalites() {
 		this.montant = (int) ((Math.random() * (350 - 100)) + 100);
-		this.delais = (int) ((Math.random() * (8 - 3)) + 3);;
+		this.delais = (int) ((Math.random() * (3 - 1)) + 3);;
 		paid = false;
 	}
 	
@@ -23,7 +23,7 @@ public abstract class Penalites implements Finance, Serializable{
 		return montant;
 	}
 	
-	public void setMontant(int montant) {
+	public void setMontant(float montant) {
 		this.montant = montant;
 	}
 	

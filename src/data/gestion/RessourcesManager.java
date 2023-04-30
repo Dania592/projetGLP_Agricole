@@ -20,6 +20,17 @@ public class RessourcesManager implements Serializable {
 	private RessourcesManager() {
 	}
 	
+	public void reset() {
+		gestionnaireAnimaux.reset();
+		gestionnaireEnclos.reset();
+		gestionnaireFinancier.reset();
+		gestionnaireMateriel.reset();
+		gestionnaireRH.reset();
+		gestionnaireStocks.reset();
+		gestionnaireStructure.reset();
+		gestionnaireTerrains.reset();
+	}
+	
 	public static RessourcesManager getInstance() {
 		return instance;
 	}

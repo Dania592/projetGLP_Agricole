@@ -1,10 +1,12 @@
-package gui.gestionnaire;
+package gui.gestionnaire.contolleurs;
 
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import data.finance.Banque;
+import gui.gestionnaire.InfosTransaction;
+import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.keys.Keys;
 import process.transaction.Transaction;
 

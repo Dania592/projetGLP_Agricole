@@ -5,22 +5,27 @@ import java.io.Serializable;
 public class Compte implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	public static float CAPITAL_INITIAL = 2000;
 	
-	private double solde = 1000;
+	private float solde = CAPITAL_INITIAL;
 	
 	public static Compte instance = new Compte();
 	
 	private Compte() {};
 	
+	public void reset() {
+		solde = CAPITAL_INITIAL;
+	}
+	
 	public static Compte getInstance() {
 		return instance;
 	}
 
-	public double getSolde() {
+	public float getSolde() {
 		return solde;
 	}
 
-	public void setSolde(double d) {
+	public void setSolde(float d) {
 		this.solde = d;
 	}
 	

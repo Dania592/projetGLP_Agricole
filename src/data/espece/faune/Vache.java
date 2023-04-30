@@ -45,7 +45,7 @@ public class Vache extends AnimalProducteur implements MilkProduceur{
 
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NoNeedToSendToAProductifPlace {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);	
 	}
 
@@ -80,28 +80,6 @@ public class Vache extends AnimalProducteur implements MilkProduceur{
 	public boolean needSpecialActionToGetProduction() {
 		return false;
 	}
-
-
-
-	@Override
-	public Structures getProductifPlaceLabel() throws NoNeedToSendToAProductifPlace {
-		return Structures.ETABLE;
-	}
-
-
-
-	@Override
-	public boolean haveProduced() {
-		return getProductifState() == ProductifState.IN_WAIT_TO_BE_TRANSPORTED;
-	}
-
-
-
-	@Override
-	public boolean haveToBeTranposted() throws NoNeedToSendToAProductifPlace {
-		return haveProduced();
-	}
-	
 
 
 

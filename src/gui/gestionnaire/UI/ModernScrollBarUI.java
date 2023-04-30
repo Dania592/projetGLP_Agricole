@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.UI;
 
 import java.awt.Color;
 import java.awt.Dimension;

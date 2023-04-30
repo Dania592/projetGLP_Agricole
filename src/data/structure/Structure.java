@@ -7,7 +7,7 @@ import data.gestion.Stockage;
 import data.map.Map;
 import data.structure.hability.Fixable;
 import data.stucture_base.Element;
-import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Structures;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
@@ -35,9 +35,6 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 		charges = new Charge[2];
 	}
 
-	public void setFixableState(FixableState fixableState){
-		state = fixableState;
-	}
 
 	public float getPrixAchat() {
 		return prixAchat;

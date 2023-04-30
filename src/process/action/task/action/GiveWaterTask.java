@@ -1,5 +1,6 @@
 package process.action.task.action;
 
+import data.espece.WaterConsumer;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;

@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.UI;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
 import javax.swing.text.View;
+
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 
 public class TogglesButtonUI extends BasicToggleButtonUI{
 	

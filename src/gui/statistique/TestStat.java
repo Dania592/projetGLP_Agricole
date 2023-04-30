@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
-import gui.gestionnaire.TabbedPaneUI;
+import gui.gestionnaire.UI.TabbedPaneUI;
 
 
 

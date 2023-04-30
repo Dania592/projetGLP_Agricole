@@ -13,7 +13,6 @@ import data.production.Produit;
 import data.production.Produits;
 import data.structure.Poulallier;
 import data.structure.Refuge;
-import data.time.BoundedCounter;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -46,11 +45,12 @@ public class Poule extends AnimalProducteur{
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
 			
 			setImage(imagePath);
+		
 	}
 
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NoNeedToSendToAProductifPlace {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
 	}
 
@@ -81,22 +81,6 @@ public class Poule extends AnimalProducteur{
 	@Override
 	public boolean needSpecialActionToGetProduction() {
 		return false;
-	}
-
-
-	@Override
-	public Structures getProductifPlaceLabel() throws NoNeedToSendToAProductifPlace {
-		throw new NoNeedToSendToAProductifPlace(this);
-	}
-
-	public boolean haveProduced(){
-		return getProductifState()  == ProductifState.HAVE_PRODUCE;
-	}
-
-
-	@Override
-	public boolean haveToBeTranposted() throws NoNeedToSendToAProductifPlace {
-		return haveProduced();
 	}
 	
 }

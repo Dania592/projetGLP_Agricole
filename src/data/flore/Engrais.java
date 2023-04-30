@@ -3,6 +3,7 @@ package data.flore;
 public class Engrais {
 	private boolean naturel;
 	private float prixAchat;
+	
 	public boolean isNaturel() {
 		return naturel;
 	}

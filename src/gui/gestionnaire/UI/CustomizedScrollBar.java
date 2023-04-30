@@ -1,8 +1,10 @@
-package gui.gestionnaire;
+package gui.gestionnaire.UI;
 
 import java.awt.Dimension;
 
 import javax.swing.JScrollBar;
+
+import gui.gestionnaire.GeneralPaintStrategy;
 
 public class CustomizedScrollBar extends JScrollBar{
 

@@ -1,15 +1,15 @@
 package process.action.visitor.place;
 
+import java.io.Serializable;
 import java.util.HashMap;
 // import java.util.Iterator;
 import java.util.Iterator;
 
 import data.espece.Produceur;
 import data.espece.Slaughtable;
-import data.espece.Produceur.ProductifState;
+    import data.espece.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.MilkProduceur;
-import data.espece.faune.NoNeedToSendToAProductifPlace;
 import data.espece.faune.Poule;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
@@ -39,8 +39,9 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.transfert.EnclosureSenderVisitor;
 
-public class ProductionPerformer implements PlaceVisitor<Void>{
+public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     ProduceVisitor producer = new ProduceVisitor();
     
     private <T extends AnimalProducteur> Void performProduction(ProductifPlace productifPlace, Iterator<T> produceurIter) throws NotImplementYetException{
@@ -55,7 +56,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
             } catch (BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException e) {
             } catch (UnableToMakeTheTransfertException e) {
-            } catch (NoNeedToSendToAProductifPlace e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -92,7 +93,15 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable(abatoire);
+        Iterator<Slaughtable> slaughtablesIter = abatoire.getAnimaltoSlaughter().iterator(); 
+        Slaughtable currentSlaughtable;
+        while(slaughtablesIter.hasNext()){
+            currentSlaughtable = slaughtablesIter.next();
+            addToProduction(abatoire, currentSlaughtable.getEquivalentInMeat().getType(), 1);
+        }
+        abatoire.getAnimaltoSlaughter().clear();
+        return null;
+
     }
 
     @Override
@@ -102,7 +111,18 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable{
-        throw new UnableToPerformSuchActionWithCurrentActionnable(salleDeTraite);
+        Iterator<MilkProduceur> milkProduceurIter = salleDeTraite.getMilkProduceur().iterator();
+        MilkProduceur currentMilkProduceur;
+        while(milkProduceurIter.hasNext()){
+            currentMilkProduceur = milkProduceurIter.next();
+            currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
+            if(currentMilkProduceur.haveProduced()){
+                addToProduction(salleDeTraite, currentMilkProduceur.collectProduction(), currentMilkProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
+                currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
+                
+            }
+        }
+        return null;
     }
 
     @Override
@@ -116,7 +136,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>{
         if(terrain.canLaunchProduction()){
             try {
                 production = terrain.launchAction(producer);
-                addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle()*terrain.getProduction().get(production));
+                addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle());
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {

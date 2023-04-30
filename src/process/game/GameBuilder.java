@@ -9,7 +9,6 @@ import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
-import data.gestion.GestionnaireStocks;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
@@ -60,7 +59,7 @@ public class GameBuilder {
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0).setStatique();
 		
 		// ajout de la maison et du fermier sur la map 
-		farm.getManager().add(farmer); 
+		farm.getManager().add(farmer);
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0));
@@ -143,10 +142,6 @@ public class GameBuilder {
 		Entrepot entrepot = new Entrepot(0,0,"entrepot", map);
 		stock.getGestionnaireStructure().add(entrepot);;
 		
-		
-		GestionnaireStocks.getInstance().getGraines().put(Graine.BROCCOLI_SEED, new Integer(5));
-		GestionnaireStocks.getInstance().getGraines().put(Graine.CACTUS_SEED, new Integer(2));
-		GestionnaireStocks.getInstance().getGraines().put(Graine.CORN_SEED, new Integer(10));
 	}
 	
 	private static void sethousePosition(Farm farm , Structure maison ) {
