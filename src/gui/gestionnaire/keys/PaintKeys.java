@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.keys;
 
 public enum PaintKeys {
 	

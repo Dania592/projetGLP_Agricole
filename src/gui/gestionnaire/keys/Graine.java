@@ -2,7 +2,6 @@ package gui.gestionnaire.keys;
 
 import data.espece.Produceur.Type;
 import data.production.Produits;
-import gui.gestionnaire.GestionnaireKey;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 import process.visitor.KeyVisitor;

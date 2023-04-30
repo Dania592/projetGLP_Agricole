@@ -18,7 +18,7 @@ import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
-import gui.gestionnaire.GestionnaireStocksGUI;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Structures;
 import process.action.TaskManager;
 import process.action.task.Task;

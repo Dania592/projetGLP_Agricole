@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 import data.acteur.Fermier;
 import gui.gestionnaire.GeneralPaintStrategy;
-import gui.gestionnaire.WindowDispose;
+import gui.gestionnaire.contolleurs.WindowDispose;
 import process.game.GameBuilder;
 
 public class FermierGui extends JFrame {

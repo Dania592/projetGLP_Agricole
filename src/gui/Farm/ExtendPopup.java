@@ -22,7 +22,7 @@ import data.stucture_base.Farm;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.InfosTransaction;
 import gui.gestionnaire.RoundedPanel;
-import gui.gestionnaire.WindowDispose;
+import gui.gestionnaire.contolleurs.WindowDispose;
 
 public class ExtendPopup extends JFrame {
 

@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.gestionnairesGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,7 +18,16 @@ import javax.swing.SwingConstants;
 
 import data.finance.Banque;
 import data.finance.Compte;
+import gui.gestionnaire.BillArticlePanel;
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.InfosTransaction;
+import gui.gestionnaire.RoundedPanel;
+import gui.gestionnaire.ValidationPanel;
+import gui.gestionnaire.UI.CustomizedScrollBar;
+import gui.gestionnaire.contolleurs.AddToCart;
+import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.Keys;
+import gui.gestionnaire.keys.PaintKeys;
 import process.game.Game;
 import process.game.GameBuilder;
 import process.game.MapManager;
@@ -85,7 +94,7 @@ public class MarketGUI extends JFrame{
 	public void addToBill(Keys key, int w, int h, PaintKeys type) {
 		if (type.equals(PaintKeys.BUY) && compte.getSolde() >= (validationPanel.getTotalCost() + key.getPrixAchat()) || type.equals(PaintKeys.SELL)) {
 			if (!bill.containsKey(key)) {	
-				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null);
+				BillArticlePanel panel = new BillArticlePanel(key, this, w, h, null, type);
 				bill.put(key,panel);
 				billPanel.add(panel);
 				billPanel.add(Box.createRigidArea(new Dimension(0,5)));

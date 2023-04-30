@@ -9,8 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
+import gui.gestionnaire.contolleurs.QuantityListener;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
+import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.keys.Keys;
+import gui.gestionnaire.keys.PaintKeys;
 import gui.gestionnaire.keys.RemoveFromCart;
 
 public class BillArticlePanel extends RoundedPanel{
@@ -24,7 +29,7 @@ public class BillArticlePanel extends RoundedPanel{
 	private JLabel nameLabel;
 	private JSpinner quantitySpinner;
 	
-	public BillArticlePanel(Keys key, MarketGUI market, int w, int h, Font font) {
+	public BillArticlePanel(Keys key, MarketGUI market, int w, int h, Font font, PaintKeys type) {
 		super(20, GestionnaireStocksGUI.LIGHT_BROWN);
 		Dimension dim = new Dimension(w, h);
 		setLayout(new FlowLayout());
@@ -40,6 +45,9 @@ public class BillArticlePanel extends RoundedPanel{
 		nameLabel = paintNameLabel(GeneralPaintStrategy.getName(key));
 		nameLabel.setPreferredSize(new Dimension(w/2 - 30, 30));
 		quantitySpinner = paintSpinner(MAN_FONT);
+		if (type.equals(PaintKeys.SELL)) {
+			quantitySpinner.setModel(new SpinnerNumberModel(0, 0, key.getGestionnaireKey().getElements().size(), 1));
+		}
 		quantitySpinner.addChangeListener(new QuantityListener(quantitySpinner, key, market));   
 		quantitySpinner.setValue(quantitySpinner.getNextValue());
 		quantitySpinner.setPreferredSize(new Dimension(w/2 - (4*GestionnaireStocksGUI.MIN_SPACE_BETWEEN),30));

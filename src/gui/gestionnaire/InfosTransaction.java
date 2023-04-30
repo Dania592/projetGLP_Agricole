@@ -10,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import gui.gestionnaire.contolleurs.WindowDispose;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
+
 public class InfosTransaction extends JFrame {
 
 	private static final long serialVersionUID = 1L;

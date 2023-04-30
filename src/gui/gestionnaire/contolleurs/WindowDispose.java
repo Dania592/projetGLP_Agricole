@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.contolleurs;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

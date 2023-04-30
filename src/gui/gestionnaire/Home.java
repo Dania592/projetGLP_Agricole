@@ -9,6 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import gui.gestionnaire.contolleurs.WindowDispose;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireFinancierGUI;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
+import gui.gestionnaire.gestionnairesGUI.MarketGUI;
+import gui.gestionnaire.gestionnairesGUI.RHManagerGUI;
+import gui.gestionnaire.keys.PaintKeys;
+
 public class Home extends JFrame{
 	
 	private static final long serialVersionUID = 1L;

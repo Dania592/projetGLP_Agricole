@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.gestionnairesGUI;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -6,6 +6,10 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.GestionnairePaintStrategy;
+import gui.gestionnaire.contolleurs.WindowDispose;
+import gui.gestionnaire.keys.PaintKeys;
 import process.game.Game;
 import process.game.GameBuilder;
 import process.game.MapManager;

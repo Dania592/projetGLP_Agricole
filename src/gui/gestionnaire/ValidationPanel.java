@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import process.transaction.FinanceManager;
 
 public class ValidationPanel extends RoundedPanel{

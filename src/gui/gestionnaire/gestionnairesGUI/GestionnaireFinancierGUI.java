@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.gestionnairesGUI;
 
 import java.awt.Container;
 
@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import data.finance.Charge;
 import data.finance.TypeCharge;
 import data.gestion.GestionnaireFinancier;
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.contolleurs.WindowDispose;
+import gui.gestionnaire.keys.PaintKeys;
 import process.transaction.Achat;
 import process.transaction.Vente;
 

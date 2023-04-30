@@ -7,7 +7,7 @@ import data.gestion.Stockage;
 import data.map.Map;
 import data.structure.hability.Fixable;
 import data.stucture_base.Element;
-import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Structures;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;

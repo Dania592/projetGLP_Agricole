@@ -18,7 +18,7 @@ import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
 import data.stucture_base.Element;
 import data.time.CyclicCounter;
-import gui.gestionnaire.GestionnaireKey;
+import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Keys;
 import process.action.exception.NotImplementYetException;

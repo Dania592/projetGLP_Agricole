@@ -1,4 +1,4 @@
-package gui.gestionnaire;
+package gui.gestionnaire.gestionnairesGUI;
 
 import java.awt.Container;
 
@@ -6,7 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import data.gestion.GestionnaireRH;
+import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.GestionnairePaintStrategy;
+import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.Employees;
+import gui.gestionnaire.keys.PaintKeys;
 
 public class RHManagerGUI extends JFrame {
 	
@@ -43,7 +47,7 @@ public class RHManagerGUI extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		GestionnaireRH.getInstance().recruter(Employees.JEAN);
+		//GestionnaireRH.getInstance().recruter(Employees.JEAN);
 		new RHManagerGUI(null,1);
 	}
 	

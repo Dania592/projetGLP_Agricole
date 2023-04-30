@@ -11,6 +11,7 @@ import gui.gestionnaire.keys.Employees;
 public class GestionnaireRH implements GestionnaireInterface, Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private Map map = Map.getInstance();
 
 	private HashMap<Employees, Employee> employees = new HashMap<>();
 	private HashMap<Employees, Employee> aRecruter = new HashMap<>();
@@ -98,11 +99,10 @@ public class GestionnaireRH implements GestionnaireInterface, Serializable{
 	}
 	
 	public void initialize() {
-		Map map = new Map(5, 5, 0, 0);
-		aRecruter.put(Employees.PAUL, new Employee(Employees.PAUL, 0, 0,Employees.PAUL.getPrixAchat() , null, map));
-		aRecruter.put(Employees.JULIE, new Employee(Employees.JULIE, 0, 0,Employees.JULIE.getPrixAchat() , null, map));
-		aRecruter.put(Employees.JEAN, new Employee(Employees.JEAN, 0, 0,Employees.JEAN.getPrixAchat() , null, map));
-		aRecruter.put(Employees.HARRY, new Employee(Employees.HARRY, 0, 0,Employees.HARRY.getPrixAchat() , null, map));
+		aRecruter.put(Employees.PAUL, new Employee(Employees.PAUL, 0, 0,Employees.PAUL.getPrixAchat() , "Paul", map));
+		aRecruter.put(Employees.JULIE, new Employee(Employees.JULIE, 0, 0,Employees.JULIE.getPrixAchat() , "Julie", map));
+		aRecruter.put(Employees.JEAN, new Employee(Employees.JEAN, 0, 0,Employees.JEAN.getPrixAchat() , "Jean", map));
+		aRecruter.put(Employees.HARRY, new Employee(Employees.HARRY, 0, 0,Employees.HARRY.getPrixAchat() , "Harry", map));
 	}
 	
 	public void printEmployees() {

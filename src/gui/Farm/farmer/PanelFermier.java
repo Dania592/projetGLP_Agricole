@@ -19,7 +19,7 @@ import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
-import gui.gestionnaire.WindowDispose;
+import gui.gestionnaire.contolleurs.WindowDispose;
 
 public class PanelFermier extends JPanel{
 
