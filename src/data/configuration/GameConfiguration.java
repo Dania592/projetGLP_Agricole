@@ -50,10 +50,10 @@ public abstract class GameConfiguration {
 	
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
 	
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 50 ; // 1 animal => 25 min (60)
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 50 ; // 1 animal => 15 min (20)
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 5 ; // 1 animal => 25 min (60)
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 5 ; // 1 animal => 15 min (20)
 	
-	public final static int FREQUENCE_ANIMAL_BIRTH_ENCLOS = 2;
+	public final static int FREQUENCE_ANIMAL_BIRTH_ENCLOS = 5;
 	
 	public final static String FILE_NAME_SAVE = "saved_farm.ser";
 	

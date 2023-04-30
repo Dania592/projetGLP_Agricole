@@ -20,7 +20,6 @@ import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Structures;
-import gui.gestionnaire.GestionnaireStocksGUI;
 import process.action.TaskManager;
 import process.action.task.Task;
 import process.time.TimeManager;

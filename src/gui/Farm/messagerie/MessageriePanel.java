@@ -31,7 +31,7 @@ public class MessageriePanel extends RoundedPanel {
 		setLayout(null);
 		this.hud=hud;
 		messagerie = Messagerie.getInstance();
-		setBounds(10,GameConfiguration.WINDOW_HEIGHT-400 , 200 , 300);	
+		setBounds(10,GameConfiguration.WINDOW_HEIGHT-380 , 200 , 300);	
 		init();
 	}
 	

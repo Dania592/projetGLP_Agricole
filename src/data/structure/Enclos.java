@@ -4,8 +4,10 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import data.espece.FoodConsumer.HungerLevel;
+import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
@@ -17,6 +19,7 @@ import data.map.Case;
 import data.map.Map;
 import data.myExceptions.FullCapaciteException;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.myExceptions.UnknownActivityException;
 import data.notification.Message;
 import data.notification.Messagerie;
 import data.planning.Activity;

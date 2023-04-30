@@ -38,7 +38,7 @@ public enum Activity  implements Serializable{
     // ---------------------- ENCLOS ---------------------- //
     FIX_ENCLOSURE(2, "Réparer", Type.FIX, ActionnableKey.ENCLOS, 1),
     SEND_BACK_HOME_ANIMALS(3, "Rentrer les animaux", Type.GO_BACK_HOME, ActionnableKey.ENCLOS, 10),
-    FEED_ANIMAL_FROM_ENCLOSURE(1, "Nourrir", Type.FEED, ActionnableKey.ENCLOS, 5),
+    FEED_ANIMAL_FROM_ENCLOSURE(1, "Nourrir", Type.FEED, ActionnableKey.ENCLOS, 1),
     COLLECT_EGG_FROM_ENCLOSURE(3, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 4),
     GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GIVE_WATER, ActionnableKey.ENCLOS, 1),
     TRANSFERT_TO_PRODUCTION_ROOM(1, "Remplir l'abreuvoir", Type.SENT_SPECIAL_ACTION, ActionnableKey.ENCLOS, 1),
@@ -52,7 +52,7 @@ public enum Activity  implements Serializable{
     // ---------------------- PUIT ---------------------- //
     // `DRAW_WATER` is an activity that allows the player to draw water from a well.
     DRAW_WATER(2, "Puiser", Type.SPECIAL, ActionnableKey.PUIT, 2),
-    COLLECT_WATER(2, "Récupere Eau", Type.GET_PRODUCTION, ActionnableKey.PUIT, 2),
+    COLLECT_WATER(2, "Récupere Eau", Type.GET_PRODUCTION, ActionnableKey.PUIT, 1),
     // ------------------------------------------------------------------- //
 
 

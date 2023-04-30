@@ -46,7 +46,7 @@ public class TimeManager extends Thread{
         while (isTimeRunning){
         	if (!gameOver) {
         		clock.increment();
-        		if (clock.getMinute().getValue() == 1) {
+        		if (clock.getHour().getValue() == 24) {
         			dayCounter++;
         			FinanceManager.getInstance().incrementCounter();
         			clock.getMinute().setValue(0);

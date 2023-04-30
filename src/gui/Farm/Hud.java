@@ -140,7 +140,7 @@ public class Hud implements Serializable {
 	}
 
 	public static void notification() {
-		message.setIcon(new ImageIcon(GameConfiguration.IMAGE_PATH+"nv_message.png"));
+		message.setIcon(new ImageIcon(GameConfiguration.IMAGE_PATH+"notif.png"));
 		alertMessage();
 	}
 	
@@ -156,13 +156,13 @@ public class Hud implements Serializable {
 		if(Arrays.asList(component.getComponents()).contains(messagerie)) {
 			component.remove(messagerie);
 		}
-		alert.setBounds(25, GameConfiguration.Y_HOME_LABEL-50,200,50);
+		alert.setBounds(15, GameConfiguration.Y_HOME_LABEL-50,200,50);
 		component.add(alert , JLayeredPane.DRAG_LAYER);
 	}
 	
 	public  void addStat() {
-		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
-		statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"statistiques.png"));
+		statistique.setBounds(10, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		component.add(statistique , JLayeredPane.DRAG_LAYER);
 	}
 
@@ -358,6 +358,7 @@ public class Hud implements Serializable {
 		messagerie = new MessageriePanel(Hud.this);
 		removeChoix();
 		removeAlert();
+		//messagerie.setBounds(10, GameConfiguration.WINDOW_HEIGHT-300, 200, 300);
 		component.add(messagerie , JLayeredPane.DRAG_LAYER);
 		component.remove(statistique);
 	}

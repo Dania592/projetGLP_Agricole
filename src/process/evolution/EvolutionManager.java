@@ -23,7 +23,6 @@ import data.gestion.GestionnaireAnimaux;
 import data.map.Case;
 import data.map.Map;
 import data.notification.Message;
-import data.notification.Message.BasicMessage;
 import data.notification.Messagerie;
 import data.notion.Mortel.EtatSante;
 import data.structure.Enclos;
@@ -32,6 +31,13 @@ import data.stucture_base.Element;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.gestionnaire.keys.Animals;
+import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.ProductionPerformer;
 import process.game.ElementManager;
 
@@ -92,14 +98,16 @@ public class EvolutionManager implements Serializable {
 			if(hydrationCounter.getValue() == 0){
 				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
 			}if(terrain.getProductifState() == ProductifState.PRODUCING){
-				try {
-					terrain.launchAction(productionPerformer);
-				} catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
-						| BeingCannotPerformSuchActionException | NotImplementYetException
-						| NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-						| UnableToMakeTheTransfertException e) {
-					e.printStackTrace();
-				} 
+				
+					try {
+						terrain.launchAction(productionPerformer);
+					} catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
+							| BeingCannotPerformSuchActionException | NotImplementYetException
+							| NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
+							| UnableToMakeTheTransfertException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
 				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
 				terrain.setEtatSante(EtatSante.MALADE);
@@ -228,6 +236,8 @@ public class EvolutionManager implements Serializable {
 					enclos.addAnimal(baby);
 					elementManager.add(baby);
 					GestionnaireAnimaux.getInstance().getAnimaux().get(target).add(baby);
+					Message message = new Message("Un "+target+" est né",Clock.getInstance().getHour().getValue(), Clock.getInstance().getMinute().getValue());
+					Messagerie.getInstance().addMessage(message);
 				
 				}
 				

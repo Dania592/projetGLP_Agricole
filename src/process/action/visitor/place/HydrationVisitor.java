@@ -1,5 +1,6 @@
 package process.action.visitor.place;
 
+import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
@@ -18,6 +19,8 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
+import data.structure.hability.Actionnable.ActionnableKey;
+import data.structure.hability.Hydratable;
 import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
