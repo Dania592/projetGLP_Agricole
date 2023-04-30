@@ -62,7 +62,4 @@ public class Maison extends Refuge<Personne>{
 			return visitor.action(this, activity);
 	}
 
-
-
-	
 }

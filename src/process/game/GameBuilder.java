@@ -13,6 +13,7 @@ import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.structure.Enclos;
 import data.structure.Entrepot;
+import data.structure.Garage;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
@@ -54,11 +55,14 @@ public class GameBuilder {
 		setEntrepotPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0).setStatique();
 		
+		setGaragePosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.GARAGE).get(0));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.GARAGE).get(0).setStatique();
 		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer);
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.GARAGE).get(0));
 		return farm ;
 	}
 	
@@ -108,8 +112,8 @@ public class GameBuilder {
 		stock.getGestionnaireTerrains().add(terrainInitial);
 		stock.getGestionnaireTerrains().add(terrainInitial2);
 		
-		//Terrain terrain3 = new Terrain("t3",false, 0, 0,map, Graine.AMARANTH_SEED);
-		Terrain terrain4 = new Terrain("t4",false, 0, 0,map,Graine.CACTUS_SEED);
+		//Terrain terrain3 = new Terrain("t3", false, 0, 0,map, Graine.AMARANTH_SEED);
+		Terrain terrain4 = new Terrain("t4", false, 0, 0,map,Graine.CACTUS_SEED);
 		
 		//stock.getGestionnaireTerrains().add(terrain3);
 		stock.getGestionnaireTerrains().add(terrain4);
@@ -136,7 +140,10 @@ public class GameBuilder {
 		stock.getGestionnaireStructure().add(puit);
 		
 		Entrepot entrepot = new Entrepot(0,0,"entrepot", map);
-		stock.getGestionnaireStructure().add(entrepot);;
+		stock.getGestionnaireStructure().add(entrepot);
+		
+		Garage garage = new Garage(0,0,"garage", map);
+		stock.getGestionnaireStructure().add(garage);
 		
 	}
 	
@@ -146,15 +153,19 @@ public class GameBuilder {
 		maison.setPosition(ligne, colonne);
 				
 	}
+	
 	private static void setEntrepotPosition(Farm farm , Structure entrepot ) {
 		int colonne = farm.getColonne()+2 ;
 		int ligne = farm.getLigne()+1;
-		entrepot.setPosition(ligne, colonne);
-				
+		entrepot.setPosition(ligne, colonne);		
 	}
 	
-	
-	
+	private static void setGaragePosition(Farm farm , Structure garage ) {
+		int colonne = farm.getColonne()+6;
+		int ligne = farm.getLigne()+1;
+		garage.setPosition(ligne, colonne);		
+	}
+		
 	private static void initisaliseFarmerPosition(Farm farm , Fermier farmer) {
 		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
 		int colonne = farm.getColonne()-1 + farm.getWidth()/2;

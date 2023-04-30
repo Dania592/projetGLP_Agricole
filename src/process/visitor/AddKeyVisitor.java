@@ -1,10 +1,14 @@
 package process.visitor;
 
+import java.io.File;
+
 import data.acteur.Employee;
+import data.configuration.GameConfiguration;
 import data.espece.faune.Animal;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
+import data.gestion.GestionnaireStructures;
 import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
@@ -20,6 +24,7 @@ import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
 import gui.gestionnaire.keys.Terrains;
 import process.GestionnaireFactory;
+import process.game.MapManager;
 
 public class AddKeyVisitor implements KeyVisitor<Void>{
 	
@@ -70,7 +75,8 @@ public class AddKeyVisitor implements KeyVisitor<Void>{
 		for (int i=0; i<quantity; i++) {
 			newEngin = GestionnaireFactory.createElement(engin, map);
 			newEngin.accept(addVisitor);
-		}		
+		}	
+		GestionnaireStructures.getInstance().getStructures().get(Structures.GARAGE).get(0).setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"GarageFilled.png");
 		return null;
 	}
 

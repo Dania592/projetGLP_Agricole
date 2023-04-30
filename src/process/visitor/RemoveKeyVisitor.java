@@ -1,7 +1,11 @@
 package process.visitor;
 
+import java.io.File;
+
+import data.configuration.GameConfiguration;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
+import data.gestion.GestionnaireStructures;
 import data.gestion.RessourcesManager;
 import data.materiel.Engin;
 import data.materiel.Outil;
@@ -58,6 +62,9 @@ public class RemoveKeyVisitor implements KeyVisitor<Void>{
 		for (int i=0; i<quantity; i++) {
 			ressourcesManager.getGestionnaireMateriel().remove(engin, quantity);;
 		}		
+		if (ressourcesManager.getGestionnaireMateriel().getEnginsSize() == 0) {
+			GestionnaireStructures.getInstance().getStructures().get(Structures.GARAGE).get(0).setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
+		}
 		return null;
 	}
 
