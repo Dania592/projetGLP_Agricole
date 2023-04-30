@@ -217,14 +217,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		this.fixableState = fixableState;
 	}
 
-	@Override
-	public String toString() {
-		return "Terrain [productifState=" + productifState + ", production=" + production + ", hydrationLevel="
-				+ hydrationLevel + ", produceurType=" + produceurType + ", timeItTakesToProduce=" + timeItTakesToProduce
-				+ ", productifCycle=" + productifCycle + ", fixableState=" + fixableState + ", evolution=" + evolution
-				+ ", type=" + type + ", etatSante=" + etatSante + ", hydrationCounter=" + hydrationCounter
-			+ "]";
-	}
+	
 
 	@Override
 	public Type getProduceurType() {

@@ -3,7 +3,6 @@ package data.notification;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.time.CyclicCounter;
 import gui.Farm.Hud;
 
 public class Messagerie implements Serializable{
@@ -24,6 +23,7 @@ public class Messagerie implements Serializable{
 	public void addMessage(Message message ) {
 		messages.add(message);
 		Hud.notification();
+		
 	}
 	
 	public ArrayList<Message> getMessages(){

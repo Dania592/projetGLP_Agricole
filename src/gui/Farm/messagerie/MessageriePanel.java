@@ -1,8 +1,6 @@
 package gui.Farm.messagerie;
 
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,8 +12,6 @@ import data.configuration.GameConfiguration;
 import data.notification.Message;
 import data.notification.Messagerie;
 import gui.Farm.Hud;
-import gui.Farm.choix.ChoixPanel;
-import gui.Farm.choix.ElementCard;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
 

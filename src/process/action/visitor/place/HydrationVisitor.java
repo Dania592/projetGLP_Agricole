@@ -1,6 +1,5 @@
 package process.action.visitor.place;
 
-import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
@@ -19,9 +18,7 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
-import data.structure.hability.Hydratable;
 import gui.gestionnaire.keys.Graine;
-import data.structure.hability.Actionnable.ActionnableKey;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.evolution.FullLevel;
@@ -42,6 +39,7 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     public Void action(Enclos enclos){
         enclos.setNiveauEau(FullLevel.FULL);
         enclos.setAnimalHydrationLevel(HydrationLevel.FULLY_HYDRATED);
+       // System.out.println("VISITOR EAU ==="+enclos.getAnimalsHydrationLevel());
         return null;
     }
 

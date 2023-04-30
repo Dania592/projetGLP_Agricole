@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
 import data.espece.faune.MilkProduceur;

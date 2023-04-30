@@ -2,8 +2,6 @@ package process.game;
 
 import java.io.Serializable;
 
-import javax.crypto.AEADBadTagException;
-
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
 import data.map.Case;

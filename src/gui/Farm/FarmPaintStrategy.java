@@ -191,12 +191,14 @@ public class FarmPaintStrategy implements Serializable {
 		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar;
 		if(enclos.isNeedToBeFeed() || enclos.isNeedToBeHydrated()){
-			if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
+			//TODO il faut afficher les deux pour faire la difference et voir ce qui manque 
+			//if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
 				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
-			}else{
+				graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+			//}else{
 				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHydrationLevel()+".png");
-			}		
-			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+				graphics.drawImage(progressBar.getImage(), x, y -20, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+				
 		}
 	}
 

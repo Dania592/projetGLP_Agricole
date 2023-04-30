@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.lang.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,26 +15,25 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
 import data.configuration.GameConfiguration;
+import data.gestion.GestionnaireStocks;
 import data.notification.Messagerie;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.ChoixPanel;
 import gui.Farm.farmer.FermierGui;
+import gui.Farm.messagerie.AlertPane;
 import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.Home;
-import gui.gestionnaire.MarketGUI;
-import gui.gestionnaire.PaintKeys;
 import gui.statistique.TestStat;
 import process.action.task.Task;
 import process.game.SaveFarm;
-import process.time.TimeManager;
 
 public class Hud implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Board component;
+	private static Board component;
 	
 	private JLabel adding = new JLabel();
 	private JLabel home = new JLabel();
@@ -45,10 +43,11 @@ public class Hud implements Serializable {
 	private JLabel farmer; 
 	private JLabel save;
 	private static JLabel message;
-	private JLabel statistique;
-	private ChoixPanel choixScroll;
+	private static JLabel statistique;
+	private static ChoixPanel choixScroll;
 	private ActionsPane actions;
-	private MessageriePanel messagerie; 
+	private static MessageriePanel messagerie; 
+	private static AlertPane alert = new AlertPane();
 	
 		
 	private JLabel time = new JLabel();
@@ -62,6 +61,10 @@ public class Hud implements Serializable {
 		removeActionPane();
 		removeChoix();
 		removeMessagerie();
+		removeAlert();
+		if(!Arrays.asList(component.getComponents()).contains(statistique)) {
+			component.add(statistique ,JLayeredPane.DRAG_LAYER);
+		}
 	}
 	
 	public void build() {	
@@ -118,9 +121,26 @@ public class Hud implements Serializable {
 	
 	public static void notification() {
 		message.setIcon(new ImageIcon(GameConfiguration.IMAGE_PATH+"nv_message.png"));
+		alertMessage();
 	}
 	
-	public void addStat() {
+	public void removeAlert() {
+		if(Arrays.asList(component.getComponents()).contains(alert)) {
+			component.remove(alert);
+		}
+	}
+	
+	public static void alertMessage() {
+		component.remove(statistique);
+		removeChoix();
+		if(Arrays.asList(component.getComponents()).contains(messagerie)) {
+			component.remove(messagerie);
+		}
+		alert.setBounds(25, GameConfiguration.Y_HOME_LABEL-50,200,50);
+		component.add(alert , JLayeredPane.DRAG_LAYER);
+	}
+	
+	public  void addStat() {
 		statistique = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"stat.png"));
 		statistique.setBounds(50, GameConfiguration.y_ADD_LABEL, GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		component.add(statistique , JLayeredPane.DRAG_LAYER);
@@ -134,7 +154,7 @@ public class Hud implements Serializable {
 		validate.setBounds( GameConfiguration.X_ADD_LABEL, GameConfiguration.y_ADD_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		validate.addMouseListener(new MouseHud());
 		validate.setToolTipText("Valider la position");
-		component.add(validate);
+		component.add(validate, JLayeredPane.DRAG_LAYER);
 	
 		
 		component.remove(home);
@@ -187,9 +207,13 @@ public class Hud implements Serializable {
 		choixScroll = new ChoixPanel(component);
 		choixScroll.setBounds(150, GameConfiguration.WINDOW_HEIGHT-200, GameConfiguration.WINDOW_WIDTH-300, 160);
 		component.add(choixScroll, JLayeredPane.DRAG_LAYER);
+		removeAlert();
+		if(!Arrays.asList(component.getComponents()).contains(statistique)) {
+			component.add(statistique , JLayeredPane.DRAG_LAYER);
+		}
 	}
 	
-	public void removeChoix() {
+	public static void removeChoix() {
 		if(Arrays.asList(component.getComponents()).contains(choixScroll)) {
 			component.remove(choixScroll);				
 		}
@@ -309,8 +333,17 @@ public class Hud implements Serializable {
 			addStat();
 			component.remove(messagerie);
 			component.remove(message);
+			//removeAlert();
 			addMessage();
 		}
+	}
+	
+	public void addMessagerie() {
+		messagerie = new MessageriePanel(Hud.this);
+		removeChoix();
+		removeAlert();
+		component.add(messagerie , JLayeredPane.DRAG_LAYER);
+		component.remove(statistique);
 	}
 	
 	private class MouseHudMessage implements MouseListener{
@@ -320,11 +353,9 @@ public class Hud implements Serializable {
 				if (Arrays.asList(component.getComponents()).contains(messagerie)) {
 					addStat();
 					component.remove(messagerie);
+					removeAlert();
 				} else {
-					messagerie = new MessageriePanel(Hud.this);
-					component.remove(statistique);
-					removeChoix();
-					component.add(messagerie , JLayeredPane.DEFAULT_LAYER);
+					addMessagerie();
 				}
 					
 		}

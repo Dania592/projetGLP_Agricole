@@ -29,7 +29,7 @@ public class Vache extends AnimalProducteur implements MilkProduceur{
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 300 ;
 	private final static int QUANTITE = 100 ;
-	private final static int SPEED_GROWTH = 5 ; 
+	private final static int SPEED_GROWTH = 2 ; 
 	private static Lait lait = new Lait();
 	private static Meat equivalenceInMeat = new Meat(); 
 	

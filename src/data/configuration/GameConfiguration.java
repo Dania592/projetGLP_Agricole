@@ -20,7 +20,7 @@ public abstract class GameConfiguration {
 	
 	public final static int NB_COLONNE = 60;
 	
-	public final static int GAME_SPEED = 10;
+	public final static int GAME_SPEED = 100;
 	
 	public final static int TIME_SPEED = 100 ;
 	
@@ -46,12 +46,15 @@ public abstract class GameConfiguration {
 	
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
 	
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 60 ; // 1 animal => 25 min 
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 20 ; // 1 animal => 15 min 
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 50 ; // 1 animal => 25 min (60)
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 50 ; // 1 animal => 15 min (20)
+	
+	public final static int FREQUENCE_ANIMAL_BIRTH_ENCLOS = 2;
 	
 	public final static String FILE_NAME_SAVE = "saved_farm.ser";
 	
 	public final static Integer START_WATER_LEVEL = 25;
+	
 	public final static int NB_CARD_CHOIX = 5 ;
 
 }

@@ -52,14 +52,18 @@ public class GameBuilder {
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0).setStatique();
 		initisaliseFarmerPosition(farm, farmer);
 		
+		// positionnement de l'entrepot sur la map
 		setEntrepotPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0).setStatique();
-		
+		// positionnement du puit sur la map
+		setPuitPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0));
+		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0).setStatique();
 		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer); 
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.ENTREPOT).get(0));
+		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0));
 		return farm ;
 	}
 	
@@ -76,7 +80,7 @@ public class GameBuilder {
 		Vache vache1 = new Vache(0, 0, 0,"violette2", "F", null, "v1", map);
 		Vache vache2 = new Vache(0, 0, 0,"violette3", "F", null, "v2", map);
 		Vache vache3 = new Vache(0, 0,0,"violette4", "F", null, "v3", map);
-		Vache vache4 = new Vache(0, 0, 0,"violette5", "F", null, "v4", map);
+		Vache vache4 = new Vache(0, 0, 0,"violette5", "F", null,"v4", map);
 
 		stock.getGestionnaireAnimaux().add(vacheInitial);
 		stock.getGestionnaireAnimaux().add(vache1);
@@ -118,9 +122,9 @@ public class GameBuilder {
 
 		Chevre chevre1 = new Chevre(0,0,0,"sheshe1",null,null,"jd",map);
 		Chevre chevre2 = new Chevre(0,0,0,"sheshe2",null,null,"jd2",map);
-		stock.getGestionnaireAnimaux().add(chevre2);
-		stock.getGestionnaireAnimaux().add(chevre1);
-		
+//		stock.getGestionnaireAnimaux().add(chevre2);
+//		stock.getGestionnaireAnimaux().add(chevre1);
+//		
 		Maison maison = new Maison(0,0,"maison",map);
 		Poulallier poulallierInitial = new Poulallier(0, 0, "p0", map);
 		
@@ -156,6 +160,12 @@ public class GameBuilder {
 		int ligne = farm.getLigne()+1;
 		entrepot.setPosition(ligne, colonne);
 				
+	}
+	
+	private static void setPuitPosition(Farm farm , Structure puit) {
+		int colonne = farm.getColonne()+farm.getWidth()-GameConfiguration.DIMENSION_STRUCUTRE-1  ;
+		int ligne = farm.getLigne()+1;
+		puit.setPosition(ligne, colonne);
 	}
 	
 	

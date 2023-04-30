@@ -18,6 +18,10 @@ import data.time.Clock;
 import process.game.ElementManager;
 
 public class AnimalEvolution implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<AnimalProducteur> animals = new ArrayList<>();
 	private ElementManager elementManager ;
 	private Clock clock ;
