@@ -40,6 +40,7 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Actionnable;
+import data.structure.hability.Fixable;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
 import gui.gestionnaire.keys.Graine;
@@ -201,8 +202,9 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         if(conditionTester.action(enclos, activity)){
             switch(activity){
+            case FIX_STRUCTURE:
             case FIX_ENCLOSURE:
-                return new FixTask(activity, enclos, fixer);
+                return new FixTask(Activity.FIX_ENCLOSURE, enclos, fixer);
             case FEED_ANIMAL_FROM_ENCLOSURE : 
                 return new FeedingTask(activity, enclos, feeder);
             case COLLECT_EGG_FROM_ENCLOSURE : 
@@ -403,7 +405,6 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             NotImplementYetException, UnableToGenerateNewTaskException {
         return action(terrain, activity,Graine.AMARANTH_SEED);
     }
-
     
 
 }

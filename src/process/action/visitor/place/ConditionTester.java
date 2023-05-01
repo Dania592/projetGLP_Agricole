@@ -257,6 +257,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Enclos enclos, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         switch(activity){
+            case FIX_STRUCTURE:
             case FIX_ENCLOSURE:
                 return enclos.isNeedToBeFixed();
             case FEED_ANIMAL_FROM_ENCLOSURE : 

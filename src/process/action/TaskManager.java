@@ -129,16 +129,23 @@ public class TaskManager{
         if(!isAnHourOfWork()){
             throw new AskingToWorkAtIllegalHourException(currentHour);
         }
-        ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
         ArrayList<Task<?>> possibleTaskToPerform= new ArrayList<>();
-        Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
-        Task<?> task;
-        while(activitiesIter.hasNext()){
+        if(actionnable.isNeedToBeFixed()){
             try {
-                
-                task = actionnable.launchAction(taskGenerator, activitiesIter.next());
-                possibleTaskToPerform.add(task);
+                possibleTaskToPerform.add(actionnable.launchAction(taskGenerator, Activity.FIX_STRUCTURE));
             } catch (Exception e) {
+            }
+        }else{
+            ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
+            Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
+            Task<?> task;
+            while(activitiesIter.hasNext()){
+                try {
+                    
+                    task = actionnable.launchAction(taskGenerator, activitiesIter.next());
+                    possibleTaskToPerform.add(task);
+                } catch (Exception e) {
+                }
             }
         }
         return possibleTaskToPerform;
