@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.espece.Slaughtable;
+import data.espece.faune.AnimalProducteur;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import data.myExceptions.UnableToGenerateNewTaskException;
@@ -53,7 +54,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     }
 
 
-    private Void sendToSlaugtherHouse(SlaughterHouseSender structure, Iterator<Slaughtable> iterator) throws UnableToMakeTheTransfertException{
+    private <T extends AnimalProducteur> Void sendToSlaugtherHouse(SlaughterHouseSender structure, Iterator<T> iterator) throws UnableToMakeTheTransfertException{
         ArrayList<Slaughtable> slaughtablesToRemove = new ArrayList<>(); 
         Slaughtable currentSlaughtable;
         Abatoire abatoire = getAvalablAbatoire();
@@ -62,7 +63,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
             abatoire.addSpecialSenderElement(currentSlaughtable);
             slaughtablesToRemove.add(currentSlaughtable);
         }
-        structure.getAnimalToSlaugther().removeAll(slaughtablesToRemove);
+        structure.removeAll();
         return null;
     }
 
@@ -70,12 +71,12 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
-        return sendToSlaugtherHouse(etable,etable.getAnimalToSlaugther().iterator());
+        return sendToSlaugtherHouse(etable,etable.getInHabitant().iterator());
     }
 
     @Override
     public Void action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
-        return sendToSlaugtherHouse(poulallier,poulallier.getAnimalToSlaugther().iterator());
+        return sendToSlaugtherHouse(poulallier,poulallier.getInHabitant().iterator());
     }
 
     @Override
@@ -111,13 +112,13 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     @Override
     public Void action(BergerieChevre bergerieChevre)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
-        return sendToSlaugtherHouse(bergerieChevre,bergerieChevre.getAnimalToSlaugther().iterator());
+        return sendToSlaugtherHouse(bergerieChevre,bergerieChevre.getInHabitant().iterator());
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
-        return sendToSlaugtherHouse(bergerieMouton,bergerieMouton.getAnimalToSlaugther().iterator());
+        return sendToSlaugtherHouse(bergerieMouton,bergerieMouton.getInHabitant().iterator());
     }
 
     @Override

@@ -31,8 +31,8 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	private HashMap<Produits, Integer> production = new HashMap<>();
 
 
-	public SalleDeTraite(int ligne_init, int colonne_init, String reference, Map map) {
-		super(ligne_init, colonne_init, reference, map);
+	public SalleDeTraite( String reference) {
+		super( reference);
 	}
 
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {

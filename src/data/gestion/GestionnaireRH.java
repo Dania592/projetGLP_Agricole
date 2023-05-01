@@ -99,10 +99,10 @@ public class GestionnaireRH implements GestionnaireInterface, Serializable{
 	}
 	
 	public void initialize() {
-		aRecruter.put(Employees.PAUL, new Employee(Employees.PAUL, 0, 0,Employees.PAUL.getPrixAchat() , "Paul", map));
-		aRecruter.put(Employees.JULIE, new Employee(Employees.JULIE, 0, 0,Employees.JULIE.getPrixAchat() , "Julie", map));
-		aRecruter.put(Employees.JEAN, new Employee(Employees.JEAN, 0, 0,Employees.JEAN.getPrixAchat() , "Jean", map));
-		aRecruter.put(Employees.HARRY, new Employee(Employees.HARRY, 0, 0,Employees.HARRY.getPrixAchat() , "Harry", map));
+		aRecruter.put(Employees.PAUL, new Employee(Employees.PAUL, Employees.PAUL.getPrixAchat() , "Paul"));
+		aRecruter.put(Employees.JULIE, new Employee(Employees.JULIE,Employees.JULIE.getPrixAchat() , "Julie"));
+		aRecruter.put(Employees.JEAN, new Employee(Employees.JEAN, Employees.JEAN.getPrixAchat() , "Jean"));
+		aRecruter.put(Employees.HARRY, new Employee(Employees.HARRY,Employees.HARRY.getPrixAchat() , "Harry"));
 	}
 	
 	public void printEmployees() {

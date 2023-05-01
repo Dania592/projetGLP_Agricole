@@ -8,6 +8,7 @@ import java.util.Random;
 import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.Produceur.ProductifState;
+import data.espece.Produceur.Type;
 import data.espece.ProductionManager;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.evolution.EvolutionAnimal;
@@ -50,9 +51,6 @@ public class EvolutionManager implements Serializable {
 	private int deathIndex = 0;
 	private ArrayList<AnimalProducteur> animalsToRemove = new ArrayList<>();
 
-
-	// on ajoute l'evolution des terrains actions ... 
-
 	public EvolutionManager(ElementManager elementManager , Clock clock) {
 		this.elementManager=elementManager;
 		this.clock=clock;
@@ -83,37 +81,42 @@ public class EvolutionManager implements Serializable {
 		}
 	}
 
-
-	private void manageEvolutionTerrain(Terrain terrain){
-		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!=EvolutionTerrain.POURRI ){
-			CyclicCounter hydrationCounter = terrain.getHydrationCounter();
-			if(!(terrain.haveProduced())){
+	private void manageEvolutionTerrain(Terrain terrain) {
+		if(terrain.getEvolution() != EvolutionTerrain.VIERGE && terrain.getEvolution() != EvolutionTerrain.LABOURE
+				&& terrain.getEvolution() != EvolutionTerrain.POURRI) {
+			if (!(ProductionManager.getInstance().getProductifList().contains(terrain))) {
+				ProductionManager.getInstance().addToProductifList(terrain);
+			}if(!(terrain.isCurrentlyUsedForAnotherTask())){
+				CyclicCounter hydrationCounter = terrain.getHydrationCounter();
 				hydrationCounter.increment();
-			}else{
-				terrain.getTimeBeforeProductionExpires().increment();
-				if(terrain.getTimeBeforeProductionExpires().getValue() == 0){
-					terrain.setEvolution(EvolutionTerrain.POURRI);
+				if(hydrationCounter.getValue() == 0 &&(terrain.getEvolution()!=EvolutionTerrain.VIERGE || terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE)) {
+					updateHealthState(terrain);
+				}if(haveToUpdateProducingStateOfCurrentlyUnabledProduceur(terrain)){
+					terrain.setProductifState(ProductifState.PRODUCING);
 				}
-			}
-			if(hydrationCounter.getValue() == 0){
-				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
-			}if(terrain.getProductifState() == ProductifState.PRODUCING){
-				try {
-					terrain.launchAction(productionPerformer);
-				} catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
-						| BeingCannotPerformSuchActionException | NotImplementYetException
-						| NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-						| UnableToMakeTheTransfertException e) {
-					e.printStackTrace();
-				} 
-			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
-				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
-				terrain.setEtatSante(EtatSante.MALADE);
-			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED && !(terrain.isCurrentlyUsedForAnotherTask())){
-				terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
-				terrain.getProduction().clear();
-				terrain.setEvolution(EvolutionTerrain.POURRI ); //TODO decommenter
-			}
+
+			}	
+		}
+		System.out.println(terrain);
+	}
+
+	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){
+		return terrain.getEvolution() == EvolutionTerrain.PLANTE && terrain.getProductifState()==ProductifState.UNABLE_TO_PRODUCE &&
+		terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE && terrain.getEtatSante() != EtatSante.MALADE;
+	}
+
+	private void updateHealthState(Terrain terrain){
+		terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
+		if (terrain.getHydrationLevel() == HydrationLevel.IN_DANGER) {
+			Messagerie.getInstance().addMessage(new Message("A besoin d'eau", clock.getHour().getValue(), clock.getMinute().getValue()));
+			terrain.setEtatSante(EtatSante.MALADE);
+		}else if (terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED) {
+			Messagerie.getInstance().addMessage(new Message(" Est deshydraté", clock.getHour().getValue(), clock.getMinute().getValue()));
+			terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
+		}else if(terrain.getHydrationLevel() == HydrationLevel.DEAD_FROM_DESHYDRATION){
+			terrain.getProduction().clear();
+			terrain.setEvolution(EvolutionTerrain.POURRI);
+			terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
 		}
 	}
 
@@ -150,6 +153,102 @@ public class EvolutionManager implements Serializable {
 			// 	Messagerie.getInstance().addMessage(message);
 			// }
 		}
+	}
+	
+	
+	public void animalReproduction(Enclos enclos ) {
+		int delay = Clock.getInstance().getMinute().getValue() - enclos.getLastBirth() ;
+		if(delay >= GameConfiguration.FREQUENCE_ANIMAL_BIRTH_ENCLOS && enclos.getAnimals().size()>0) {
+			Random newBirth = new Random();
+			Animals target =null;
+			Animal baby = null ;
+			if(newBirth.nextBoolean() && birthConditions(enclos)) {
+				int indice_animal = (int)(Math.random() * (4));
+				switch (indice_animal) {
+				case 0:					
+					if(enclos.getAnimalStorage().getVaches().size()>= 2) {
+						int nbAdult = 0;
+						for(Vache vache :enclos.getAnimalStorage().getVaches()) {
+							if(vache.getEvolution()== EvolutionAnimal.ADULTE) {
+								nbAdult++;
+							}
+						}
+						if(nbAdult>=2) {
+							baby = new Vache(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());
+							target =  Animals.VACHE ;
+							
+						}
+					}
+					break;				
+				case 1 :
+					if(enclos.getAnimalStorage().getChevres().size()>= 2) {
+						int nbAdult=0;
+						for(Chevre chevre :enclos.getAnimalStorage().getChevres()) {
+							if(chevre.getEvolution()== EvolutionAnimal.ADULTE) {
+								nbAdult++;
+							}
+						}
+						if(nbAdult>=2) {
+							target = Animals.CHEVRE;
+							baby = new Chevre(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());							
+						}
+					}
+					break;
+				case 2:
+					if(enclos.getAnimalStorage().getMoutons().size()>= 2) {
+						int nbAdult=0;
+						for(Mouton mouton :enclos.getAnimalStorage().getMoutons()) {
+							if(mouton.getEvolution()== EvolutionAnimal.ADULTE) {
+								nbAdult++;
+							}
+						}
+						if(nbAdult>=2) {
+							baby = new Mouton(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());
+							target = Animals.MOUTON ;							
+						}
+					}
+					break;
+				case 3 :
+					if(enclos.getAnimalStorage().getPoules().size()>= 2) {
+						int nbAdult =0;
+						for(Poule poule :enclos.getAnimalStorage().getPoules()) {
+							if(poule.getEvolution()== EvolutionAnimal.ADULTE) {
+								nbAdult++;
+							}
+						}
+						if(nbAdult>=2) {
+							target = Animals.POULE ;
+							baby = new Poule(null, Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size());							
+						}
+					}
+					break;
+				default:
+					target = null ;
+				}
+				
+				if(target!=null) {	
+					
+					
+					Case randomCase = randomPosition(baby , enclos);
+					baby.setPosition(randomCase.getLigne(), randomCase.getColonne());		
+					enclos.addAnimal(baby);
+					elementManager.add(baby);
+					GestionnaireAnimaux.getInstance().getAnimaux().get(target).add(baby);
+					Message message = new Message("Un "+target+" est né",Clock.getInstance().getHour().getValue(), Clock.getInstance().getMinute().getValue());
+					Messagerie.getInstance().addMessage(message);
+				
+				}
+				
+			}
+			
+			enclos.setLastBirth(Clock.getInstance().getMinute().getValue());
+		}
+	}
+	
+	public boolean birthConditions(Enclos enclos) {
+		return enclos.getAnimalsHungerLevel()==HungerLevel.FULL 
+				&& enclos.getAnimalsHydrationLevel()==HydrationLevel.FULLY_HYDRATED 
+				&& enclos.getCapacite()>enclos.getAnimals().size();				
 	}
 
 	private void manageWaterLevelInEnclosure(Enclos enclos){
@@ -219,6 +318,17 @@ public class EvolutionManager implements Serializable {
 			}
 		}
 	}
-
+	
+	public Case randomPosition(Element element ,Enclos enclos ) {
+        Case block = new Case(true , 0 , 0);
+        Boolean libre = false ;
+        while( !libre) {
+            int ligneAleatoire =  enclos.getPosition().getLigne_init() + (int)(Math.random() * (enclos.getDimension()-2));
+            int colonneAleatoire = enclos.getPosition().getColonne_init() + (int)(Math.random() * (enclos.getDimension()-2));
+            block = new Case(true, ligneAleatoire, colonneAleatoire);
+           libre = Map.getInstance().getCase(ligneAleatoire, colonneAleatoire).isLibre();
+        }
+        return block;
+    }
 
 }

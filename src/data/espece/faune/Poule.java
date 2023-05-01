@@ -2,10 +2,13 @@ package data.espece.faune;
 
 
 import java.io.File;
+import java.util.ArrayList;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Lait;
 import data.production.Meat;
 import data.production.Oeuf;
@@ -15,12 +18,15 @@ import data.structure.Poulallier;
 import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.PlaceVisitor;
 
 
 public class Poule extends AnimalProducteur{
@@ -31,15 +37,15 @@ public class Poule extends AnimalProducteur{
 	private final static int PRIX_ACHAT = 1000 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
-	private final static int QUANTITE = 10 ;
+	private final static int QUANTITE = 1;
 	private final static int SPEED_GROWTH = 5 ; 
 	private static Oeuf oeuf = new Oeuf();
 	private static Meat equivalentInMeat = new Meat();
 	
-	public Poule(int ligne_init, int colonne_init,Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference , Map map ) {
+	public Poule(Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference ) {
 			 
-		super(ligne_init, colonne_init, milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, oeuf, reference , map , SPEED_GROWTH);
+		super( milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE, oeuf, reference ,  SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
@@ -82,5 +88,6 @@ public class Poule extends AnimalProducteur{
 	public boolean needSpecialActionToGetProduction() {
 		return false;
 	}
+
 	
 }

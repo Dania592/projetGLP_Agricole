@@ -54,7 +54,7 @@ public class TimeManager extends Thread{
         		}
         	}
             try {
-                sleep(GameConfiguration.GAME_SPEED*timeSpeed);
+                sleep(GameConfiguration.GAME_SPEED/timeSpeed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -79,6 +79,10 @@ public class TimeManager extends Thread{
 
     public void stopTime(){
         isTimeRunning = false;
+    }
+    
+    public void setTimeSpeed(int coef) {
+    	timeSpeed=coef;
     }
 
 }

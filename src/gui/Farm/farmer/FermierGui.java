@@ -42,7 +42,7 @@ public class FermierGui extends JFrame {
 	
 
 	public static void main(String[] args) {
-		new FermierGui(null , new Fermier("Saadi", 0, 0, new Date(), " ", GameBuilder.MapBuilder().getMap()));
+		new FermierGui(null , new Fermier("Saadi", new Date(), " "));
 
 	}
 	

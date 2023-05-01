@@ -17,9 +17,9 @@ public abstract class EtreVivant extends Element implements Mortel{
 	private EtatSante etatSante;
 	
 
-	public EtreVivant( int nbCase, int ligne_init, int colonne_init, Milieu milieu, int dureeVie,
-			float prixAchat, String reference , Map map) {
-		super(reference ,false, nbCase, ligne_init, colonne_init , map );
+	public EtreVivant( int nbCase,  Milieu milieu, int dureeVie,
+			float prixAchat, String reference ) {
+		super(reference ,false, nbCase );
 		this.milieu = milieu;
 		this.dureeVie = dureeVie;
 		this.prixAchat = prixAchat;
@@ -40,6 +40,10 @@ public abstract class EtreVivant extends Element implements Mortel{
 
 	public EtatSante getEtatSante() {
 		return etatSante;
+	}
+
+	public void setEtatSante(EtatSante etatSante){
+		this.etatSante = etatSante;
 	}
 	
 	public void empireEtatSante() throws MortException{

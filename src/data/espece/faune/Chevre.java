@@ -1,10 +1,13 @@
 package data.espece.faune;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Lait;
 import data.production.Meat;
 import data.production.Produit;
@@ -13,12 +16,15 @@ import data.structure.Etable;
 import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.PlaceVisitor;
 
 
 public class Chevre extends AnimalProducteur implements MilkProduceur{
@@ -34,9 +40,9 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	private final static Lait lait = new Lait();
 	private final static Meat equivalentInMeat = new Meat();
 	
-	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
-		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , map , SPEED_GROWTH);
+	public Chevre( int naissance, String nom,  String sexe, Etable habitat , String reference) {
+		super( Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Chevre"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
@@ -76,6 +82,12 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	public boolean needSpecialActionToGetProduction() {
 		return false;
 	}
+
+
+
+
+
+	
 
 	
 }

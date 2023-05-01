@@ -12,6 +12,7 @@ import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Healable;
 import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
@@ -28,6 +29,7 @@ import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
 import data.structure.hability.Fixable;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
@@ -47,7 +49,7 @@ import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
 import process.visitor.GestionVisitor;
 
-public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer{
+public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer, HealablePlace{
 	private int capacite ;
 	private int lastDecrementationNourriture ; 
 	private int lastDecrementationEau ;
@@ -63,8 +65,8 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	private HashMap<String, String > images = new HashMap<>();
 	
-	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
-		super(reference, false, 49, ligne_init ,colonne_init ,map );
+	public Enclos( String reference){
+		super(reference, false, 49);
 		//animalProducteurs = new ArrayList<>();
 		state = FixableState.USABLE;
 		capacite = 10;
@@ -374,8 +376,4 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 		throw new UnsupportedOperationException("Utilisé seulement par les terrains");
 	}
 	
-
-
-
-
 }

@@ -20,6 +20,7 @@ import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
+import data.notion.Mortel.EtatSante;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -107,7 +108,6 @@ public class FarmPaintStrategy implements Serializable {
 		  
 		Position position = enclos.getPosition();
 		BufferedImage image ;
-		
 		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {
 			for(int colonneIndex = position.getColonne_init() ; colonneIndex < enclos.getDimension()+position.getColonne_init(); colonneIndex ++) {
 				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
@@ -207,11 +207,8 @@ public class FarmPaintStrategy implements Serializable {
 		Position position = terrain.getPosition();
 		int y = (position.getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION +map.getX();
-		ImageIcon progressBar;
-		if(!(terrain.isEnoughHydrated())){
-			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+terrain.getHydrationLevel()+".png");
-			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
-		}
+		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"health"+File.separator+terrain.getHydrationLevel()+".png");
+		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
 	}
 	
 	public void paintNight( Map map ,Graphics graphics ) {
@@ -220,18 +217,21 @@ public class FarmPaintStrategy implements Serializable {
 		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
 		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
 		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
-		graphics.drawImage(night.getImage(), x, y, dx, dy, null);	
+		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
+		
+		ImageIcon notif = new ImageIcon(GameConfiguration.IMAGE_PATH+"nightdraw.png");
+		graphics.drawImage(notif.getImage(), (GameConfiguration.WINDOW_WIDTH-300)/2, (GameConfiguration.WINDOW_HEIGHT-300)/2, 300, 300, null);
 	}
 	
 	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {
 		ArrayList<Task<?>> tasks = taskManager.getinProcess();
 		//g.drawLine(0, 0, 300, 300);
-		for(Task task : tasks) {
+		for(Task<?> task : tasks) {
 			Position position =task.getActionnableTarget().getPosition();
-			int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + map.getX() ; 
+			int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
 			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + map.getY();
-			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
-			g.drawImage(bar.getImage(), x, y, 100,20, null);
+			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+"progressBar"+File.separator+task.getActivity()+File.separator+task.getState()+".png");
+			g.drawImage(bar.getImage(), x, y, 150,30, null);
 		}
 	}
 	

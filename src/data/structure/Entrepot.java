@@ -23,8 +23,8 @@ public class Entrepot extends Structure{
 	private ArrayList<Produit> produits ;
 	private int capacite =100  ; 
 	private boolean usedForAnAction = false;
-	public Entrepot(int ligne_init, int colonne_init, String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map);
+	public Entrepot( String reference ) {
+		super( reference );
 		this.produits = new ArrayList<>();
 		
 		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Entrepot1.png");

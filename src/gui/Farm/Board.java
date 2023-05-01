@@ -13,6 +13,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
+import data.espece.Produceur.ProductifState;
+import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
@@ -118,10 +120,15 @@ public class Board  extends JLayeredPane implements Serializable{
 					
 					paintStrategy.paintLevelHeart(enclos, g);
 				}
+			}else if(element instanceof Terrain){
+				Terrain terrain = (Terrain)element;
+				paintStrategy.paint(terrain, g);
+				if(terrain.getHydrationLevel()!= HydrationLevel.FULLY_HYDRATED && terrain.getProductifState()!= ProductifState.UNABLE_TO_PRODUCE && terrain.getHydrationLevel()!= HydrationLevel.DEAD_FROM_DESHYDRATION){
+					paintStrategy.paintLevelHeart(terrain, g);
+				}
 			}
 			else {
 				paintStrategy.paint(element, g);				
-				
 			}
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
@@ -138,10 +145,11 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud.solde();
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-		//night mode 
-//		if(farm.getClock().getMinute().getValue() == 1) {
-//			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
-//		}
+
+		if(!farm.getJourMode()) {
+			hud.remove_panels();
+			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
+		}
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

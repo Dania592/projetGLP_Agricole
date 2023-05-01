@@ -12,8 +12,8 @@ public class Predateur extends Element{
 	private ArrayList<EtreVivant> proies ;
 	private ModeDefense modeDefense ;
 
-	public Predateur(  int ligne_init, int colonne_init , ModeDefense mode , ArrayList<EtreVivant> proies , String reference , Map map) {
-		super( reference ,false, 1, ligne_init, colonne_init ,map);
+	public Predateur(  ModeDefense mode , ArrayList<EtreVivant> proies , String reference , Map map) {
+		super( reference ,false, 1);
 		this.proies = proies;
 		modeDefense=mode;	
 		

@@ -42,15 +42,15 @@ public class GestionnaireFactory {
 		String reference = generateReference(key);
 		switch (key) {
 			case VACHE:
-				return new Vache(0, 0, 0, null, null, null, reference, map);
+				return new Vache(0, null, null, null, reference);
 			case MOUTON:
-				return new Mouton(0, 0, 0, null, null, null, reference, map);
+				return new Mouton(0, null, null, null, reference);
 			case POULE:
-				return new Poule(0, 0, null, 0, null, null, null, reference, map);
+				return new Poule(null, 0, null, null, null, reference);
 			case CHEVRE:
-				return new Chevre(0, 0, 0, null, null, null, reference, map);
+				return new Chevre(0, null, null, null, reference);
 			case CHIEN:
-				return new Chien(0, 0, null, 0, null, null, null, reference, map);
+				return new Chien(null, 0, null, null, null, reference);
 			default:
 				return null;
 		}
@@ -60,27 +60,27 @@ public class GestionnaireFactory {
 		String reference = generateReference(key);
 		switch (key) {
 			case ABATTOIRE:
-				return new Abatoire(0, 0, reference, map);
+				return new Abatoire(reference);
 			case ENTREPOT:
-				return new Entrepot(0, 0, reference, map);
+				return new Entrepot(reference);
 			case ETABLE:
-				return new Etable(0, 0, reference, map);
+				return new Etable(reference);
 			case MAISON:
-				return new Maison(0, 0, reference, map);
+				return new Maison(reference);
 			case POULAILLER:
-				return new Poulallier(0, 0, reference, map);
+				return new Poulallier(reference);
 			case SALLE_DE_TRAITE:
-				return new SalleDeTraite(0, 0, reference, map);
+				return new SalleDeTraite(reference);
 			case GARAGE:
-				return new Garage(0, 0, reference, map);
+				return new Garage(reference);
 			case GRANGE:
-				return new Grange(0, 0, reference, map);
+				return new Grange(reference);
 			case BERGERIE_MOUTON:
-				return new BergerieMouton(0, 0, reference, map);
+				return new BergerieMouton(reference);
 			case BERGERIE_CHEVRE:
-				return new BergerieChevre(0, 0, reference, map);
+				return new BergerieChevre(reference);
 			case PUIT:
-				return new Puit(0, 0, reference, map);
+				return new Puit(reference);
 			default:
 				return null;
 		}
@@ -88,22 +88,22 @@ public class GestionnaireFactory {
 	
 	public static Terrain createElement(Terrains terrain, Map map) {
 		String reference = generateReference(terrain);
-		return new Terrain(reference, false, 0, 0, map, null);
+		return new Terrain(reference, false, null);
 	}
 	
 	public static Outil createElement(Outils outil, Map map) {
 		String reference = generateReference(outil);
-		return new Outil(reference, false, 0, 0, 0, map, outil);
+		return new Outil(reference, false, 0, outil);
 	}
 	
 	public static Engin createElement(Engins engin, Map map) {
 		String reference = generateReference(engin);
-		return new Engin(reference, false, 0, 0, 0, map, engin);
+		return new Engin(reference, false, 0, engin);
 	}
 	
 	public static Enclos createElement(Encloss enclos, Map map) {
 		String reference = generateReference(enclos);
-		return new Enclos(0, 0, reference, map);
+		return new Enclos(reference);
 	}
 	
 	public static String generateReference(Keys key) {

@@ -16,8 +16,8 @@ import process.action.visitor.place.PlaceVisitor;
 public class Grange extends Structure{
 	private static final long serialVersionUID = 1L;
 
-	public Grange(int ligne_init, int colonne_init, String reference, Map map) {
-		super(ligne_init, colonne_init, reference, map);
+	public Grange( String reference) {
+		super( reference);
 	}
 
 	@Override

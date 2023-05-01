@@ -40,8 +40,6 @@ public class GiveWaterTask extends Task<Hydratable>{
 
     @Override
     protected void performSpecialActionToTerminateTask(){
-        Integer oldWaterQuantity =GestionnaireStocks.getInstance().getProduits().get(Produits.WATER); 
-        GestionnaireStocks.getInstance().getProduits().replace(Produits.WATER, oldWaterQuantity-1);
     }
 
     

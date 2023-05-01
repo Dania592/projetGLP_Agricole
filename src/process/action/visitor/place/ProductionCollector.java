@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import data.espece.Produceur.ProductifState;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
@@ -112,6 +113,8 @@ public class ProductionCollector implements PlaceVisitor<Void> {
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
         collectProduction(terrain);
         terrain.setEvolution(EvolutionTerrain.VIERGE);
+        terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
+        terrain.getHydrationCounter().setMax(Terrain.DEFAUT_MAX_HYDRATION_COUNTER);
         return null;
     }
 
@@ -139,12 +142,7 @@ public class ProductionCollector implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
-        if(GestionnaireStocks.getInstance().getProduits().containsKey(Produits.WATER)){
-        }
-        collectProduction(puit); 
-        if(GestionnaireStocks.getInstance().getProduits().containsKey(Produits.WATER)){
-        }
-        return null;
+        throw new UnableToPerformSuchActionWithCurrentActionnable(puit);    
     }
 
     @Override

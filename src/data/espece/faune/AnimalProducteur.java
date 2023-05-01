@@ -15,7 +15,7 @@ import gui.gestionnaire.keys.Animals;
 
 
 
-public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
+public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Healable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,16 +25,17 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	private Produceur.Type produceurType;
 	private Produceur.TimeItTakes timeItTakesToProduce;
 	private Produit produit;
+	private boolean isDoped = false;
 	
 	public Produceur.TimeItTakes getTimeItTakesToProduce() {
 		return timeItTakesToProduce;
 	}
 
-	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
+	public AnimalProducteur( Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
 			Structure habitat, int frequenceProduction, int quantiteProduction,
-			Produit produit , String reference , Map map ,int speedGrowth ) {
-		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
-				sexe, habitat ,reference ,map , speedGrowth);
+			Produit produit , String reference  ,int speedGrowth ) {
+		super( milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
+				sexe, habitat ,reference  , speedGrowth);
 		this.quantiteProduction = quantiteProduction;
 		this.produit = produit;
 		produceurType = Type.AVERAGE_PRODUCEUR; 
@@ -88,6 +89,14 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		return getKey();
 	}
 
+	public boolean isDoped() {
+		return isDoped;
+	}
+
+    @Override
+    public void setDoped(boolean isDoped) {
+        this.isDoped = isDoped;
+    }
 
 
 }

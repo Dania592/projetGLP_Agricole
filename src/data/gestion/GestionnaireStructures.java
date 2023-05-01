@@ -72,11 +72,11 @@ public class GestionnaireStructures implements GestionnaireInterface, Serializab
 	}
 	
 	public void initializeGestionnaire(Map map ) {
-		Maison maison0 = new Maison(0, 0, "ma0", map);
-		Etable etable = new Etable(0, 0, "et0", map);
-		Poulallier poulallier = new Poulallier(0, 0, "po0", map);
-		Entrepot entrepot = new Entrepot(0, 0, "en0", map);
-		Maison maison1 = new Maison(0, 0, "ma1", map);
+		Maison maison0 = new Maison("ma0");
+		Etable etable = new Etable("et0");
+		Poulallier poulallier = new Poulallier("po0");
+		Entrepot entrepot = new Entrepot("en0");
+		Maison maison1 = new Maison("ma1");
 		
 		ArrayList<Structure> maisons = new ArrayList<>();
 		maisons.add(maison0);

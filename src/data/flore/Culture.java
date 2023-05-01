@@ -15,7 +15,7 @@ public  abstract class Culture extends EtreVivant {
 	private EvolutionPlante evolution;
 	
 	public Culture(int nbCase, int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat,  String reference , Map map ) {
-		super(nbCase, ligne_init, colonne_init, milieu, dureeVie, prixAchat, reference , map);
+		super(nbCase, milieu, dureeVie, prixAchat, reference );
 		this.engrais = new Engrais();
 		evolution = EvolutionPlante.GRAINE;
 	}

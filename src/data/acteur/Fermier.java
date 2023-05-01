@@ -7,14 +7,35 @@ import data.configuration.GameConfiguration;
 import data.finance.Compte;
 import data.map.Map;
 
-
+/**
+ * Class de donnée représentant le fermier 
+ * 
+ *
+ */
 public class Fermier extends Personne {
-
+	/**
+	 * Date de naissance du fermier pour le calcule d'age 
+	 */
 	private Date dateNaissance ;
-	private String package_path ; 
+	/**
+	 * Chemin vers les images du fermier selon son avatar
+	 */
+	private String package_path ;
+	/**
+	 * Compte bancaire du fermier contenant le solde du jeu 
+	 */
 	private Compte bankAccount;
-	public Fermier(String nom, int ligne, int colonne , Date dateNaissance ,String reference , Map map ) {
-		super(nom, ligne, colonne , reference , map);
+	/**
+	 * Constructeur du fermier 
+	 * @param nom 
+	 * @param ligne 
+	 * @param colonne
+	 * @param dateNaissance
+	 * @param reference
+	 * @param map
+	 */
+	public Fermier(String nom , Date dateNaissance ,String reference ) {
+		super(nom,  reference );
 		this.dateNaissance=dateNaissance;
 		package_path = GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"personnage0" ;
 		setImage(package_path+File.separator+"stand.png");	

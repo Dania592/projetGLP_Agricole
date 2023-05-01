@@ -6,10 +6,13 @@ import java.util.HashMap;
 import data.espece.Slaughtable;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.ProductifPlace;
+import data.structure.hability.SpecialActionPerformer;
+import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -20,7 +23,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Abatoire extends StructureAction implements Distributor<Slaughtable>{
+public class Abatoire extends StructureAction implements Distributor<Slaughtable>, SpecialActionPerformer{
 	private ArrayList<Slaughtable> animaltoSlaughter = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private HashMap<Produits, Integer> production = new HashMap<>();
@@ -29,8 +32,8 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 		return animaltoSlaughter;
 	}
 
-	public Abatoire(int ligne_init, int colonne_init, String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map);
+	public Abatoire( String reference ) {
+		super( reference );
 	}
 
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){
@@ -101,6 +104,18 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);
+	}
+
+	@Override
+	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
+		return animaltoSlaughter.size()> 0;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine)
+			throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+			UnableToGenerateNewTaskException {
+		throw new UnsupportedOperationException("uniquement pour les terrains");
 	}
 
 	

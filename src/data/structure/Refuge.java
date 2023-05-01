@@ -27,8 +27,8 @@ public abstract class Refuge<T> extends Structure {
 		}
 	}
 
-	public Refuge(int ligne_init, int colonne_init, String reference, Map map) {
-		super(ligne_init, colonne_init, reference, map);
+	public Refuge( String reference) {
+		super( reference);
 		this.inHabitant = new ArrayList<>();
 		currentNumberOfInhabitant = 0;
 	}

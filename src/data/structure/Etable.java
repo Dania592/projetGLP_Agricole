@@ -4,11 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import data.espece.Slaughtable;
+import data.espece.faune.Healable;
 import data.espece.faune.Vache;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
@@ -20,12 +22,11 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>{
-	private ArrayList<Slaughtable> animalToSlaughter = new ArrayList<>();
+public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>, HealablePlace{
 	private static boolean usedForAnAction = false;
 
-	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+	public Etable( String reference ) {
+		super( reference );
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
 		
@@ -59,17 +60,6 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	}
 
 	@Override
-	public void addToSlaughter(Slaughtable slaughtable) {
-		animalToSlaughter.add(slaughtable);
-		getInHabitant().remove(slaughtable);
-	}
-
-	@Override
-	public ArrayList<Slaughtable> getAnimalToSlaugther() {
-		return animalToSlaughter;
-	}
-
-	@Override
 	public boolean readyToSend() {
 		return true; 
 	}
@@ -77,11 +67,6 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	@Override
 	public void addSpecialSenderElement(Vache specialSenderElement) {
 		addInHabitant(specialSenderElement);
-	}
-
-	@Override
-	public boolean isReadyToSendToSlaughterHouse() {
-		return !animalToSlaughter.isEmpty();
 	}
 
 	@Override
@@ -116,6 +101,16 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 			return visitor.action(this, activity); 
+	}
+
+	@Override
+	public boolean isReadyToSendToSlaughterHouse() {
+		return !(getInHabitant().size() == 0);
+	}
+
+	@Override
+	public void removeAll() {
+		getInHabitant().clear();
 	}
 
 

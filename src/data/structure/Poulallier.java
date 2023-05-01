@@ -12,6 +12,7 @@ import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
@@ -24,13 +25,12 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distributor<Poule>, SlaughterHouseSender{
-	private ArrayList<Slaughtable> animalToKill = new ArrayList<>(); 
+public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distributor<Poule>, SlaughterHouseSender, HealablePlace{
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	
 	
-	public Poulallier(int ligne_init, int colonne_init,String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map);
+	public Poulallier(String reference ) {
+		super( reference );
 		setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");	
 	}
 
@@ -61,16 +61,6 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	}
 
 	@Override
-	public void addToSlaughter(Slaughtable slaughtable) {
-		animalToKill.add(slaughtable);
-		getInHabitant().remove(slaughtable);
-	}
-	@Override
-	public ArrayList<Slaughtable> getAnimalToSlaugther() {
-		return animalToKill;
-	}
-
-	@Override
 	public boolean readyToSend() {
 		return true;
 	}
@@ -83,11 +73,6 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	@Override
 	public void addSpecialSenderElement(Poule specialSenderElement) {
 		addInHabitant(specialSenderElement);
-	}
-
-	@Override
-	public boolean isReadyToSendToSlaughterHouse() {
-		return !animalToKill.isEmpty();
 	}
 
 	@Override
@@ -122,8 +107,17 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 			BeingCannotPerformSuchActionException, NotImplementYetException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
-		// TODO Auto-generated method stub
-		return null;
+			return visitor.action(this, activity);
+	}
+
+	@Override
+	public boolean isReadyToSendToSlaughterHouse() {
+		return getInHabitant().size()>0;
+	}
+
+	@Override
+	public void removeAll() {
+		getInHabitant().clear();
 	}
 
 

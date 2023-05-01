@@ -9,7 +9,7 @@ public class Clock implements Serializable{
     private static Clock reference = new Clock();
    
     private Clock(){
-    	this.hour = new CyclicCounter(0,23,0);
+    	this.hour = new CyclicCounter(6,23,0);
     	this.minute = new CyclicCounter(0,59,0);
     	this.second = new CyclicCounter(0,59,0);
     } 
@@ -45,7 +45,7 @@ public class Clock implements Serializable{
     }
 
     public void init() {
-        hour.setValue(0);
+        hour.setValue(6);
         minute.setValue(0);
         second.setValue(0);
     }

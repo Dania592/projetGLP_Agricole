@@ -11,6 +11,7 @@ import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.production.Produit;
 import data.structure.hability.Distributor;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
@@ -23,13 +24,11 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouton>, SlaughterHouseSender{
-    private ArrayList<Produit> production =new ArrayList<>();
-    private ArrayList<Slaughtable> moutonToSlaughter = new ArrayList<>();
+public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouton>, SlaughterHouseSender, HealablePlace{
     private boolean isUsedForATask= false;
 
-    public BergerieMouton(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+    public BergerieMouton( String reference ) {
+		super( reference  );
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
 		
@@ -52,17 +51,6 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     }
 
     @Override
-    public void addToSlaughter(Slaughtable slaughtable) {
-        moutonToSlaughter.add(slaughtable);
-        getInHabitant().remove(slaughtable);
-    }
-
-    @Override
-    public ArrayList<Slaughtable> getAnimalToSlaugther() {
-        return moutonToSlaughter;
-    }
-
-    @Override
     public boolean isEmpty() {
         return getInHabitant().isEmpty();
     }
@@ -81,12 +69,7 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     public void addSpecialSenderElement(Mouton specialSenderElement) {
         addInHabitant(specialSenderElement);
     }
-
-    @Override
-    public boolean isReadyToSendToSlaughterHouse() {
-        return !moutonToSlaughter.isEmpty();
-    }
-
+    
     @Override
     public void removeAll(ArrayList<Mouton> transportableToRemoveList) {
         getInHabitant().removeAll(transportableToRemoveList);
@@ -123,6 +106,18 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException{
         return visitor.action(this, activity);
     }
+
+    @Override
+    public boolean isReadyToSendToSlaughterHouse() {
+        return getInHabitant().size()>0;
+    }
+
+    @Override
+    public void removeAll() {
+        getInHabitant().clear();        
+    }
+
+    
 
 
 

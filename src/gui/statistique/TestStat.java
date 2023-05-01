@@ -118,13 +118,13 @@ public class TestStat extends JFrame {
 	
 	public void piePanelStat(HashMap<String, Integer> donnee , int x , int y , int w , int h , String title ) {	
 		PiePanel pie = new PiePanel(title);
-		pie.initDonnee(donnee);
+		pie.reelStat();
 		pie.setBounds(x,y,w,h);	
 		panelProduit.add(pie);
 		
 	}
-	
-	public void barPanelStat(HashMap<String, Integer> donnee , int x , int y , int w , int h , String title) {
+	// lié avec les gestionnaire
+	public void barPanelStat( int x , int y , int w , int h , String title) {
 		BarPanel bar = new BarPanel(title);
 		bar.reelStat();
 		bar.setBounds(x, y, w, h);
@@ -168,7 +168,7 @@ public void statistiqueFinance(ArrayList<Integer> achat , ArrayList<Integer> ven
 		
 		piePanelStat(animals , 30, 120, 400,400 , "Produits Animals");
 		
-		piePanelStat(vegetals , 460, 120, 400,400 , "Produits Végétals");	
+		//piePanelStat(vegetals , 460, 120, 400,400 , "Produits Végétals");	
 	}
 	
 	public void statistiqueStock(HashMap<String, Integer> animals , HashMap<String, Integer> vegetals) {
@@ -180,8 +180,8 @@ public void statistiqueFinance(ArrayList<Integer> achat , ArrayList<Integer> ven
 		title.setBounds(300, 50, 400, 50);
 		panelStock.add(title);
 		
-		barPanelStat(animals, 30, 120, 400,400, "Animaux");
-		barPanelStat(vegetals,  460, 120, 400,400, "Végétaux");
+		barPanelStat( 30, 120, 400,400, "Animaux");
+		barPanelStat( 460, 120, 400,400, "Végétaux");
 		
 	}
 	

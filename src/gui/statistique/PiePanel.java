@@ -1,6 +1,7 @@
 package gui.statistique;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -11,7 +12,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
+import data.espece.faune.Animal;
+import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireStocks;
+import data.production.Produit;
+import data.production.Produits;
 import gui.gestionnaire.GeneralPaintStrategy;
+import gui.gestionnaire.keys.Animals;
+import gui.gestionnaire.keys.Graine;
 
 public class PiePanel extends StatPanel {
 	
@@ -55,5 +63,32 @@ public class PiePanel extends StatPanel {
 	public void initDonnee(HashMap<String, Integer> donnees) {
 		this.donnees=donnees;
 		initPie();
+	}
+	
+	public void reelStat() {
+		if(getTitle().equals("Produits Animals")) {
+			HashMap<Produits, Integer> produit = GestionnaireStocks.getInstance().getProduits();
+			HashMap<String, Integer> donnees = new HashMap<>();
+			for(Produits produits : produit.keySet()) {
+				donnees.put(produits.name(),produit.get(produits));
+			}
+			this.donnees=donnees;
+			initPie();			
+		}
+//		else {
+//			if(getTitle().equals("Produits Végétals")) {
+//				
+//				HashMap<Graine, Integer> graines = GestionnaireStocks.getInstance().getGraines();
+//				HashMap<String, Integer> donnees = new HashMap<>();	
+//				for(Graine graine : graines.keySet()) {
+//					if(graines.get(graine)>0) {
+//						donnees.put(graine.name(),new Integer( graines.get(graine)));						
+//					}
+//				}
+//				this.donnees=donnees;
+//				initBar();
+//			}
+//			
+//		}
 	}
 }

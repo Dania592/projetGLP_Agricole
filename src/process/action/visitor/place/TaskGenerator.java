@@ -2,11 +2,18 @@ package process.action.visitor.place;
 
 
 import process.action.task.Task;
+import process.action.task.action.CareTask;
 import process.action.task.action.CollectTask;
 import process.action.task.action.FeedingTask;
 import process.action.task.action.FixTask;
 import process.action.task.action.GiveWaterTask;
+import process.action.task.action.HealTask;
 import process.action.task.action.SpecialTask;
+import process.action.task.action.transfert.SendBackHomeTask;
+import process.action.task.action.transfert.SendToEnclosureTask;
+import process.action.task.action.transfert.SendToProductifPlace;
+import process.action.task.action.transfert.SendToProductifPlaceTask;
+import process.action.task.action.transfert.SendToSlaugtherHouseTask;
 import data.structure.Garage;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import data.espece.faune.Chevre;
@@ -59,6 +66,8 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
     private static HomeSenderVisitor homeSender = new HomeSenderVisitor();
     private static SendToSlaughterHouseVisitor slaughterHouseSender = new SendToSlaughterHouseVisitor();
     private static SpecialActionVisitor specialTaskVisitor = new SpecialActionVisitor();
+    private static CareVisitor careVisitor = new CareVisitor();
+    private static HealerVisitor healerVisitor = new HealerVisitor();
     private static ConditionTester conditionTester = new ConditionTester();
 
     @Override
@@ -151,9 +160,13 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     case FIX_STRUCTURE:
                         return new FixTask(activity, etable, fixer);
                     case SEND_TO_ENCLOSURE:
+                        return new SendToEnclosureTask(activity, etable, enclosureSender);
                     case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
+                        return new SendToSlaugtherHouseTask(activity, etable, slaughterHouseSender);
                     case SEND_TO_MILKING_PARLOUR:
-                        throw new NotImplementYetException(activity);
+                        return new SendToProductifPlaceTask(activity, etable, placeSender);
+                    case HEAL :
+                        return new HealTask(activity, etable, healerVisitor);
                     default:            
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, etable);
                 }
@@ -167,11 +180,15 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             if(conditionTester.action(poulallier, activity)){
                 switch(activity){
                     case FIX_STRUCTURE:
+                        return new FixTask(activity, poulallier, fixer);
+                    case COLLECT_EGG:  
                         return new CollectTask(activity, poulallier, collector);
-                    case COLLECT_EGG:
                     case SEND_TO_ENCLOSURE:
+                        return new SendToEnclosureTask(activity, poulallier, enclosureSender);
                     case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
-                        throw new NotImplementYetException(activity);
+                        return new SendToSlaugtherHouseTask(activity, null, slaughterHouseSender);
+                    case HEAL:
+                        return new HealTask(activity, poulallier, healerVisitor);
                     default:            
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, poulallier);
                 }
@@ -195,8 +212,11 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
             case SHAVE_SHEEP : 
                 return new SpecialTask(activity, enclos, specialTaskVisitor);
             case SEND_BACK_HOME_ANIMALS : 
+                return new SendBackHomeTask(activity, enclos, homeSender);
             case TRANSFERT_TO_PRODUCTION_ROOM : 
-                throw new NotImplementYetException(activity);
+                return new SendToProductifPlace(activity, enclos, placeSender);
+            case HEAL_FROM_ENCLOSURE:
+                return new HealTask(activity, enclos, healerVisitor);
             default:            
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, enclos);
             }
@@ -287,8 +307,9 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     case REMOVE_ROTTEN_PLANT:
                         return new SpecialTask(activity, terrain, specialTaskVisitor);
                     case FERTILIZE_GROUND:
-                        // return;
-                        throw new NotImplementYetException(activity);
+                        return new CareTask(activity, terrain, careVisitor);
+                    case HEAL_FIELD:
+                        return new HealTask(activity, terrain, healerVisitor);
                     default:
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, terrain);
                     }
@@ -304,7 +325,9 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                 case FIX_STRUCTURE:
                     return new FixTask(activity, bergerieChevre, fixer);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return new SendToEnclosureTask(activity, bergerieChevre, enclosureSender);
+                case HEAL:
+                    return new HealTask(activity, bergerieChevre, healerVisitor); 
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieChevre);
             }
@@ -320,7 +343,9 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                 case FIX_STRUCTURE:
                     return new FixTask(activity, bergerieMouton, fixer);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return new SendToEnclosureTask(activity, bergerieMouton, enclosureSender);
+                case HEAL :
+                    return new HealTask(activity, bergerieMouton, healerVisitor);
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieMouton);
             }
@@ -336,8 +361,6 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                 return new FixTask(activity, puit, fixer);
             case DRAW_WATER:
                 return new SpecialTask(activity, puit, specialTaskVisitor);
-            case COLLECT_WATER:
-                return new CollectTask(activity, puit, collector);
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, puit);
             }

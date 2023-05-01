@@ -34,9 +34,9 @@ public abstract class Animal extends EtreVivant implements Stockage, Buyable, Fo
 	private int lastEvolutionHour ;
 	private int speedGrowth ; 
 	
-	public Animal( int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
-			Alimentation alimentation, String sexe, Structure habitat, String reference , Map map  , int speedGrowth) {
-				super(1, ligne_init, colonne_init, milieu, dureeVie, prixAchat,reference , map );
+	public Animal(  Milieu milieu, int dureeVie, float prixAchat , int naissance, float poids, String nom, 
+			Alimentation alimentation, String sexe, Structure habitat, String reference   , int speedGrowth) {
+				super(1, milieu, dureeVie, prixAchat,reference );
 		this.naissance = naissance;
 		this.poids = poids;
 		this.nom = nom;

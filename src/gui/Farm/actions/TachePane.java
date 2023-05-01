@@ -32,17 +32,16 @@ public class TachePane extends JPanel{
 		
 		setLayout(new FlowLayout());
 		String activity = task.getActivity().getLabel();
-		
+		setOpaque(false);
 		String imagePath = GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getActivity()+".png";
 		ImageIcon icon = new ImageIcon(imagePath);
 		JLabel image = new JLabel(icon);
 		image.setBackground(Color.black);
-		image.addMouseListener(new MouseTask());
+		addMouseListener(new MouseTask());
 		add(image);
 		
-		JLabel label_image = new JLabel(activity);
-		label_image.addMouseListener(new MouseTask());
-		add(label_image);
+		JLabel labelImage = new JLabel(activity);
+		add(labelImage);
 	
 	}
 	
@@ -54,10 +53,13 @@ public class TachePane extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			lunchTask();
+			if (task.getActivity().getLabel().equals("Planter")) {
+				// afficher le chois de la graine
+				lunchTask();
+			} else {
+				lunchTask();	
+			}
 			hud.removeActionPane();
-			
-			
 		}
 
 		@Override

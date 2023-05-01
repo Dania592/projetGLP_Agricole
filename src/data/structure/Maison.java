@@ -19,8 +19,8 @@ import process.action.visitor.place.PlaceVisitor;
 
 public class Maison extends Refuge<Personne>{
 
-	public Maison(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+	public Maison( String reference  ) {
+		super( reference  );
 			setImage("src"+File.separator+"ressources"+File.separator+"minimaison.png");
 	}
 	

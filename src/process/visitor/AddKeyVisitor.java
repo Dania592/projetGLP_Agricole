@@ -94,7 +94,7 @@ public class AddKeyVisitor implements KeyVisitor<Void>{
 
 	@Override
 	public Void visit(Employees employee, int quantity) {
-		Employee employe = new Employee(employee, quantity, quantity, employee.getPrixAchat(), null, map);
+		Employee employe = new Employee(employee, quantity, null);
 		GestionnaireRH.getInstance().getEmployees().put(employee, employe);
 		return null;
 	}

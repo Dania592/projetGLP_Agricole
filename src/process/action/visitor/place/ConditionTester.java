@@ -2,7 +2,9 @@ package process.action.visitor.place;
 
 import java.util.Iterator;
 
+import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
+import data.espece.faune.Healable;
 import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
 import data.espece.Produceur.ProductifState;
@@ -11,6 +13,7 @@ import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.Abatoire;
@@ -24,6 +27,7 @@ import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
+import data.structure.Refuge;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Actionnable;
 import data.structure.hability.Hydratable;
@@ -32,6 +36,7 @@ import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.task.action.CollectTask;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
@@ -137,9 +142,6 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
         return action(terrain, activity);
     }
 
-
-
-
     @Override
     public Boolean action(Etable etable, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException{ 
@@ -149,7 +151,9 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
                 case SEND_TO_ENCLOSURE:
                 case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
                 case SEND_TO_MILKING_PARLOUR:
-                    throw new NotImplementYetException(activity);
+                    throw new NotImplementYetException();
+                case HEAL :
+                    return canHeal(etable.getInHabitant().iterator());
                 default:            
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, etable);
             }
@@ -162,9 +166,12 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
                 case FIX_STRUCTURE:
                     return needToFix(poulallier);
                 case COLLECT_EGG:
+                    return isInProductifPlaceProduction(poulallier, Produits.OEUF);
                 case SEND_TO_ENCLOSURE:
                 case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
-                    throw new NotImplementYetException(activity);
+                    throw new NotImplementYetException();
+                case HEAL :
+                    return canHeal(poulallier.getInHabitant().iterator());
                 default:            
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, poulallier);
             }
@@ -187,6 +194,8 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             case SEND_BACK_HOME_ANIMALS : 
             case TRANSFERT_TO_PRODUCTION_ROOM : 
                 throw new NotImplementYetException(activity);
+            case HEAL_FROM_ENCLOSURE :
+                return canHeal(enclos.getAnimals().iterator());
             default:            
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, enclos);
         }    
@@ -211,9 +220,11 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     private boolean canShaveSheep(Enclos enclos){
         boolean haveProduced = false;
 		Iterator<Mouton> moutons = enclos.getAnimalStorage().getMoutons().iterator();
-			while(moutons.hasNext() && !haveProduced){
-				haveProduced = moutons.next().getProductifState() == ProductifState.IN_WAIT;
-			}
+        Mouton mouton;
+		while(moutons.hasNext() && !haveProduced){
+            mouton =  moutons.next();
+			haveProduced = mouton.getProductifState() == ProductifState.IN_WAIT; 
+		}
 		return haveProduced;
     } 
 
@@ -297,19 +308,49 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             case TO_WATER:
                 return canWaterField(terrain);
             case HARVEST:
-                return defaultConditionForCheckingProduction(terrain);
+                return canCollectPlant(terrain);
             case REMOVE_ROTTEN_PLANT:
                 return canRemoveRottenPlant(terrain);
             case FERTILIZE_GROUND:
-                // return;
-                throw new NotImplementYetException(activity);
+                return canFertilise(terrain);
+            case HEAL_FIELD:
+                return canHeal(terrain);
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, terrain);
         }
     }
 
+    private boolean needToHeal(Healable healable){
+        return healable.getEtatSante() == EtatSante.MALADE || healable.getEtatSante() == EtatSante.MOURANT ||
+        healable.getEtatSante() == EtatSante.GRAVEMENT_MALADE;
+    }
+
+    private boolean canHeal(Terrain terrain){
+        return needToHeal(terrain);
+    }//TODO doit on acheter les médicaments
+
+    private <E extends AnimalProducteur> boolean canHeal(Iterator<E> animalProduceurIterator){
+        boolean needToHeal = false;
+        while(animalProduceurIterator.hasNext() && !needToHeal){
+            needToHeal =  needToHeal(animalProduceurIterator.next());
+        }
+        return needToHeal;
+    }//TODO doit on acheter les médicaments
+
+
+    private boolean canCollectPlant(Terrain terrain){
+        return defaultConditionForCheckingProduction(terrain) && terrain.getEvolution() == EvolutionTerrain.PLANTE_5;
+    }
+
+    private boolean canFertilise(Terrain terrain){
+        return terrain.getProductifState() == ProductifState.PRODUCING && !(terrain.getEtatSante() == EtatSante.GRAVEMENT_MALADE) &&
+        !(terrain.getEtatSante() == EtatSante.MOURANT) && terrain.isDoped() == false && terrain.getHydrationLevel() != HydrationLevel.IN_DANGER && terrain.getHydrationLevel() != HydrationLevel.DESHYDRATED;
+        //TODO on doit acheter donc vérifier qu'il y en a dans le gestionnaire
+    }
+
+
     private boolean canWaterField(Terrain terrain){
-        return terrain.getProductifState() == ProductifState.PRODUCING && basicConditionForHydration(terrain);
+        return basicConditionForHydration(terrain) && terrain.getEvolution() != EvolutionTerrain.POURRI;
     }
     private boolean defaultConditionForCheckingProduction(ProductifPlace productifPlace){
         Iterator<Integer> productionIter = productifPlace.getProduction().values().iterator();
@@ -325,7 +366,8 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     }
 
     private boolean canPlant(Terrain terrain){
-        return terrain.getEvolution() == EvolutionTerrain.LABOURE && terrain.getHydrationLevel() == HydrationLevel.FULLY_HYDRATED;
+        return terrain.getEvolution() == EvolutionTerrain.LABOURE && terrain.getHydrationLevel() == HydrationLevel.FULLY_HYDRATED &&
+        terrain.getEtatSante() != EtatSante.MALADE &&  terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE;
     }
 
     private boolean canRemoveRottenPlant(Terrain terrain){
@@ -340,7 +382,9 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             case FIX_STRUCTURE:
                 return needToFix(bergerieChevre);
             case SEND_TO_ENCLOSURE:
-                throw new NotImplementYetException(activity);
+                throw new NotImplementYetException();
+            case HEAL :
+                return canHeal(bergerieChevre.getInHabitant().iterator());
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieChevre);
         }
@@ -354,6 +398,8 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
                 return needToFix(bergerieMouton);
             case SEND_TO_ENCLOSURE:
                 throw new NotImplementYetException(activity);
+            case HEAL :
+                return canHeal(bergerieMouton.getInHabitant().iterator());
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieMouton);
         }
@@ -366,12 +412,13 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
                 return needToFix(puit);
             case DRAW_WATER:
                 return haveWaterInWell(puit);
-            case COLLECT_WATER:
-                return isInProductifPlaceProduction(puit, Produits.WATER);
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, puit);
         }
     }
+
+
+
 
     private boolean haveWaterInWell(Puit puit){
         return puit.getQuantite()>=puit.getSeau().getCapacite();

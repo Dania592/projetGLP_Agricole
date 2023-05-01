@@ -438,7 +438,7 @@ public class GeneralPaintStrategy {
 			default:
 				infos[0] = "Non reconnu";
 				infos[1] = "src"+File.separator+"ressources"+File.separator+"default-image.png";
-				infos[2] = "/";
+				infos[2] = "0";
 				break;
 		}
 		return infos;
@@ -479,31 +479,33 @@ public class GeneralPaintStrategy {
 		Keys element = (Keys) elements.get(counter);
 		String[] infos = getInformation(element, key);
 		String imagePath = infos[1];
-		int size = Integer.valueOf(infos[2]).intValue();
-		if (size != 0) {
-			JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
-			
-			JLabel icone = new JLabel();
-			icone.setBounds(gap, gap, width - (2*gap), 100);
-			ImageIcon elementImage= new ImageIcon(imagePath);
-			icone.setIcon(elementImage);
-			icone.setHorizontalAlignment(JLabel.CENTER);
-			
-			JLabel name = new JLabel();
-			name.setBounds(gap, 2 * gap + 100 , width - (2*gap), 50);
-			name.setText(infos[0]);
-			name.setHorizontalAlignment(JLabel.CENTER);
-			
-			JLabel count = new JLabel();
-			count.setBounds(gap, 3 * gap + 120, width - (2*gap), 50);
-			count.setText(infos[2]);
-			count.setHorizontalAlignment(JLabel.CENTER);
-			count.setForeground(GeneralPaintStrategy.DARK_BROWN);
-			
-			card.add(icone);
-			card.add(name);
-			card.add(count);
-			return card;
+		if (!infos[2].equals("/")) {
+			int size = Integer.valueOf(infos[2]).intValue();
+			if (size != 0) {
+				JPanel card = paintRoundedPanel(posX, posY, width, height, null, GeneralPaintStrategy.RADIUS, color);
+				
+				JLabel icone = new JLabel();
+				icone.setBounds(gap, gap, width - (2*gap), 100);
+				ImageIcon elementImage= new ImageIcon(imagePath);
+				icone.setIcon(elementImage);
+				icone.setHorizontalAlignment(JLabel.CENTER);
+				
+				JLabel name = new JLabel();
+				name.setBounds(gap, 2 * gap + 100 , width - (2*gap), 50);
+				name.setText(infos[0]);
+				name.setHorizontalAlignment(JLabel.CENTER);
+				
+				JLabel count = new JLabel();
+				count.setBounds(gap, 3 * gap + 120, width - (2*gap), 50);
+				count.setText(infos[2]);
+				count.setHorizontalAlignment(JLabel.CENTER);
+				count.setForeground(GeneralPaintStrategy.DARK_BROWN);
+				
+				card.add(icone);
+				card.add(name);
+				card.add(count);
+				return card;
+			}
 		}
 		return null;
 	}
@@ -854,7 +856,7 @@ public class GeneralPaintStrategy {
 			gestionnaireRH.printEmployees();
 			gestionnaireRH.recruter(employee);
 			gestionnaireRH.getARecruter().remove(employee);
-			gestionnaireRH.getEmployees().put(employee, new Employee(employee, 0, 0, 100, "", Map.getInstance()));
+			gestionnaireRH.getEmployees().put(employee, new Employee(employee, 0, ""));
 			gestionnaireRH.printEmployees();
 			button.getParent().revalidate();
 			button.getParent().repaint();

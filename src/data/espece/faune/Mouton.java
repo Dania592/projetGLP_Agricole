@@ -1,10 +1,13 @@
 package data.espece.faune;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Laine;
 import data.production.Lait;
 import data.production.Meat;
@@ -16,11 +19,13 @@ import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.PlaceVisitor;
 
 public class Mouton extends AnimalProducteur{
 
@@ -35,9 +40,9 @@ public class Mouton extends AnimalProducteur{
 	private final static Laine laine = new Laine();
 	private final static Meat equivalentInMeat = new Meat();
 	
-	public Mouton(int ligne_init, int colonne_init, int naissance,String nom, String sexe, Etable habitat,String reference ,Map map) {
-		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, laine, reference , map ,SPEED_GROWTH);
+	public Mouton( int naissance,String nom, String sexe, Etable habitat,String reference ) {
+		super( Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE, laine, reference , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Mouton"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";
@@ -83,9 +88,5 @@ public class Mouton extends AnimalProducteur{
 	public boolean needSpecialActionToGetProduction() {
 		return true;
 	}
-
-
-
-
 
 }

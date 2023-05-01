@@ -10,9 +10,9 @@ import data.stucture_base.Element;
 
 public class Tornade extends Catastrophe{
 
-	public Tornade(int duree, int debut, boolean succes, Predateur predateur, ModeDefense modeDefense,
+	public Tornade(int duree, int debut, boolean succes, 
 			ArrayList<Element> cibles) {
-		super(duree, debut, succes, predateur, modeDefense, cibles);
+		super(duree, debut, succes, cibles);
 	}
 
 }
