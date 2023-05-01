@@ -6,6 +6,7 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import data.gestion.GestionnaireStocks;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.GestionnairePaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
@@ -43,6 +44,7 @@ public class GestionnaireStocksGUI extends JFrame {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(paint(tab));	
+		System.out.println("Mon affichage à moi ::::::: " +GestionnaireStocks.getInstance());
 		
 	    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
