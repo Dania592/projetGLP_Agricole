@@ -25,15 +25,13 @@ import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 import process.transaction.Buyable;
 
-public class Puit extends Structure implements SpecialActionPerformer, ProductifPlace, Buyable{
-    private HashMap<Produits, Integer> production = new HashMap<>();
+public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     private Seau seau = Seau.SEAU_BOIS;
     private int quantite = 100; //affectée par les saisons
 
     
     public Puit(String reference  ) {
 		super( reference );
-		production.put(Produits.WATER, GameConfiguration.START_WATER_LEVEL);
 		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
@@ -90,34 +88,8 @@ public class Puit extends Structure implements SpecialActionPerformer, Productif
     }
 
     @Override
-    public boolean canLaunchProduction() {
-        return quantite>=seau.getCapacite();
-    }
-
-    
-    @Override
-    public HashMap<Produits, Integer> getProduction() {
-        return production;
-    }
-
-    @Override
-    public String toString() {
-        return "Puit [production=" + production + ", seau=" + seau + ", quantite=" + quantite + "]";
-    }
-
-    @Override
     public Structures getKey(){
         return Structures.PUIT;
-    }
-
-    @Override
-    public boolean needPlayerIntervention() {
-        return true;
-    }
-
-    @Override
-    public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
-        return canLaunchProduction();
     }
 
     @Override
@@ -133,11 +105,11 @@ public class Puit extends Structure implements SpecialActionPerformer, Productif
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) {
 		throw new UnsupportedOperationException("Utilisé seulement par les terrains");
     }
+
+    @Override
+    public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
+        return true; 
+    }
     
-
-
-
-
-
 
 }

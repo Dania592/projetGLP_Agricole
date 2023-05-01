@@ -109,25 +109,26 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits>, Seriali
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException, NotImplementYetException {
         updateProducingAbilityOfTerrain(terrain);
-        if(terrain.canLaunchProduction()){
+            if(terrain.getProductifState() ==  ProductifState.HAVE_PRODUCE){
+                terrain.setProductifState(ProductifState.IN_WAIT);
+                terrain.getHydrationCounter().setMax(terrain.getHydrationCounter().getMax()*2);
+                return terrain.collectProduction();
+            }
             CyclicCounter productifCycle = terrain.getProductionCycle(); 
             productifCycle.increment();
             if(productifCycle.getValue() == 0 && terrain.getProductifState()== ProductifState.PRODUCING){
                 terrain.evoluer();
             }if(terrain.getEvolution()==EvolutionTerrain.PLANTE_5){
-                return terrain.collectProduction();
+                terrain.setProductifState(ProductifState.HAVE_PRODUCE);
             }else{
                 throw new HaveNotProducedYetException(terrain);
             }
-        }
         throw new HaveNotProducedYetException(terrain);
     }
 
 
     private void updateProducingAbilityOfTerrain(Terrain terrain){
-        if(terrain.getProductifState() ==  ProductifState.UNABLE_TO_PRODUCE && terrain.getEvolution() != EvolutionTerrain.VIERGE && terrain.getEvolution() != EvolutionTerrain.LABOURE){
-            terrain.setProductifState(ProductifState.PRODUCING);
-        }if(!(terrain.getEtatSante() == EtatSante.BONNE_SANTE)){
+        if(!(terrain.getEtatSante() == EtatSante.BONNE_SANTE)){
             terrain.setProduceurType(Produceur.Type.BAD_PRODUCEUR);
         }
     } 

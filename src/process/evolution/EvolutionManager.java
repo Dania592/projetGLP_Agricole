@@ -8,6 +8,7 @@ import java.util.Random;
 import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.Produceur.ProductifState;
+import data.espece.Produceur.Type;
 import data.espece.ProductionManager;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.espece.evolution.EvolutionAnimal;
@@ -50,9 +51,6 @@ public class EvolutionManager implements Serializable {
 	private int deathIndex = 0;
 	private ArrayList<AnimalProducteur> animalsToRemove = new ArrayList<>();
 
-
-	// on ajoute l'evolution des terrains actions ... 
-
 	public EvolutionManager(ElementManager elementManager , Clock clock) {
 		this.elementManager=elementManager;
 		this.clock=clock;
@@ -83,39 +81,41 @@ public class EvolutionManager implements Serializable {
 		}
 	}
 
-
-	private void manageEvolutionTerrain(Terrain terrain){
-		if(terrain.getEvolution()!=EvolutionTerrain.VIERGE && terrain.getEvolution()!=EvolutionTerrain.LABOURE && terrain.getEvolution()!=EvolutionTerrain.POURRI ){
-			CyclicCounter hydrationCounter = terrain.getHydrationCounter();
-			if(!(terrain.haveProduced())){
+	private void manageEvolutionTerrain(Terrain terrain) {
+		if(terrain.getEvolution() != EvolutionTerrain.VIERGE && terrain.getEvolution() != EvolutionTerrain.LABOURE
+				&& terrain.getEvolution() != EvolutionTerrain.POURRI) {
+			if (!(ProductionManager.getInstance().getProductifList().contains(terrain))) {
+				ProductionManager.getInstance().addToProductifList(terrain);
+			}if(!(terrain.isCurrentlyUsedForAnotherTask())){
+				CyclicCounter hydrationCounter = terrain.getHydrationCounter();
 				hydrationCounter.increment();
-			}else{
-				terrain.getTimeBeforeProductionExpires().increment();
-				if(terrain.getTimeBeforeProductionExpires().getValue() == 0){
-					terrain.setEvolution(EvolutionTerrain.POURRI);
+				if(hydrationCounter.getValue() == 0 &&(terrain.getEvolution()!=EvolutionTerrain.VIERGE || terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE)) {
+					updateHealthState(terrain);
+				}if(haveToUpdateProducingStateOfCurrentlyUnabledProduceur(terrain)){
+					terrain.setProductifState(ProductifState.PRODUCING);
 				}
-			}
-			if(hydrationCounter.getValue() == 0){
-				terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
-			}if(terrain.getProductifState() == ProductifState.PRODUCING){
-				
-					try {
-						terrain.launchAction(productionPerformer);
-					} catch (UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
-							| BeingCannotPerformSuchActionException | NotImplementYetException
-							| NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-							| UnableToMakeTheTransfertException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}if(terrain.getHydrationLevel() == HydrationLevel.IN_DANGER){
-				// terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
-				terrain.setEtatSante(EtatSante.MALADE);
-			}else if(terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED && !(terrain.isCurrentlyUsedForAnotherTask())){
-				terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
-				terrain.getProduction().clear();
-				terrain.setEvolution(EvolutionTerrain.POURRI ); //TODO decommenter
-			}
+			}	
+		}
+		System.out.println(terrain);
+	}
+
+	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){
+		return terrain.getEvolution() == EvolutionTerrain.PLANTE && terrain.getProductifState()==ProductifState.UNABLE_TO_PRODUCE &&
+		terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE && terrain.getEtatSante() != EtatSante.MALADE;
+	}
+
+	private void updateHealthState(Terrain terrain){
+		terrain.setHydrationLevel(terrain.getHydrationLevel().decrease());
+		if (terrain.getHydrationLevel() == HydrationLevel.IN_DANGER) {
+			Messagerie.getInstance().addMessage(new Message("A besoin d'eau", clock.getHour().getValue(), clock.getMinute().getValue()));
+			terrain.setEtatSante(EtatSante.MALADE);
+		}else if (terrain.getHydrationLevel() == HydrationLevel.DESHYDRATED) {
+			Messagerie.getInstance().addMessage(new Message(" Est deshydraté", clock.getHour().getValue(), clock.getMinute().getValue()));
+			terrain.setEtatSante(EtatSante.GRAVEMENT_MALADE);
+		}else if(terrain.getHydrationLevel() == HydrationLevel.DEAD_FROM_DESHYDRATION){
+			terrain.getProduction().clear();
+			terrain.setEvolution(EvolutionTerrain.POURRI);
+			terrain.setProductifState(ProductifState.UNABLE_TO_PRODUCE);
 		}
 	}
 

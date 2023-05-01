@@ -135,7 +135,8 @@ public class TaskManager{
         Task<?> task;
         while(activitiesIter.hasNext()){
             try {
-                task = actionnable.launchAction(taskGenerator,  activitiesIter.next());
+                
+                task = actionnable.launchAction(taskGenerator, activitiesIter.next());
                 possibleTaskToPerform.add(task);
             } catch (Exception e) {
             }

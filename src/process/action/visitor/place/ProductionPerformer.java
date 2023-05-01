@@ -8,12 +8,14 @@ import java.util.Iterator;
 import data.espece.Produceur;
 import data.espece.Slaughtable;
     import data.espece.Produceur.ProductifState;
+import data.espece.Produceur.Type;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.MilkProduceur;
 import data.espece.faune.Poule;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.production.exception.NonExistantProduceException;
@@ -136,7 +138,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
         if(terrain.canLaunchProduction()){
             try {
                 production = terrain.launchAction(producer);
-                addToProduction(terrain, production, terrain.getProduceurType().getNumberOfProductPerProductifCycle());
+                addToProductionAccordingToProduceurType(terrain, production);
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
@@ -144,6 +146,15 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
         }
         return null;
     }
+
+    private void addToProductionAccordingToProduceurType(Terrain terrain, Produits produit){
+        Produceur.Type produceurType = terrain.getProduceurType();
+        if(terrain.isDoped() && terrain.getEtatSante() == EtatSante.BONNE_SANTE){
+            produceurType  = Type.DOPED_PRODUCEUR;
+        }
+        addToProduction(terrain, produit, produceurType.getNumberOfProductPerProductifCycle()*terrain.getProcuedQuantity());
+    }
+
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)

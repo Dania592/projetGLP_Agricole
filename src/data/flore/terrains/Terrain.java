@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import data.espece.Produceur;
 import data.espece.WaterConsumer;
+import data.espece.faune.Healable;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
@@ -13,6 +14,7 @@ import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Fixable;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
@@ -33,7 +35,7 @@ import process.action.visitor.place.PlaceVisitor;
 import process.transaction.Buyable;
 import process.visitor.GestionVisitor;
 
-public class Terrain extends Element implements Buyable, Produceur, ProductifPlace, WaterConsumer, Fixable, SpecialActionPerformer, Hydratable{
+public class Terrain extends Element implements Buyable, Produceur, ProductifPlace, WaterConsumer, Fixable, SpecialActionPerformer, Hydratable, Healable, HealablePlace{
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isUsedForATask = false;
@@ -48,20 +50,18 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	}
 
 	private Produceur.Type produceurType = Type.AVERAGE_PRODUCEUR;
-	private Produceur.TimeItTakes timeItTakesToProduce = TimeItTakes.TERRAIN;
+	private static Produceur.TimeItTakes timeItTakesToProduce = TimeItTakes.TERRAIN;
 	private CyclicCounter productifCycle = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde());
 	private FixableState fixableState = FixableState.USABLE;
-	private static int DEFAULT_PRODUCED_QUANTITY = 10;
+	private static int DEFAULT_PRODUCED_QUANTITY = 25;
 	private EvolutionTerrain evolution;
 	private Graine type;
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	private EtatSante etatSante = EtatSante.BONNE_SANTE;
-	private CyclicCounter hydrationCounter = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde()/3); 
-	private CyclicCounter timeBeforeProductionExpires = new CyclicCounter(hydrationCounter.getMax()*4); 
+	public final static int DEFAUT_MAX_HYDRATION_COUNTER = timeItTakesToProduce.getTimeInSeconde()/3;
+	private CyclicCounter hydrationCounter = new CyclicCounter(DEFAUT_MAX_HYDRATION_COUNTER); 
+	private boolean isDoped = false;
 
-	public CyclicCounter getTimeBeforeProductionExpires() {
-		return timeBeforeProductionExpires;
-	}
 
 	public Terrain(String reference, boolean statique ,Graine type) {
 		super(reference, statique, DIMENSION);
@@ -81,14 +81,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	public void setType(Graine type) {
 		this.type = type;
 	}
-
-	// public void evoluer() {
-	// 	index++;
-	// 	if (index > SPEED && isStatique()) {
-	// 		index = 0;
-	// 		nextEvolution();
-	// 	}
-	// }
 	
 
 	public void evoluer(){
@@ -213,7 +205,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 
 	@Override
 	public boolean canLaunchProduction() {
-		return true;
+		return productifState == ProductifState.PRODUCING || productifState == ProductifState.HAVE_PRODUCE;
 	}
 
 	@Override()
@@ -341,6 +333,24 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity, graine);
 	}
+
+	@Override
+	public boolean isDoped() {
+		return isDoped;
+	}
+
+    @Override
+    public void setDoped(boolean isDoped) {
+        this.isDoped = isDoped;
+    }
+
+	
+
+
+
+	
+
+	
 
 		
 }

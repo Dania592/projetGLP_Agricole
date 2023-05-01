@@ -94,6 +94,7 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Terrain terrain) {
         terrain.setHydrationLevel(HydrationLevel.FULLY_HYDRATED);
+        terrain.getHydrationCounter().reset();
         return null;
     }
 

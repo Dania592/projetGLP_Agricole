@@ -92,7 +92,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                 break;
             case POURRI:
                 terrain.setEvolution(EvolutionTerrain.VIERGE);
-                
                 break;
             default : 
                 throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
@@ -114,14 +113,15 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
-        if(puit.getProduction().containsKey(Produits.WATER)){
-        }
         int capaciteSeau =  puit.getSeau().getCapacite();
-        Integer alreadyCollectedWater = puit.getProduction().containsKey(Produits.WATER)? puit.getProduction().get(Produits.WATER) : 0;
-        puit.setQuantite(puit.getQuantite()-1);
-        puit.getProduction().put(Produits.WATER,alreadyCollectedWater+capaciteSeau);
-        if(puit.getProduction().containsKey(Produits.WATER)){
+        Integer alreadyCollectedWater = GestionnaireStocks.getInstance().getProduits().get(Produits.WATER) == null?0: GestionnaireStocks.getInstance().getProduits().get(Produits.WATER); 
+        if(alreadyCollectedWater>0){
+            GestionnaireStocks.getInstance().getProduits().replace(Produits.WATER, alreadyCollectedWater+capaciteSeau);
+        }else{
+            GestionnaireStocks.getInstance().getProduits().put(Produits.WATER, capaciteSeau);
         }
+        // .containsKey(Produits.WATER)? puit.getProduction().get(Produits.WATER) : 0;
+        puit.setQuantite(puit.getQuantite()-1);
         return null;
     }
 

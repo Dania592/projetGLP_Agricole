@@ -2,9 +2,11 @@ package process.action.visitor.place;
 
 import java.util.Iterator;
 
-import data.espece.Produceur;
+import data.espece.Produceur.Type;
+import data.espece.faune.AnimalProducteur;
 import data.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
@@ -27,27 +29,22 @@ import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPla
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 
-public class CareVisitor implements PlaceVisitor<Void>{
+public class HealerVisitor implements PlaceVisitor<Void> {
 
-    private <T extends Produceur> Void careAboutProductif(Iterator<T> produceurIt){
+    public <T extends AnimalProducteur> Void healAnimals(Iterator<T> iteratorAnimal){
         T currentProduceur;
-        while(produceurIt.hasNext()){
-            currentProduceur =  produceurIt.next();
-            currentProduceur.setProduceurType(currentProduceur.getProduceurType().upgradeProduceurType());
-            currentProduceur.setDoped(true);
+        while(iteratorAnimal.hasNext()){
+            currentProduceur = iteratorAnimal.next();  
+            currentProduceur.setEtatSante(EtatSante.BONNE_SANTE);
+            currentProduceur.setProduceurType(Type.AVERAGE_PRODUCEUR);
         }
         return null;
     }
 
-
-
-
     @Override
     public Void action(Etable etable)
-            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-            BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException,
-            ProblemOccursInProductionException, UnableToMakeTheTransfertException {
-        return careAboutProductif(etable.getInHabitant().iterator());
+            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException{
+        return healAnimals(etable.getInHabitant().iterator());
     }
 
     @Override
@@ -55,7 +52,7 @@ public class CareVisitor implements PlaceVisitor<Void>{
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
             BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException,
             ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
-        return careAboutProductif(poulallier.getInHabitant().iterator());
+        return healAnimals(poulallier.getInHabitant().iterator());
     }
 
     @Override
@@ -63,7 +60,7 @@ public class CareVisitor implements PlaceVisitor<Void>{
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
             BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException,
             ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
-        return careAboutProductif(enclos.getAnimals().iterator());
+        return healAnimals(enclos.getAnimals().iterator());
     }
 
     @Override
@@ -87,41 +84,42 @@ public class CareVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Entrepot entrepot) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable(entrepot);    }
+        throw new UnableToPerformSuchActionWithCurrentActionnable(entrepot);
+    }
 
     @Override
     public Void action(Terrain terrain)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        terrain.setProduceurType(terrain.getProduceurType().upgradeProduceurType());
-        terrain.setDoped(true);
+        terrain.setEtatSante(EtatSante.BONNE_SANTE);
+        terrain.setProduceurType(Type.AVERAGE_PRODUCEUR);
         return null;
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,
             NotImplementYetException, UnableToMakeTheTransfertException {
-        return careAboutProductif(bergerieChevre.getInHabitant().iterator());
+        return healAnimals(bergerieChevre.getInHabitant().iterator());
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton) throws UnableToPerformSuchActionWithCurrentActionnable,
             NotImplementYetException, UnableToMakeTheTransfertException {
-        return careAboutProductif(bergerieMouton.getInHabitant().iterator());
+        return healAnimals(bergerieMouton.getInHabitant().iterator());
     }
 
     @Override
     public Void action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable();
+        throw new UnableToPerformSuchActionWithCurrentActionnable(puit);
     }
 
     @Override
     public Void action(Garage garage) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable();
+        throw new UnableToPerformSuchActionWithCurrentActionnable(garage);
     }
 
     @Override
     public Void action(Grange grange) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable();
+        throw new UnableToPerformSuchActionWithCurrentActionnable(grange);
     }
 
     @Override
@@ -133,11 +131,10 @@ public class CareVisitor implements PlaceVisitor<Void>{
     }
 
     @Override
-    public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-            BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException,
-            ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException,
-            UnableToGenerateNewTaskException {
+    public Void action(Poulallier poulallier, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable,
+            HaveNotProducedYetException, BeingCannotPerformSuchActionException,
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
+            UnableToMakeTheTransfertException, NotImplementYetException, UnableToGenerateNewTaskException {
         return action(poulallier);
     }
 
@@ -150,9 +147,8 @@ public class CareVisitor implements PlaceVisitor<Void>{
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-            UnableToGenerateNewTaskException {
+    public Void action(Abatoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable,
+            HaveNotProducedYetException, UnableToGenerateNewTaskException {
         return action(abatoire);
     }
 
@@ -174,7 +170,7 @@ public class CareVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Entrepot entrepot, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException {
-            return action(entrepot);
+        return action(entrepot);
     }
 
     @Override
@@ -187,7 +183,7 @@ public class CareVisitor implements PlaceVisitor<Void>{
     public Void action(BergerieChevre bergerieChevre, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
             UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
-        return action(bergerieChevre); 
+        return action(bergerieChevre);
     }
 
     @Override
@@ -202,7 +198,6 @@ public class CareVisitor implements PlaceVisitor<Void>{
             throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException {
         return action(puit);
     }
-    
 
     @Override
     public Void action(Garage garage, Activity activity)
@@ -213,14 +208,14 @@ public class CareVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Grange grange, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException {
-        return action(grange);                
+        return action(grange);
     }
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
             UnableToGenerateNewTaskException {
-        return action(terrain);
+        return action (terrain);
     }
     
 }
