@@ -2,10 +2,13 @@ package data.espece.faune;
 
 
 import java.io.File;
+import java.util.ArrayList;
 
 import data.espece.Milieu;
 import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
+import data.myExceptions.UnableToGenerateNewTaskException;
+import data.planning.Activity;
 import data.production.Lait;
 import data.production.Meat;
 import data.production.Oeuf;
@@ -15,12 +18,15 @@ import data.structure.Poulallier;
 import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
+import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.PlaceVisitor;
 
 
 public class Poule extends AnimalProducteur{
@@ -31,7 +37,7 @@ public class Poule extends AnimalProducteur{
 	private final static int PRIX_ACHAT = 1000 ;
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
-	private final static int QUANTITE = 10 ;
+	private final static int QUANTITE = 1;
 	private final static int SPEED_GROWTH = 5 ; 
 	private static Oeuf oeuf = new Oeuf();
 	private static Meat equivalentInMeat = new Meat();
@@ -82,5 +88,6 @@ public class Poule extends AnimalProducteur{
 	public boolean needSpecialActionToGetProduction() {
 		return false;
 	}
+
 	
 }

@@ -41,6 +41,10 @@ public abstract class EtreVivant extends Element implements Mortel{
 	public EtatSante getEtatSante() {
 		return etatSante;
 	}
+
+	public void setEtatSante(EtatSante etatSante){
+		this.etatSante = etatSante;
+	}
 	
 	public void empireEtatSante() throws MortException{
 		switch(etatSante){

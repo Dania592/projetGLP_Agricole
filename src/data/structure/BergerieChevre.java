@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 import data.espece.Slaughtable;
 import data.espece.faune.Chevre;
+import data.espece.faune.Healable;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
+import data.structure.hability.HealablePlace;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
@@ -20,8 +22,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender{
-    private ArrayList<Slaughtable> chevreToKill = new ArrayList<>();
+public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender, HealablePlace{
     private boolean isUsedForATask = false;
 
     public BergerieChevre( String reference  ) {
@@ -47,19 +48,6 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
             HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToMakeTheTransfertException {
         return visitor.action(this);
     }
-
-
-    @Override
-    public void addToSlaughter(Slaughtable slaughtable) {
-        chevreToKill.add(slaughtable);
-        getInHabitant().remove(slaughtable);
-    }
-
-    @Override
-    public ArrayList<Slaughtable> getAnimalToSlaugther() {
-        return chevreToKill;
-    }
-
     @Override
     public boolean isEmpty() {
        return getInHabitant().isEmpty();
@@ -80,12 +68,7 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     public void addSpecialSenderElement(Chevre specialSenderElement) {
         getInHabitant().add(specialSenderElement);
     }
-
-    @Override
-    public boolean isReadyToSendToSlaughterHouse() {
-        return !chevreToKill.isEmpty();
-    }
-
+    
     @Override
     public void removeAll(ArrayList<Chevre> transportableToRemoveList) {
         getInHabitant().removeAll(transportableToRemoveList);
@@ -126,6 +109,16 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         return visitor.action(this, activity);
+    }
+
+    @Override
+    public boolean isReadyToSendToSlaughterHouse() {
+        return getInHabitant().size()>0;
+    }
+
+    @Override
+    public void removeAll() {
+        getInHabitant().clear();
     }
     
 }

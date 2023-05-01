@@ -20,6 +20,7 @@ import data.configuration.GameConfiguration;
 import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
+import data.notion.Mortel.EtatSante;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
@@ -206,11 +207,8 @@ public class FarmPaintStrategy implements Serializable {
 		Position position = terrain.getPosition();
 		int y = (position.getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION +map.getX();
-		ImageIcon progressBar;
-		if(!(terrain.isEnoughHydrated())){
-			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+terrain.getHydrationLevel()+".png");
-			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
-		}
+		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"health"+File.separator+terrain.getHydrationLevel()+".png");
+		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
 	}
 	
 	public void paintNight( Map map ,Graphics graphics ) {
@@ -227,7 +225,8 @@ public class FarmPaintStrategy implements Serializable {
 	
 	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {
 		ArrayList<Task<?>> tasks = taskManager.getinProcess();
-		for(Task task : tasks) {
+		//g.drawLine(0, 0, 300, 300);
+		for(Task<?> task : tasks) {
 			Position position =task.getActionnableTarget().getPosition();
 			int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
 			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + map.getY();

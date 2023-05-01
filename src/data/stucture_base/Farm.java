@@ -15,56 +15,51 @@ import process.evolution.EvolutionManager;
 import process.game.ElementManager;
 import process.transaction.FinanceManager;
 
-public class Farm implements Serializable{
+public class Farm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int height = 22; 
+	private int height = 22;
 	private int width = 38;
 	private int cptJour;
-	private Saison saisonActuelle ;
-	private Fermier fermier ; 
-	private Boolean jour ;
-	private RessourcesManager ressourcesManager ;	
-	private int nbEtoile ;
-	private ElementManager elementManager ;
-	private Clock clock ; 
-	private EvolutionManager evolutionManager ;
-	private int ligne ; 
-	private int colonne ; 
-	private int lastCatastroph ;
-	
-	public Farm( ElementManager manager, Fermier fermier ) {
-		this.clock= Clock.getInstance();
+	private Saison saisonActuelle;
+	private Fermier fermier;
+	private Boolean jour;
+	private RessourcesManager ressourcesManager;
+	private int nbEtoile;
+	private ElementManager elementManager;
+	private Clock clock;
+	private EvolutionManager evolutionManager;
+	private int ligne;
+	private int colonne;
+	private int lastCatastroph;
+
+	public Farm(ElementManager manager, Fermier fermier) {
+		this.clock = Clock.getInstance();
 		elementManager = manager;
-		this.fermier=fermier;
+		this.fermier = fermier;
 		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile = 0;
 		cptJour = 0;
-		lastCatastroph=0;
-		jour = true ;
+		lastCatastroph = 0;
+		jour = true;
 		saisonActuelle = Saison.PRINTEMPS;
-		evolutionManager = new EvolutionManager(manager , clock);
-		ligne = 2 ;
-		colonne = 5 ;
+		evolutionManager = new EvolutionManager(manager, clock);
+		ligne = 2;
+		colonne = 5;
 	}
+
+	public Boolean getJourMode() {
+		return jour;
+	}
+
+
+
 	
 	public int getLastCatastroph() {
 		return lastCatastroph;
 	}
 
-	public void setLastCatastroph(int lastCatastroph) {
-		this.lastCatastroph = lastCatastroph;
-	}
-
-	public void setJourMode(Boolean switched) {
-		jour = switched ;
-	}
-	
-	public Boolean getJourMode() {
-		return jour;
-	}
-		
 	public ElementManager getElementManager() {
 		return elementManager;
 	}
@@ -72,14 +67,15 @@ public class Farm implements Serializable{
 	public EvolutionManager getEvolutionManager() {
 		return evolutionManager;
 	}
-	
+
 	public void setFermier(Fermier fermier) {
-		this.fermier=fermier;
+		this.fermier = fermier;
 	}
+
 	public Clock getClock() {
 		return clock;
 	}
-	
+
 	public int getLigne() {
 		return ligne;
 	}
@@ -91,63 +87,69 @@ public class Farm implements Serializable{
 	public int getNbEtoile() {
 		return nbEtoile;
 	}
-	
-	public void setNbEtoile(int nbEtoile ) {
+
+	public void setNbEtoile(int nbEtoile) {
 		this.nbEtoile = nbEtoile;
 	}
+
 	public int getHeight() {
 		return height;
 	}
+
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
+	public void setJourMode(Boolean switched) {
+		jour = switched;
+	}
+
 	public int getWidth() {
 		return width;
 	}
+
 	public void setWidht(int width) {
 		this.width = width;
 	}
+
 	public int getCptJour() {
 		return cptJour;
 	}
+
 	public void incrementCptJour() {
-		if(cptJour == 19) {
-			cptJour=0;
-		}
-		else{
-			cptJour ++;
+		if (cptJour == 19) {
+			cptJour = 0;
+		} else {
+			cptJour++;
 			FinanceManager.getInstance().incrementCounter();
 		}
 		setSaisonActuelle();
 	}
-	
+
 	public Saison getSaisonActuelle() {
 		return saisonActuelle;
 	}
-	
+
 	public void setSaisonActuelle() {
-		if( cptJour <5 ) {
-			saisonActuelle = Saison.ETE;	
-		}
-		else {
-			if(cptJour < 10) {
+		if (cptJour < 5) {
+			saisonActuelle = Saison.ETE;
+		} else {
+			if (cptJour < 10) {
 				saisonActuelle = Saison.HIVER;
-			}
-			else {
-				if(cptJour <15) {
+			} else {
+				if (cptJour < 15) {
 					saisonActuelle = Saison.AUTOMNE;
-				}
-				else {
+				} else {
 					saisonActuelle = Saison.PRINTEMPS;
 				}
 			}
 		}
 	}
-	
+
 	public ElementManager getManager() {
 		return elementManager;
 	}
-	
+
 	public RessourcesManager getRessourcesManager() {
 		return ressourcesManager;
 	}
@@ -155,18 +157,20 @@ public class Farm implements Serializable{
 	public Fermier getFermier() {
 		return fermier;
 	}
-	
-	public Boolean isOnborderFarm(int ligne , int colonne  ) {
-		return ( this.ligne ==ligne) || (this.colonne == colonne) || ( ligne == (this.ligne+height-1)) || (colonne == (this.colonne+width-1)) ;
+
+	public Boolean isOnborderFarm(int ligne, int colonne) {
+		return (this.ligne == ligne) || (this.colonne == colonne) || (ligne == (this.ligne + height - 1))
+				|| (colonne == (this.colonne + width - 1));
 	}
-	
+
 	public void reservePlaceToFarm() {
-		for(int ligneIndex = ligne ; ligneIndex < height+ligne ; ligneIndex ++) {
-			for(int colonneIndex = colonne ; colonneIndex < width+colonne; colonneIndex ++) {
-				if(isOnborderFarm(ligneIndex, colonneIndex )) {
-					elementManager.getMapManager().getMap().getCase(ligneIndex , colonneIndex).setLibre(false);
+		for (int ligneIndex = ligne; ligneIndex < height + ligne; ligneIndex++) {
+			for (int colonneIndex = colonne; colonneIndex < width + colonne; colonneIndex++) {
+				if (isOnborderFarm(ligneIndex, colonneIndex)) {
+					elementManager.getMapManager().getMap().getCase(ligneIndex, colonneIndex).setLibre(false);
 				}
 			}
 		}
 	}
+
 }

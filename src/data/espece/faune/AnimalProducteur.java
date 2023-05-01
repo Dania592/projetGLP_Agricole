@@ -15,7 +15,7 @@ import gui.gestionnaire.keys.Animals;
 
 
 
-public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Transportable{
+public abstract class AnimalProducteur extends Animal implements Produceur, Slaughtable, Healable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,6 +25,7 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 	private Produceur.Type produceurType;
 	private Produceur.TimeItTakes timeItTakesToProduce;
 	private Produit produit;
+	private boolean isDoped = false;
 	
 	public Produceur.TimeItTakes getTimeItTakesToProduce() {
 		return timeItTakesToProduce;
@@ -88,6 +89,14 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		return getKey();
 	}
 
+	public boolean isDoped() {
+		return isDoped;
+	}
+
+    @Override
+    public void setDoped(boolean isDoped) {
+        this.isDoped = isDoped;
+    }
 
 
 }
