@@ -33,10 +33,12 @@ public class GestionnaireAnimaux implements GestionnaireInterface, Serializable{
 		Animals key = animal.getKey();
 		if (animaux.containsKey(key)) {
 			animaux.get(key).add(animal);
+			System.out.println("Added animal contained");
 		} else {
 			ArrayList<Animal> animals = new ArrayList<>();
 			animals.add(animal);
 			animaux.put(key, animals);
+			System.out.println("Added animal new");
 		}
 	}
 	
@@ -44,8 +46,10 @@ public class GestionnaireAnimaux implements GestionnaireInterface, Serializable{
 		ArrayList<Animal> animals = GestionnaireAnimaux.getInstance().getAnimaux().get(animal.getKey());
 		if (animals != null ) {
 			if (animals.size() == 1) {
+				System.out.println("removing 1 animal");
 				GestionnaireAnimaux.getInstance().getAnimaux().remove(animal.getKey());
 			} else {
+				System.out.println("removing more animal");
 				animals.remove(animal);
 			}
 		}
@@ -53,8 +57,15 @@ public class GestionnaireAnimaux implements GestionnaireInterface, Serializable{
 	
 	public void remove(Animals key,int quantity) {
 		int i = 0;
-		while(i<quantity) {
-			animaux.get(key).remove(0);
+		int count = animaux.get(key).size();
+		if (quantity == count) {
+			animaux.remove(key);
+		} else {
+			while(i<quantity && quantity < count) {
+				System.out.println("removing quantity animal");
+				animaux.get(key).remove(0);
+				i++;
+			}
 		}
 	}
 	

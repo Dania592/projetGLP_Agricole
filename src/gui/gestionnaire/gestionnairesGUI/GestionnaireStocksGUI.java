@@ -17,8 +17,6 @@ import process.transaction.Achat;
 
 public class GestionnaireStocksGUI extends JFrame {
 	
-	public static Achat achat = new Achat();
-	
 	public static Color DARK_BROWN = new Color(68,40,24);
 	public static Color MEDIUM_BROWN = new Color(188,149,88);
 	public static Color LIGHT_BROWN = new Color(255,231,171);
@@ -35,13 +33,13 @@ public class GestionnaireStocksGUI extends JFrame {
 	public static int WIDTH = 895;
 	public static int HEIGHT = 530;
 
-	private GeneralPaintStrategy paintStrategy;
+	private GeneralPaintStrategy paintStrategy  = new GeneralPaintStrategy();;
 
 	private static final long serialVersionUID = 1L;
 	
 	public GestionnaireStocksGUI(String title, JFrame container, int tab) {
 		super(title);
-		paintStrategy  = new GeneralPaintStrategy();
+		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(paint(tab));	
@@ -72,8 +70,7 @@ public class GestionnaireStocksGUI extends JFrame {
 		Game game = new Game();
 		MapManager manager = GameBuilder.MapBuilder();
 		game.acheter(manager.getMap());
-		GestionnaireStocksGUI.achat = game.getAchat();
-		
+				
 		GestionnaireStocksGUI gestionnaire = new GestionnaireStocksGUI("Gestionnaire",null, 0);
 	}
 	

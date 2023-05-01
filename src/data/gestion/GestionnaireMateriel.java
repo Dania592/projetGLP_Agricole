@@ -72,8 +72,9 @@ public class GestionnaireMateriel implements GestionnaireInterface, Serializable
 	
 	public void remove(Outils key,int quantity) {
 		int i = 0;
-		while(i<quantity) {
+		while(i < quantity) {
 			outils.get(key).remove(0);
+			i++;
 		}
 	}
 	
@@ -81,6 +82,7 @@ public class GestionnaireMateriel implements GestionnaireInterface, Serializable
 		int i = 0;
 		while(i<quantity) {
 			engins.get(key).remove(0);
+			i++;
 		}
 	}
 	

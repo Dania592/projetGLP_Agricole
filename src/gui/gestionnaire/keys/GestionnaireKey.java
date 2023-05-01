@@ -23,6 +23,7 @@ public enum GestionnaireKey {
 	EMPLOYE(new ArrayList<>(GestionnaireRH.getInstance().getEmployees().keySet())),
 	RECRUT(new ArrayList<>(GestionnaireRH.getInstance().getARecruter().keySet())),
 	CHARGE(GestionnaireFinancier.getInstance().getCharges()),
+	
 	VENTE(GestionnaireFinancier.getInstance().getVentes()),
 	ACHAT(GestionnaireFinancier.getInstance().getAchats()),
 	PRODUIT(new ArrayList<>(GestionnaireStocks.getInstance().getProduits().keySet()));

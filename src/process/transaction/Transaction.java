@@ -1,9 +1,12 @@
 package process.transaction;
 
+import java.io.Serializable;
+
 import gui.gestionnaire.keys.Keys;
 
-public abstract class Transaction{
-	
+public abstract class Transaction implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private boolean validated = false;
 	private float totalCost;
 	private String reference;

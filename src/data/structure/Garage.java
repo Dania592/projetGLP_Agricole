@@ -3,6 +3,7 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 
+import data.configuration.GameConfiguration;
 import data.gestion.GestionnaireMateriel;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
@@ -22,7 +23,7 @@ public class Garage extends Structure{
 
 	public Garage(int ligne_init, int colonne_init, String reference, Map map) {
 		super(ligne_init, colonne_init, reference, map);
-		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Garage.png");
+		setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
 	}
 
 	@Override

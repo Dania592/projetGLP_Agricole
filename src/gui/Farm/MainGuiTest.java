@@ -23,7 +23,6 @@ import gui.gestionnaire.keys.Structures;
 import process.action.TaskManager;
 import process.action.task.Task;
 import process.time.TimeManager;
-import process.game.Game;
 
 public class MainGuiTest  extends JFrame implements Runnable{
 

@@ -5,21 +5,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
-import data.flore.terrains.Terrain;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
 import data.notification.Message;
@@ -129,6 +124,7 @@ public class ElementCard extends RoundedPanel{
 					Element element = elements.get(nbE -1);
 					
 					if(element instanceof AnimalProducteur) {
+						//System.out.println(element.getReference());
 						AnimalProducteur animal = (AnimalProducteur)element;
 						try {
 							animal.setStatique();

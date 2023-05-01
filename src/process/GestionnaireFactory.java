@@ -11,6 +11,8 @@ import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
 import data.structure.Abatoire;
+import data.structure.BergerieChevre;
+import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Etable;
@@ -18,6 +20,7 @@ import data.structure.Garage;
 import data.structure.Grange;
 import data.structure.Maison;
 import data.structure.Poulallier;
+import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Animals;
@@ -72,6 +75,12 @@ public class GestionnaireFactory {
 				return new Garage(0, 0, reference, map);
 			case GRANGE:
 				return new Grange(0, 0, reference, map);
+			case BERGERIE_MOUTON:
+				return new BergerieMouton(0, 0, reference, map);
+			case BERGERIE_CHEVRE:
+				return new BergerieChevre(0, 0, reference, map);
+			case PUIT:
+				return new Puit(0, 0, reference, map);
 			default:
 				return null;
 		}

@@ -46,6 +46,7 @@ public class FeedVisitor implements PlaceVisitor<Void>{
     public Void action(Enclos enclos){
     	enclos.setNiveauNourriture(FullLevel.FULL);
     	enclos.setAnimalsHungerLevel(HungerLevel.FULL);
+    	//System.out.println("VISITOR NOURRITURE ===="+enclos.getNiveauNourriture());
         return null;
     }
 

@@ -38,7 +38,6 @@ public class MapManager implements Serializable{
 	 * @param element l'element à placer
 	 */
 	public void addElement(Element element ) {
-		
 		Case case_init= new Case(false,element.getPosition().getLigne_init(),element.getPosition().getColonne_init());
 		if(verificationLiberte(element,case_init )) {
 			composants.put(element.getReference(), element );

@@ -114,7 +114,8 @@ public class Board  extends JLayeredPane implements Serializable{
 			if(element instanceof Enclos) {
 				Enclos enclos = (Enclos)element;
 				paintStrategy.paint(enclos, g);
-				if((enclos.getNiveauEau()==FullLevel.EMPTY || enclos.getNiveauNourriture() == FullLevel.EMPTY) && enclos.getAnimals().size()!=0) {
+				if((enclos.getNiveauEau().equals(FullLevel.EMPTY) || enclos.getNiveauNourriture().equals(FullLevel.EMPTY)) && enclos.getAnimals().size()>0) {
+					
 					paintStrategy.paintLevelHeart(enclos, g);
 				}
 			}

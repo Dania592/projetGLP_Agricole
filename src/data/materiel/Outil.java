@@ -30,6 +30,6 @@ public class Outil extends Element implements Stockage{
 	}
 	
 	public String toString() {
-		return "Outil : " + type + getReference();
+		return "Outil : " + type + " " + getReference();
 	}
 }

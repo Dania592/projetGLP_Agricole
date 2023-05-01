@@ -16,9 +16,9 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 	private HashMap<Produits, Integer> produits = new HashMap<>();
 
 	private GestionnaireStocks() {
-//		for (Graine graine : Graine.values()) {
-//			graines.put(graine, 0);
-//		}
+		for (Graine graine : Graine.values()) {
+			graines.put(graine, 0);
+		}
 	}
 
 	private static GestionnaireStocks instance = new GestionnaireStocks();
@@ -32,6 +32,7 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 	}
 	
 	public void reset() {
+		System.out.println("Reset");
 		graines.clear();
 		produits.clear();
 	}
@@ -39,7 +40,7 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 	public Set<Graine> getAvailableGraines() {
 		Set<Graine> set = new HashSet<>();
 		for (Graine graine : graines.keySet()) {
-			if (graines.get(graine) != 0) {
+			if (graines.get(graine) > 0) {
 				set.add(graine);
 			}
 		}
@@ -72,7 +73,7 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 
 	public void remove(Graine key, int quantity) {
 		int i = 0;
-		while (i < quantity) {
+		while (i < quantity && i >= 0) {
 			remove(key);
 			i++;
 		}

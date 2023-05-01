@@ -19,16 +19,20 @@ public enum FullLevel {
 
 	public FullLevel getNextState(Clock clock , String type) {
 		switch(this) {
-		case FULL :
+		case FULL :			
 			return HALF_FULL;
+			
 		case HALF_FULL :
 			return QUARTER_FULL;
-		case QUARTER_FULL :
+			
+		case QUARTER_FULL :		
 			Message message = new Message("Plus de "+type+" dans \nun enclos", Clock.getInstance().getHour().getValue() , Clock.getInstance().getMinute().getValue());
 			Messagerie.getInstance().addMessage(message);
 			return EMPTY ;
+			
 		case EMPTY :
 			return EMPTY;
+			
 		default : 
 			return FULL ;
 		}

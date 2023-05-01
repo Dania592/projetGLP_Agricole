@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import data.finance.Banque;
 import data.gestion.GestionnaireFinancier;
+import data.gestion.GestionnaireStocks;
+import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Keys;
 import process.game.Game;
 import process.visitor.AddKeyVisitor;
@@ -65,16 +67,16 @@ public class Achat extends Transaction{
 		if (cart!=null && cart.size()!=0) {
 			setValidated(true);
 			for (Keys key : cart.keySet()) {
-				addToGestionnaire(key,cart.get(key));
+				System.out.println("ajouter : " + key.name());
+				key.accept(addKeyVisitor, cart.get(key));
+				System.out.println(" Elements of : " + key.name() + " : " + key.getGestionnaireKey().getElements().size());
 			}
 			calculateTotalCost();
 			Banque.getInstance().debiter(getTotalCost());
 			GestionnaireFinancier.getInstance().getAchats().add(this);	
+			System.out.println(GestionnaireStocks.getInstance().toString()); 
+			System.out.println(GestionnaireFinancier.getInstance().toString());
 		}
-	}
-	
-	public void addToGestionnaire(Keys key, Integer entier) {
-		key.accept(addKeyVisitor, entier);
 	}
 	
 	@Override

@@ -30,6 +30,6 @@ public class Engin extends Element implements Stockage{
 	}
 	
 	public String toString() {
-		return "Engin : " + type + getReference();
+		return "Engin : " + type  + " " +  getReference();
 	}
 }

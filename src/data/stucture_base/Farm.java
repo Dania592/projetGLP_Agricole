@@ -22,7 +22,7 @@ public class Farm implements Serializable{
 	private int height = 22; 
 	private int width = 38;
 	private int cptJour;
-	private Saison saisonActuelle ;
+	public static Saison saisonActuelle ;
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;

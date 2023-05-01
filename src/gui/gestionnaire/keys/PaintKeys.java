@@ -6,6 +6,9 @@ public enum PaintKeys {
 	FINANCE,
 	EMPLOY,
 	BUY,
-	SELL;
+	SELL, 
+	VENTE,
+	CHARGE,
+	ACHAT;
 
 }

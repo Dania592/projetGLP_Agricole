@@ -15,16 +15,8 @@ import data.materiel.Outil;
 import data.production.Produits;
 import data.structure.Enclos;
 import data.structure.Structure;
-import gui.gestionnaire.keys.Animals;
-import gui.gestionnaire.keys.Employees;
-import gui.gestionnaire.keys.Encloss;
-import gui.gestionnaire.keys.Engins;
-import gui.gestionnaire.keys.Graine;
-import gui.gestionnaire.keys.Outils;
-import gui.gestionnaire.keys.Structures;
-import gui.gestionnaire.keys.Terrains;
+import gui.gestionnaire.keys.*;
 import process.GestionnaireFactory;
-import process.game.MapManager;
 
 public class AddKeyVisitor implements KeyVisitor<Void>{
 	
@@ -75,7 +67,7 @@ public class AddKeyVisitor implements KeyVisitor<Void>{
 		for (int i=0; i<quantity; i++) {
 			newEngin = GestionnaireFactory.createElement(engin, map);
 			newEngin.accept(addVisitor);
-		}	
+		}
 		GestionnaireStructures.getInstance().getStructures().get(Structures.GARAGE).get(0).setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"GarageFilled.png");
 		return null;
 	}

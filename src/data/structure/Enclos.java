@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
@@ -15,15 +16,14 @@ import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
-import data.flore.Saison;
 import data.map.Case;
 import data.map.Map;
-import data.notification.Message;
-import data.notification.Messagerie;
+import data.myExceptions.FullCapaciteException;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
+import data.notification.Message;
+import data.notification.Messagerie;
 import data.planning.Activity;
-import data.production.Produit;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.Feedable;
@@ -50,7 +50,8 @@ import process.visitor.GestionVisitor;
 public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer{
 	private int capacite ;
 	private int lastDecrementationNourriture ; 
-	private int lastDecrementationEau ; 
+	private int lastDecrementationEau ;
+	private int lastBirth ; 
 	private FullLevel niveauEau ; 
 	private FullLevel niveauNourriture ;
 	private int dimension ; 
@@ -66,16 +67,24 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 		super(reference, false, 49, ligne_init ,colonne_init ,map );
 		//animalProducteurs = new ArrayList<>();
 		state = FixableState.USABLE;
-		capacite = 20;
+		capacite = 10;
 		niveauEau = FullLevel.FULL ;
 		niveauNourriture = FullLevel.FULL;
 		dimension = 7 ;
+		lastBirth = 0 ;
 		lastDecrementationNourriture = 0 ; 
 		lastDecrementationEau = 0 ; 
 		initImage();
 		setImage(images.get("entier"));
 		animalsHungerLevel = HungerLevel.FULL;
 		animalsHydrationLevel = HydrationLevel.FULLY_HYDRATED;
+	}
+	
+	public int getLastBirth() {
+		return lastBirth;
+	}
+	public void setLastBirth(int birth) {
+		this.lastBirth=birth;
 	}
 	
 	public EnclosStorageStructure getAnimalStorage() {
@@ -140,11 +149,11 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 	
 	private void initImage() {
-			images.put("bas_milieu","src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_m.png");
-			images.put("bas_gauche", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_g.png");
-			images.put("bas_droit", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_d.png");
-			images.put("milieu", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png");
-			images.put("entier", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png");
+			images.put("bas_milieu",GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_m.png");
+			images.put("bas_gauche", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_g.png");
+			images.put("bas_droit", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_d.png");
+			images.put("milieu", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"mm.png");
+			images.put("entier", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"entier.png");
 		
 	}
 
@@ -184,6 +193,7 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	public void addAnimal(AnimalProducteur animal ) {
 		animalStorage.add(animal);
 	}
+	
 	
 	public ArrayList<Case> bordEnclos() {
 		Position position = getPosition();

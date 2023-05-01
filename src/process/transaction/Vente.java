@@ -71,6 +71,7 @@ public class Vente extends Transaction {
 		if (cart!=null && cart.size()!=0) {
 			setValidated(true);
 			for (Keys key : cart.keySet()) {
+				System.out.println("enlever : " + key.name());
 				key.accept(removeVisitor,cart.get(key));
 			}
 			calculateTotalCost();
