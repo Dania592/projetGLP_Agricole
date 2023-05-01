@@ -22,59 +22,69 @@ public class AddVisitor implements GestionVisitor<Void>{
 
 	@Override
 	public Void visit(Animal animal) {
+		System.out.println("Adiing animal");
 		GestionnaireAnimaux.getInstance().add(animal);
 		return null;
 	}
 
 	@Override
 	public Void visit(Graine graine) {
+		System.out.println("Adiing graine");
 		GestionnaireStocks.getInstance().add(graine);
 		return null;
 	}
 
 	@Override
 	public Void visit(Structure structure) {
+		System.out.println("Adiing struct");
 		GestionnaireStructures.getInstance().add(structure);
 		return null;
 	}
 
 	@Override
 	public Void visit(Employee employee) {
+		System.out.println("Adiing employee");
 		GestionnaireRH.getInstance().getEmployees().put(employee.getNom(),employee);
 		return null;
 	}
 
 	@Override
 	public Void visit(Outil outil) {
+		System.out.println("Adiing outil");
 		GestionnaireMateriel.getInstance().add(outil);;
 		return null;
 	}
 
 	@Override
 	public Void visit(Engin engin) {
+		System.out.println("Adiing engin");
 		GestionnaireMateriel.getInstance().add(engin);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Produit product) {
+		System.out.println("Adiing product");
 		return visit(product.getType());
 
 	}
 
 	public Void visit(Produits productType) {
+		System.out.println("Adiing productType");
 		GestionnaireStocks.getInstance().add(productType);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Terrain terrain) {
+		System.out.println("Adiing terrain");
 		GestionnaireTerrains.getInstance().add(terrain);
 		return null;
 	}
 	
 	@Override
 	public Void visit(Enclos enclos) {
+		System.out.println("Adiing enclos");
 		GestionnaireEnclos.getInstance().add(enclos);
 		return null;
 	}

@@ -65,13 +65,13 @@ public class ValidationPanel extends RoundedPanel{
 			market.getBillPanel().removeAll();
 			market.getBill().clear();
 			totalCostLabel.setText("0");
-			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(totalCostLabel);
 			String info;
 			if (market.getTransaction().isValidated()) {
 				info = "Transaction validée!";
 			} else {
 				info = "La transaction ne " + FinanceManager.EOL+ "peut pas être effectuée!";
 			}
+			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(totalCostLabel);
 			new InfosTransaction(info, market.getFrame());
 			frame.dispose();
 		}

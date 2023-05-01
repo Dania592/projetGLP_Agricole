@@ -22,20 +22,21 @@ public class Farm implements Serializable {
 	private int height = 22;
 	private int width = 38;
 	private int cptJour;
-	private Saison saisonActuelle;
-	private Fermier fermier;
+	public static Saison saisonActuelle ;
+	private Fermier fermier ; 
+	private RessourcesManager ressourcesManager ;	
+	private int nbEtoile ;
+	private ElementManager elementManager ;
+	private Clock clock ; 
+	private EvolutionManager evolutionManager ;
+	private Messagerie messagerie ;
+	private int ligne ; 
+	private int colonne ; 
 	private Boolean jour;
-	private RessourcesManager ressourcesManager;
-	private int nbEtoile;
-	private ElementManager elementManager;
-	private Clock clock;
-	private EvolutionManager evolutionManager;
-	private int ligne;
-	private int colonne;
 	private int lastCatastroph;
-
-	public Farm(ElementManager manager, Fermier fermier) {
-		this.clock = Clock.getInstance();
+	
+	public Farm( ElementManager manager, Fermier fermier ) {
+		this.clock= Clock.getInstance();
 		elementManager = manager;
 		this.fermier = fermier;
 		ressourcesManager = RessourcesManager.getInstance();
@@ -53,9 +54,6 @@ public class Farm implements Serializable {
 		return jour;
 	}
 
-
-
-	
 	public int getLastCatastroph() {
 		return lastCatastroph;
 	}

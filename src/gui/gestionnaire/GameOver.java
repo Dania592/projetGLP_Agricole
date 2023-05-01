@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import data.stucture_base.Farm;
@@ -26,11 +27,16 @@ public class GameOver extends JFrame{
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(GeneralPaintStrategy.MEDIUM_BROWN);
 		
+		JPanel gameOverPanel = new JPanel();
+		gameOverPanel.setSize(400,200);
+		gameOverPanel.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
+		gameOverPanel.setLayout(null);
+		
 		JLabel gameOver = new JLabel("Game Over");
 		gameOver.setHorizontalAlignment(SwingConstants.CENTER);
 		gameOver.setFont(GeneralPaintStrategy.font);
 		gameOver.setBounds(25, 20, 334, 77);
-		getContentPane().add(gameOver);
+		gameOverPanel.add(gameOver);
 		
 		nouvellePartie = new JButton("Rejouer");
 		nouvellePartie.setBackground(GeneralPaintStrategy.DARK_BROWN);
@@ -38,7 +44,7 @@ public class GameOver extends JFrame{
 		nouvellePartie.setFont(GeneralPaintStrategy.font);
 		nouvellePartie.setBounds(239, 107, 120, 29);
 		nouvellePartie.addActionListener(new Action());
-		getContentPane().add(nouvellePartie);
+		gameOverPanel.add(nouvellePartie);
 		
 		quitter = new JButton("Quitter");
 		quitter.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
@@ -46,7 +52,7 @@ public class GameOver extends JFrame{
 		quitter.setFont(GeneralPaintStrategy.font);
 		quitter.setBounds(35, 107, 120, 29);
 		quitter.addActionListener(new Action());
-		getContentPane().add(quitter);
+		gameOverPanel.add(quitter);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -56,12 +62,9 @@ public class GameOver extends JFrame{
 	}
 	
 	private class Action implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(nouvellePartie)) {
-				//TimeManager.getInstance().resetTime();
-				
 				if (jeu != null) {
 					System.out.println("Nouvelle partie");
 					jeu.restart();
@@ -73,7 +76,6 @@ public class GameOver extends JFrame{
 				System.exit(0);
 			}
 		}
-		
 	}
 	
 	

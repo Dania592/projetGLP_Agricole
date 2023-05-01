@@ -6,6 +6,7 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import data.gestion.GestionnaireStocks;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.GestionnairePaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
@@ -16,8 +17,6 @@ import process.game.MapManager;
 import process.transaction.Achat;
 
 public class GestionnaireStocksGUI extends JFrame {
-	
-	public static Achat achat = new Achat();
 	
 	public static Color DARK_BROWN = new Color(68,40,24);
 	public static Color MEDIUM_BROWN = new Color(188,149,88);
@@ -35,16 +34,17 @@ public class GestionnaireStocksGUI extends JFrame {
 	public static int WIDTH = 895;
 	public static int HEIGHT = 530;
 
-	private GeneralPaintStrategy paintStrategy;
+	private GeneralPaintStrategy paintStrategy  = new GeneralPaintStrategy();;
 
 	private static final long serialVersionUID = 1L;
 	
 	public GestionnaireStocksGUI(String title, JFrame container, int tab) {
 		super(title);
-		paintStrategy  = new GeneralPaintStrategy();
+		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(paint(tab));	
+		System.out.println("Mon affichage à moi ::::::: " +GestionnaireStocks.getInstance());
 		
 	    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -72,8 +72,7 @@ public class GestionnaireStocksGUI extends JFrame {
 		Game game = new Game();
 		MapManager manager = GameBuilder.MapBuilder();
 		game.acheter(manager.getMap());
-		GestionnaireStocksGUI.achat = game.getAchat();
-		
+				
 		GestionnaireStocksGUI gestionnaire = new GestionnaireStocksGUI("Gestionnaire",null, 0);
 	}
 	

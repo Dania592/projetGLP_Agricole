@@ -2,6 +2,8 @@ package data.configuration;
 
 import java.io.File;
 
+import data.espece.Produceur;
+import data.stucture_base.Farm;
 
 /**
  * Class regroupant toute les constante fonctionnels du programme 
@@ -36,9 +38,7 @@ public abstract class GameConfiguration {
 	 * vitesse du jeu 
 	 */
 	public final static int GAME_SPEED = 50;
-	/**
-	 * vitesse du temps 
-	 */
+	
 	public final static int TIME_SPEED = 100 ;
 	
 	/**
@@ -85,25 +85,17 @@ public abstract class GameConfiguration {
 	 * dimension des structures 
 	 */
 	public final static int DIMENSION_STRUCUTRE = 4; 
-	/**
-	 * chemin pour retrouver les images 
-	 */
+	
 	public final static String IMAGE_PATH = "src"+File.separator+"ressources"+File.separator;
 	/**
 	 * vitesse de mouvement des animaux 
 	 */
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
-	/**
-	 * fréquence de décrementation de la nourriture dans l'enclos 
-	 */
+	
 	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 5 ; // 1 animal => 25 min (60)
-	/**
-	 * fréquence de dérementation du niveau d'eau dans l'enclos 
-	 */
+	
 	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 5 ; // 1 animal => 15 min (20)
-	/**
-	 * fréquence de reproduction des animaux 
-	 */
+	
 	public final static int FREQUENCE_ANIMAL_BIRTH_ENCLOS = 5;
 	/*
 	 * path vers la ferme sauvegardée 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /ressources/
 /Chancesare.wav
 /Despertar.wav
@@ -14,5 +15,11 @@
 /music_de_film.wav
 /process/
 /test.mp3
+=======
+/data/
+/gui/
+/process/
+/ressources/
+>>>>>>> master
 /test/
 /testing/

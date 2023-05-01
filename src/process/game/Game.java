@@ -9,9 +9,13 @@ import data.finance.Banque;
 import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
+import data.materiel.Engin;
+import data.materiel.Outil;
 import data.structure.Maison;
 import data.structure.Structure;
+import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
+import gui.gestionnaire.keys.Outils;
 import process.transaction.Achat;
 import process.transaction.Vente;
 
@@ -74,6 +78,7 @@ public class Game {
 		Terrain plante9 = new Terrain("p15", false, Graine.CABBAGE_SEED);
 		Terrain plante10 = new Terrain("p15", false, Graine.CACTUS_SEED);
 		Terrain plante11 = new Terrain("p15", false, Graine.CARROT_SEED);
+
 		//TODO changer la structure de traitement des plantes et arbres (classes de données)
 		//Culture arbre = new Pommier(0, 0, Milieu.PLAINE, "pm1", map);
 		Structure maison = new Maison("ld");
@@ -111,6 +116,7 @@ public class Game {
 		achat.addToCart(plante9.getKey());
 		achat.addToCart(plante10.getKey());
 		achat.addToCart(plante11.getKey());
+
 		//achat.addToCart(arbre.getKey());
 		
 		System.out.println("************************************************");
@@ -121,6 +127,27 @@ public class Game {
 		System.out.println(achat.isValidated());
 		System.out.println(ressourcesManager);
 		System.out.println(achat);
+		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
+		
+		
+		vente.addToCart(plante4.getKey());
+		vente.addToCart(plante5.getKey());
+		vente.addToCart(plante6.getKey());
+		vente.addToCart(plante7.getKey());
+		vente.addToCart(plante8.getKey());
+		
+		vente.addToCart(plante9.getKey());
+		vente.addToCart(plante10.getKey());
+		vente.addToCart(plante11.getKey());
+		
+		System.out.println("************************************************");
+		System.out.println(ressourcesManager);
+		System.out.println(vente.isValidated());
+		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
+		vente.validate();
+		System.out.println(vente.isValidated());
+		System.out.println(ressourcesManager);
+		System.out.println(vente);
 		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
 		
 	}

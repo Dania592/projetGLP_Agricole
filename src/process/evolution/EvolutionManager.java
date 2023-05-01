@@ -94,6 +94,7 @@ public class EvolutionManager implements Serializable {
 				}if(haveToUpdateProducingStateOfCurrentlyUnabledProduceur(terrain)){
 					terrain.setProductifState(ProductifState.PRODUCING);
 				}
+
 			}	
 		}
 		//System.out.println(terrain);
@@ -119,20 +120,17 @@ public class EvolutionManager implements Serializable {
 		}
 	}
 
-	private void manageFoodLevelInEnclosure(Enclos enclos) {
-
-		int delayNourriture = enclos.getAnimals().size() != 0
-				? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE / enclos.getAnimals().size()
-				: GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE;
-		int dhourNourriture = clock.getMinute().getValue() - enclos.getLastDecrementationNourriture();
-		if (dhourNourriture >= delayNourriture && enclos.getAnimals().size() != 0) {
-			if (enclos.getNiveauNourriture() != FullLevel.EMPTY) {
-				//System.out.println(enclos.getNiveauNourriture());
+	private void manageFoodLevelInEnclosure(Enclos enclos){
+	
+		int delayNourriture = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE;
+		int dhourNourriture = clock.getMinute().getValue()- enclos.getLastDecrementationNourriture();
+		if(dhourNourriture >= delayNourriture && enclos.getAnimals().size()!=0) {
+			if(enclos.getNiveauNourriture()!=FullLevel.EMPTY) {
 				enclos.setNiveauNourriture(enclos.getNiveauNourriture().getNextState(clock, "nourriture"));
-				enclos.setLastDecrementationNourriture(clock.getMinute().getValue());
-			} else {
-				if (enclos.getAnimalsHungerLevel() != HungerLevel.STARVING) {
-					//System.out.println(enclos.getAnimalsHungerLevel());
+				enclos.setLastDecrementationNourriture( clock.getMinute().getValue());
+			}
+			else {
+				if(enclos.getAnimalsHungerLevel()!= HungerLevel.STARVING) {
 					enclos.setAnimalsHungerLevel(enclos.getAnimalsHungerLevel().decrease_1());
 					enclos.setLastDecrementationNourriture( clock.getMinute().getValue());
 				}
@@ -253,33 +251,16 @@ public class EvolutionManager implements Serializable {
 				&& enclos.getCapacite()>enclos.getAnimals().size();				
 	}
 
-	public Case randomPosition(Element element ,Enclos enclos ) {
-		Case block = new Case(true , 0 , 0);
-		Boolean libre = false ;
-		while( !libre) {	
-			int ligneAleatoire =  enclos.getPosition().getLigne_init() + (int)(Math.random() * (enclos.getDimension()-2));
-			int colonneAleatoire = enclos.getPosition().getColonne_init() + (int)(Math.random() * (enclos.getDimension()-2));
-			block = new Case(true, ligneAleatoire, colonneAleatoire);
-		   libre = Map.getInstance().getCase(ligneAleatoire, colonneAleatoire).isLibre();
-		}
-		return block;
-
-	}
-	
-	private void manageWaterLevelInEnclosure(Enclos enclos) {
-		int delayEau = enclos.getAnimals().size() != 0
-				? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU / enclos.getAnimals().size()
-				: GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU;
-		int dhourEau = clock.getMinute().getValue() - enclos.getLastDecrementationEau();
-		if (dhourEau >= delayEau && enclos.getAnimals().size() != 0) {
-			//System.out.println("debug1");
-			if (enclos.getNiveauEau() != FullLevel.EMPTY) {
-				//System.out.println(enclos.getNiveauEau());
+	private void manageWaterLevelInEnclosure(Enclos enclos){
+		int delayEau = enclos.getAnimals().size()!=0 ? GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU/enclos.getAnimals().size() : GameConfiguration.FREQUENCE_DECREMENTATION_ENCLOS_EAU;
+		int dhourEau = clock.getMinute().getValue()- enclos.getLastDecrementationEau();
+		if(dhourEau >= delayEau && enclos.getAnimals().size()!=0) {
+			if(enclos.getNiveauEau()!=FullLevel.EMPTY) {
 				enclos.setNiveauEau(enclos.getNiveauEau().getNextState(clock, "eau"));
 				enclos.setLastDecrementationEau(clock.getMinute().getValue());
-			} else {
-				if (enclos.getAnimalsHydrationLevel() != HydrationLevel.DESHYDRATED) {
-					//System.out.println(enclos.getAnimalsHydrationLevel());
+			}
+			else {
+				if(enclos.getAnimalsHydrationLevel() != HydrationLevel.DESHYDRATED) {
 					enclos.setAnimalHydrationLevel(enclos.getAnimalsHydrationLevel().decrease());
 					enclos.setLastDecrementationEau(clock.getMinute().getValue());
 				}
@@ -312,7 +293,6 @@ public class EvolutionManager implements Serializable {
 		for(Enclos enclos : elementManager.getMapManager().getEnclosOnMap()) {
 			manageFoodLevelInEnclosure(enclos);
 			manageWaterLevelInEnclosure(enclos);
-			animalReproduction(enclos);
 		}
 		killAnimalToRemove();
 	}
@@ -334,12 +314,21 @@ public class EvolutionManager implements Serializable {
 				i++;
 				String imagePath =GameConfiguration.IMAGE_PATH +"nuage"+deathIndex+".png";
 				animalsToRemove.get(0).setImage(imagePath);
-
+				BufferedImage image;		
 			}
 		}
 	}
 	
-	
-
+	public Case randomPosition(Element element ,Enclos enclos ) {
+        Case block = new Case(true , 0 , 0);
+        Boolean libre = false ;
+        while( !libre) {
+            int ligneAleatoire =  enclos.getPosition().getLigne_init() + (int)(Math.random() * (enclos.getDimension()-2));
+            int colonneAleatoire = enclos.getPosition().getColonne_init() + (int)(Math.random() * (enclos.getDimension()-2));
+            block = new Case(true, ligneAleatoire, colonneAleatoire);
+           libre = Map.getInstance().getCase(ligneAleatoire, colonneAleatoire).isLibre();
+        }
+        return block;
+    }
 
 }

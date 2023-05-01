@@ -1,7 +1,5 @@
 package process.action.task.action;
 
-import data.acteur.Personne;
-import data.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;

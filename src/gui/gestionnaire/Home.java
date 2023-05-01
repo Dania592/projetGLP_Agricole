@@ -15,6 +15,9 @@ import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.gestionnairesGUI.RHManagerGUI;
 import gui.gestionnaire.keys.PaintKeys;
+import process.game.Game;
+import process.game.GameBuilder;
+import process.game.MapManager;
 
 public class Home extends JFrame{
 	
@@ -92,7 +95,7 @@ public class Home extends JFrame{
 			}else if (e.getSource().equals(vendre)) {
 				new MarketGUI(Home.this, PaintKeys.SELL, 0);
 			} else if (e.getSource().equals(stocks)) {
-				new GestionnaireStocksGUI("Gestionnaire de stocks", Home.this, 0);
+				new GestionnaireStocksGUI("teeeeeest", Home.this, 0);
 			} else if (e.getSource().equals(finances)) {
 				new GestionnaireFinancierGUI(Home.this, 1);
 			} else {

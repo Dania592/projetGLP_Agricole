@@ -46,10 +46,10 @@ public class BillArticlePanel extends RoundedPanel{
 		nameLabel.setPreferredSize(new Dimension(w/2 - 30, 30));
 		quantitySpinner = paintSpinner(MAN_FONT);
 		if (type.equals(PaintKeys.SELL)) {
-			quantitySpinner.setModel(new SpinnerNumberModel(0, 0, key.getGestionnaireKey().getElements().size(), 1));
+			quantitySpinner.setModel(new SpinnerNumberModel(0, 0, (int) Integer.valueOf(GeneralPaintStrategy.getInformation(key, key.getGestionnaireKey())[2]), 1));
 		}
 		quantitySpinner.addChangeListener(new QuantityListener(quantitySpinner, key, market));   
-		quantitySpinner.setValue(quantitySpinner.getNextValue());
+		//quantitySpinner.setValue(quantitySpinner.getNextValue());
 		quantitySpinner.setPreferredSize(new Dimension(w/2 - (4*GestionnaireStocksGUI.MIN_SPACE_BETWEEN),30));
 		add(nameLabel);
 		add(quantitySpinner);

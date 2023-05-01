@@ -44,7 +44,7 @@ public class FeedingTask extends Task<Feedable> {
 
     @Override
     protected void performSpecialActionToTerminateTask() {
-       // System.out.println("Target : "+ getActionnableTarget());
+        System.out.println("Target : "+ getActionnableTarget());
     }
 
 

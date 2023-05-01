@@ -207,7 +207,6 @@ public class MarketGUI extends JFrame{
 		Game game = new Game();
 		MapManager manager = GameBuilder.MapBuilder();
 		game.acheter(manager.getMap());
-		GestionnaireStocksGUI.achat = game.getAchat();
 		MarketGUI market = new MarketGUI(null,PaintKeys.BUY,0);
 	}
 	

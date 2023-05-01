@@ -29,6 +29,9 @@ import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
 import gui.statistique.TestStat;
 import process.action.task.Task;
+import process.game.Game;
+import process.game.GameBuilder;
+import process.game.MapManager;
 import process.game.SaveFarm;
 
 public class Hud implements Serializable {
@@ -316,8 +319,11 @@ public class Hud implements Serializable {
 				frame.setVisible(false);
 				new TestStat(frame);
 			} else {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
-				new ExtendPopup(frame, component.getFarm());
+				//JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+				Game game = new Game();
+				MapManager manager = GameBuilder.MapBuilder();
+				game.acheter(manager.getMap());
+				//new ExtendPopup(frame, component.getFarm());
 			}
 		}
 

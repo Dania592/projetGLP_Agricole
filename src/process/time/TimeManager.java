@@ -13,7 +13,7 @@ public class TimeManager extends Thread{
     private boolean gameOver = false;
     private boolean isTimeRunning;
     private DayOfWeek day;
-    private int timeSpeed = 10; 
+    private int timeSpeed = 1; 
     private static TimeManager timeManager = new TimeManager();
 
     // doit etre modifier pour prendre en compte l'etat de la ferme == jour , semaine ...

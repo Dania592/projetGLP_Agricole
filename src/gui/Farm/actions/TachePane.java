@@ -60,8 +60,8 @@ public class TachePane extends JPanel{
 		addMouseListener(new MouseTask());
 		add(image);
 		
-		JLabel label_image = new JLabel(activity);
-		add(label_image);
+		JLabel labelImage = new JLabel(activity);
+		add(labelImage);
 	
 	}
 	
@@ -80,10 +80,13 @@ public class TachePane extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			lunchTask();
+			if (task.getActivity().getLabel().equals("Planter")) {
+				// afficher le chois de la graine
+				lunchTask();
+			} else {
+				lunchTask();	
+			}
 			hud.removeActionPane();
-			
-			
 		}
 
 		@Override

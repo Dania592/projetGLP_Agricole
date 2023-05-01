@@ -2,6 +2,8 @@ package process.game;
 
 import java.io.Serializable;
 
+import javax.crypto.AEADBadTagException;
+
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
 import data.map.Case;
@@ -28,9 +30,8 @@ public class ElementManager implements Serializable{
 	 */
 	public void add(Element element) {	
 		mapManager.addElement(element);
-		if(element instanceof ProductifPlace){
-			ProductifPlace productifPlace = (ProductifPlace)element;
-			if(!(productifPlace.needPlayerIntervention())){
+		if(element instanceof ProductifPlace) {
+			if(!(((ProductifPlace) element).needPlayerIntervention())){
 				ProductionManager.getInstance().addToProductifList((ProductifPlace)element);
 			}
 		}

@@ -27,7 +27,7 @@ import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 
-public class Board  extends JLayeredPane implements Serializable{
+public class Board extends JLayeredPane implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private FarmPaintStrategy paintStrategy = new FarmPaintStrategy();
@@ -36,21 +36,17 @@ public class Board  extends JLayeredPane implements Serializable{
 	private Element clicked;
 	private JPanel choixTerrain;
 	private TaskManager taskManager ;
-	private MouseHandler mouseHandler;
-	//private ChoixPanel choixScroll;
-	//private ActionsPane actions;
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
 
 	
- 	
 	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
 		this.farm = farm;
 		this.selected=selected;
 		this.taskManager = taskManager ;
 		keys = new KeyControls(farm.getManager() , selected); 
-		mouseHandler = new MouseHandler(farm.getManager(), this);
+		new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
 		choix.init();
 		init();
@@ -87,7 +83,6 @@ public class Board  extends JLayeredPane implements Serializable{
 		
 	public void init() {
 		addKeyListener(keys);
-		//addMouseListener(mouseHandler);
 		
 		hud = new Hud(this);
 		hud.build();
@@ -97,7 +92,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		setFocusable(true);
 	}
 	
-	public  void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		MapManager mapManager = farm.getManager().getMapManager();
 		paintStrategy.paint(mapManager.getMap(), g);
@@ -145,7 +140,7 @@ public class Board  extends JLayeredPane implements Serializable{
 		hud.solde();
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-		//night mode 
+
 		if(!farm.getJourMode()) {
 			hud.remove_panels();
 			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
@@ -166,17 +161,17 @@ public class Board  extends JLayeredPane implements Serializable{
 	}
 	
 	
-	// public void paintProgressBar(Graphics g ) {
-	// 	ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
-	// 	//g.drawLine(0, 0, 300, 300);
-	// 	for(Task<?> task : tasks) {
-	// 		Position position =task.getActionnableTarget().getPosition();
-	// 		int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
-	// 		int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
-	// 		ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
-	// 		g.drawImage(bar.getImage(), x, y, 100,20, null);
-	// 	}
-	// }
+//	 public void paintProgressBar(Graphics g ) {
+//	 	ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
+//	 	//g.drawLine(0, 0, 300, 300);
+//	 	for(Task<?> task : tasks) {
+//	 		Position position =task.getActionnableTarget().getPosition();
+//	 		int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
+//	 		int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
+//	 		ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
+//	 		g.drawImage(bar.getImage(), x, y, 100,20, null);
+//	 	}
+//	 }
 	
 
 	

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import data.configuration.GameConfiguration;
 import data.espece.FoodConsumer.HungerLevel;
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
@@ -150,11 +151,11 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 	
 	private void initImage() {
-			images.put("bas_milieu","src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_m.png");
-			images.put("bas_gauche", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_g.png");
-			images.put("bas_droit", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"bas_d.png");
-			images.put("milieu", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"mm.png");
-			images.put("entier", "src"+File.separator+"ressources"+File.separator+"enclos"+File.separator+"entier.png");
+			images.put("bas_milieu",GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_m.png");
+			images.put("bas_gauche", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_g.png");
+			images.put("bas_droit", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"bas_d.png");
+			images.put("milieu", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"mm.png");
+			images.put("entier", GameConfiguration.IMAGE_PATH+"enclos"+File.separator+"entier.png");
 		
 	}
 

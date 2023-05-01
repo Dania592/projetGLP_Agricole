@@ -1,7 +1,11 @@
 package process.visitor;
 
+import java.io.File;
+
+import data.configuration.GameConfiguration;
 import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
+import data.gestion.GestionnaireStructures;
 import data.gestion.RessourcesManager;
 import data.materiel.Engin;
 import data.materiel.Outil;
@@ -21,43 +25,36 @@ public class RemoveKeyVisitor implements KeyVisitor<Void>{
 	
 	@Override
 	public Void visit(Animals animal, int quantity) {
-		for (int i=0; i<quantity; i++) {
-			ressourcesManager.getGestionnaireAnimaux().remove(animal, quantity);
-		}
+		ressourcesManager.getGestionnaireAnimaux().remove(animal, quantity);
 		return null;
 	}
 
 	@Override
 	public Void visit(Graine graine, int quantity) {
-		for (int i=0; i<quantity; i++) {
-			ressourcesManager.getGestionnaireStocks().remove(graine, quantity);
-		}
+		ressourcesManager.getGestionnaireStocks().remove(graine, quantity);
 		return null;
 	}
 
 	@Override
 	public Void visit(Structures structure, int quantity) {
-		for (int i=0; i<quantity; i++) {
-			ressourcesManager.getGestionnaireStructure().remove(structure, quantity);
-		}
+		ressourcesManager.getGestionnaireStructure().remove(structure, quantity);
 		return null;
 	}
 
 	@Override
 	public Void visit(Outils outil, int quantity) {
 		Outil newOutil;
-		for (int i=0; i<quantity; i++) {
-			ressourcesManager.getGestionnaireMateriel().remove(outil, quantity);;
-		}
+		ressourcesManager.getGestionnaireMateriel().remove(outil, quantity);;
 		return null;
 	}
 
 	@Override
 	public Void visit(Engins engin, int quantity) {
 		Engin newEngin;
-		for (int i=0; i<quantity; i++) {
-			ressourcesManager.getGestionnaireMateriel().remove(engin, quantity);;
-		}		
+		ressourcesManager.getGestionnaireMateriel().remove(engin, quantity);
+		if (ressourcesManager.getGestionnaireMateriel().getEnginsSize() == 0) {
+			GestionnaireStructures.getInstance().getStructures().get(Structures.GARAGE).get(0).setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
+		}
 		return null;
 	}
 

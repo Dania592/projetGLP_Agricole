@@ -1,7 +1,10 @@
 package data.structure;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import data.configuration.GameConfiguration;
+import data.gestion.GestionnaireMateriel;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -19,7 +22,8 @@ public class Garage extends Structure{
 	private static final long serialVersionUID = 1L;
 
 	public Garage( String reference) {
-		super( reference);
+		super(reference);
+		setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
 	}
 
 	@Override
@@ -51,6 +55,6 @@ public class Garage extends Structure{
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity); 
-			}
+	}
 
 }
