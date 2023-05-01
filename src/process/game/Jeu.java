@@ -5,9 +5,7 @@ package process.game;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,7 +21,6 @@ import data.notification.Message;
 import data.notification.Messagerie;
 import data.stucture_base.Farm;
 import data.time.Clock;
-import gui.Farm.Hud;
 import gui.Farm.MainGuiTest;
 import gui.Farm.Musique;
 import gui.gestionnaire.GameOver;

@@ -42,9 +42,9 @@ public class Poule extends AnimalProducteur{
 	private static Oeuf oeuf = new Oeuf();
 	private static Meat equivalentInMeat = new Meat();
 	
-	public Poule(Milieu milieu , int naissance, String nom,  String sexe, Poulallier habitat,String reference ) {
+	public Poule( int naissance, String nom,  String sexe, Poulallier habitat,String reference ) {
 			 
-		super( milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.GRAINIVORE, sexe, habitat,
+		super( DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom,  sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE, oeuf, reference ,  SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Poule"

@@ -10,26 +10,20 @@ public abstract class EtreVivant extends Element implements Mortel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Milieu milieu ;
+
 	private int dureeVie;
 	private float prixAchat ,prixVente;
 
 	private EtatSante etatSante;
 	
 
-	public EtreVivant( int nbCase,  Milieu milieu, int dureeVie,
+	public EtreVivant( int nbCase,   int dureeVie,
 			float prixAchat, String reference ) {
 		super(reference ,false, nbCase );
-		this.milieu = milieu;
 		this.dureeVie = dureeVie;
 		this.prixAchat = prixAchat;
 		prixVente = 100;
 		this.etatSante = EtatSante.BONNE_SANTE;
-	}
-
-
-	public Milieu getMilieu() {
-		return milieu;
 	}
 
 

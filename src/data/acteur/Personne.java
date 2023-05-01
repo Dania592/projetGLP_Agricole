@@ -43,9 +43,9 @@ public abstract class Personne extends Element implements Serializable {
 	 */
 	public static final int MAX_HOUR_OF_WORK_EMPLOYEE = 12;
 	/**
-	 * 
-	 * @param nom
-	 * @param reference
+	 * constructeur nécessaire pour le polymorphisme 
+	 * @param nom : nom de la personne 
+	 * @param reference : référence sur la map 
 	 */
 	public Personne(String nom, String reference) {
 		super(reference, false, 1);
@@ -54,32 +54,53 @@ public abstract class Personne extends Element implements Serializable {
 		this.etatSante = EtatSante.BONNE_SANTE;
 	}
 
+	/**
+	 * retourne l'état de santé du personnage 
+	 * @return
+	 */
 	public EtatSante getEtatSante() {
 		return etatSante;
 	}
-
+	/**
+	 * retourne le nom du personnage 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
-	
+	/**
+	 * fige l'élément sur la map 
+	 */
 	public void setStatique() {
 		super.setStatique(true);
 	}
-
+	/**
+	 * modifie l'état de santé de la personne 
+	 * @param etatSante
+	 */
 	public void setEtatSante(EtatSante etatSante) {
 		this.etatSante = etatSante;
 	}
-	
+	/**
+	 * retourne le le planning du personnage
+	 * @return
+	 */
 	public WeeklyPlanner getPlanning() {
 		return planning;
 	}
-	
 	public abstract int getMaxHourOfWork();
 	
+	/**
+	 * état occupation du personnage 
+	 * @return
+	 */
 	public boolean isFree() {
 		return isFree;
 	}
-	
+	/**
+	 * modifie l'état d'occupation du personnage 
+	 * @param isFree
+	 */
 	public void setFree(boolean isFree) {
 		this.isFree = isFree;
 	}

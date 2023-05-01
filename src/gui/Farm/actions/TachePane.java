@@ -15,19 +15,39 @@ import gui.Farm.Hud;
 import process.action.TaskManager;
 import process.action.task.Task;
 
+/**
+ * 
+ * Panel associé à une seule action 
+ *
+ */
 public class TachePane extends JPanel{
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
-	private Task task ;
+	/**
+	 * la tâche à afficher 
+	 */
+	private Task<?> task ;
+	/**
+	 * le hud du jeu 
+	 */
 	private Hud hud ;
 	
-	public  TachePane(Task task , Hud hud ) {
+	/**
+	 * constructeur pour instancier les panels de chaque tâches 
+	 * @param task : la tâche à afficher 
+	 * @param hud : hud du jeu 
+	 */
+	public  TachePane(Task<?> task , Hud hud ) {
 		this.task=task;
 		this.hud = hud;
 		init();
 	}
 	
+	/**
+	 * initialisation du panel
+	 */
 	public void init() {
 		
 		setLayout(new FlowLayout());
@@ -45,10 +65,17 @@ public class TachePane extends JPanel{
 	
 	}
 	
+	/**
+	 * lancement de la tâche 
+	 */
 	public void lunchTask() {
 		TaskManager.getInstance().addToTaskToBeLaunched(task);
 	}
-	
+	/***
+	 * 
+	 * MouseListener adpater au lancement des tâches 
+	 *
+	 */
 	private class MouseTask implements MouseListener{
 
 		@Override

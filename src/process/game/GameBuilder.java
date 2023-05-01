@@ -96,9 +96,9 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(mouton1);
 		stock.getGestionnaireAnimaux().add(mouton2);
 	
-		Poule poule = new Poule(null, 0, "Poupou1", null, null, "p1");
-		Poule poule1 = new Poule(null, 0, "Poupou2", null, null, "p2");
-		Poule poule2 = new Poule(null, 0, "Poupou3", null, null, "p3");
+		Poule poule = new Poule(0, "Poupou1", null, null, "p1");
+		Poule poule1 = new Poule(0, "Poupou2", null, null, "p2");
+		Poule poule2 = new Poule(0, "Poupou3", null, null, "p3");
 		
 		
 		stock.getGestionnaireAnimaux().add(poule);

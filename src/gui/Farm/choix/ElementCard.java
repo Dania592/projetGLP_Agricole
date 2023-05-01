@@ -27,21 +27,58 @@ import gui.Farm.Board;
 import gui.gestionnaire.RoundedPanel;
 
 
-
+/**
+ * la carte correspondante à un type d'élément à placer sur la map 
+ *
+ */
 public class ElementCard extends RoundedPanel{
+	/**
+	 * liste d'éléments pouvant etre placé
+	 */
 	private ArrayList<Element> elements ;
+	/**
+	 * nombre d'élément totale sur la carte
+	 */
 	private int nbElement ;
+	/**
+	 * nombre d'élément présent sur la carte
+	 */
 	private int nbElementPresent ;
+	/**
+	 * la ferme du jeu 
+	 */
 	private Farm farm ;
+	/**
+	 * panel principale du jeu 
+	 */
 	private Board component ; 
-	
+	/**
+	 * label pour image de l'élément 
+	 */
 	private JLabel imageLabel;
+	/**
+	 * label pour pouvoir positioner l'élément 
+	 */
 	private JLabel position;
+	/**
+	 * quantité de élément présent 
+	 */
 	private JTextPane nbElementPane;
+	/**
+	 * nom de la carte 
+	 */
 	private String nameCard;
-	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * constructeur des cartes 
+	 * @param elements : la liste d'éléments pouvant etre placé
+	 * @param farm : ferme du jeu 
+	 * @param component : panel principal du jeu 
+	 */
 	public ElementCard(ArrayList<Element> elements , Farm farm , Board component ) {
 		super(null , 100 , Color.WHITE);
 		this.farm = farm;
@@ -53,12 +90,11 @@ public class ElementCard extends RoundedPanel{
 		init();
 	}
 	
-	
+	/**
+	 * initialisation des composants du panel 
+	 */
 	public void init() {
 		setSize(150, 140);
-		//setLayout(null);
-		
-		//BufferedImage imageElement = ImageIO.read(new File(elements.get(0).getImage()));
 		imageLabel= new JLabel(new ImageIcon(elements.get(0).getImage()));
 		imageLabel.setBounds(40, 5 , 70, 70);
 		add(imageLabel);
@@ -82,12 +118,19 @@ public class ElementCard extends RoundedPanel{
 		
 		
 	}
-	
+	/**
+	 * retourne les éléments présents sur la carte 
+	 * @return
+	 */
 	public ArrayList<Element> getElements() {
 		return elements;
 	}
 
 
+	/**
+	 * ajoute un élément à la carte 
+	 * @param newElement : élément à ajouter
+	 */
 	public void addElement(Element newElement) {
 		elements.add( newElement);
 		nbElement ++;
@@ -95,6 +138,10 @@ public class ElementCard extends RoundedPanel{
 		nbElementPane.setText(nameCard+":"+nbElementPresent+"/"+nbElement);
 	}
 
+	/**
+	 * supprime un élément de la carte 
+	 * @param element : élément à supprimer 
+	 */
 
 	public void removeOneElement(Element element) {
 		elements.remove(element);
@@ -105,15 +152,27 @@ public class ElementCard extends RoundedPanel{
 		nbElementPane.setText(nameCard+":"+nbElementPresent+"/"+nbElement);
 	}
 
+	/**
+	 * retourne le nombre d'élément totale de la carte 
+	 * @return
+	 */
 	public int getNbElement() {
 		return nbElement;
 	}
-	
+	/**
+	 * retourne le nombre d'éléments présents sur la carte 
+	 * @return
+	 */
 	public int getNbElementPresent() {
 		return nbElementPresent;
 	}
 	
-	
+	/**
+	 * 
+	 * Action pour placer l'élément sur la map 
+	 * 
+	 *
+	 */
 	private class MouseListenerLabel implements MouseListener{
 
 		@Override
@@ -188,6 +247,11 @@ public class ElementCard extends RoundedPanel{
 	}
 	
 
+	/**
+	 * ajout de d'un animal sur la map et dans un enclos qui vérifie les conditions 
+	 * @param animal : animal à positionner 
+	 * @throws FullCapaciteException : en cas de disponibilité d'espace 
+	 */
 	public void addAnimalToMap(AnimalProducteur animal) throws FullCapaciteException {
 		Case randomCase = randomPosition(animal);
 		  if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
@@ -197,7 +261,11 @@ public class ElementCard extends RoundedPanel{
 		  }
 	
 	}
-	
+	/**
+	 * donne une position random pour un élément en vérifiant la liberté de la position
+	 * @param element l'element à placer 
+	 * @return : la case pour générer la position de l'élément 
+	 */
 	public Case randomPosition(Element element ) {
 		Case block = new Case(true , 0 , 0);
 		Boolean libre = false ;
@@ -211,6 +279,12 @@ public class ElementCard extends RoundedPanel{
 
 	}
 	
+	/**
+	 * donne une position random à un animal dans un enclos en vérifiant la disponibilité et l'espace et les conditions sur la nourriture et l'eau 
+	 * @param animal : animal à positionner 
+	 * @return : case à partir de laquelle générer la position  
+	 * @throws FullCapaciteException en cas de d'espace insuffisant 
+	 */
 	public Case randomPosition(AnimalProducteur animal ) throws FullCapaciteException {
 		ArrayList<Enclos> enclosdisponible = farm.getManager().getMapManager().getEnclosOnMap();
 		if(enclosdisponible.size() > 0) {
@@ -243,6 +317,9 @@ public class ElementCard extends RoundedPanel{
 	
 	}
 
+	/**
+	 * retir le label de positionnement pour les cartes vide 
+	 */
 	public void removePositionforEmpty() {
 		if(nbElementPresent==0) {
 			remove(position);

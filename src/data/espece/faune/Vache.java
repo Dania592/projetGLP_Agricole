@@ -41,7 +41,7 @@ public class Vache extends AnimalProducteur implements MilkProduceur{
 	
 	public Vache( int naissance, String nom, String sexe, Etable habitat , String reference ) {
 		
-		super( Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+		super(  DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, sexe, habitat,
 				FREQUENCE_PRODUCTION, QUANTITE,lait , reference , SPEED_GROWTH );
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Vache"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";

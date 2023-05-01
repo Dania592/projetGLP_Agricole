@@ -20,8 +20,8 @@ public class Chien extends AnimalCompagnie {
 	private final static int SPEED_GROWTH = 50 ; 
 	
 	
-	public Chien( Milieu milieu, int naissance, String nom, String sexe, Maison habitat , String reference  ) {
-		super(milieu, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.CARNIVORE, sexe, habitat , reference ,  SPEED_GROWTH);
+	public Chien(  int naissance, String nom, String sexe, Maison habitat , String reference  ) {
+		super( DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom,sexe, habitat , reference ,  SPEED_GROWTH);
 	}
 
 

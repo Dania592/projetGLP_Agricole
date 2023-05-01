@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
@@ -17,15 +16,36 @@ import gui.gestionnaire.RoundedPanel;
 
 
 
-
+/**
+ * 
+ * Panel de choix à afficher sur la frame
+ *
+ */
 public class ChoixPanel extends RoundedPanel {
-
+/**
+ * 
+ */
 	private static final long serialVersionUID = 1L;	
-	// la clé de hashMap et le simple name de la classe 
+	/**
+	 *  la clé de hashMap et le simple name de la classe 
+	 */
 	private HashMap<String, ElementCard> cards = new HashMap<>();
+	/**
+	 * manager layout pour afficher toutes les cartes 
+	 */
 	private CardLayout cardlayout ;
+	/**
+	 * cartes précédentes 
+	 */
 	private JLabel previous ;
+	/**
+	 * cartes suivantes 
+	 */
 	private JLabel next ;
+	/***
+	 * constructeur du panel 
+	 * @param component : le panel de jeu principal
+	 */
 
 	public ChoixPanel( Board component  ) {
 		super(null, 20,GeneralPaintStrategy.LIGHT_BROWN );
@@ -35,11 +55,17 @@ public class ChoixPanel extends RoundedPanel {
 		
 	}
 
+	/**
+	 * retourne le layaout du panel
+	 * @return
+	 */
 	public CardLayout getCardLayout() {
 		return cardlayout;
 	}
 	
-	
+	/**
+	 * initialise le choix panel 
+	 */
 	public void init() {
 		setLayout(null);
 		setOpaque(true);
@@ -47,6 +73,9 @@ public class ChoixPanel extends RoundedPanel {
 		addChoixPanel();		
 	}
 
+	/**
+	 * ajout des cartes sur le panel 
+	 */
 	public void addChoixPanel() {
 		
 		cardlayout = new CardLayout();
@@ -96,7 +125,11 @@ public class ChoixPanel extends RoundedPanel {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * Permet de naviguer entre les cartes des éléments 
+	 *
+	 */
 	private class Change implements MouseListener{
 
 		JPanel parent ; 

@@ -1,11 +1,4 @@
-/data/
-/gui/
-/m.wav
-/process/
 /ressources/
-/test.mp3
-/test/
-/testing/
 /Chancesare.wav
 /Despertar.wav
 /EZ01.wav
@@ -14,5 +7,12 @@
 /EZ04.wav
 /EZ05.wav
 /EZ07.wav
+/data/
 /elvis2.wav
+/gui/
+/m.wav
 /music_de_film.wav
+/process/
+/test.mp3
+/test/
+/testing/
