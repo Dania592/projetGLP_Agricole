@@ -11,11 +11,14 @@ import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
+import data.structure.BergerieChevre;
+import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
+import data.structure.SalleDeTraite;
 import data.structure.Structure;
 import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
@@ -158,8 +161,17 @@ public class GameBuilder {
 		stock.getGestionnaireStructure().add(garage);
 	
 		Entrepot entrepot = new Entrepot("entrepot");
-		stock.getGestionnaireStructure().add(entrepot);;
+		stock.getGestionnaireStructure().add(entrepot);
 
+		//TODO  supprimer salle de traite
+		SalleDeTraite salleDeTraite = new SalleDeTraite("salleDeTraite");
+		stock.getGestionnaireStructure().add(salleDeTraite);
+
+		BergerieMouton bergerieMouton = new BergerieMouton(" BergerieMouton");
+		stock.getGestionnaireStructure().add(bergerieMouton);
+
+		BergerieChevre bergerieChevre = new BergerieChevre("bergerieChevre");
+		stock.getGestionnaireStructure().add(bergerieChevre);
 		
 	}
 	

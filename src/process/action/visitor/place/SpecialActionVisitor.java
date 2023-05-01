@@ -3,10 +3,15 @@ package process.action.visitor.place;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.Slaughtable;
 import data.espece.Produceur.ProductifState;
+import data.espece.faune.Animal;
+import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireAnimaux;
+import data.gestion.GestionnaireEnclos;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -48,9 +53,10 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         Mouton currentMouton;
         while(moutonIter.hasNext()){
             currentMouton = moutonIter.next();
+            System.out.println(currentMouton);
             if(currentMouton.haveProduced()){
                 System.out.println("C'est ça production :"+currentMouton.collectProduction());
-                GestionnaireStocks.getInstance().add(currentMouton.collectProduction(),currentMouton.getProcuedQuantity());
+                GestionnaireStocks.getInstance().add(currentMouton.collectProduction(), currentMouton.getProcuedQuantity());
                 currentMouton.setProductifState(ProductifState.PRODUCING);
                 currentMouton.getProductionCycle().reset();
             }
@@ -61,7 +67,17 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable();    
+        Iterator<Slaughtable> slaughtableIter = abatoire.getAnimaltoSlaughter().iterator();
+        Slaughtable currentSlaughtable;
+        while(slaughtableIter.hasNext()){
+            currentSlaughtable = slaughtableIter.next();
+            System.out.println(currentSlaughtable);
+            System.out.println("On kill lui :"+currentSlaughtable);
+            GestionnaireStocks.getInstance().add(Produits.MEAT, 1);
+            GestionnaireAnimaux.getInstance().remove((Animal)currentSlaughtable);
+        }
+        abatoire.getAnimaltoSlaughter().clear();
+        return null;
     }
 
     @Override
@@ -71,7 +87,19 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable();
+        Iterator<MilkProduceur> milkProduceurIter = salleDeTraite.getMilkProduceur().iterator();
+        MilkProduceur milkProduceur;
+        while(milkProduceurIter.hasNext()){
+            milkProduceur = milkProduceurIter.next();
+            System.out.println(milkProduceur);
+            if(milkProduceur.haveProduced()){
+                GestionnaireStocks.getInstance().add(milkProduceur.collectProduction(), 1);
+                milkProduceur.setProductifState(ProductifState.PRODUCING);
+                milkProduceur.getProductionCycle().reset();
+            }
+        }
+        System.out.println(GestionnaireStocks.getInstance().getProduits());
+        return null;
     }
 
     @Override

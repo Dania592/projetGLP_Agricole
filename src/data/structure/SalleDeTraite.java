@@ -11,9 +11,13 @@ import data.espece.faune.MilkProduceur;
 import data.espece.faune.Vache;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
+import data.structure.hability.SlaughterHouseSender;
+import data.structure.hability.SpecialActionPerformer;
+import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -24,7 +28,7 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class SalleDeTraite extends StructureAction implements Distributor<MilkProduceur>{
+public class SalleDeTraite extends StructureAction implements Distributor<MilkProduceur>, SpecialActionPerformer{
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Vache> vaches = new ArrayList<>();
 	private ArrayList<Chevre> chevres = new ArrayList<>();
@@ -155,6 +159,18 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);
+	}
+
+	@Override
+	public boolean canPerformSpecialAction(Activity activity) throws UnknownActivityException {
+		return true;
+	}
+
+	@Override
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine)
+			throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+			UnableToGenerateNewTaskException {
+		throw new UnsupportedOperationException("Seulement pour les terrains ");
 	}
 	
 }

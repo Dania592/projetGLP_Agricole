@@ -15,7 +15,7 @@ public enum Activity  implements Serializable{
 
 
     // ---------------------- ETABLE ---------------------- //
-    SEND_TO_MILKING_PARLOUR(1, "Traire", Type.SENT_SPECIAL_ACTION, ActionnableKey.ETABLE, 1),
+    SEND_TO_MILKING_PARLOUR(1, "Traire", Type.SENT_SPECIAL_ACTION, ActionnableKey.MILK_PRODUCEUR_REFUGE, 1),
     // ------------------------------------------------------------------- //
     
    
@@ -41,7 +41,7 @@ public enum Activity  implements Serializable{
     FEED_ANIMAL_FROM_ENCLOSURE(1, "Nourrir", Type.FEED, ActionnableKey.ENCLOS, 1),
     COLLECT_EGG_FROM_ENCLOSURE(3, "Récolter les oeufs", Type.GET_PRODUCTION, ActionnableKey.ENCLOS, 1),
     GIVE_WATER_TO_ANIMAL(1, "Remplir l'abreuvoir", Type.GIVE_WATER, ActionnableKey.ENCLOS, 1),
-    TRANSFERT_TO_PRODUCTION_ROOM(1, "Remplir l'abreuvoir", Type.SENT_SPECIAL_ACTION, ActionnableKey.ENCLOS, 1),
+    TRANSFERT_TO_PRODUCTION_ROOM(1, "Transférer pour produire", Type.SENT_SPECIAL_ACTION, ActionnableKey.ENCLOS, 1),
     SHAVE_SHEEP(3, "Tondre Mouton", Type.SPECIAL, ActionnableKey.ENCLOS, 1),
     HEAL_FROM_ENCLOSURE(1, "Soigner", Type.HEAL, ActionnableKey.REFUGE, 1),  
     // ------------------------------------------------------------------- //

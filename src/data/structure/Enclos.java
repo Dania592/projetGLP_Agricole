@@ -212,7 +212,8 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 
 	
-	
+
+
 	public boolean isOnBorderEnclos(int ligne , int colonne) {
 		Position position = getPosition();
 		return ligne==position.getLigne_init() || ligne==(position.getLigne_init()+dimension-1) ||

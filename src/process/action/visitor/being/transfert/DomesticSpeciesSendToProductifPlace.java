@@ -45,7 +45,7 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NotImplementYetException {
-        throw new NotImplementYetException();
+        throw new BeingCannotPerformSuchActionException(mouton);
     }
 
     @Override

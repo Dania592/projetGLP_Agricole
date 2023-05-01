@@ -34,15 +34,14 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     private Abatoire getAvalablAbatoire() throws UnableToMakeTheTransfertException{
         ArrayList<Structure> abatoirePossible = GestionnaireStructures.getInstance().getStructures().get(Structures.ABATTOIRE);
-        int index= 0;
         boolean isAvalable = false;
-        while(index<abatoirePossible.size() && !isAvalable) {
-            isAvalable = abatoirePossible.get(index).isStatique();
-            index++;
-        }if(index >= abatoirePossible.size()){
-            throw new UnableToMakeTheTransfertException(" No Abatoir Avalable");
+        Iterator<Structure> abatoireIter = abatoirePossible.iterator();
+        Structure structure = abatoireIter.next();
+        if(abatoireIter.hasNext() && !isAvalable){
+            structure = abatoireIter.next();
+            isAvalable = structure.isStatique();
         }
-        return (Abatoire)abatoirePossible.get(index);
+        return (Abatoire)structure; 
     } 
     
     

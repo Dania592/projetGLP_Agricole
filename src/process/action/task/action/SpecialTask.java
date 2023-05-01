@@ -62,8 +62,12 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
 
     @Override
     protected void performSpecialActionToTerminateTask() {
-        if(getActivity()==Activity.DRAW_WATER){
-            System.out.println(GestionnaireStocks.getInstance());
+        if(getActivity()==Activity.SHAVE_SHEEP){
+            System.out.println("ICI c'est le bon message du gestionnaire : " + GestionnaireStocks.getInstance().toString());
+        }if(getActivity()==Activity.SLAUGHTER){
+            System.out.println("ICI c'est le bon message du gestionnaire : " + GestionnaireStocks.getInstance().toString());
+        }if(getActivity()==Activity.MILK){
+            System.out.println("ICI c'est le bon message du gestionnaire : " + GestionnaireStocks.getInstance().toString());
         }
     }
     
