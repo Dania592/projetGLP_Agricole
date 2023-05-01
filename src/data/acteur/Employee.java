@@ -10,8 +10,8 @@ public class Employee extends Personne  {
 	private Employees nom;
 	private boolean recrute = false;
 
-	public Employee(Employees nom, int ligne, int colonne, float salaire, String reference, Map map) {
-		super(nom.toString(), ligne, colonne, reference, map);
+	public Employee(Employees nom,  float salaire, String reference) {
+		super(nom.toString(), reference);
 		this.salaire = salaire;
 
 	}

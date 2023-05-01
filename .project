@@ -14,6 +14,13 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>musique</name>
+			<type>2</type>
+			<location>C:/Users/dania/git/projetGLP_Agricole/glpAgricole/src/ressources/musique</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1682501534258</id>

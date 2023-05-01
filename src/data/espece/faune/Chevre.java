@@ -34,9 +34,9 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	private final static Lait lait = new Lait();
 	private final static Meat equivalentInMeat = new Meat();
 	
-	public Chevre(int ligne_init, int colonne_init, int naissance, String nom,  String sexe, Etable habitat , String reference ,Map map) {
-		super(ligne_init, colonne_init, Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , map , SPEED_GROWTH);
+	public Chevre( int naissance, String nom,  String sexe, Etable habitat , String reference) {
+		super( Milieu.MONTAGNE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE, lait, reference , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Chevre"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";

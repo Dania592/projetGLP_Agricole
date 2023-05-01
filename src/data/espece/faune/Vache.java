@@ -33,10 +33,10 @@ public class Vache extends AnimalProducteur implements MilkProduceur{
 	private static Lait lait = new Lait();
 	private static Meat equivalenceInMeat = new Meat(); 
 	
-	public Vache(int ligne_init, int colonne_init, int naissance, String nom, String sexe, Etable habitat , String reference , Map map) {
+	public Vache( int naissance, String nom, String sexe, Etable habitat , String reference ) {
 		
-		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE,lait , reference , map , SPEED_GROWTH );
+		super( Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE,lait , reference , SPEED_GROWTH );
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Vache"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"STAND.png";
 			setImage(imagePath);

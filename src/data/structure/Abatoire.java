@@ -29,8 +29,8 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 		return animaltoSlaughter;
 	}
 
-	public Abatoire(int ligne_init, int colonne_init, String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map);
+	public Abatoire( String reference ) {
+		super( reference );
 	}
 
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){

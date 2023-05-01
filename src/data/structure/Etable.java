@@ -24,8 +24,8 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	private ArrayList<Slaughtable> animalToSlaughter = new ArrayList<>();
 	private static boolean usedForAnAction = false;
 
-	public Etable(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+	public Etable( String reference ) {
+		super( reference );
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
 		

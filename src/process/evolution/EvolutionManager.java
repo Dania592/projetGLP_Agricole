@@ -176,7 +176,7 @@ public class EvolutionManager implements Serializable {
 							}
 						}
 						if(nbAdult>=2) {
-							baby = new Vache(0,0,Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size(), Map.getInstance());
+							baby = new Vache(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());
 							target =  Animals.VACHE ;
 							
 						}
@@ -192,7 +192,7 @@ public class EvolutionManager implements Serializable {
 						}
 						if(nbAdult>=2) {
 							target = Animals.CHEVRE;
-							baby = new Chevre(0,0,Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size(), Map.getInstance());							
+							baby = new Chevre(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());							
 						}
 					}
 					break;
@@ -205,7 +205,7 @@ public class EvolutionManager implements Serializable {
 							}
 						}
 						if(nbAdult>=2) {
-							baby = new Mouton(0,0,Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size(), Map.getInstance());
+							baby = new Mouton(Clock.getInstance().getMinute().getValue(),null, null, null, ""+enclos.getAnimals().size());
 							target = Animals.MOUTON ;							
 						}
 					}
@@ -220,7 +220,7 @@ public class EvolutionManager implements Serializable {
 						}
 						if(nbAdult>=2) {
 							target = Animals.POULE ;
-							baby = new Poule(0,0,null, Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size(), Map.getInstance());							
+							baby = new Poule(null, Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size());							
 						}
 					}
 					break;

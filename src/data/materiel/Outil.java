@@ -10,8 +10,8 @@ public class Outil extends Element implements Stockage{
 	
 	private Outils type;
 	
-	public Outil(String reference, boolean statique, int nbCase, int ligne_init, int colonne_init , Map map, Outils type) {
-		super(reference, statique, nbCase, ligne_init, colonne_init , map);
+	public Outil(String reference, boolean statique, int nbCase, Outils type) {
+		super(reference, statique, nbCase);
 		this.type = type;
 	}
 

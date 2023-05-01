@@ -24,8 +24,8 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     private ArrayList<Slaughtable> chevreToKill = new ArrayList<>();
     private boolean isUsedForATask = false;
 
-    public BergerieChevre(int ligne_init, int colonne_init, String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+    public BergerieChevre( String reference  ) {
+		super( reference);
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
 		

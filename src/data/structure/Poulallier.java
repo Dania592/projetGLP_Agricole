@@ -29,8 +29,8 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	
 	
-	public Poulallier(int ligne_init, int colonne_init,String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map);
+	public Poulallier(String reference ) {
+		super( reference );
 		setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");	
 	}
 

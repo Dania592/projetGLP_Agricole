@@ -19,8 +19,8 @@ public abstract class Personne extends Element implements Serializable {
 	public static final int MAX_HOUR_OF_WORK_FARMER = 10;
 	public static final int MAX_HOUR_OF_WORK_EMPLOYEE = 12;
 
-	public Personne(String nom, int ligne, int colonne, String reference, Map map) {
-		super(reference, false, 1, ligne, colonne, map);
+	public Personne(String nom, String reference) {
+		super(reference, false, 1);
 		this.name = nom;
 		planning = new WeeklyPlanner(getMaxHourOfWork());
 		this.etatSante = EtatSante.BONNE_SANTE;

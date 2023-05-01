@@ -28,8 +28,8 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     private ArrayList<Slaughtable> moutonToSlaughter = new ArrayList<>();
     private boolean isUsedForATask= false;
 
-    public BergerieMouton(int ligne_init, int colonne_init , String reference , Map map ) {
-		super(ligne_init, colonne_init, reference , map );
+    public BergerieMouton( String reference ) {
+		super( reference  );
 		
 			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
 		

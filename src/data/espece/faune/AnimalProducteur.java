@@ -30,11 +30,11 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		return timeItTakesToProduce;
 	}
 
-	public AnimalProducteur(int ligne_init, int colonne_init, Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
+	public AnimalProducteur( Milieu milieu, int dureeVie, float prixAchat, int naissance, float poids, String nom, Alimentation alimentation, String sexe,
 			Structure habitat, int frequenceProduction, int quantiteProduction,
-			Produit produit , String reference , Map map ,int speedGrowth ) {
-		super(ligne_init, colonne_init, milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
-				sexe, habitat ,reference ,map , speedGrowth);
+			Produit produit , String reference  ,int speedGrowth ) {
+		super( milieu, dureeVie, prixAchat, naissance, poids, nom, alimentation,
+				sexe, habitat ,reference  , speedGrowth);
 		this.quantiteProduction = quantiteProduction;
 		this.produit = produit;
 		produceurType = Type.AVERAGE_PRODUCEUR; 

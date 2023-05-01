@@ -35,9 +35,9 @@ public class Mouton extends AnimalProducteur{
 	private final static Laine laine = new Laine();
 	private final static Meat equivalentInMeat = new Meat();
 	
-	public Mouton(int ligne_init, int colonne_init, int naissance,String nom, String sexe, Etable habitat,String reference ,Map map) {
-		super(ligne_init, colonne_init, Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
-				FREQUENCE_PRODUCTION, QUANTITE, laine, reference , map ,SPEED_GROWTH);
+	public Mouton( int naissance,String nom, String sexe, Etable habitat,String reference ) {
+		super( Milieu.PLAINE, DUREE_VIE, PRIX_ACHAT, naissance, POIDS, nom, Alimentation.HERBIVORE, sexe, habitat,
+				FREQUENCE_PRODUCTION, QUANTITE, laine, reference , SPEED_GROWTH);
 		
 			String imagePath = "src"+File.separator+"ressources"+File.separator+"Mouton"
 					+File.separator+EvolutionAnimal.JEUNE+File.separator+"stand.png";

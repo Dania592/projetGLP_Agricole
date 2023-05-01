@@ -28,8 +28,8 @@ public  abstract class Structure extends Element implements Buyable,Stockage, Fi
 
 	private final static int  NB_CASE = 16;
 	
-	public Structure( int ligne_init, int colonne_init, String reference , Map map  ) {
-		super(reference ,false,NB_CASE, ligne_init, colonne_init , map);
+	public Structure( String reference   ) {
+		super(reference ,false,NB_CASE);
 		this.prixAchat = getKey().getPrixAchat();
 		state = FixableState.USABLE;
 		charges = new Charge[2];

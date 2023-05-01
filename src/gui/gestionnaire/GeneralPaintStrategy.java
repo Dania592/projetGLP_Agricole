@@ -843,7 +843,7 @@ public class GeneralPaintStrategy {
 			gestionnaireRH.printEmployees();
 			gestionnaireRH.recruter(employee);
 			gestionnaireRH.getARecruter().remove(employee);
-			gestionnaireRH.getEmployees().put(employee, new Employee(employee, 0, 0, 100, "", Map.getInstance()));
+			gestionnaireRH.getEmployees().put(employee, new Employee(employee, 0, ""));
 			gestionnaireRH.printEmployees();
 			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
 			frame.dispose();

@@ -63,8 +63,8 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		return timeBeforeProductionExpires;
 	}
 
-	public Terrain(String reference, boolean statique, int ligne_init, int colonne_init, Map map,Graine type) {
-		super(reference, statique, DIMENSION, ligne_init, colonne_init, map);
+	public Terrain(String reference, boolean statique ,Graine type) {
+		super(reference, statique, DIMENSION);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
 		if (type != null) {

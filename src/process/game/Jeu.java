@@ -2,7 +2,17 @@ package process.game;
 
 
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Random;
+
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import data.configuration.GameConfiguration;
 import data.evenement.Catastrophe;
@@ -15,6 +25,7 @@ import data.stucture_base.Farm;
 import data.time.Clock;
 import gui.Farm.Hud;
 import gui.Farm.MainGuiTest;
+import gui.Farm.Musique;
 import gui.gestionnaire.GameOver;
 import process.action.TaskManager;
 import process.time.TimeManager;
@@ -29,6 +40,7 @@ public class Jeu implements Runnable{
 	private TaskManager taskManager; 
 	private FinanceManager financeManager = FinanceManager.getInstance();
 	private boolean gameOver = false;
+	private  static Clip clip ;
 	private Farm farm;
 
 	public Jeu(Farm farm,String title) {
@@ -39,7 +51,7 @@ public class Jeu implements Runnable{
 		TimeManager.getInstance().start();
 		taskManager = TaskManager.getInstance();
 		frame = new MainGuiTest(title, farm , taskManager);
-
+		playMusique();
 		Thread thread = new Thread(frame);
 		thread.start();
 	}
@@ -116,11 +128,28 @@ public class Jeu implements Runnable{
 		return (frame.getFarm().getLastCatastroph()-Clock.getInstance().getMinute().getValue()) == GameConfiguration.FREQUENCE_CATASTROPHE;
 	}
 	
-//	public void catastropheIntervention() {
-//		if(catastrophTime()) {
-//			Catastrophe catastrophe = new Catastrophe(i, i, gameOver, null);
-//		}
-//	}
+	public void catastropheIntervention() {
+		if(catastrophTime()) {
+			Catastrophe catastrophe = new Catastrophe(i, i, gameOver, null);
+		}
+	}
+	
+	public void playMusique() {
+		  try {
+	           URL url= Musique.class.getClassLoader().getResource("src/ressources/musique/m.wav");
+	           File file = new File("src/ressources/musique/EZ02.wav");	           
+	           AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+	           clip = AudioSystem.getClip();
+	           clip.open(audioIn);
+	           clip.start();
+	           clip.loop(clip.LOOP_CONTINUOUSLY);
+	       }
+		catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+	    
+	}
 	
 	
 	

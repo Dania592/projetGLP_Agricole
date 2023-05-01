@@ -10,8 +10,8 @@ public class Engin extends Element implements Stockage{
 	
 	private Engins type;
 	
-	public Engin(String reference, boolean statique, int nbCase, int ligne_init, int colonne_init , Map map, Engins type) {
-		super(reference, statique, nbCase, ligne_init, colonne_init , map);
+	public Engin(String reference, boolean statique, int nbCase, Engins type) {
+		super(reference, statique, nbCase);
 		this.type = type;
 	}
 

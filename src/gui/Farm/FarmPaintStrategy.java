@@ -107,7 +107,6 @@ public class FarmPaintStrategy implements Serializable {
 		  
 		Position position = enclos.getPosition();
 		BufferedImage image ;
-		
 		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {
 			for(int colonneIndex = position.getColonne_init() ; colonneIndex < enclos.getDimension()+position.getColonne_init(); colonneIndex ++) {
 				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
@@ -228,7 +227,6 @@ public class FarmPaintStrategy implements Serializable {
 	
 	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {
 		ArrayList<Task<?>> tasks = taskManager.getinProcess();
-		//g.drawLine(0, 0, 300, 300);
 		for(Task task : tasks) {
 			Position position =task.getActionnableTarget().getPosition();
 			int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 

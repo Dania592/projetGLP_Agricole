@@ -6,6 +6,7 @@ import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
 import data.map.Case;
 import data.structure.Enclos;
+import data.structure.hability.Fixable.FixableState;
 import data.structure.hability.ProductifPlace;
 import data.stucture_base.Element;
 
@@ -36,6 +37,7 @@ public class ElementManager implements Serializable{
 	}
 
 	public void add(Enclos enclos) {
+		enclos.setState(FixableState.DAMAGED);
 		mapManager.addEnclos(enclos);
 		System.out.println("On a ajouter l'enclos");
 		ProductionManager.getInstance().addToProductifList(enclos);

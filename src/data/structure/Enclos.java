@@ -62,8 +62,8 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	private HashMap<String, String > images = new HashMap<>();
 	
-	public Enclos(int ligne_init, int colonne_init, String reference, Map map ){
-		super(reference, false, 49, ligne_init ,colonne_init ,map );
+	public Enclos( String reference){
+		super(reference, false, 49);
 		//animalProducteurs = new ArrayList<>();
 		state = FixableState.USABLE;
 		capacite = 10;

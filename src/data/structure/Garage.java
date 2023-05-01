@@ -18,8 +18,8 @@ import process.action.visitor.place.PlaceVisitor;
 public class Garage extends Structure{
 	private static final long serialVersionUID = 1L;
 
-	public Garage(int ligne_init, int colonne_init, String reference, Map map) {
-		super(ligne_init, colonne_init, reference, map);
+	public Garage( String reference) {
+		super( reference);
 	}
 
 	@Override

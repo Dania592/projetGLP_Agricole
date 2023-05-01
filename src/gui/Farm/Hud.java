@@ -45,6 +45,7 @@ public class Hud implements Serializable {
 	private JLabel farmer; 
 	private JLabel save;
 	private JLabel soldeBg;
+	private JLabel music ;
 	private static JLabel message;
 	private static JLabel statistique;
 	private static ChoixPanel choixScroll;
