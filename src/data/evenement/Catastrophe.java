@@ -3,31 +3,22 @@ package data.evenement;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.acteur.ModeDefense;
-import data.acteur.Predateur;
 import data.stucture_base.Element;
-
 
 
 public class Catastrophe implements Serializable{
 	private int duree;
 	private int debut;
 	private boolean succes;
-	private Predateur predateur;
-	private ModeDefense modeDefense;
 	
 	private ArrayList<Element> cibles = new ArrayList<>();
 
-
 	
-	public Catastrophe(int duree, int debut, boolean succes, Predateur predateur, ModeDefense modeDefense,
-			ArrayList<Element> cibles) {
+	public Catastrophe(int duree, int debut, boolean succes, ArrayList<Element> cibles) {
 		super();
 		this.setDuree(duree);
 		this.setDebut(debut);
 		this.setSucces(succes);
-		this.setPredateur(predateur);
-		this.setModeDefense(modeDefense);
 		this.cibles = cibles;
 	}
 
@@ -67,20 +58,6 @@ public class Catastrophe implements Serializable{
 		this.succes = succes;
 	}
 
-	public Predateur getPredateur() {
-		return predateur;
-	}
 
-	public void setPredateur(Predateur predateur) {
-		this.predateur = predateur;
-	}
-
-	public ModeDefense getModeDefense() {
-		return modeDefense;
-	}
-
-	public void setModeDefense(ModeDefense modeDefense) {
-		this.modeDefense = modeDefense;
-	}
 	
 }

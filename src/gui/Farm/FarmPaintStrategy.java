@@ -231,10 +231,10 @@ public class FarmPaintStrategy implements Serializable {
 		//g.drawLine(0, 0, 300, 300);
 		for(Task task : tasks) {
 			Position position =task.getActionnableTarget().getPosition();
-			int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + map.getX() ; 
+			int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
 			int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + map.getY();
-			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
-			g.drawImage(bar.getImage(), x, y, 100,20, null);
+			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+"progressBar"+File.separator+task.getActivity()+File.separator+task.getState()+".png");
+			g.drawImage(bar.getImage(), x, y, 150,30, null);
 		}
 	}
 	

@@ -10,9 +10,9 @@ import data.stucture_base.Element;
 
 public class Meteorite extends Catastrophe{
 
-	public Meteorite(int duree, int debut, boolean succes, Predateur predateur, ModeDefense modeDefense,
+	public Meteorite(int duree, int debut, boolean succes,
 			ArrayList<Element> cibles) {
-		super(duree, debut, succes, predateur, modeDefense, cibles);
+		super(duree, debut, succes,cibles);
 	}
 
 }

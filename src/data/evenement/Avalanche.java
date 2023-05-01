@@ -10,9 +10,9 @@ import data.stucture_base.Element;
 
 public class Avalanche extends Catastrophe{
 
-	public Avalanche(int duree, int debut, boolean succes, Predateur predateur, ModeDefense modeDefense,
+	public Avalanche(int duree, int debut, boolean succes,
 			ArrayList<Element> cibles) {
-		super(duree, debut, succes, predateur, modeDefense, cibles);
+		super(duree, debut, succes, cibles);
 	}
 
 }

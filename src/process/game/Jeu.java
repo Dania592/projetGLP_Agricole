@@ -2,7 +2,10 @@ package process.game;
 
 
 
+import java.util.Random;
+
 import data.configuration.GameConfiguration;
+import data.evenement.Catastrophe;
 import data.finance.Banque;
 import data.gestion.RessourcesManager;
 import data.map.Map;
@@ -81,7 +84,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(20);
+				TimeManager.getInstance().setTimeSpeed(1);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}
@@ -105,7 +108,20 @@ public class Jeu implements Runnable{
 		if(isNight()) {
 			frame.getFarm().setJourMode(false);
 			TimeManager.getInstance().setTimeSpeed(50);
-		}
-		
+		}				
 	}
+	
+	// partie des catastrophes 
+	public boolean catastrophTime() {
+		return (frame.getFarm().getLastCatastroph()-Clock.getInstance().getMinute().getValue()) == GameConfiguration.FREQUENCE_CATASTROPHE;
+	}
+	
+//	public void catastropheIntervention() {
+//		if(catastrophTime()) {
+//			Catastrophe catastrophe = new Catastrophe(i, i, gameOver, null);
+//		}
+//	}
+	
+	
+	
 }

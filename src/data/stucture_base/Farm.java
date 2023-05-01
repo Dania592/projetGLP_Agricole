@@ -32,6 +32,7 @@ public class Farm implements Serializable{
 	private EvolutionManager evolutionManager ;
 	private int ligne ; 
 	private int colonne ; 
+	private int lastCatastroph ;
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
@@ -40,6 +41,7 @@ public class Farm implements Serializable{
 		ressourcesManager = RessourcesManager.getInstance();
 		nbEtoile = 0;
 		cptJour = 0;
+		lastCatastroph=0;
 		jour = true ;
 		saisonActuelle = Saison.PRINTEMPS;
 		evolutionManager = new EvolutionManager(manager , clock);
@@ -47,6 +49,14 @@ public class Farm implements Serializable{
 		colonne = 5 ;
 	}
 	
+	public int getLastCatastroph() {
+		return lastCatastroph;
+	}
+
+	public void setLastCatastroph(int lastCatastroph) {
+		this.lastCatastroph = lastCatastroph;
+	}
+
 	public void setJourMode(Boolean switched) {
 		jour = switched ;
 	}
