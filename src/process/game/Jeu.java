@@ -2,9 +2,18 @@ package process.game;
 
 
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.AttributedCharacterIterator;
 import java.util.Random;
 
 import javax.print.attribute.standard.Media;
@@ -23,6 +32,7 @@ import data.notification.Message;
 import data.notification.Messagerie;
 import data.stucture_base.Farm;
 import data.time.Clock;
+import gui.Farm.FarmPaintStrategy;
 import gui.Farm.Hud;
 import gui.Farm.MainGuiTest;
 import gui.Farm.Musique;
@@ -40,11 +50,9 @@ public class Jeu implements Runnable{
 	private TaskManager taskManager; 
 	private FinanceManager financeManager = FinanceManager.getInstance();
 	private boolean gameOver = false;
-	private  static Clip clip ;
-	private Farm farm;
-
+	private static Clip clip ;
+	
 	public Jeu(Farm farm,String title) {
-		this.farm = farm;
 		financeManager.setJeu(this);
 		timeManager = TimeManager.getInstance();	
 		TimeManager.getInstance().setClock(farm.getClock());
@@ -77,7 +85,6 @@ public class Jeu implements Runnable{
 		Jeu jeu = new Jeu(ferme, "Nouvelle partie");
 		Thread gameThread = new Thread(jeu);
 		TimeManager.getInstance().reset();
-		//TimeManager.getInstance().start();
 		TimeManager.getInstance().gameOver(false);
 		gameThread.start();
 	}
@@ -96,7 +103,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(1);
+				TimeManager.getInstance().setTimeSpeed(20);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}
@@ -108,11 +115,11 @@ public class Jeu implements Runnable{
 	
 	public boolean nightNotif() {
 		Clock clock =Clock.getInstance(); 
-		return clock.getHour().getValue()==10 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
+		return clock.getHour().getValue()==9 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
 	}
 	
 	public boolean isNight() {
-		return TimeManager.getInstance().getClock().getHour().getValue()>=20 
+		return TimeManager.getInstance().getClock().getHour().getValue()>=10 
 				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
 	}
 	
@@ -136,7 +143,6 @@ public class Jeu implements Runnable{
 	
 	public void playMusique() {
 		  try {
-	           URL url= Musique.class.getClassLoader().getResource("src/ressources/musique/m.wav");
 	           File file = new File("src/ressources/musique/EZ02.wav");	           
 	           AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
 	           clip = AudioSystem.getClip();

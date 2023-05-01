@@ -79,7 +79,11 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	}
 
 	public Farm getFarm() {
-		return farm ;
+		return farm;
+	}
+	
+	public Board getBoard() {
+		return dashboard;
 	}
 
 	private class MouseControls implements MouseListener{

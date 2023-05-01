@@ -2,6 +2,7 @@ package gui.Farm;
 
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,9 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
@@ -95,11 +98,6 @@ public class FarmPaintStrategy implements Serializable {
 			panelChoixTerrain.add(titre, actions.get(titre));
 			y += 30;
 		}
-		if(!(terrain.isEnoughHydrated())){
-
-		}
-
-
 		return panelChoixTerrain;
 	}
 	
@@ -117,7 +115,6 @@ public class FarmPaintStrategy implements Serializable {
 						image = ImageIO.read(new File(enclos.getImages().get("bas_gauche")));
 						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -129,7 +126,6 @@ public class FarmPaintStrategy implements Serializable {
 						image = ImageIO.read(new File(enclos.getImages().get("bas_milieu")));
 						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -141,7 +137,6 @@ public class FarmPaintStrategy implements Serializable {
 						image = ImageIO.read(new File(enclos.getImages().get("milieu")));
 						graphics.drawImage(image, x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -233,6 +228,19 @@ public class FarmPaintStrategy implements Serializable {
 			ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+"progressBar"+File.separator+task.getActivity()+File.separator+task.getState()+".png");
 			g.drawImage(bar.getImage(), x, y, 150,30, null);
 		}
+	}
+	
+	public static void paintOverlay(Graphics graphics, JPanel panel, JLayeredPane frame) {
+		int x = Map.getInstance().getX();
+		int y = Map.getInstance().getY();
+		int dx = Map.getInstance().getNbColones()*GameConfiguration.CASE_DIMENSION;
+		int dy = Map.getInstance().getNbLignes()*GameConfiguration.CASE_DIMENSION;
+		ImageIcon overlay = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
+		graphics.drawImage(overlay.getImage(), x, y, dx, dy, null);
+		
+		panel.setLocation((frame.getHeight() - panel.getHeight()) / 2, (frame.getWidth() - panel.getWidth()) / 2);
+		frame.add(panel, JLayeredPane.DRAG_LAYER);
+		
 	}
 	
 	
