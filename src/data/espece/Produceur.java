@@ -66,7 +66,7 @@ public interface Produceur extends DomesticSpecie{
 	public enum TimeItTakes{
         CHEVRE(35, Type.AVERAGE_PRODUCEUR),
 		MOUTON(200, Type.AVERAGE_PRODUCEUR),
-		POULE(100, Type.AVERAGE_PRODUCEUR),
+		POULE(10, Type.AVERAGE_PRODUCEUR),
 		VACHE(50, Type.AVERAGE_PRODUCEUR),
         TERRAIN(100, Type.AVERAGE_PRODUCEUR),
 

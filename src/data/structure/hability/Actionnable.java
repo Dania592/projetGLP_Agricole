@@ -33,6 +33,7 @@ public interface Actionnable{
         PUIT,
         GARAGE,
         GRANGE,
+        MILK_PRODUCEUR_REFUGE,
         ;
     }
 

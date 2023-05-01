@@ -5,6 +5,7 @@ import data.espece.Slaughtable;
 import data.espece.Transportable;
 import gui.gestionnaire.keys.Animals;
 
-public interface MilkProduceur extends Transportable, Produceur, Slaughtable{
+public interface MilkProduceur extends Produceur, Slaughtable{
     Animals getKey();
+    
 }

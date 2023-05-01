@@ -35,8 +35,9 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	@Override
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){
 		ArrayList<ActionnableKey> actionnableKeys = super.getActionnableKey();
+		actionnableKeys.add(ActionnableKey.MILK_PRODUCEUR_REFUGE);
 		actionnableKeys.add(getSpecificActionnableKey());
-		return actionnableKeys;
+		return actionnableKeys; //MILK_PRODUCEUR_REFUGE
 	}
 
 	@Override

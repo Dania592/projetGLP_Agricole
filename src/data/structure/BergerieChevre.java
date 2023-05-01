@@ -77,6 +77,7 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     @Override
     public ArrayList<ActionnableKey> getASetOfAllActionnableKey(){
         ArrayList<ActionnableKey> actionnableKey = super.getActionnableKey();
+		actionnableKey.add(ActionnableKey.MILK_PRODUCEUR_REFUGE);
 		actionnableKey.add(getSpecificActionnableKey());
 		return actionnableKey;
     }

@@ -1,5 +1,6 @@
 package process.action.visitor.place;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.espece.faune.AnimalProducteur;
@@ -7,11 +8,14 @@ import data.espece.faune.Chevre;
 import data.espece.faune.Healable;
 import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
+import data.evenement.Avalanche;
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.EvolutionTerrain;
 import data.flore.terrains.Terrain;
+import data.gestion.GestionnaireEnclos;
 import data.gestion.GestionnaireStocks;
+import data.gestion.GestionnaireStructures;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
@@ -29,10 +33,12 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.Refuge;
 import data.structure.SalleDeTraite;
+import data.structure.Structure;
 import data.structure.hability.Actionnable;
 import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
 import gui.gestionnaire.keys.Graine;
+import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -43,10 +49,6 @@ import process.action.visitor.being.exception.ProblemOccursInProductionException
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 
 public class ConditionTester implements PlaceVisitor<Boolean>{
-
-    private boolean needToFix(Actionnable actionnable){
-        return actionnable.isNeedToBeFixed();
-    }
     
     
     
@@ -132,7 +134,6 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
         throw new IllegalArgumentException("Les conditions doivent être vérifié en passant l'activité.");
     }
 
-    
 
     
     @Override
@@ -147,11 +148,13 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException{ 
             switch(activity){
                 case FIX_STRUCTURE:
-                    return needToFix(etable);
+                    return etable.isNeedToBeFixed();
                 case SEND_TO_ENCLOSURE:
+                    return isThereFreeEnclosure() && !(etable.getInHabitant().isEmpty());
                 case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
+                    return isThereFreeSlaugtherHouse() && !(etable.getInHabitant().isEmpty());
                 case SEND_TO_MILKING_PARLOUR:
-                    throw new NotImplementYetException();
+                    return isThereFreeMilkHouse();
                 case HEAL :
                     return canHeal(etable.getInHabitant().iterator());
                 default:            
@@ -164,12 +167,14 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
         throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
             switch(activity){
                 case FIX_STRUCTURE:
-                    return needToFix(poulallier);
+                    return poulallier.isNeedToBeFixed();
                 case COLLECT_EGG:
                     return isInProductifPlaceProduction(poulallier, Produits.OEUF);
                 case SEND_TO_ENCLOSURE:
+                    System.out.println("Des free enclosure : "+ isThereFreeEnclosure());
+                    return isThereFreeEnclosure() && !(poulallier.getInHabitant().isEmpty());  
                 case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
-                    throw new NotImplementYetException();
+                    return isThereFreeSlaugtherHouse() && !(poulallier.getInHabitant().isEmpty());
                 case HEAL :
                     return canHeal(poulallier.getInHabitant().iterator());
                 default:            
@@ -177,12 +182,83 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             }
     }
 
+    /**
+     * This function checks if there are available homes for animal producers in a given enclosure.
+     * 
+     * @param enclos an object of type Enclos, which presumably represents an animal enclosure or
+     * habitat.
+     * @return The method is returning a boolean value.
+     */
+    private boolean isThereAvalablesHomes(Enclos enclos){
+        Iterator<AnimalProducteur> animalProduceurIter = enclos.getAnimals().iterator();
+        boolean isThereAvalable = false;
+        ArrayList<Structure> possibleHomeForAnimalProduceur;
+        while(animalProduceurIter.hasNext() && !isThereAvalable){
+            possibleHomeForAnimalProduceur = GestionnaireStructures.getInstance().getStructures().get(animalProduceurIter.next().getHomeLabel());
+            if(possibleHomeForAnimalProduceur != null){
+                isThereAvalable = areStructureAvalables(possibleHomeForAnimalProduceur);
+            }
+        }
+        return isThereAvalable;   
+    }
+    private boolean isThereFreeMilkHouse(){
+        ArrayList<Structure> salleDeTraiteList = GestionnaireStructures.getInstance().getStructures().get(Structures.SALLE_DE_TRAITE);
+        boolean isThereAvalable = false;
+        if(salleDeTraiteList != null){
+            Iterator<Structure> salleDeTraite = salleDeTraiteList.iterator();
+            while(salleDeTraite.hasNext() && !isThereAvalable){
+                isThereAvalable = basicConditionForActionnableToBeFree(salleDeTraite.next());
+            }
+        }
+        return isThereAvalable;
+    }
+
+    private boolean isThereFreeSlaugtherHouse(){
+        ArrayList<Structure> abattoireList = GestionnaireStructures.getInstance().getStructures().get(Structures.ABATTOIRE);
+        boolean isThereAvalable = false;
+        if(abattoireList != null){
+            Iterator<Structure> abattoire = abattoireList.iterator();
+            while(abattoire.hasNext() && !isThereAvalable){
+                isThereAvalable = basicConditionForActionnableToBeFree(abattoire.next());
+            }
+        }
+        return isThereAvalable;
+    }
+
+
+    private boolean isThereFreeEnclosure(){
+        boolean isTherePossibleEnclosure = false;
+        ArrayList<Enclos> possibleAvalableEnclosure = GestionnaireEnclos.getInstance().getEnclos();
+        if(possibleAvalableEnclosure!= null){
+            Iterator<Enclos> enclosureIter = possibleAvalableEnclosure.iterator();
+            while(enclosureIter.hasNext() && !isTherePossibleEnclosure){
+                isTherePossibleEnclosure = basicConditionForActionnableToBeFree(enclosureIter.next()); 
+            }
+        }
+        return isTherePossibleEnclosure;
+    }
+
+    private boolean areStructureAvalables(ArrayList<Structure> structures){
+        Iterator<Structure> structureIter = structures.iterator();
+        boolean areAvalable = false;
+        while(structureIter.hasNext() && !areAvalable){
+            areAvalable = basicConditionForActionnableToBeFree(structureIter.next());
+        }
+        return areAvalable;
+    }   
+
+
+    private boolean basicConditionForActionnableToBeFree(Actionnable actionnable){
+        // return !(actionnable.isNeedToBeFixed()) && actionnable.isStatique();
+        return actionnable.isStatique();
+    }
+
     @Override
     public Boolean action(Enclos enclos, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
         switch(activity){
             case FIX_ENCLOSURE:
-                return needToFix(enclos);
+                return enclos.isNeedToBeFixed();
             case FEED_ANIMAL_FROM_ENCLOSURE : 
                 return enclos.isNeedToBeFeed();
             case COLLECT_EGG_FROM_ENCLOSURE : 
@@ -192,8 +268,9 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             case SHAVE_SHEEP : 
                 return canShaveSheep(enclos);
             case SEND_BACK_HOME_ANIMALS : 
+                return isThereAvalablesHomes(enclos);
             case TRANSFERT_TO_PRODUCTION_ROOM : 
-                throw new NotImplementYetException(activity);
+                return isThereFreeMilkHouse() && !(enclos.getAnimalStorage().getChevres().isEmpty()) && !(enclos.getAnimalStorage().getChevres().isEmpty());
             case HEAL_FROM_ENCLOSURE :
                 return canHeal(enclos.getAnimals().iterator());
             default:            
@@ -232,7 +309,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Abatoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException{
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(abatoire);
+                return abatoire.isNeedToBeFixed();
             case COLLECT_MEAT:
                 return isInProductifPlaceProduction(abatoire, Produits.MEAT); 
             case SLAUGHTER:
@@ -250,7 +327,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Maison maison, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(maison);
+                return maison.isNeedToBeFixed();
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, maison);
         }
@@ -261,13 +338,13 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
         throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
             switch(activity){
                 case FIX_STRUCTURE:
-                return needToFix(salleDeTraite);
+                return salleDeTraite.isNeedToBeFixed();
                 case COLLECT_MILK:
                     return isInProductifPlaceProduction(salleDeTraite, Produits.WATER);
                 case MILK:
                     return haveMilkProducedProduced(salleDeTraite);
                 case SEND_TO_ENCLOSURE:
-                    throw new NotImplementYetException(activity);
+                    return isThereFreeEnclosure() && !(salleDeTraite.getMilkProduceur().isEmpty());
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, salleDeTraite);
             }
@@ -290,7 +367,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Entrepot entrepot, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(entrepot);
+                return entrepot.isNeedToBeFixed();
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, entrepot);
         }
@@ -299,8 +376,6 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     @Override
     public Boolean action(Terrain terrain, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
         switch(activity){
-            case FIX_STRUCTURE:
-                return needToFix(terrain);
             case DIG_OVER:
                 return canDigOver(terrain);
             case PLANT:
@@ -326,7 +401,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     }
 
     private boolean canHeal(Terrain terrain){
-        return needToHeal(terrain);
+        return needToHeal(terrain) && terrain.getProductifState() != ProductifState.IN_WAIT && terrain.getProductifState() != ProductifState.PRODUCING;
     }//TODO doit on acheter les médicaments
 
     private <E extends AnimalProducteur> boolean canHeal(Iterator<E> animalProduceurIterator){
@@ -380,11 +455,15 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException{
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(bergerieChevre);
+                return bergerieChevre.isNeedToBeFixed();
             case SEND_TO_ENCLOSURE:
-                throw new NotImplementYetException();
+                return isThereFreeEnclosure() &&  !(bergerieChevre.getInHabitant().isEmpty());
             case HEAL :
                 return canHeal(bergerieChevre.getInHabitant().iterator());
+            case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
+                return isThereFreeSlaugtherHouse() && !(bergerieChevre.getInHabitant().isEmpty());
+            case SEND_TO_MILKING_PARLOUR:
+                return isThereFreeMilkHouse();
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieChevre);
         }
@@ -395,11 +474,13 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException{
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(bergerieMouton);
+                return bergerieMouton.isNeedToBeFixed();
             case SEND_TO_ENCLOSURE:
-                throw new NotImplementYetException(activity);
+                return isThereFreeEnclosure() && !(bergerieMouton.getInHabitant().isEmpty());
             case HEAL :
                 return canHeal(bergerieMouton.getInHabitant().iterator());
+            case SEND_TO_SEND_TO_SLAUGHTERHOUSE:
+                return isThereFreeSlaugtherHouse() && !(bergerieMouton.getInHabitant().isEmpty());
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, bergerieMouton);
         }
@@ -409,7 +490,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Puit puit, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(puit);
+                return puit.isNeedToBeFixed();
             case DRAW_WATER:
                 return haveWaterInWell(puit);
             default:
@@ -435,7 +516,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Garage garage, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(garage);
+                return garage.isNeedToBeFixed();
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, garage);
         }
@@ -445,7 +526,7 @@ public class ConditionTester implements PlaceVisitor<Boolean>{
     public Boolean action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         switch(activity){
             case FIX_STRUCTURE:
-                return needToFix(grange);
+                return grange.isNeedToBeFixed();
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, grange);
         }
