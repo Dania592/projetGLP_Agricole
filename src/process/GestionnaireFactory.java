@@ -2,7 +2,6 @@ package process;
 
 import data.espece.faune.Animal;
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -49,8 +48,6 @@ public class GestionnaireFactory {
 				return new Poule(null, 0, null, null, null, reference);
 			case CHEVRE:
 				return new Chevre(0, null, null, null, reference);
-			case CHIEN:
-				return new Chien(null, 0, null, null, null, reference);
 			default:
 				return null;
 		}

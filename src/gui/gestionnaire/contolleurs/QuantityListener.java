@@ -33,7 +33,10 @@ public class QuantityListener implements ChangeListener{
 			if (newValue == 0) {
 				market.getBillPanel().remove(market.getBill().get(key));
 				market.getBill().remove(key);
+				market.getValidationPanel().resetTotalCost();
 				transaction.removeFromCart(key,(newValue-lastValue));
+				market.getBillPanel().revalidate();
+				market.getBillPanel().repaint();
 			}else{
 				if ((newValue-lastValue)>0) {
 					if(type.equals("Achat")) {

@@ -53,6 +53,11 @@ public class ValidationPanel extends RoundedPanel{
 		totalCostLabel.setText(String.valueOf(cost));
 	}
 	
+	public void resetTotalCost() {
+		totalCostLabel.setText("0");
+	}
+	
+	
 	public float getTotalCost() {
 		return Float.valueOf(totalCostLabel.getText());
 	}
@@ -87,7 +92,7 @@ public class ValidationPanel extends RoundedPanel{
 			market.getBill().clear();
 			totalCostLabel.setText("0");
 			String info;
-			if (market.getTransaction().isValidated()) {
+			if (!market.getTransaction().isValidated()) {
 				info = "Transaction annulée!" + market.getTransaction().getClass().getSimpleName();
 			} else {
 				info = "La transaction ne " + FinanceManager.EOL+ "peut pas être annulée!";

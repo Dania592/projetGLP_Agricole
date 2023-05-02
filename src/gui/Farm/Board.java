@@ -3,27 +3,22 @@ package gui.Farm;
 
 
 import java.awt.Graphics;
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import data.configuration.GameConfiguration;
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
-import data.stucture_base.Position;
-import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.Choix;
+import gui.gestionnaire.gestionnairesGUI.UIGraph;
 import process.action.TaskManager;
-import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 
@@ -39,17 +34,34 @@ public class Board extends JLayeredPane implements Serializable{
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
+	
+	private UIGraph ui;
+
+	public int gameState = 0;
+	public final int playState = 0;
+	public final int optionState = 1;
+	public final int pauseState = 2;
+	public final int gameOverState = 3;
 
 	
 	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
 		this.farm = farm;
+		ui = new UIGraph(this);
 		this.selected=selected;
 		this.taskManager = taskManager ;
-		keys = new KeyControls(farm.getManager() , selected); 
+		keys = new KeyControls(farm.getManager() , selected, this); 
 		new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
 		choix.init();
 		init();
+	}
+	
+	public int getGameState() {
+		return gameState;
+	}
+	
+	public void setGameState(int gameState) {
+		this.gameState = gameState;
 	}
 	
 	public void setFarm(Farm farm) {
@@ -136,15 +148,22 @@ public class Board extends JLayeredPane implements Serializable{
 			}
 			
 		}
+		
 		hud.time();
 		hud.solde();
+		hud.water();
+		ui.draw(g);
+		if (gameState == pauseState) {
+			
+		}
+		
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-
 		if(!farm.getJourMode()) {
 			hud.remove_panels();
 			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 		}
+		
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

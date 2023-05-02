@@ -41,7 +41,7 @@ public class TestStat extends JFrame {
 		
 		GeneralPaintStrategy strategie = new GeneralPaintStrategy();
 		
-		JTabbedPane tabbed = strategie.paintTabbedPane(0, 0, 900, 580, GeneralPaintStrategy.LIGHT_BROWN,GeneralPaintStrategy.DARK_BROWN);
+		JTabbedPane tabbed = GeneralPaintStrategy.paintTabbedPane(0, 0, 900, 580, GeneralPaintStrategy.LIGHT_BROWN,GeneralPaintStrategy.DARK_BROWN);
 		
 		RoundedPanel buttonPane = new RoundedPanel(null , 30 , GeneralPaintStrategy.LIGHT_BROWN);
 		buttonPane.setBounds(20,590,850,60);

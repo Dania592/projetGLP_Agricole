@@ -33,6 +33,9 @@ public class Achat extends Transaction{
 	}
 	
 	public void removeFromCart(Keys element, int quantity) {
+		if (quantity < 0) {
+			quantity = -(quantity);
+		}
 		for (int i = 0; i < quantity; i++) {
 			if (cart.get(element) != 1){
 				decrementQuantity(element);

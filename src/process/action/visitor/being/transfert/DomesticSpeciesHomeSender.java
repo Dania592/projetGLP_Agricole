@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -43,12 +42,6 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
             return structureList.get(indexOfAvalableStructure);
         }
         throw new UnableToMakeTheTransfertException(" No free "+ structureKey); 
-    }
-
-
-    @Override
-    public Void action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        throw new BeingCannotPerformSuchActionException();
     }
     
     @Override

@@ -103,7 +103,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(20);
+				TimeManager.getInstance().setTimeSpeed(1);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}

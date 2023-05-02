@@ -1,7 +1,6 @@
 package process.action.visitor.being;
 
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -18,6 +17,5 @@ public interface DomesticSpeciesVisitor<T>{
     T action(Poule poule) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException; 
     T action(Vache vache) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Chevre chevre) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
-    T action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException;
     T action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NotImplementYetException;
 }

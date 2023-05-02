@@ -7,7 +7,6 @@ public enum Animals implements Keys{
 	VACHE(100,150),
 	MOUTON(70,100),
 	CHEVRE(70,100),
-	CHIEN(50,70),
 	POULE(20,30);
 	
 	private float prixAchat;

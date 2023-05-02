@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import data.acteur.Employee;
+import data.configuration.GameConfiguration;
 import data.finance.Charge;
 import data.gestion.GestionnaireAnimaux;
 import data.gestion.GestionnaireEnclos;
@@ -35,6 +36,9 @@ import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
 import data.gestion.GestionnaireTerrains;
 import data.production.Produits;
+import data.stucture_base.Farm;
+import gui.Farm.FarmPaintStrategy;
+import gui.Farm.MainGuiTest;
 import gui.gestionnaire.UI.TabbedPaneUI;
 import gui.gestionnaire.contolleurs.AddToCart;
 import gui.gestionnaire.contolleurs.Next;
@@ -42,12 +46,16 @@ import gui.gestionnaire.contolleurs.Previous;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.keys.*;
+import process.GestionnaireFactory;
+import process.game.ElementManager;
 import process.transaction.Achat;
 import process.transaction.FinanceManager;
 import process.transaction.Transaction;
 import process.transaction.Vente;
 
 public class GeneralPaintStrategy {
+	
+	private MainGuiTest frame;
 
 	public static int MIN_SPACE_BETWEEN = 10;
 	public static int WIDTH = 1000;
@@ -73,7 +81,14 @@ public class GeneralPaintStrategy {
 	private JPanel enclosPanel = new JPanel();
 
 	private ArrayList<Color> statColors = new ArrayList<>();
-
+	
+	public GeneralPaintStrategy(MainGuiTest frame) {
+		this.frame = frame;
+	}
+	
+	public GeneralPaintStrategy() {
+	}
+		
 	public ArrayList<Color> getStatColors(){
 		initStatColors();
 		return statColors;
@@ -124,7 +139,7 @@ public class GeneralPaintStrategy {
 	}
 
 	//ok
-	public JPanel paintRoundedPanel(int x, int y, int w, int h,LayoutManager layout, int radius, Color color) {
+	public static JPanel paintRoundedPanel(int x, int y, int w, int h,LayoutManager layout, int radius, Color color) {
 		RoundedPanel roundedPanel = new RoundedPanel(layout, radius);
 		roundedPanel.setOpaque(false);
 		roundedPanel.setBackground(color);
@@ -133,7 +148,7 @@ public class GeneralPaintStrategy {
 	}
 
 	//ok
-	public JLabel printImageLabel(String price, int x, int y, int w, int h, String imagePath, Font font) {
+	public static JLabel printImageLabel(String price, int x, int y, int w, int h, String imagePath, Font font) {
 		ImageIcon icon = new ImageIcon(imagePath);
 
 		JLabel label= new JLabel() {
@@ -561,7 +576,7 @@ public class GeneralPaintStrategy {
 				break;
 			}
 			infos[1] = "src"+File.separator+"ressources"+File.separator+"Employee"+File.separator+infos[0]+".png";
-			infos[2] = String.valueOf(GestionnaireStocks.getInstance().getProduits().size());
+			infos[2] = String.valueOf(GestionnaireStocks.getInstance().getProduits().get(element));
 			break;
 		default:
 			infos[0] = "Non reconnu";
@@ -858,19 +873,13 @@ public class GeneralPaintStrategy {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//			gestionnaireRH.printEmployees();
-			//			Container panel = button.getParent().getParent();
-			//			//panel.remove(button.getParent());
-			//			panel.revalidate();
-			//			panel.repaint();			
-			//			gestionnaireRH.printRecruts();
-			gestionnaireRH.printEmployees();
+			Employee employe = gestionnaireRH.getARecruter().get(employee);
 			gestionnaireRH.recruter(employee);
-			gestionnaireRH.getARecruter().remove(employee);
-			gestionnaireRH.getEmployees().put(employee, new Employee(employee, 0, ""));
-			gestionnaireRH.printEmployees();
-			button.getParent().revalidate();
-			button.getParent().repaint();
+			Farm farm = frame.getFarm();
+			int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
+			int colonne = farm.getColonne()-1 + farm.getWidth()/2 + gestionnaireRH.getEmployees().size();
+			employe.setPosition(ligne, colonne);
+			frame.getFarm().getElementManager().add(employe);
 			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
 			frame.dispose();
 			new InfosTransaction(employee.toString() + " recruté !", frame);

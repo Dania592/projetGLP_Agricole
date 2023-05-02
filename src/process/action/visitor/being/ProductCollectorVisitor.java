@@ -1,11 +1,9 @@
 
 package process.action.visitor.being;
 
-import data.espece.ProductionManager;
 import data.espece.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -40,11 +38,6 @@ public class ProductCollectorVisitor implements DomesticSpeciesVisitor<Produit>{
     @Override
     public Produit action(Chevre chevre) throws HaveNotProducedYetException {
         return getAnimalToProduce(chevre);
-    }
-
-    @Override
-    public Produit action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        throw new BeingCannotPerformSuchActionException();
     }
 
     @Override

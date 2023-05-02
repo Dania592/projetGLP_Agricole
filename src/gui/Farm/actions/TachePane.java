@@ -19,8 +19,8 @@ public class TachePane extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Task task ;
-	private Hud hud ;
+	private Task task;
+	private Hud hud;
 	
 	public  TachePane(Task task , Hud hud ) {
 		this.task=task;
@@ -55,11 +55,15 @@ public class TachePane extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			if (task.getActivity().getLabel().equals("Planter")) {
 				// afficher le chois de la graine
-				lunchTask();
+				ActionsPane actions = (ActionsPane) TachePane.this.getParent();
+				hud.removeActionPane();
+				System.out.println("ACTIONS X : " + actions.getX());
+				hud.addChoixGraine(actions.getX(), actions.getY());
+				//lunchTask();
 			} else {
 				lunchTask();	
+				hud.removeActionPane();
 			}
-			hud.removeActionPane();
 		}
 
 		@Override

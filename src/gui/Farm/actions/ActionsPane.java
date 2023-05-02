@@ -31,6 +31,13 @@ public class ActionsPane extends RoundedPanel {
 		
 	}
 	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}	
 	
 	public void init() {
 		// soit faire un scrol ou voir comment adapter selon le nombre de taches 

@@ -1,14 +1,11 @@
 package process.action.visitor.being;
 
 import java.io.Serializable;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import data.espece.Produceur;
-import data.espece.ProductionManager;
 import data.espece.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -72,12 +69,6 @@ public class ProduceVisitor implements DomesticSpeciesVisitor<Produits>, Seriali
                 throw new ProblemOccursInProductionException(animal);
         }
         
-    }
-
-
-    @Override
-    public Produits action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        throw new BeingCannotPerformSuchActionException(chien); 
     }
 
     @Override
