@@ -332,7 +332,7 @@ public class Hud implements Serializable {
 	
 	public void addChoixGraine(int x, int y, TachePane tachePane) {
 		if(!Arrays.asList(component.getComponents()).contains(graines)) {
-			graines = new ChoixGraine(x,y,250,250,tachePane, this);
+			graines = new ChoixGraine(x,y,250,300,tachePane, this);
 			component.add(graines);		
 		}
 		else {
