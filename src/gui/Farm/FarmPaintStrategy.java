@@ -20,18 +20,18 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import data.configuration.GameConfiguration;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
 import data.notion.Mortel.EtatSante;
+import data.notion.basic.Element;
+import data.notion.basic.Farm;
+import data.notion.basic.Position;
 import data.structure.Enclos;
-import data.stucture_base.Element;
-import data.stucture_base.Farm;
-import data.stucture_base.Position;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
-import process.action.TaskManager;
 import process.action.task.Task;
+import process.action.task.coordinator.TaskManager;
 
 
 /**

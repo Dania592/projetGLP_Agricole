@@ -1,6 +1,6 @@
 package process.action.visitor.being.exception;
 
-import data.espece.Produceur;
+import data.espece.characteristic.Produceur;
 
 public class ProblemOccursInProductionException extends Exception {
     public ProblemOccursInProductionException(Produceur produceur){

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.finance.Charge;
-import process.transaction.Achat;
-import process.transaction.Vente;
+import process.gestion.transaction.Achat;
+import process.gestion.transaction.Vente;
 
 public class GestionnaireFinancier implements GestionnaireInterface, Serializable{
 

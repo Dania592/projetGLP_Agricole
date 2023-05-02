@@ -1,6 +1,6 @@
 package data.gestion;
 
-import process.visitor.GestionVisitor;
+import process.gestion.visitor.GestionVisitor;
 
 public interface Stockage {
 

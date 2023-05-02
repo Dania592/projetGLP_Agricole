@@ -3,9 +3,9 @@ package process.action.visitor.place.transfert;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.Slaughtable;
+import data.espece.characteristic.Slaughtable;
 import data.espece.faune.AnimalProducteur;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -25,9 +25,8 @@ import data.structure.Structure;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
@@ -47,7 +46,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException {
         return action(terrain, activity);
     }
@@ -110,13 +109,13 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(BergerieChevre bergerieChevre)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return sendToSlaugtherHouse(bergerieChevre,bergerieChevre.getInHabitant().iterator());
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return sendToSlaugtherHouse(bergerieMouton,bergerieMouton.getInHabitant().iterator());
     }
 
@@ -145,13 +144,13 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(enclos);
     }
 
@@ -168,7 +167,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(salleDeTraite);
     }
@@ -180,20 +179,20 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }

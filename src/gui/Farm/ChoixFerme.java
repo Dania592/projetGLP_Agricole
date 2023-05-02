@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import data.configuration.GameConfiguration;
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import process.game.GameBuilder;
 import process.game.Jeu;
 import process.game.SaveFarm;

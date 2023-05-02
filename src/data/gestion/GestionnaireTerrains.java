@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import gui.gestionnaire.keys.Graine;
 
 public class GestionnaireTerrains implements GestionnaireInterface, Serializable{

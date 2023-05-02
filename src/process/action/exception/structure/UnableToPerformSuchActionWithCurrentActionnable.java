@@ -1,6 +1,6 @@
 package process.action.exception.structure;
 
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
 

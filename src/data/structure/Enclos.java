@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
-import data.espece.FoodConsumer.HungerLevel;
-import data.espece.Produceur.ProductifState;
-import data.espece.WaterConsumer.HydrationLevel;
+import data.espece.characteristic.Healable;
+import data.espece.characteristic.MilkProduceur;
+import data.espece.characteristic.FoodConsumer.HungerLevel;
+import data.espece.characteristic.Produceur.ProductifState;
+import data.espece.characteristic.WaterConsumer.HydrationLevel;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
-import data.espece.faune.Healable;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -24,6 +24,8 @@ import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.notion.basic.Element;
+import data.notion.basic.Position;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
@@ -34,20 +36,17 @@ import data.structure.hability.Hydratable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
 import data.structure.hability.list.EnclosStorageStructure;
-import data.stucture_base.Element;
-import data.stucture_base.Position;
 import data.time.Clock;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 import process.evolution.FullLevel;
-import process.visitor.GestionVisitor;
+import process.gestion.visitor.GestionVisitor;
 
 public class Enclos extends Element implements Fixable, Feedable, ProductifPlace, Distributor<AnimalProducteur>, Hydratable, SpecialActionPerformer, HealablePlace{
 	private int capacite ;
@@ -233,7 +232,7 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
 	}
 
@@ -369,7 +368,7 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);

@@ -34,7 +34,6 @@ public enum Activity  implements Serializable{
     TO_REST(1, "Repos", Type.CARE, ActionnableKey.MAISON, 1),
     // ------------------------------------------------------------------- //
     
-    
     // ---------------------- ENCLOS ---------------------- //
     FIX_ENCLOSURE(2, "Réparer", Type.FIX, ActionnableKey.ENCLOS, 1),
     SEND_BACK_HOME_ANIMALS(3, "Rentrer les animaux", Type.GO_BACK_HOME, ActionnableKey.ENCLOS, 1),

@@ -3,7 +3,7 @@ package data.finance;
 import java.io.Serializable;
 
 import process.game.Game;
-import process.transaction.FinanceManager;
+import process.gestion.transaction.FinanceManager;
 
 public abstract class Penalites implements Serializable{
 

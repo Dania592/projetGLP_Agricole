@@ -5,17 +5,16 @@ import java.util.ArrayList;
 
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.production.Produit;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 
@@ -86,7 +85,7 @@ public class Entrepot extends Structure{
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);

@@ -8,7 +8,7 @@ import data.finance.Banque;
 import gui.gestionnaire.InfosTransaction;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.keys.Keys;
-import process.transaction.Transaction;
+import process.gestion.transaction.Transaction;
 
 public class QuantityListener implements ChangeListener{
 

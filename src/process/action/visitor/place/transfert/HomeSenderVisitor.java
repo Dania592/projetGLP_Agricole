@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.locks.Condition;
 
-import data.espece.Transportable;
+import data.espece.characteristic.MilkProduceur;
+import data.espece.characteristic.Transportable;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.Abatoire;
@@ -26,15 +26,14 @@ import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Distributor;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.transfert.DomesticSpeciesHomeSender;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.task.coordinator.ConditionTester;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.place.ConditionTester;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
+import process.action.visitor.being.transfert.DomesticSpeciesHomeSender;
 import process.action.visitor.place.PlaceVisitor;
 import process.game.ElementManager;
 
@@ -54,7 +53,7 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
                 }
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-                    | UnableToMakeTheTransfertException| NotImplementYetException e) {
+                    | UnableToMakeTheTransfertException e) {
             }
         }
         distributor.removeAll(tranportableToRemove);
@@ -63,7 +62,7 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException {
         return action(terrain, activity);
     }
@@ -107,20 +106,20 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(terrain); 
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         Iterator<Chevre> chevreIter = bergerieChevre.getInHabitant().iterator();
         return sendHome(bergerieChevre, chevreIter);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         Iterator<Mouton> moutonIter = bergerieMouton.getInHabitant().iterator();
         return sendHome(bergerieMouton, moutonIter);
     }
@@ -149,13 +148,13 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(enclos);
     }
 
@@ -172,7 +171,7 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(salleDeTraite);
     }
@@ -184,20 +183,20 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }

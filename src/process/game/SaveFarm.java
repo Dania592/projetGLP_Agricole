@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import gui.Farm.choix.Choix;
 
 public class SaveFarm {

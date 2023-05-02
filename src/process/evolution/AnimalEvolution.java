@@ -6,16 +6,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.configuration.GameConfiguration;
-import data.espece.ProductionManager;
-import data.espece.evolution.EvolutionAnimal;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
 import data.myExceptions.MortException;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.notion.evolution.EvolutionAnimal;
 import data.structure.Enclos;
 import data.time.Clock;
 import process.game.ElementManager;
+import process.production.ProductionManager;
 
 public class AnimalEvolution implements Serializable{
 	/**

@@ -13,15 +13,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 
-import data.espece.FoodConsumer.HungerLevel;
+import data.espece.characteristic.FoodConsumer.HungerLevel;
 import data.espece.faune.AnimalProducteur;
 import data.map.Case;
 import data.myExceptions.FullCapaciteException;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.notion.basic.Element;
+import data.notion.basic.Farm;
 import data.structure.Enclos;
-import data.stucture_base.Element;
-import data.stucture_base.Farm;
 import data.time.Clock;
 import gui.Farm.Board;
 import gui.gestionnaire.RoundedPanel;

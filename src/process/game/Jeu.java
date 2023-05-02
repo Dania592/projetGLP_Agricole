@@ -16,13 +16,13 @@ import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.notification.Message;
 import data.notification.Messagerie;
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import data.time.Clock;
 import gui.Farm.MainGuiTest;
 import gui.gestionnaire.GameOver;
-import process.action.TaskManager;
+import process.action.task.coordinator.TaskManager;
+import process.gestion.transaction.FinanceManager;
 import process.time.TimeManager;
-import process.transaction.FinanceManager;
 
 public class Jeu implements Runnable{
 

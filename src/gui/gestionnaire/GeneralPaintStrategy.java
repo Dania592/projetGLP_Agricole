@@ -35,8 +35,8 @@ import data.gestion.GestionnaireRH;
 import data.gestion.GestionnaireStocks;
 import data.gestion.GestionnaireStructures;
 import data.gestion.GestionnaireTerrains;
+import data.notion.basic.Farm;
 import data.production.Produits;
-import data.stucture_base.Farm;
 import gui.Farm.FarmPaintStrategy;
 import gui.Farm.MainGuiTest;
 import gui.gestionnaire.UI.TabbedPaneUI;
@@ -46,12 +46,10 @@ import gui.gestionnaire.contolleurs.Previous;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.keys.*;
-import process.GestionnaireFactory;
-import process.game.ElementManager;
-import process.transaction.Achat;
-import process.transaction.FinanceManager;
-import process.transaction.Transaction;
-import process.transaction.Vente;
+import process.gestion.transaction.Achat;
+import process.gestion.transaction.FinanceManager;
+import process.gestion.transaction.Transaction;
+import process.gestion.transaction.Vente;
 
 public class GeneralPaintStrategy {
 	

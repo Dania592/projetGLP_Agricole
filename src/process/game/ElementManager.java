@@ -7,13 +7,13 @@ import java.util.Iterator;
 import javax.crypto.AEADBadTagException;
 
 import data.configuration.GameConfiguration;
-import data.espece.ProductionManager;
-import data.espece.Transportable;
+import data.espece.characteristic.Transportable;
 import data.map.Case;
+import data.notion.basic.Element;
 import data.structure.Enclos;
 import data.structure.hability.Fixable.FixableState;
 import data.structure.hability.ProductifPlace;
-import data.stucture_base.Element;
+import process.production.ProductionManager;
 
 /**
  * reponsable de la gestion des composants de la map et de la coordination des mouvement 

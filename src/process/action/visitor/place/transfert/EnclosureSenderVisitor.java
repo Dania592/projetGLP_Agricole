@@ -3,13 +3,13 @@ package process.action.visitor.place.transfert;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.characteristic.MilkProduceur;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireEnclos;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -27,13 +27,12 @@ import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Distributor;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
@@ -83,12 +82,11 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
     
 @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
-            UnableToGenerateNewTaskException {
+            throws UnableToPerformSuchActionWithCurrentActionnable,
+            UnableToGenerateNewTaskException, ProblemOccursInProductionException {
         return action(terrain, activity);
     }
 
-    //TO DO trouver moyen de rassemnbler les type s!!
     private Void sendToEnclosure(SalleDeTraite salleDeTraite, Iterator<MilkProduceur> iterator) throws UnableToMakeTheTransfertException{
         ArrayList<MilkProduceur> tranportableToRemove = new ArrayList<>(); 
         MilkProduceur currentMilkProduceur;
@@ -157,21 +155,15 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
 
 
     @Override
-    public Void action(Terrain terrain)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException("Pas pour les terrains");
-    }
-
-    @Override
     public Void action(BergerieChevre bergerieChevre)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         Iterator<Chevre> chevreIter = bergerieChevre.getInHabitant().iterator();
         return sendToEnclosure(bergerieChevre, chevreIter);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         Iterator<Mouton> moutonIter = bergerieMouton.getInHabitant().iterator();
         return sendToEnclosure(bergerieMouton, moutonIter);
     }
@@ -200,13 +192,13 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
         return action(enclos);
     }
 
@@ -223,7 +215,7 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(salleDeTraite);
     }
@@ -235,20 +227,20 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, ProblemOccursInProductionException {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }
@@ -266,6 +258,12 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(grange);
+    }
+
+    @Override
+    public Void action(Terrain terrain)
+            throws UnableToPerformSuchActionWithCurrentActionnable, ProblemOccursInProductionException {
+        throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
     }
 
     

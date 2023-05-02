@@ -6,12 +6,11 @@ import java.util.HashMap;
 
 import java.util.NoSuchElementException;
 
-
 import data.configuration.GameConfiguration;
 import data.map.Case;
 import data.map.Map;
+import data.notion.basic.Element;
 import data.structure.Enclos;
-import data.stucture_base.Element;
 
 
 

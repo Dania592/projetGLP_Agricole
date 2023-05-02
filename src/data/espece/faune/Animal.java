@@ -1,18 +1,18 @@
 package data.espece.faune;
 
 
-import data.espece.EtreVivant;
-import data.espece.FoodConsumer;
-import data.espece.WaterConsumer;
-import data.espece.evolution.EvolutionAnimal;
+import data.espece.characteristic.EtreVivant;
+import data.espece.characteristic.FoodConsumer;
+import data.espece.characteristic.WaterConsumer;
 import data.gestion.Stockage;
 import data.myExceptions.MortException;
+import data.notion.evolution.EvolutionAnimal;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.GestionnaireKey;
 import process.evolution.Direction;
-import process.transaction.Buyable;
-import process.visitor.GestionVisitor;
+import process.gestion.transaction.Buyable;
+import process.gestion.visitor.GestionVisitor;
 
 /**
  * class abstraite regroupant le conmportement de tout les animaux 

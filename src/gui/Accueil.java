@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import data.configuration.GameConfiguration;
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import gui.gestionnaire.GeneralPaintStrategy;
 import process.game.GameBuilder;
 import process.game.Jeu;

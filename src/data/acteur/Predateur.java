@@ -2,9 +2,9 @@ package data.acteur;
 
 import java.util.ArrayList;
 
-import data.espece.EtreVivant;
+import data.espece.characteristic.EtreVivant;
 import data.map.Map;
-import data.stucture_base.Element;
+import data.notion.basic.Element;
 
 
 public class Predateur extends Element{

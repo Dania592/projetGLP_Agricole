@@ -12,7 +12,7 @@ import gui.gestionnaire.keys.PaintKeys;
 import process.game.Game;
 import process.game.GameBuilder;
 import process.game.MapManager;
-import process.transaction.Achat;
+import process.gestion.transaction.Achat;
 
 public class NewStockGUI extends JFrame{
 	

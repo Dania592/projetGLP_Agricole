@@ -3,8 +3,8 @@ package process.action.visitor.place.transfert;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.Transportable;
-import data.flore.terrains.Terrain;
+import data.espece.characteristic.Transportable;
+import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.Abatoire;
@@ -21,16 +21,15 @@ import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Distributor;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.task.coordinator.ConditionTester;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
-import process.action.visitor.place.ConditionTester;
-import process.action.visitor.place.PlaceVisitor;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.being.transfert.DomesticSpeciesSendToProductifPlace;
+import process.action.visitor.place.PlaceVisitor;
 
 public class ProductifPlaceSender implements PlaceVisitor<Void>{
     DomesticSpeciesSendToProductifPlace productifPlaceSender = new DomesticSpeciesSendToProductifPlace();
@@ -47,7 +46,6 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
-            } catch (NotImplementYetException e) {
             }
         }
         distributor.removeAll(tranportableToRemove);
@@ -89,8 +87,7 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
     }
 
     @Override
-    public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable,
-            NotImplementYetException, HaveNotProducedYetException {
+    public Void action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         throw new UnableToPerformSuchActionWithCurrentActionnable(salleDeTraite);
     }
 
@@ -101,21 +98,21 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
-        throw new NotImplementYetException();
+            throws UnableToPerformSuchActionWithCurrentActionnable{
+        throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
     }
 
 
     @Override
     public Void action(BergerieChevre bergerieChevre)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable{
         return sendToProductifPlace(bergerieChevre, bergerieChevre.getInHabitant().iterator());
     }
 
 
     @Override
     public Void action(BergerieMouton bergerieMouton)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return sendToProductifPlace(bergerieMouton, bergerieMouton.getInHabitant().iterator());
         
     }
@@ -138,7 +135,7 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException {
         return action(terrain, activity);
     }
@@ -152,13 +149,13 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
         return action(enclos);
     }
 
@@ -175,7 +172,7 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException, HaveNotProducedYetException {
         return action(salleDeTraite);
     }
@@ -187,20 +184,20 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }

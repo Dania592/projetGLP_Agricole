@@ -5,13 +5,17 @@ import java.util.ArrayList;
 
 import data.gestion.Stockage;
 import data.map.Map;
+import data.notion.basic.Element;
 import data.structure.hability.Fixable;
-import data.stucture_base.Element;
 import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Structures;
-import process.transaction.Buyable;
-import process.visitor.GestionVisitor;
+import process.gestion.transaction.Buyable;
+import process.gestion.visitor.GestionVisitor;
 
+
+/**
+ * Les structures sont des {@link Actionnable} qui permmettent de lancer des {@link Task}
+ */
 public  abstract class Structure extends Element implements Buyable,Stockage, Fixable, Serializable{
 	private boolean usedForAnAction = false;
 	private static final long serialVersionUID = 1L;

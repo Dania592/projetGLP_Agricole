@@ -1,9 +1,9 @@
 package data.structure.hability;
 
-import java.util.ArrayList;
-
-import data.espece.Slaughtable;
-
+/**
+ * Une SlaughterHouseSender est un {@link Actionnable} qui peut envoyer des {@link Slaughtable} 
+ * à l'{@link Abatoire}
+ */
 public interface SlaughterHouseSender extends AbleToActOnInHabitant{
     boolean isReadyToSendToSlaughterHouse();
     void removeAll();

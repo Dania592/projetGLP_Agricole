@@ -14,15 +14,15 @@ import data.configuration.GameConfiguration;
 import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.notion.basic.Element;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
-import data.stucture_base.Element;
-import data.stucture_base.Farm;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Structures;
-import process.action.TaskManager;
 import process.action.task.Task;
+import process.action.task.coordinator.TaskManager;
 import process.time.TimeManager;
 
 public class MainGuiTest  extends JFrame implements Runnable{

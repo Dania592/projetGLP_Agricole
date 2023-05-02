@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import data.acteur.ModeDefense;
 import data.acteur.Predateur;
-import data.stucture_base.Element;
+import data.notion.basic.Element;
 
 
 

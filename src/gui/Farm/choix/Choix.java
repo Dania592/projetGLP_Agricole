@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.espece.faune.Animal;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
+import data.notion.basic.Element;
+import data.notion.basic.Farm;
 import data.structure.Enclos;
 import data.structure.Structure;
-import data.stucture_base.Element;
-import data.stucture_base.Farm;
 import gui.Farm.Board;
 /**
  * Class qui regroupe tous les éléments pouvant être placé dans la map 

@@ -6,15 +6,13 @@ import data.configuration.GameConfiguration;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class Grange extends Structure{
@@ -22,12 +20,12 @@ public class Grange extends Structure{
 
 	public Grange( String reference) {
 		super( reference);
-		setImage(GameConfiguration.IMAGE_PATH + Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Grange.png");
+		setImage(GameConfiguration.IMAGE_PATH + data.notion.basic.Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Grange.png");
 
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, BeingCannotPerformSuchActionException, NotImplementYetException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, BeingCannotPerformSuchActionException {
 		return visitor.action(this);
 	}
 
@@ -44,7 +42,7 @@ public class Grange extends Structure{
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 			return visitor.action(this, activity);

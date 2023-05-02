@@ -7,7 +7,7 @@ import gui.gestionnaire.keys.Employees;
  * Classe de donnée des employés à recruter pour l'automatisation des actions 
  *
  */
-public class Employee extends Personne  {
+public class Employee extends Personne {
 /**
  * Constante necéssaire pour hérité de Serialisable
  */

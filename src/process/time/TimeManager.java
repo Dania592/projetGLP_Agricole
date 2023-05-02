@@ -2,7 +2,7 @@ package process.time;
 import data.configuration.GameConfiguration;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import data.time.Clock;
-import process.transaction.FinanceManager;
+import process.gestion.transaction.FinanceManager;
 public class TimeManager extends Thread{
     private Clock clock = Clock.getInstance();
     private int dayCounter;

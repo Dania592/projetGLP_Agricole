@@ -2,9 +2,9 @@ package data.materiel;
 
 import data.gestion.Stockage;
 import data.map.Map;
-import data.stucture_base.Element;
+import data.notion.basic.Element;
 import gui.gestionnaire.keys.Outils;
-import process.visitor.GestionVisitor;
+import process.gestion.visitor.GestionVisitor;
 
 public class Outil extends Element implements Stockage{
 	

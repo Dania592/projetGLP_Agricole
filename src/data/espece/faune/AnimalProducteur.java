@@ -2,8 +2,9 @@ package data.espece.faune;
 
 
 
-import data.espece.Produceur;
-import data.espece.Slaughtable;
+import data.espece.characteristic.Healable;
+import data.espece.characteristic.Produceur;
+import data.espece.characteristic.Slaughtable;
 import data.production.Produit;
 import data.production.Produits;
 import data.structure.Structure;

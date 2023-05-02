@@ -6,25 +6,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
-import data.espece.Slaughtable;
+import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Poule;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.HealablePlace;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SlaughterHouseSender;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distributor<Poule>, SlaughterHouseSender, HealablePlace{
@@ -44,7 +43,7 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
 	}
 
@@ -101,7 +100,7 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 			return visitor.action(this, activity);

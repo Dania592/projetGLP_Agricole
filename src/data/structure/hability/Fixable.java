@@ -1,5 +1,10 @@
 package data.structure.hability;
 
+
+
+/**
+ * Un Fixable est un {@link Actionnable} qui peut être Réparer.
+ */
 public interface Fixable extends Actionnable{
     
     public enum FixableState {

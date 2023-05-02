@@ -8,7 +8,7 @@ import data.espece.faune.Chevre;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
@@ -16,12 +16,12 @@ import data.structure.Etable;
 import data.structure.Poulallier;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 
 public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
 
@@ -43,7 +43,7 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
         }
         throw new UnableToMakeTheTransfertException(" No free "+ structureKey); 
     }
-    
+
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
         BergerieMouton freeBergerieMouton;
@@ -81,7 +81,7 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
     @Override
     public Void action(Terrain terrain) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
-            UnableToMakeTheTransfertException, NotImplementYetException {
+            UnableToMakeTheTransfertException {
         throw new BeingCannotPerformSuchActionException();
     }
   

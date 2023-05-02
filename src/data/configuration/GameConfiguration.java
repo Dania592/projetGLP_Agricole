@@ -2,8 +2,8 @@ package data.configuration;
 
 import java.io.File;
 
-import data.espece.Produceur;
-import data.stucture_base.Farm;
+import data.espece.characteristic.Produceur;
+import data.notion.basic.Farm;
 
 /**
  * Class regroupant toute les constante fonctionnels du programme 

@@ -4,10 +4,9 @@ package data.espece.faune;
 import java.io.File;
 import java.util.ArrayList;
 
-import data.espece.Milieu;
-import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.evolution.EvolutionAnimal;
 import data.planning.Activity;
 import data.production.Lait;
 import data.production.Meat;
@@ -18,14 +17,13 @@ import data.structure.Poulallier;
 import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 

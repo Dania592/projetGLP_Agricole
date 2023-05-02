@@ -1,6 +1,6 @@
 package test;
 
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import process.game.GameBuilder;
 import process.game.Jeu;
 import process.time.TimeManager;

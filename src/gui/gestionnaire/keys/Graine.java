@@ -1,10 +1,10 @@
 package gui.gestionnaire.keys;
 
-import data.espece.Produceur.Type;
+import data.espece.characteristic.Produceur.Type;
 import data.production.Produits;
-import process.transaction.Buyable;
-import process.visitor.GestionVisitor;
-import process.visitor.KeyVisitor;
+import process.gestion.transaction.Buyable;
+import process.gestion.visitor.GestionVisitor;
+import process.gestion.visitor.KeyVisitor;
 
 public enum Graine implements Buyable, Keys{
 	

@@ -1,6 +1,6 @@
 package gui.gestionnaire.keys;
 
-import process.visitor.KeyVisitor;
+import process.gestion.visitor.KeyVisitor;
 
 public enum Encloss implements Keys{
 

@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
+import data.notion.basic.Element;
 import data.structure.Refuge;
 import data.structure.Structure;
-import data.stucture_base.Element;
 import process.game.ElementManager;
 
 public class MouseHandler implements MouseListener,Serializable{

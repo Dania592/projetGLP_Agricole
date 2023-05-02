@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Serializable;
 
+import data.notion.basic.Element;
 import process.game.ElementManager;
-import data.stucture_base.Element;
 
 public class KeyControls implements KeyListener,Serializable {
 

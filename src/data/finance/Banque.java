@@ -3,7 +3,7 @@ package data.finance;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import process.transaction.Transaction;
+import process.gestion.transaction.Transaction;
 
 public class Banque implements Serializable{
 

@@ -3,25 +3,24 @@ package process.action.visitor.being.transfert;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.Produceur.ProductifState;
+import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.faune.Chevre;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import data.structure.SalleDeTraite;
 import data.structure.Structure;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 
 public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisitor<Void>{
-
 
     private Structure getProductifPlace(Structures structures) throws UnableToMakeTheTransfertException{
         ArrayList<Structure> potencielStructure =  GestionnaireStructures.getInstance().getStructures().get(structures);
@@ -37,7 +36,7 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
 
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
-            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, NotImplementYetException {
+            NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException {
         throw new BeingCannotPerformSuchActionException(mouton);
     }
 
@@ -73,7 +72,7 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
     @Override
     public Void action(Terrain terrain) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
-            UnableToMakeTheTransfertException, NotImplementYetException {
+            UnableToMakeTheTransfertException {
         throw new BeingCannotPerformSuchActionException();
     }
     

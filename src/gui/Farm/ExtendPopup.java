@@ -18,7 +18,7 @@ import javax.swing.event.ChangeListener;
 
 import data.configuration.GameConfiguration;
 import data.finance.Banque;
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.InfosTransaction;
 import gui.gestionnaire.RoundedPanel;

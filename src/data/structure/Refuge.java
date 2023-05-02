@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import data.map.Map;
 
+
+
 public abstract class Refuge<T> extends Structure {
-	// public abstract class Refuge<T> extends Structureimplements Healable {
 	private ArrayList<T> inHabitant;
 	private int currentNumberOfInhabitant;
 

@@ -8,23 +8,22 @@ import data.configuration.GameConfiguration;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Fixable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
-import process.transaction.Buyable;
+import process.gestion.transaction.Buyable;
 
 public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     private Seau seau = Seau.SEAU_BOIS;
@@ -33,7 +32,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     
     public Puit(String reference  ) {
 		super( reference );
-		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Puit.png");	
+		setImage(GameConfiguration.IMAGE_PATH+ Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
     public Seau getSeau() {
@@ -82,7 +81,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
 
     @Override
     public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable,
-            HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException,
+            HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException {
         return visitor.action(this);
@@ -96,7 +95,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     @Override
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-            BeingCannotPerformSuchActionException, NotImplementYetException,
+            BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         return visitor.action(this, activity);

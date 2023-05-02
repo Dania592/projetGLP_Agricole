@@ -4,8 +4,8 @@ package data.acteur;
 import java.io.Serializable;
 
 import data.notion.Mortel.EtatSante;
+import data.notion.basic.Element;
 import data.planning.WeeklyPlanner;
-import data.stucture_base.Element;
 
 /**
  * class abstraite regroupant le traitement de tous les acteurs du jeu 

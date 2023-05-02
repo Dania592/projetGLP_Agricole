@@ -3,19 +3,17 @@ package process.action.visitor.place;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.espece.Slaughtable;
-import data.espece.Produceur.ProductifState;
+import data.espece.characteristic.MilkProduceur;
+import data.espece.characteristic.Slaughtable;
+import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.faune.Animal;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
-import data.flore.terrains.EvolutionTerrain;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireAnimaux;
-import data.gestion.GestionnaireEnclos;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
-import data.production.Produit;
 import data.production.Produits;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
@@ -30,14 +28,15 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import gui.gestionnaire.keys.Graine;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
-import process.time.TimeManager;
-import process.action.exception.NotImplementYetException;
-import process.action.exception.being.BeingCannotPerformSuchActionException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
+import process.production.ProductionPerformer;
+
+
 public class SpecialActionVisitor implements PlaceVisitor<Void> {
     ProductionPerformer productionPerformer = new ProductionPerformer();
     
@@ -67,9 +66,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                     currentMouton.getProductionCycle().reset();
                 } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                         | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-                        | UnableToMakeTheTransfertException | NotImplementYetException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                        | UnableToMakeTheTransfertException e) {
                 }
 
             }
@@ -84,8 +81,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         Slaughtable currentSlaughtable;
         while(slaughtableIter.hasNext()){
             currentSlaughtable = slaughtableIter.next();
-            System.out.println(currentSlaughtable);
-            System.out.println("On kill lui :"+currentSlaughtable);
             GestionnaireStocks.getInstance().add(Produits.MEAT, 1);
             GestionnaireAnimaux.getInstance().remove((Animal)currentSlaughtable);
         }
@@ -112,8 +107,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                     milkProduceur.getProductionCycle().reset();
                 } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                         | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
-                        | UnableToMakeTheTransfertException | NotImplementYetException e) {
-                    // TODO Auto-generated catch block
+                        | UnableToMakeTheTransfertException e) {
                     e.printStackTrace();
                 }
             }
@@ -128,7 +122,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, ProblemOccursInProductionException {
+    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, ProblemOccursInProductionException {
         switch(terrain.getEvolution()){
             case VIERGE : 
                 terrain.setEvolution(EvolutionTerrain.LABOURE);
@@ -145,14 +139,13 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,
-            NotImplementYetException, UnableToMakeTheTransfertException {
+    public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         throw new UnableToPerformSuchActionWithCurrentActionnable();
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton) throws UnableToPerformSuchActionWithCurrentActionnable,
-            NotImplementYetException, UnableToMakeTheTransfertException {
+     UnableToMakeTheTransfertException {
         throw new UnableToPerformSuchActionWithCurrentActionnable();
     }
 
@@ -188,13 +181,13 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(enclos);
     }
 
@@ -211,7 +204,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(salleDeTraite);
     }
@@ -223,20 +216,20 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, ProblemOccursInProductionException {
+            throws UnableToPerformSuchActionWithCurrentActionnable,ProblemOccursInProductionException {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }
@@ -258,7 +251,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException, ProblemOccursInProductionException {
             switch(terrain.getEvolution()){
                 case LABOURE : 

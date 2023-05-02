@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.characteristic.MilkProduceur;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;

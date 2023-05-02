@@ -6,32 +6,35 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
-import data.espece.Produceur.ProductifState;
+import data.espece.characteristic.MilkProduceur;
+import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
-import data.espece.faune.MilkProduceur;
 import data.espece.faune.Vache;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.SlaughterHouseSender;
 import data.structure.hability.SpecialActionPerformer;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.task.launcher.basic.SpecialTask;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class SalleDeTraite extends StructureAction implements Distributor<MilkProduceur>, SpecialActionPerformer{
+/**
+ * Une salle de traite permet de collecter le {@link Lait} des {@link MilkProduceur}
+ */
+public class SalleDeTraite extends StructureAction implements Distributor<MilkProduceur>{
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Vache> vaches = new ArrayList<>();
 	private ArrayList<Chevre> chevres = new ArrayList<>();
@@ -60,7 +63,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
+	public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
 		return visitor.action(this);
 	}
 
@@ -147,7 +150,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);
@@ -160,7 +163,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine)
-			throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+			throws UnableToPerformSuchActionWithCurrentActionnable,
 			UnableToGenerateNewTaskException {
 		throw new UnsupportedOperationException("Seulement pour les terrains ");
 	}

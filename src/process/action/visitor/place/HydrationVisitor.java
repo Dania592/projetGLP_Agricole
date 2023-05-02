@@ -1,8 +1,8 @@
 package process.action.visitor.place;
 
-import data.espece.Produceur.ProductifState;
-import data.espece.WaterConsumer.HydrationLevel;
-import data.flore.terrains.Terrain;
+import data.espece.characteristic.Produceur.ProductifState;
+import data.espece.characteristic.WaterConsumer.HydrationLevel;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -22,12 +22,11 @@ import data.structure.SalleDeTraite;
 import data.structure.hability.Actionnable.ActionnableKey;
 import data.structure.hability.Hydratable;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.evolution.FullLevel;
 
-public class HydrationVisitor implements PlaceVisitor<Void>{
 
+public class HydrationVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(etable);
@@ -60,13 +59,9 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
         return needToBeHydrated;
     }
 
-
-    
-
-
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException {
         return action(terrain, activity);
     }
@@ -132,13 +127,13 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(enclos);
     }
 
@@ -155,7 +150,7 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+            throws UnableToPerformSuchActionWithCurrentActionnable{
         return action(salleDeTraite);
     }
 
@@ -166,19 +161,19 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+            throws UnableToPerformSuchActionWithCurrentActionnable{
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException{
+            throws UnableToPerformSuchActionWithCurrentActionnable{
         return action(bergerieMouton);
     }
 

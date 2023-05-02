@@ -3,9 +3,9 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 
-import data.espece.Slaughtable;
+import data.espece.characteristic.Healable;
+import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Chevre;
-import data.espece.faune.Healable;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -13,14 +13,14 @@ import data.structure.hability.Distributor;
 import data.structure.hability.HealablePlace;
 import data.structure.hability.SlaughterHouseSender;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
+
 
 public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevre>, SlaughterHouseSender, HealablePlace{
     private boolean isUsedForATask = false;
@@ -45,7 +45,7 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
 
     @Override
     public <T> T launchAction(PlaceVisitor<T> visitor) throws UnableToPerformSuchActionWithCurrentActionnable,
-            HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToMakeTheTransfertException {
+            HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
         return visitor.action(this);
     }
     @Override
@@ -95,7 +95,7 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     @Override
     public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-            BeingCannotPerformSuchActionException, NotImplementYetException,
+            BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
             UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
         return visitor.action(this, activity);

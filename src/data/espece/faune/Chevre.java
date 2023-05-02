@@ -2,7 +2,8 @@ package data.espece.faune;
 
 import java.io.File;
 
-import data.espece.evolution.EvolutionAnimal;
+import data.espece.characteristic.MilkProduceur;
+import data.notion.evolution.EvolutionAnimal;
 import data.production.Lait;
 import data.production.Meat;
 import data.structure.Etable;
@@ -13,7 +14,7 @@ import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 
 /**
  * class de donnée pour la chèvre

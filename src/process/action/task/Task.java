@@ -1,18 +1,19 @@
 package process.action.task;
 
-import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Actionnable;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskCompleteException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
-
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
+/**
+ * L'ensemble des {@link Activity} est lançable depuis des {@link Actionnable}. 
+ * Les {@link Task} permettent de représenter les {@link Activity} de les lancer/exécuter depuis de {@link TaskManager}  
+ */
 public abstract class Task<T extends Actionnable> {
 
     public enum TaskState {
@@ -64,36 +65,13 @@ public abstract class Task<T extends Actionnable> {
     private Activity activity; 
     private long totalTime;
     private long timeSpend = 0;
-    private Personne personne;
-    private boolean isAutomated;
-
-    public Task(Activity activity, T actionnableTarget, Personne personne, boolean isAutomated) throws UnableToGenerateNewTaskException{
-        this.actionnableTarget = actionnableTarget;
-        totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
-        this.activity = activity;
-        this.personne = personne;
-        this.isAutomated = isAutomated;
-    }
-
-
 
     public Task(Activity activity, T actionnableTarget) throws UnableToGenerateNewTaskException{
         this.actionnableTarget = actionnableTarget;
         totalTime = getTotalTimeInMilisFromTimeGivenInMinutes(activity.getDuration());
         this.activity = activity;
-        this.personne = personne;
-        this.isAutomated = isAutomated;
     }
 
-    public Task(Activity activity, T actionnableTarget, Personne personne) throws UnableToGenerateNewTaskException{
-        this(activity, actionnableTarget, personne, false);
-    }
-
-
-
-    public Personne getPersonne() {
-        return personne;
-    }
 
     public synchronized Activity getActivity() {
         return activity;
@@ -107,7 +85,7 @@ public abstract class Task<T extends Actionnable> {
         return actionnableTarget;
     }
 
-    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NotImplementYetException, UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
+    protected abstract void performAction() throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToPerformSuchActionWithCurrentActionnable, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     protected abstract void performSpecialActionToInitTask();
     protected abstract void performSpecialActionToTerminateTask();
 
@@ -116,26 +94,22 @@ public abstract class Task<T extends Actionnable> {
         if(state == TaskState.WAITING_TO_BE_LANCHED){
             getActionnableTarget().setStructureStatus(true);
             performSpecialActionToInitTask();
-            // personne.setFree(false);
         }
         if(updateTaskStatus()){
             state = state.update();
         }if(state == TaskState.DONE){
             try {
-                System.out.println("PERFORM_ACTION : "+ activity.getLabel());
                 performAction();
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException 
-        | NotImplementYetException| UnableToPerformSuchActionWithCurrentActionnable | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException temp) {
+        | UnableToPerformSuchActionWithCurrentActionnable | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException temp) {
                 temp.printStackTrace();
             } catch (UnableToMakeTheTransfertException e) {
                 e.printStackTrace();
             } catch (UnableToGenerateNewTaskException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             getActionnableTarget().setStructureStatus(false);
             performSpecialActionToTerminateTask();
-            // personne.setFree(!isAutomated);
             throw new TaskCompleteException(this);
         }
     }
@@ -145,21 +119,13 @@ public abstract class Task<T extends Actionnable> {
         return timeSpend >= (totalTime*(state.getStage()/(TaskState.getLastState())));
     }
 
-    //TODO use quand on voudra lancer les actions automatisées
-    private long getTotalTimeInMilisFromTimeGivenInHours(int timeGivenInHours){
-        return timeGivenInHours*3600000;
-    }
 
-    //TODO 
     private long getTotalTimeInMilisFromTimeGivenInMinutes(int timeGivenInMinutes){
         return timeGivenInMinutes*60*1000;
     }
 
     @Override
     public String toString() {
-        // return "Task label : "+activity.getLabel()+ "[Hour to start=" + ", state=" + state + ", actionnableTarget="
-        //         + actionnableTarget.getActionnableKey()
-        //         + ", totalTime=" + totalTime + "]= currently :"+ activity.getNumberOfHourIfPlanned()+"Heure";
         return activity.getLabel()+ "total : "+ activity.getDuration(); 
     }
 

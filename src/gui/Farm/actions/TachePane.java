@@ -20,16 +20,15 @@ import data.planning.Activity;
 import data.structure.hability.Actionnable;
 import gui.Farm.Hud;
 import gui.gestionnaire.keys.Graine;
-import process.action.TaskManager;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskNotNeededToBePerform;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.task.Task;
+import process.action.task.coordinator.TaskManager;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.time.TimeManager;
 
 /**
@@ -93,7 +92,7 @@ public class TachePane extends JPanel{
 	public void lunchTask() {
 		try {
 			TaskManager.getInstance().addNewTask(activity, actionnable);
-		} catch (UnableToGenerateNewTaskException | NotImplementYetException | TaskNotNeededToBePerform
+		} catch (UnableToGenerateNewTaskException | TaskNotNeededToBePerform
 				| UnknownActivityException | AskingToWorkAtIllegalHourException
 				| UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
 				| BeingCannotPerformSuchActionException | NeedToBeSendToSpecialProductionPlaceException
@@ -105,7 +104,7 @@ public class TachePane extends JPanel{
 	public void lunchTask(Graine graine){
 		try {
 			TaskManager.getInstance().addNewTask(activity, actionnable, graine);
-		} catch (UnableToGenerateNewTaskException | NotImplementYetException | TaskNotNeededToBePerform
+		} catch (UnableToGenerateNewTaskException | TaskNotNeededToBePerform
 				| UnknownActivityException | AskingToWorkAtIllegalHourException
 				| UnableToPerformSuchActionWithCurrentActionnable | HaveNotProducedYetException
 				| BeingCannotPerformSuchActionException | NeedToBeSendToSpecialProductionPlaceException
@@ -125,9 +124,7 @@ public class TachePane extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (activity == Activity.PLANT) {
-				//TODO afficher le choix de la graine
-				//TODO IIIIIIIIIICIIIIIIIII à supprimer mettre le retour du xhoix de l'utilisateur
-					ActionsPane actions = (ActionsPane) TachePane.this.getParent();
+				ActionsPane actions = (ActionsPane) TachePane.this.getParent();
 					hud.removeActionPane();
 					System.out.println("ACTIONS X : " + actions.getX());
 					hud.addChoixGraine(actions.getX(), actions.getY(),TachePane.this);

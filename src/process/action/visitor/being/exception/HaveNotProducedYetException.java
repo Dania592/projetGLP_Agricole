@@ -1,7 +1,7 @@
 package process.action.visitor.being.exception;
 
-import data.espece.Produceur;
-import data.flore.terrains.Terrain;
+import data.espece.characteristic.Produceur;
+import data.espece.flore.terrains.Terrain;
 import data.structure.hability.ProductifPlace;
 
 public class HaveNotProducedYetException extends Exception {

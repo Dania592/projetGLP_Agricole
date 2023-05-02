@@ -1,12 +1,11 @@
 package process.game;
 
 
-import data.espece.Milieu;
 import data.espece.faune.Animal;
 import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
+import data.espece.flore.terrains.Terrain;
 import data.finance.Banque;
-import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.materiel.Engin;
@@ -16,8 +15,8 @@ import data.structure.Structure;
 import gui.gestionnaire.keys.Engins;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Outils;
-import process.transaction.Achat;
-import process.transaction.Vente;
+import process.gestion.transaction.Achat;
+import process.gestion.transaction.Vente;
 
 public class Game {
 	private RessourcesManager ressourcesManager = RessourcesManager.getInstance();

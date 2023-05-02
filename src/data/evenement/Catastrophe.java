@@ -3,7 +3,7 @@ package data.evenement;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import data.stucture_base.Element;
+import data.notion.basic.Element;
 
 
 public class Catastrophe implements Serializable{

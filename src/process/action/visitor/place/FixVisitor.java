@@ -1,9 +1,9 @@
 package process.action.visitor.place;
 
-import data.flore.terrains.EvolutionTerrain;
-import data.flore.terrains.Terrain;
+import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.Mortel.EtatSante;
+import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
@@ -20,9 +20,8 @@ import data.structure.SalleDeTraite;
 import data.structure.hability.Fixable;
 import data.structure.hability.Fixable.FixableState;
 import gui.gestionnaire.keys.Graine;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 
 public class FixVisitor implements PlaceVisitor<Void> {
 
@@ -77,14 +76,14 @@ public class FixVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable,
-            NotImplementYetException, UnableToMakeTheTransfertException {
+    public Void action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable, 
+        UnableToMakeTheTransfertException {
         return fixStructure(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton) throws UnableToPerformSuchActionWithCurrentActionnable,
-            NotImplementYetException, UnableToMakeTheTransfertException {
+        UnableToMakeTheTransfertException {
         return fixStructure(bergerieMouton);
     }
 
@@ -106,7 +105,7 @@ public class FixVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToGenerateNewTaskException {
         return action(terrain);
     }
@@ -119,13 +118,13 @@ public class FixVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Poulallier poulallier, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException {
         return action(poulallier);
     }
 
     @Override
     public Void action(Enclos enclos, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, UnableToMakeTheTransfertException{
         return action(enclos);
     }
 
@@ -142,7 +141,7 @@ public class FixVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(SalleDeTraite salleDeTraite, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(salleDeTraite);
     }
@@ -154,20 +153,20 @@ public class FixVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable{
         return action(terrain);
     }
 
     @Override
     public Void action(BergerieChevre bergerieChevre, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
             return action(bergerieChevre);
     }
 
     @Override
     public Void action(BergerieMouton bergerieMouton, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+            throws UnableToPerformSuchActionWithCurrentActionnable,
             UnableToMakeTheTransfertException {
         return action(bergerieMouton);
     }

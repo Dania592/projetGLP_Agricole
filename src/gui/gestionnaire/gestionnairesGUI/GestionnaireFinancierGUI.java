@@ -11,8 +11,8 @@ import data.gestion.GestionnaireFinancier;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.PaintKeys;
-import process.transaction.Achat;
-import process.transaction.Vente;
+import process.gestion.transaction.Achat;
+import process.gestion.transaction.Vente;
 
 public class GestionnaireFinancierGUI extends JFrame{
 

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import data.stucture_base.Farm;
+import data.notion.basic.Farm;
 import process.game.GameBuilder;
 import process.game.Jeu;
 import process.time.TimeManager;

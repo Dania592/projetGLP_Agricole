@@ -3,7 +3,7 @@ package data.structure;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.espece.Slaughtable;
+import data.espece.characteristic.Slaughtable;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
@@ -14,16 +14,20 @@ import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
-public class Abatoire extends StructureAction implements Distributor<Slaughtable>, SpecialActionPerformer{
+
+/**
+ * L'Abatoire est une {@link SpecialActionPerformer} permettant de tuer un {@link Slaughtable} pour en récupérer
+ * de la {@link data.production.Meat}
+ */
+public class Abatoire extends StructureAction implements Distributor<Slaughtable>{
 	private ArrayList<Slaughtable> animaltoSlaughter = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private HashMap<Produits, Integer> production = new HashMap<>();
@@ -95,7 +99,7 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 		return visitor.action(this, activity);
@@ -108,7 +112,7 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine)
-			throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
+			throws UnableToPerformSuchActionWithCurrentActionnable,
 			UnableToGenerateNewTaskException {
 		throw new UnsupportedOperationException("uniquement pour les terrains");
 	}

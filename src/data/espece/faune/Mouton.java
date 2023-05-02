@@ -3,10 +3,9 @@ package data.espece.faune;
 import java.io.File;
 import java.util.ArrayList;
 
-import data.espece.Milieu;
-import data.espece.evolution.EvolutionAnimal;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.evolution.EvolutionAnimal;
 import data.planning.Activity;
 import data.production.Laine;
 import data.production.Lait;
@@ -17,15 +16,16 @@ import data.structure.Etable;
 import data.structure.Refuge;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.DomesticSpeciesVisitor;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
+
+
 
 public class Mouton extends AnimalProducteur{
 
@@ -51,7 +51,7 @@ public class Mouton extends AnimalProducteur{
 	
 
 	@Override
-	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, NotImplementYetException {
+	public <T> T launchAction(DomesticSpeciesVisitor<T> visitor) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
 		return visitor.action(this); 
 	}
 

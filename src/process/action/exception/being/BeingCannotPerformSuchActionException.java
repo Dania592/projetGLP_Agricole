@@ -1,6 +1,6 @@
 package process.action.exception.being;
 
-import data.espece.DomesticSpecie;
+import data.espece.characteristic.DomesticSpecie;
 
 public class BeingCannotPerformSuchActionException extends Exception {
     public BeingCannotPerformSuchActionException(){

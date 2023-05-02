@@ -3,24 +3,23 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 
-import data.espece.Slaughtable;
-import data.espece.faune.Healable;
+import data.espece.characteristic.Healable;
+import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Vache;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.basic.Farm;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
 import data.structure.hability.HealablePlace;
 import data.structure.hability.SlaughterHouseSender;
-import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
-import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
-import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.PlaceVisitor;
 
 public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distributor<Vache>, HealablePlace{
@@ -95,7 +94,7 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	@Override
 	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity)
 			throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException,
-			BeingCannotPerformSuchActionException, NotImplementYetException,
+			BeingCannotPerformSuchActionException,
 			NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException,
 			UnableToMakeTheTransfertException, UnableToGenerateNewTaskException {
 			return visitor.action(this, activity); 

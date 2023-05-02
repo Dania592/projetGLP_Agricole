@@ -2,8 +2,13 @@ package data.production;
 
 import gui.gestionnaire.keys.GestionnaireKey;
 import gui.gestionnaire.keys.Keys;
-import process.visitor.KeyVisitor;
+import process.gestion.visitor.KeyVisitor;
 
+
+
+/**
+ * L'ensemble des produits générés par les {@link data.espece.characteristic.Produceur}
+ */
 public enum Produits implements Keys{
 	LAIT, LAINE, OEUF,
 	RADISH, RED_CABBAGE, TOMATO,
