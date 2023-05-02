@@ -67,18 +67,12 @@ public class ImagesTerrains {
 		images3.put(EvolutionTerrain.PLANTE_5, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"h5.png");
 		images3.put(EvolutionTerrain.POURRI, GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"toDELETE.png");
 
-		images.put(Graine.TOMATO_SEED, images0);
-		images.put(Graine.BROCCOLI_SEED, images1);
-		images.put(Graine.BOK_CHOY_SEED, images3);
-		images.put(Graine.CACTUS_SEED, images2);
-		images.put(Graine.AMARANTH_SEED, images2);
-		images.put(Graine.CARROT_SEED, images2);
-		images.put(Graine.CABBAGE_SEED, images2);
-		images.put(Graine.BRUSSEL_SPROUTS_SEED, images2);
-		images.put(Graine.BLUEBERRY_SEED, images2);
-		images.put(Graine.BEET_SEED, images2);
-		images.put(Graine.ARTICHOKE_SEED, images2);
-		
+		images.put(Graine.GRAINE_TOMATE, images0);
+		images.put(Graine.GRAINE_CACTUS, images2);
+		images.put(Graine.GRAINE_CARROTTE, images2);
+		images.put(Graine.GRAINE_CHOUX_ROUGE, images2);
+		images.put(Graine.GRAINE_MYRTILLE, images2);
+
 	}
 	
 }

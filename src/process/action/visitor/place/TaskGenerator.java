@@ -403,7 +403,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
     @Override
     public Task<?> action(Terrain terrain, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable,
             NotImplementYetException, UnableToGenerateNewTaskException {
-        return action(terrain, activity, Graine.AMARANTH_SEED);
+        return action(terrain, activity, Graine.GRAINE_AIL);
     }
     
 

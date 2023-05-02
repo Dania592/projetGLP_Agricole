@@ -122,14 +122,12 @@ public class GameBuilder {
 		stock.getGestionnaireAnimaux().add(poule2);
 
 		// sera remplacer par une instance de terrain 
-		Terrain terrainInitial = new Terrain("t0",false, Graine.TOMATO_SEED);
-		Terrain terrainInitial2 = new Terrain("t1",false, Graine.BROCCOLI_SEED);
+		Terrain terrainInitial = new Terrain("t0",false, Graine.GRAINE_TOMATE);
 		
 		stock.getGestionnaireTerrains().add(terrainInitial);
-		stock.getGestionnaireTerrains().add(terrainInitial2);
 
 		//Terrain terrain3 = new Terrain("t3",false, 0, 0,map, Graine.AMARANTH_SEED);
-		Terrain terrain4 = new Terrain("t4",false, Graine.CACTUS_SEED);
+		Terrain terrain4 = new Terrain("t4",false, Graine.GRAINE_CACTUS);
 
 		
 		//stock.getGestionnaireTerrains().add(terrain3);

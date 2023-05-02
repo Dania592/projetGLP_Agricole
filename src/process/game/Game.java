@@ -58,36 +58,18 @@ public class Game {
 		Animal vache4 = new Vache(0, null, null, null, "v2");
 		Animal vache5 = new Vache(0, null, null, null, "v2");
 		Animal vache6 = new Vache(0, null, null, null, "v2");
-		Animal vache7 = new Vache(0, null, null, null, "v2");
-		Animal vache8 = new Vache(0, null, null, null, "v2");
-		Animal vache9 = new Vache(0, null, null, null, "v2");
 		Animal mouton = new Mouton(0, null, null, null, "m11");
 		Animal mouton0 = new Mouton(0, null, null, null, "m11");
 		Animal mouton1 = new Mouton(0, null, null, null, "m11");
 		Animal mouton2 = new Mouton(0, null, null, null, "m11");
 		Animal mouton3 = new Mouton(0, null, null, null, "m11");
 		Animal mouton4 = new Mouton(0, null, null, null, "m11");
-		Terrain plante1 = new Terrain("p15", false, Graine.TOMATO_SEED);
-		Terrain plante2 = new Terrain("p15", false, Graine.AMARANTH_SEED);
-		Terrain plante3 = new Terrain("p15", false, Graine.ARTICHOKE_SEED);
-		Terrain plante4 = new Terrain("p15", false, Graine.BEET_SEED);
-		Terrain plante5 = new Terrain("p15", false, Graine.BLUEBERRY_SEED);
-		Terrain plante6 = new Terrain("p15", false, Graine.BOK_CHOY_SEED);
-		Terrain plante7 = new Terrain("p15", false, Graine.BROCCOLI_SEED);
-		Terrain plante8 = new Terrain("p15", false, Graine.BRUSSEL_SPROUTS_SEED);
-		Terrain plante9 = new Terrain("p15", false, Graine.CABBAGE_SEED);
-		Terrain plante10 = new Terrain("p15", false, Graine.CACTUS_SEED);
-		Terrain plante11 = new Terrain("p15", false, Graine.CARROT_SEED);
+		Terrain plante1 = new Terrain("p15", false, Graine.GRAINE_TOMATE);
+		Terrain plante5 = new Terrain("p15", false, Graine.GRAINE_MYRTILLE);
+		Terrain plante9 = new Terrain("p15", false, Graine.GRAINE_CHOUX_ROUGE);
+		Terrain plante10 = new Terrain("p15", false, Graine.GRAINE_CACTUS);
+		Terrain plante11 = new Terrain("p15", false, Graine.GRAINE_CARROTTE);
 
-		//TODO changer la structure de traitement des plantes et arbres (classes de données)
-		//Culture arbre = new Pommier(0, 0, Milieu.PLAINE, "pm1", map);
-		Structure maison = new Maison("ld");
-		Structure maison2 = new Maison("bn");
-		Structure maison3 = new Maison("bn");
-		Structure maison4 = new Maison("bn");
-		Structure maison5 = new Maison("bn");
-		Structure maison6 = new Maison("bn");
-		Structure maison7 = new Maison("bn");
 		
 		achat.addToCart(vache.getKey());
 		achat.addToCart(vache1.getKey());
@@ -105,13 +87,7 @@ public class Game {
 		//achat.addToCart(vache3.getKey());
 	
 		achat.addToCart(plante1.getKey()); 
-		achat.addToCart(plante2.getKey());
-		achat.addToCart(plante3.getKey());
-		achat.addToCart(plante4.getKey());
 		achat.addToCart(plante5.getKey());
-		achat.addToCart(plante6.getKey());
-		achat.addToCart(plante7.getKey());
-		achat.addToCart(plante8.getKey());
 		
 		achat.addToCart(plante9.getKey());
 		achat.addToCart(plante10.getKey());
@@ -130,12 +106,8 @@ public class Game {
 		System.out.println("Animaux " + ressourcesManager.getGestionnaireAnimaux().getAnimaux().size());
 		
 		
-		vente.addToCart(plante4.getKey());
+
 		vente.addToCart(plante5.getKey());
-		vente.addToCart(plante6.getKey());
-		vente.addToCart(plante7.getKey());
-		vente.addToCart(plante8.getKey());
-		
 		vente.addToCart(plante9.getKey());
 		vente.addToCart(plante10.getKey());
 		vente.addToCart(plante11.getKey());

@@ -263,7 +263,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
             switch(terrain.getEvolution()){
                 case LABOURE : 
                     if(graine == null){
-                        graine = Graine.AMARANTH_SEED;
+                        graine = Graine.GRAINE_AIL;
                     }
                     terrain.setType(graine);
                     terrain.setEvolution(EvolutionTerrain.PLANTE);

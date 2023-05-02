@@ -209,8 +209,6 @@ public class GeneralPaintStrategy {
 		return button;
 	}
 
-
-
 	public void fillContainers(PaintKeys key, int x, int y, int w, int h, int cardWidth, int cardHeight, int rowCount, int columnCount, CardLayout cardLayout, int radius, Color cardColor,int gap, Transaction achat, MarketGUI market ) {
 		if (key.equals(PaintKeys.EMPLOY)){
 			JLayeredPane recruterCards = paintCardsContainer(x, y, w, h, cardWidth, cardHeight, rowCount, columnCount, 
@@ -625,7 +623,7 @@ public class GeneralPaintStrategy {
 		case "STRUCTURES":
 			Structures structure = (Structures)element;
 			infos[0] = getName(structure);
-			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+infos[0]+".png";	
+			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+structure.name()+".png";	
 			infos[2] = String.valueOf(structure.getPrixAchat());
 			break;
 		case "ANIMALS":
