@@ -170,5 +170,24 @@ public class Farm implements Serializable {
 			}
 		}
 	}
+	
+	public void etendre(int width, int height) {		
+		for (int ligneIndex = ligne; ligneIndex < this.height + ligne; ligneIndex++) {
+			for (int colonneIndex = colonne; colonneIndex < this.width + colonne; colonneIndex++) {
+				if (isOnborderFarm(ligneIndex, colonneIndex)) {
+					elementManager.getMapManager().getMap().getCase(ligneIndex, colonneIndex).setLibre(true);
+				}
+			}
+		}
+		this.height = height;
+		this.width = width;
+		for (int ligneIndex = ligne; ligneIndex < height + ligne; ligneIndex++) {
+			for (int colonneIndex = colonne; colonneIndex < width + colonne; colonneIndex++) {
+				if (isOnborderFarm(ligneIndex, colonneIndex)) {
+					elementManager.getMapManager().getMap().getCase(ligneIndex, colonneIndex).setLibre(false);
+				}
+			}
+		}
+	}
 
 }

@@ -47,6 +47,8 @@ public class BillArticlePanel extends RoundedPanel{
 		quantitySpinner = paintSpinner(MAN_FONT);
 		if (type.equals(PaintKeys.SELL)) {
 			quantitySpinner.setModel(new SpinnerNumberModel(0, 0, (int) Integer.valueOf(GeneralPaintStrategy.getInformation(key, key.getGestionnaireKey())[2]), 1));
+		} else {
+			quantitySpinner.setModel(new SpinnerNumberModel(0,0,100,1));
 		}
 		quantitySpinner.addChangeListener(new QuantityListener(quantitySpinner, key, market));   
 		//quantitySpinner.setValue(quantitySpinner.getNextValue());

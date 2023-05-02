@@ -40,7 +40,7 @@ public abstract class GameConfiguration {
 	public final static int GAME_SPEED = 100;
 	
 	public final static int TIME_SPEED = GAME_SPEED ;
-	
+
 	/**
 	 * abscisse de la map par rapport à l'écran 
 	 */

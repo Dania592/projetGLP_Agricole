@@ -69,10 +69,10 @@ public class ExtendPopup extends JFrame {
 		heightSpinner.addChangeListener(new Extend(heightSpinner));
 		settingPanel.add(heightSpinner);
 
-		height = generalPaintStrategy.printImageLabel("", 10, 5, 30, 40, GameConfiguration.IMAGE_PATH+"height.png",null);
+		height = GeneralPaintStrategy.printImageLabel("", 10, 5, 30, 40, GameConfiguration.IMAGE_PATH+"height.png",null);
 		settingPanel.add(height);
 
-		width = generalPaintStrategy.printImageLabel("", 120, 5, 40, 30, GameConfiguration.IMAGE_PATH+"width.png",null);
+		width = GeneralPaintStrategy.printImageLabel("", 120, 5, 40, 30, GameConfiguration.IMAGE_PATH+"width.png",null);
 		settingPanel.add(width);
 
 		RoundedPanel panel = new RoundedPanel(null,500,GeneralPaintStrategy.DARK_BROWN);
@@ -80,7 +80,7 @@ public class ExtendPopup extends JFrame {
 		panel.setBounds(145, 10, 160, 150);
 		getContentPane().add(panel);
 
-		personnageLabel = generalPaintStrategy.printImageLabel("", 40, 20, 100, 130, GameConfiguration.IMAGE_PATH+"Employee"+File.separator+"Jean.png",null);
+		personnageLabel = GeneralPaintStrategy.printImageLabel("", 40, 20, 100, 130, GameConfiguration.IMAGE_PATH+"Employee"+File.separator+"Jean.png",null);
 		personnageLabel.setHorizontalAlignment(SwingConstants.LEADING);
 		panel.add(personnageLabel);
 
@@ -94,7 +94,7 @@ public class ExtendPopup extends JFrame {
 		valider.addActionListener(new Action());
 		getContentPane().add(valider);
 
-		costLabel = generalPaintStrategy.printImageLabel("0", 95, 190, 260, 55, GameConfiguration.IMAGE_PATH+"solde.png",font);
+		costLabel = GeneralPaintStrategy.printImageLabel("0", 95, 190, 260, 55, GameConfiguration.IMAGE_PATH+"solde.png",font);
 		getContentPane().add(costLabel);
 
 		setBackground(GeneralPaintStrategy.LIGHT_BROWN);
@@ -115,15 +115,18 @@ public class ExtendPopup extends JFrame {
 
 	public String extendFarm() {
 		String title = null;
-		if (widthExtension>=0 && ((farm.getWidth()+widthExtension)<=GameConfiguration.NB_COLONNE)){
-			farm.setWidht(farm.getWidth() + widthExtension);
-		} else {
-			title = "Extension en largeur depasse la limite!";
-		}
-		if (heightExtension>=0 && ((farm.getHeight()+heightExtension)<=GameConfiguration.NB_LIGNE)) {
-			farm.setHeight(farm.getHeight() + heightExtension);
-		} else {
-			title = "Extension en longueur depasse la limite!";
+		if (widthExtension>=0 && ((farm.getWidth()+widthExtension)<=GameConfiguration.NB_COLONNE) || 
+				heightExtension>=0 && ((farm.getHeight()+heightExtension)<=GameConfiguration.NB_LIGNE)) {
+			int width = farm.getWidth() + widthExtension;
+			int height = farm.getHeight() + heightExtension;
+			if (width > GameConfiguration.NB_COLONNE) {
+				title = "Extension en largeur a atteint la limite !";
+				width = farm.getWidth();
+			} else if (height > GameConfiguration.NB_LIGNE) {
+				title = "Extension en longueur a atteint la limite !";
+				height = farm.getHeight();
+			}
+			farm.etendre(width, height);
 		}
 		Banque.getInstance().debiter(Float.valueOf(costLabel.getText()));
 		return title;
@@ -183,8 +186,4 @@ public class ExtendPopup extends JFrame {
 		}
 
 	}
-
-	//	public static void main(String[] args) {
-	//		new ExtendPopup(null,null);
-	//	}
 }

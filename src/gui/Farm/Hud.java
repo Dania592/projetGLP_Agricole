@@ -17,18 +17,23 @@ import javax.swing.SwingUtilities;
 
 import data.configuration.GameConfiguration;
 import data.finance.Banque;
+import data.gestion.GestionnaireStocks;
 import data.notification.Messagerie;
 import data.planning.Activity;
+import data.production.Produits;
 import data.structure.hability.Actionnable;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
+import gui.Farm.actions.TachePane;
 import gui.Farm.choix.ChoixPanel;
 import gui.Farm.farmer.FermierGui;
 import gui.Farm.messagerie.AlertPane;
 import gui.Farm.messagerie.MessageriePanel;
+import gui.gestionnaire.ChoixGraine;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
+import gui.statistique.TestStat;
 import gui.statistique.Statistiques;
 import process.action.task.Task;
 import process.game.Game;
@@ -50,17 +55,21 @@ public class Hud implements Serializable {
 	private JLabel farmer; 
 	private JLabel save;
 	private JLabel soldeBg;
+	private JLabel timeBg;
+	private JLabel waterBg;
 	private JLabel music ;
 	private static JLabel message;
 	private static JLabel statistique;
 	private static ChoixPanel choixScroll;
 	private ActionsPane actions;
+	private ChoixGraine graines;
 	private static MessageriePanel messagerie; 
 	private static AlertPane alert = new AlertPane();
 	
 		
 	private JLabel solde = new JLabel();
 	private JLabel time = new JLabel();
+	private JLabel water = new JLabel();
 
 
 	public  Hud(Board component) {
@@ -86,6 +95,8 @@ public class Hud implements Serializable {
 			component.add(message , JLayeredPane.DRAG_LAYER);
 			component.add(statistique, JLayeredPane.DRAG_LAYER);
 			component.add(soldeBg, JLayeredPane.DRAG_LAYER);
+			component.add(timeBg, JLayeredPane.DRAG_LAYER);
+			component.add(waterBg, JLayeredPane.DRAG_LAYER);
 		}
 		else {
 			add_ADD();
@@ -101,6 +112,8 @@ public class Hud implements Serializable {
 			addExtend();
 
 			save();
+			
+			water();
 		}
 		time();
 		solde();
@@ -209,26 +222,47 @@ public class Hud implements Serializable {
 		farmer.addMouseListener(new MouseHud());
 		component.add(farmer , JLayeredPane.DRAG_LAYER);
 
-		soldeBg = new GeneralPaintStrategy().printImageLabel("", 20 + GameConfiguration.WIDHT_LABEL , 25, 3*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 27, GameConfiguration.IMAGE_PATH+"soldeHud.png",null);
-		component.add(soldeBg);
-
 	}
 
 	public void solde() {
+		soldeBg = GeneralPaintStrategy.printImageLabel("", 485 , 10, 3*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 27, GameConfiguration.IMAGE_PATH+"soldeHud.png",null);
+		component.add(soldeBg);
+		
 		if(!Arrays.asList(component.getComponents()).contains(solde)) {
-			solde.setBounds(10 + 2*GameConfiguration.WIDHT_LABEL , 25, 2*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 30);
+			solde.setBounds(550 , 10, 2*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 30);
 			solde.setFont(new Font(Font.SANS_SERIF,  Font.BOLD , 14));
 			solde.setHorizontalTextPosition(SwingConstants.CENTER);
 			component.add(solde, JLayeredPane.DRAG_LAYER);		
 		}
 		solde.setText(String.valueOf(Banque.getInstance().getCompte().getSolde()));
 	}
+	
+	public void water() {
+		waterBg = GeneralPaintStrategy.printImageLabel("", (GameConfiguration.WINDOW_WIDTH + 150)/2 , 10, 3*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 27, GameConfiguration.IMAGE_PATH+"waterHud.png",null);
+		component.add(waterBg);
+		
+		if(!Arrays.asList(component.getComponents()).contains(water)) {
+			water.setBounds((GameConfiguration.WINDOW_WIDTH + 320)/2 , 10, 2*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 30);
+			water.setFont(new Font(Font.SANS_SERIF,  Font.BOLD , 14));
+			water.setHorizontalTextPosition(SwingConstants.CENTER);
+			component.add(water, JLayeredPane.DRAG_LAYER);		
+		}
+		String value = String.valueOf(GestionnaireStocks.getInstance().getProduits().get(Produits.WATER));
+		if (value == "null") {
+			value = "0";
+		}
+		water.setText(value);
+	}
 
 	public void time() {
+		
+		timeBg = GeneralPaintStrategy.printImageLabel("", (GameConfiguration.WINDOW_WIDTH-210)/2 , 10, 3*GameConfiguration.WIDHT_LABEL,  GameConfiguration.HEIGHT_LABEL - 27, GameConfiguration.IMAGE_PATH+"timeHud.png",null);
+		component.add(timeBg);
+
 		if(!Arrays.asList(component.getComponents()).contains(time)) {
-			time.setBounds((GameConfiguration.WINDOW_WIDTH-120)/2, 10, 120, 20);
+			time.setBounds((GameConfiguration.WINDOW_WIDTH-120)/2, 15, 120, 20);
 			time.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
-			component.add(time);			
+			component.add(time,JLayeredPane.DRAG_LAYER);			
 		}
 		Clock clock = component.getFarm().getClock();
 		CyclicCounter hour = clock.getHour();
@@ -282,7 +316,22 @@ public class Hud implements Serializable {
 			component.remove(actions);			
 		}
 	}
+	
+	public void addChoixGraine(int x, int y, TachePane tachePane) {
+		if(!Arrays.asList(component.getComponents()).contains(graines)) {
+			graines = new ChoixGraine(x,y,250,250,tachePane, this);
+			component.add(graines);		
+		}
+		else {
+			component.remove(graines);
+		}
+	}
 
+	public void removeChoixGraine() {
+		if(Arrays.asList(component.getComponents()).contains(graines)) {
+			component.remove(graines);			
+		}
+	}
 
 	private class MouseHud implements MouseListener{
 
@@ -295,7 +344,7 @@ public class Hud implements Serializable {
 					addStat();
 				}
 			}else if(e.getSource().equals(home)) {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+				MainGuiTest frame = (MainGuiTest) SwingUtilities.getWindowAncestor(Hud.component);
 				removeChoix();
 				new Home(frame);
 				frame.dispose();
@@ -318,11 +367,11 @@ public class Hud implements Serializable {
 				new FermierGui(frame , component.getFarm().getFermier());
 				
 			} else if(e.getSource().equals(statistique)) {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.component);
 				frame.setVisible(false);
 				new Statistiques(frame);
 			} else {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.component);
 
 				new ExtendPopup(frame, component.getFarm());
 			}

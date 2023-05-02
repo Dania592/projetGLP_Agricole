@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import data.espece.Produceur.ProductifState;
 import data.espece.faune.Chevre;
-import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
 import data.espece.faune.Poule;
 import data.espece.faune.Vache;
@@ -22,11 +21,6 @@ import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPla
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 
 public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisitor<Void>{
-
-    @Override
-    public Void action(Chien chien) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException {
-        throw new BeingCannotPerformSuchActionException(chien);
-    }
 
 
     private Structure getProductifPlace(Structures structures) throws UnableToMakeTheTransfertException{

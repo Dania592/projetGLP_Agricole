@@ -17,6 +17,7 @@ import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
 import gui.Farm.choix.Choix;
+import gui.gestionnaire.gestionnairesGUI.UIGraph;
 import process.action.TaskManager;
 import process.evolution.FullLevel;
 import process.game.MapManager;
@@ -33,19 +34,36 @@ public class Board extends JLayeredPane implements Serializable{
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
+	
+	private UIGraph ui;
 	private MainGuiTest frame ;
+
+	public int gameState = 0;
+	public final int playState = 0;
+	public final int optionState = 1;
+	public final int pauseState = 2;
+	public final int gameOverState = 3;
 
 	
 	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest frame) {
 		this.farm = farm;
 		this.frame = frame ;
+		ui = new UIGraph(this);
 		this.selected=selected;
 		this.taskManager = taskManager ;
-		keys = new KeyControls(farm.getManager() , selected); 
+		keys = new KeyControls(farm.getManager() , selected, this); 
 		new MouseHandler(farm.getManager(), this);
 		choix = new Choix(farm, this);
 		choix.init();
 		init();
+	}
+	
+	public int getGameState() {
+		return gameState;
+	}
+	
+	public void setGameState(int gameState) {
+		this.gameState = gameState;
 	}
 	
 	public void setFarm(Farm farm) {
@@ -135,15 +153,22 @@ public class Board extends JLayeredPane implements Serializable{
 			}
 			
 		}
+		
 		hud.time();
 		hud.solde();
+		hud.water();
+		ui.draw(g);
+		if (gameState == pauseState) {
+			
+		}
+		
 		paintStrategy.paintProgressBar(g, taskManager);
 				
-
 		if(!farm.getJourMode()) {
 			hud.remove_panels();
 			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 		}
+		
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

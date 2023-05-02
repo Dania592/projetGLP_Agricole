@@ -42,6 +42,8 @@ public class TachePane extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private Task task;
 	/**
 	 * la tâche à afficher 
 	 */
@@ -50,6 +52,7 @@ public class TachePane extends JPanel{
 	 * le hud du jeu 
 	 */
 	private Hud hud ;
+
 	
 	private Actionnable actionnable;
 	/**
@@ -98,7 +101,7 @@ public class TachePane extends JPanel{
 			Messagerie.getInstance().addMessage(new Message("Impossible d'initer la tâche", TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
 		}
 	}
-
+	
 	public void lunchTask(Graine graine){
 		try {
 			TaskManager.getInstance().addNewTask(activity, actionnable, graine);
@@ -124,12 +127,14 @@ public class TachePane extends JPanel{
 			if (activity == Activity.PLANT) {
 				//TODO afficher le choix de la graine
 				//TODO IIIIIIIIIICIIIIIIIII à supprimer mettre le retour du xhoix de l'utilisateur
-				Graine defaultGraine = Graine.BEET_SEED; 
-				lunchTask(defaultGraine);
+					ActionsPane actions = (ActionsPane) TachePane.this.getParent();
+					hud.removeActionPane();
+					System.out.println("ACTIONS X : " + actions.getX());
+					hud.addChoixGraine(actions.getX(), actions.getY(),TachePane.this);
 			} else {
 				lunchTask();	
+				hud.removeActionPane();
 			}
-			hud.removeActionPane();
 		}
 
 		@Override

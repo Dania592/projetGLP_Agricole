@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import data.gestion.GestionnaireRH;
+import gui.Farm.MainGuiTest;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.GestionnairePaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
@@ -20,9 +21,9 @@ public class RHManagerGUI extends JFrame {
 	public static int ROW_COUNT = 1;
 	public static int COLUMN_COUNT = 4;
 	
-	public RHManagerGUI(JFrame frame, int tab) {
+	public RHManagerGUI(MainGuiTest frame, int tab) {
 		super("Gestionnaire des ressources humaines");
-		generalPaintStrategy  = new GeneralPaintStrategy();
+		generalPaintStrategy  = new GeneralPaintStrategy(frame);
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);

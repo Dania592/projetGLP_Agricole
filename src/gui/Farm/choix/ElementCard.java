@@ -52,9 +52,11 @@ public class ElementCard extends RoundedPanel{
 	 * panel principale du jeu 
 	 */
 	private Board component ; 
+
 	/**
 	 * label pour image de l'élément 
 	 */
+
 	private JLabel imageLabel;
 	/**
 	 * label pour pouvoir positioner l'élément 
@@ -68,9 +70,11 @@ public class ElementCard extends RoundedPanel{
 	 * nom de la carte 
 	 */
 	private String nameCard;
+
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -89,17 +93,20 @@ public class ElementCard extends RoundedPanel{
 		nbElementPresent = elements.size();
 		init();
 	}
+
 	
 	/**
 	 * initialisation des composants du panel 
 	 */
+
 	public void init() {
 		setSize(150, 140);
+
 		imageLabel= new JLabel(new ImageIcon(elements.get(0).getImage()));
 		imageLabel.setBounds(40, 5 , 70, 70);
 		add(imageLabel);
-		
-		
+
+
 		nbElementPane = new JTextPane();
 		nbElementPane.setText(nameCard+" : "+nbElementPresent+"/"+nbElement);
 		nbElementPane.setBackground(Color.white);
@@ -107,7 +114,7 @@ public class ElementCard extends RoundedPanel{
 		nbElementPane.setBounds(40, 80, 100, 20);
 		nbElementPane.setEditable(false);
 		add(nbElementPane);
-		
+
 		if(nbElementPresent > 0) {
 			position = new JLabel(new ImageIcon("src"+File.separator+"ressources"+File.separator+"positionMap.png"));
 			position.setBounds(50,100, 45, 45);
@@ -115,9 +122,10 @@ public class ElementCard extends RoundedPanel{
 			position.setToolTipText("Ajouter à la map");
 			add(position);			
 		}
-		
-		
+
+
 	}
+
 	/**
 	 * retourne les éléments présents sur la carte 
 	 * @return
@@ -159,13 +167,16 @@ public class ElementCard extends RoundedPanel{
 	public int getNbElement() {
 		return nbElement;
 	}
+
 	/**
 	 * retourne le nombre d'éléments présents sur la carte 
 	 * @return
 	 */
+
 	public int getNbElementPresent() {
 		return nbElementPresent;
 	}
+
 	
 	/**
 	 * 
@@ -173,6 +184,7 @@ public class ElementCard extends RoundedPanel{
 	 * 
 	 *
 	 */
+
 	private class MouseListenerLabel implements MouseListener{
 
 		@Override
@@ -181,7 +193,7 @@ public class ElementCard extends RoundedPanel{
 				int nbE = nbElementPresent ;
 				if(nbE>0) {
 					Element element = elements.get(nbE -1);
-					
+
 					if(element instanceof AnimalProducteur) {
 						//System.out.println(element.getReference());
 						AnimalProducteur animal = (AnimalProducteur)element;
@@ -206,46 +218,45 @@ public class ElementCard extends RoundedPanel{
 						}else{
 							farm.getManager().add(element);						
 						}
-						
+
 						//removeOneElement(element);	
 						component.setSelected(element);
 						//System.out.println(component.getSelected().getReference());
-						
+
 						component.getHud().removeChoix();
 						component.getHud().addValidation();
-						
+
 					}
-							
+
 				}
-							
+
 			}
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
-	
 
 	/**
 	 * ajout de d'un animal sur la map et dans un enclos qui vérifie les conditions 
@@ -254,18 +265,19 @@ public class ElementCard extends RoundedPanel{
 	 */
 	public void addAnimalToMap(AnimalProducteur animal) throws FullCapaciteException {
 		Case randomCase = randomPosition(animal);
-		  if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
-			  animal.setPosition(randomCase.getLigne(), randomCase.getColonne());
-				farm.getManager().add(animal);
-				removeOneElement(animal);	
-		  }
-	
+		if(!farm.getManager().getMapManager().getElements().containsKey(animal.getReference())){
+			animal.setPosition(randomCase.getLigne(), randomCase.getColonne());
+			farm.getManager().add(animal);
+			removeOneElement(animal);	
+		}
 	}
+
 	/**
 	 * donne une position random pour un élément en vérifiant la liberté de la position
 	 * @param element l'element à placer 
 	 * @return : la case pour générer la position de l'élément 
 	 */
+
 	public Case randomPosition(Element element ) {
 		Case block = new Case(true , 0 , 0);
 		Boolean libre = false ;
@@ -273,11 +285,12 @@ public class ElementCard extends RoundedPanel{
 			int ligneAleatoire =  farm.getLigne() + (int)(Math.random() * (farm.getHeight()-elements.get(0).getPosition().getNbLigne()-1));
 			int colonneAleatoire = farm.getColonne() + (int)(Math.random() * (farm.getWidth()-elements.get(0).getPosition().getNbColonne()-1));
 			block = new Case(true, ligneAleatoire, colonneAleatoire);
-		   libre = farm.getManager().getMapManager().verificationLiberte(element, block);
+			libre = farm.getManager().getMapManager().verificationLiberte(element, block);
 		}
 		return block;
 
 	}
+
 	
 	/**
 	 * donne une position random à un animal dans un enclos en vérifiant la disponibilité et l'espace et les conditions sur la nourriture et l'eau 
@@ -298,7 +311,7 @@ public class ElementCard extends RoundedPanel{
 						int ligneAleatoire =  enclos.getPosition().getLigne_init() + (int)(Math.random() * (enclos.getDimension()-elements.get(0).getPosition().getNbLigne()-1));
 						int colonneAleatoire = enclos.getPosition().getColonne_init() + (int)(Math.random() * (enclos.getDimension()-elements.get(0).getPosition().getNbColonne()-1));
 						block = new Case(true, ligneAleatoire, colonneAleatoire);
-					   libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
+						libre = farm.getManager().getMapManager().verificationLiberte(animal, block);
 					}
 					if(enclos.getAnimals().size()==0) {
 						enclos.setLastDecrementationNourriture(animal.getNaissance());
@@ -306,15 +319,15 @@ public class ElementCard extends RoundedPanel{
 					}
 					enclos.addAnimal(animal);
 					return block;
-					
+
 				}
-				
+
 			}
 		}
-		
+
 		throw new FullCapaciteException("vous ne disposez pas de la capacité nécessaire pour avoir un animal");
-		
-	
+
+
 	}
 
 	/**
@@ -325,5 +338,5 @@ public class ElementCard extends RoundedPanel{
 			remove(position);
 		}
 	}
-	
+
 }

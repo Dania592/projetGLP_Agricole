@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import gui.Farm.MainGuiTest;
 import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireFinancierGUI;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
@@ -31,8 +32,10 @@ public class Home extends JFrame{
 	private JLabel recruter;
 	private GeneralPaintStrategy generalPaintStrategy; 
 	private Font font = new Font(Font.SANS_SERIF,  Font.BOLD, 12);
+	private MainGuiTest frame;
 	
-	public Home(JFrame frame) {
+	public Home(MainGuiTest frame) {
+		this.frame = frame;
 		Action action = new Action();
 		generalPaintStrategy  = new GeneralPaintStrategy();
 		
@@ -99,7 +102,7 @@ public class Home extends JFrame{
 			} else if (e.getSource().equals(finances)) {
 				new GestionnaireFinancierGUI(Home.this, 1);
 			} else {
-				new RHManagerGUI(Home.this, 1);
+				new RHManagerGUI(frame, 1);
 			}
 			Home.this.dispose();
 		}

@@ -55,6 +55,14 @@ public class ActionsPane extends RoundedPanel {
 		
 	}
 	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}	
+
 	/**
 	 * initilise le panel en ajoutant tout les panel des differents taches 
 	 * @see TachePane
