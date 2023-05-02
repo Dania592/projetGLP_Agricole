@@ -1,6 +1,7 @@
 package gui.Farm.messagerie;
 
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -67,7 +68,8 @@ public class MessageriePanel extends RoundedPanel {
 		else {
 			RoundedPanel liste = new RoundedPanel(null , 20 ,GeneralPaintStrategy.MEDIUM_BROWN );
 			liste.setBounds(18, 70 , 170 , 200 );
-			JLabel noMessage = new JLabel("Messagerie vide!!");
+			JLabel noMessage = new JLabel("Messagerie vide");
+			noMessage.setFont(new Font(Font.SANS_SERIF , Font.BOLD , 15));
 			noMessage.setBounds(30 , 50 ,200 , 50);
 			liste.add(noMessage);
 			add(liste);

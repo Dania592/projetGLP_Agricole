@@ -1,9 +1,11 @@
 package data.structure;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import data.configuration.GameConfiguration;
 import data.espece.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
@@ -17,6 +19,7 @@ import data.production.Produits;
 import data.structure.hability.Distributor;
 import data.structure.hability.SlaughterHouseSender;
 import data.structure.hability.SpecialActionPerformer;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
@@ -37,6 +40,8 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 
 	public SalleDeTraite( String reference) {
 		super( reference);
+		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Salle_De_Traite.png");	
+		
 	}
 
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {

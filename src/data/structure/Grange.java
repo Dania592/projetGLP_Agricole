@@ -1,8 +1,12 @@
 package data.structure;
 
+import java.io.File;
+
+import data.configuration.GameConfiguration;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -18,6 +22,8 @@ public class Grange extends Structure{
 
 	public Grange( String reference) {
 		super( reference);
+		setImage(GameConfiguration.IMAGE_PATH + Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Grange.png");
+
 	}
 
 	@Override

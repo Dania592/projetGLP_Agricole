@@ -1,20 +1,16 @@
 package gui.statistique;
 
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
 
 import data.espece.faune.Animal;
 import data.gestion.GestionnaireAnimaux;
@@ -25,7 +21,6 @@ import gui.gestionnaire.keys.Graine;
 
 public class BarPanel extends StatPanel{
 
-	private  BarRenderer barRenderer;
 	private HashMap<String, Integer> donnees = new HashMap<>();
 	private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	
@@ -69,6 +64,7 @@ public class BarPanel extends StatPanel{
 		initBar();
 	}
 	
+	@Override
 	public void reelStat() {
 		if(getTitle().equals("Animaux")) {
 			HashMap<Animals, ArrayList<Animal>> animals = GestionnaireAnimaux.getInstance().getAnimaux();

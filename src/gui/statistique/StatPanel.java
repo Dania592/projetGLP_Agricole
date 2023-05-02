@@ -60,7 +60,8 @@ public  abstract class StatPanel extends RoundedPanel{
 	}
 	
 	
-
+	public abstract void reelStat() ;
+		
 	
 
 	

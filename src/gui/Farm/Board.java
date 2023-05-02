@@ -36,6 +36,7 @@ public class Board extends JLayeredPane implements Serializable{
 	private Farm farm;
 	
 	private UIGraph ui;
+	private MainGuiTest frame ;
 
 	public int gameState = 0;
 	public final int playState = 0;
@@ -44,8 +45,9 @@ public class Board extends JLayeredPane implements Serializable{
 	public final int gameOverState = 3;
 
 	
-	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
+	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest frame) {
 		this.farm = farm;
+		this.frame = frame ;
 		ui = new UIGraph(this);
 		this.selected=selected;
 		this.taskManager = taskManager ;
@@ -80,6 +82,9 @@ public class Board extends JLayeredPane implements Serializable{
 
 	public Farm getFarm() {
 		return farm;
+	}
+	public MainGuiTest getFrame() {
+		return frame ;
 	}
 	
 	public Hud getHud() {

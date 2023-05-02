@@ -2,12 +2,15 @@ package gui.Farm;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+
+import gui.gestionnaire.GeneralPaintStrategy;
 
 public class PopupSave extends JDialog {
 
@@ -32,15 +35,17 @@ public class PopupSave extends JDialog {
 	Container content = getContentPane();
 	content.setLayout(null);
 	
-	content.setBackground(new Color(255, 231, 171));
+	content.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 	JButton okButton = new JButton("Ok");
-	okButton.setBounds(100,50 , 50 , 30);
-	//okButton.setBackground(new Color(103, 148, 76));
+	okButton.setBackground(GeneralPaintStrategy.MEDIUM_GREEN);
+	okButton.setBounds(100,60 , 50 , 30);
+
 	
 	okButton.addActionListener(new Ok());
 	content.add(okButton);
 	
-	JLabel label = new JLabel("Vous avez enregistez l'état de la ferme!!");
+	JLabel label = new JLabel("Vous avez enregisté l'état de la ferme");
+	label.setFont(new Font(Font.SANS_SERIF, Font.BOLD , 13));
 	
 	label.setBounds(10,10,300,50);
 	content.add(label);

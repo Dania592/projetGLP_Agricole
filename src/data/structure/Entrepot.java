@@ -7,6 +7,7 @@ import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.production.Produit;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -27,7 +28,7 @@ public class Entrepot extends Structure{
 		super( reference );
 		this.produits = new ArrayList<>();
 		
-		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Entrepot1.png");
+		setImage("src"+File.separator+"ressources"+File.separator+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Entrepot.png");
 		
 	}
 

@@ -1,20 +1,7 @@
 package process.game;
 
-
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.text.AttributedCharacterIterator;
-import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -31,10 +18,7 @@ import data.notification.Message;
 import data.notification.Messagerie;
 import data.stucture_base.Farm;
 import data.time.Clock;
-import gui.Farm.FarmPaintStrategy;
-import gui.Farm.Hud;
 import gui.Farm.MainGuiTest;
-import gui.Farm.Musique;
 import gui.gestionnaire.GameOver;
 import process.action.TaskManager;
 import process.time.TimeManager;
@@ -50,9 +34,11 @@ public class Jeu implements Runnable{
 	private FinanceManager financeManager = FinanceManager.getInstance();
 	private boolean gameOver = false;
 	private static Clip clip ;
+	public static boolean music ; 
 	
 	public Jeu(Farm farm,String title) {
 		financeManager.setJeu(this);
+		music= true ;
 		timeManager = TimeManager.getInstance();	
 		TimeManager.getInstance().setClock(farm.getClock());
 		TimeManager.getInstance().start();
@@ -118,7 +104,7 @@ public class Jeu implements Runnable{
 	}
 	
 	public boolean isNight() {
-		return TimeManager.getInstance().getClock().getHour().getValue()>=20 
+		return TimeManager.getInstance().getClock().getHour().getValue()>=21 
 				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
 	}
 	
@@ -129,18 +115,8 @@ public class Jeu implements Runnable{
 		}				
 	}
 	
-	// partie des catastrophes 
-	public boolean catastrophTime() {
-		return (frame.getFarm().getLastCatastroph()-Clock.getInstance().getMinute().getValue()) == GameConfiguration.FREQUENCE_CATASTROPHE;
-	}
 	
-	public void catastropheIntervention() {
-		if(catastrophTime()) {
-			Catastrophe catastrophe = new Catastrophe(i, i, gameOver, null);
-		}
-	}
-	
-	public void playMusique() {
+	public static void playMusique() {
 		  try {
 	           File file = new File("src/ressources/musique/EZ02.wav");	           
 	           AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
@@ -152,8 +128,12 @@ public class Jeu implements Runnable{
 		catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-	    
+			    
+	}
+	
+	public static void stopMusique() {
+		music = false ;
+		clip.stop();
 	}
 	
 	

@@ -11,19 +11,15 @@ import data.espece.faune.Vache;
 import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
-import data.structure.BergerieChevre;
-import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
+import data.structure.Garage;
 import data.structure.Maison;
-import data.structure.Poulallier;
 import data.structure.Puit;
-import data.structure.SalleDeTraite;
 import data.structure.Structure;
 import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
-import data.structure.Garage;
 
 
 public class GameBuilder {
@@ -91,35 +87,15 @@ public class GameBuilder {
 	private static void initialize( RessourcesManager stock , Map map) {
 			
 		// initialisation du stock pour l'etat initial 
-		Vache vacheInitial = new Vache(0, "violette1", "F", null, "v0");
-		Vache vache1 = new Vache(0, "violette2", "F", null, "v1");
-		Vache vache2 = new Vache(0, "violette3", "F", null, "v2");
-		Vache vache3 = new Vache(0, "violette4", "F", null, "v3");
-		Vache vache4 = new Vache(0, "violette5", "F", null,"v4");
-
+		Vache vacheInitial = new Vache(0, "violette", "F", null, "v0");
 		stock.getGestionnaireAnimaux().add(vacheInitial);
-		stock.getGestionnaireAnimaux().add(vache1);
-		stock.getGestionnaireAnimaux().add(vache2);
-		stock.getGestionnaireAnimaux().add(vache3);
-		stock.getGestionnaireAnimaux().add(vache4);
 
-		
 		Mouton mouton = new Mouton(0, "Moumout1", null, null, "m1");
-		Mouton mouton1 = new Mouton(0, "Moumout2", null, null, "m2");
-		Mouton mouton2 = new Mouton(0, "Moumout3", null, null, "m3");
-		
 		stock.getGestionnaireAnimaux().add(mouton);
-		stock.getGestionnaireAnimaux().add(mouton1);
-		stock.getGestionnaireAnimaux().add(mouton2);
 	
 		Poule poule = new Poule(0, "Poupou1", null, null, "p1");
-		Poule poule1 = new Poule(0, "Poupou2", null, null, "p2");
-		Poule poule2 = new Poule(0, "Poupou3", null, null, "p3");
-		
-		
 		stock.getGestionnaireAnimaux().add(poule);
-		stock.getGestionnaireAnimaux().add(poule1);
-		stock.getGestionnaireAnimaux().add(poule2);
+
 
 		// sera remplacer par une instance de terrain 
 		Terrain terrainInitial = new Terrain("t0",false, Graine.GRAINE_TOMATE);
@@ -132,25 +108,21 @@ public class GameBuilder {
 		
 		//stock.getGestionnaireTerrains().add(terrain3);
 		stock.getGestionnaireTerrains().add(terrain4);
-		
 
 		Chevre chevre1 = new Chevre(0,"sheshe1",null,null,"jd");
-		Chevre chevre2 = new Chevre(0,"sheshe2",null,null,"jd2");
-//		stock.getGestionnaireAnimaux().add(chevre2);
-//		stock.getGestionnaireAnimaux().add(chevre1);
-//		
+		stock.getGestionnaireAnimaux().add(chevre1);
+
+		stock.getGestionnaireTerrains().add(terrainInitial);
+
+		
 		Maison maison = new Maison("maison");
-		Poulallier poulallierInitial = new Poulallier("p0");
-		
-		Enclos enclos1 = new Enclos("enclos1");
-		Enclos enclos2 = new Enclos("enclos2");
-		
 		stock.getGestionnaireStructure().add(maison);
-		stock.getGestionnaireStructure().add(poulallierInitial);
-		 		
+	
+
+		Enclos enclos1 = new Enclos("enclos1");
 		stock.getGestionnaireEnclos().add(enclos1);
-		stock.getGestionnaireEnclos().add(enclos2);
-		
+
+		 			
 		Puit puit = new Puit("puit");
 		stock.getGestionnaireStructure().add(puit);
 
@@ -159,18 +131,7 @@ public class GameBuilder {
 		stock.getGestionnaireStructure().add(garage);
 	
 		Entrepot entrepot = new Entrepot("entrepot");
-		stock.getGestionnaireStructure().add(entrepot);
-
-		//TODO  supprimer salle de traite
-		SalleDeTraite salleDeTraite = new SalleDeTraite("salleDeTraite");
-		stock.getGestionnaireStructure().add(salleDeTraite);
-
-		BergerieMouton bergerieMouton = new BergerieMouton(" BergerieMouton");
-		stock.getGestionnaireStructure().add(bergerieMouton);
-
-		BergerieChevre bergerieChevre = new BergerieChevre("bergerieChevre");
-		stock.getGestionnaireStructure().add(bergerieChevre);
-		
+		stock.getGestionnaireStructure().add(entrepot);		
 	}
 	
 	private static void sethousePosition(Farm farm , Structure maison ) {

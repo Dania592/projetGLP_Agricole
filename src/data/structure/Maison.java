@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import data.acteur.Personne;
+import data.configuration.GameConfiguration;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -21,7 +23,7 @@ public class Maison extends Refuge<Personne>{
 
 	public Maison( String reference  ) {
 		super( reference  );
-			setImage("src"+File.separator+"ressources"+File.separator+"minimaison.png");
+			setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Maison.png");
 	}
 	
 	

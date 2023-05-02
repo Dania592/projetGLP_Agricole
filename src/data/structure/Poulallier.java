@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import data.configuration.GameConfiguration;
 import data.espece.Slaughtable;
 import data.espece.faune.Poule;
 import data.map.Map;
@@ -15,6 +16,7 @@ import data.structure.hability.Distributor;
 import data.structure.hability.HealablePlace;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SlaughterHouseSender;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -31,7 +33,7 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	
 	public Poulallier(String reference ) {
 		super( reference );
-		setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Poulailler.png");	
 	}
 
 	@Override
