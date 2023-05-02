@@ -37,7 +37,7 @@ public abstract class GameConfiguration {
 	/**
 	 * vitesse du jeu 
 	 */
-	public final static int GAME_SPEED = 50;
+	public final static int GAME_SPEED = 100;
 	
 	public final static int TIME_SPEED = 100 ;
 	

@@ -102,7 +102,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(20);
+				TimeManager.getInstance().setTimeSpeed(1);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}
@@ -118,7 +118,7 @@ public class Jeu implements Runnable{
 	}
 	
 	public boolean isNight() {
-		return TimeManager.getInstance().getClock().getHour().getValue()>=20 
+		return TimeManager.getInstance().getClock().getHour().getValue()>=21 
 				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
 	}
 	

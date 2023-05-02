@@ -7,13 +7,16 @@ import gui.Farm.Hud;
 
 public class Messagerie implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Message> messages ;
 	private static Messagerie instance = new Messagerie();
 	
 	
 	private  Messagerie() {
 		messages = new ArrayList<>();
-		init();
 	}
 	
 	public static Messagerie getInstance() {
@@ -33,14 +36,6 @@ public class Messagerie implements Serializable{
 	public void removeMessages() {
 		messages= new ArrayList<>();
 	}
-	
-	private void init() {
-		Message message = new Message ("test de \nmessagerie" , 1 ,5);
-		messages.add(message);
-		
-		Message message2 = new Message ("test de messagerie 2" ,22,5);
-		messages.add(message2);
-		
-	}
+
 	
 }

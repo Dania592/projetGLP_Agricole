@@ -59,11 +59,10 @@ public class TestStat extends JFrame {
 		
 		
 		// pie chart 
-		statistiqueProduit(statTestAnimal(), statTestVegetal());
-		//contentPane.add(panelProduit);
+		statistiqueProduit();
 		
 		// bar graph 
-		statistiqueStock(statTestAnimal(), statTestVegetal());
+		statistiqueStock();
 		//contentPane.add(panelStock);
 		
 		
@@ -116,7 +115,7 @@ public class TestStat extends JFrame {
 	}
 	
 	
-	public void piePanelStat(HashMap<String, Integer> donnee , int x , int y , int w , int h , String title ) {	
+	public void piePanelStat( int x , int y , int w , int h , String title ) {	
 		PiePanel pie = new PiePanel(title);
 		pie.reelStat();
 		pie.setBounds(x,y,w,h);	
@@ -155,7 +154,7 @@ public void statistiqueFinance(ArrayList<Integer> achat , ArrayList<Integer> ven
 			
 	}
 	
-	public void statistiqueProduit(HashMap<String , Integer> animals , HashMap<String, Integer> vegetals) {
+	public void statistiqueProduit() {
 		
 		panelProduit.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 		panelProduit.setLayout(null);
@@ -166,12 +165,11 @@ public void statistiqueFinance(ArrayList<Integer> achat , ArrayList<Integer> ven
 		panelProduit.add(title);
 		
 		
-		piePanelStat(animals , 30, 120, 400,400 , "Produits Animals");
+		piePanelStat( 250, 120, 400,400 , "Produits");
 		
-		//piePanelStat(vegetals , 460, 120, 400,400 , "Produits Végétals");	
 	}
 	
-	public void statistiqueStock(HashMap<String, Integer> animals , HashMap<String, Integer> vegetals) {
+	public void statistiqueStock() {
 		panelStock.setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 		panelStock.setLayout(null);
 		
