@@ -625,7 +625,7 @@ public class GeneralPaintStrategy {
 		case "STRUCTURES":
 			Structures structure = (Structures)element;
 			infos[0] = getName(structure);
-			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+infos[0]+".png";	
+			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+structure.name()+".png";	
 			infos[2] = String.valueOf(structure.getPrixAchat());
 			break;
 		case "ANIMALS":

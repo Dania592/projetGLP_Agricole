@@ -166,7 +166,7 @@ public class FarmPaintStrategy implements Serializable {
 
 	
 	public void paint(Farm farm ,Graphics graphics) {
-		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+"buisson.png");
+		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"buisson.png");
 		
 		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getHeight()+farm.getLigne() ; ligneIndex ++) {
 			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getWidth()+farm.getColonne() ; colonneIndex ++) {

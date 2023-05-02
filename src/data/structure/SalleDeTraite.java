@@ -40,7 +40,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 
 	public SalleDeTraite( String reference) {
 		super( reference);
-		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"SalleDeTraite.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Salle_De_Traite.png");	
 		
 	}
 
