@@ -13,6 +13,7 @@ import data.production.Produits;
 import data.structure.hability.Fixable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
@@ -32,7 +33,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     
     public Puit(String reference  ) {
 		super( reference );
-		setImage("src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+"Puit.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
     public Seau getSeau() {

@@ -12,6 +12,7 @@ import data.planning.Activity;
 import data.structure.hability.Distributor;
 import data.structure.hability.HealablePlace;
 import data.structure.hability.SlaughterHouseSender;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -28,7 +29,7 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	public Etable( String reference ) {
 		super( reference );
 		
-			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
+			setImage("src"+File.separator+"ressources"+File.separator+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Etable.png");
 		
 	}
 	

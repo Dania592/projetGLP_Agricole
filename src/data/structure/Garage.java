@@ -8,6 +8,7 @@ import data.gestion.GestionnaireMateriel;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.stucture_base.Farm;
 import gui.gestionnaire.keys.Structures;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -23,7 +24,7 @@ public class Garage extends Structure{
 
 	public Garage( String reference) {
 		super(reference);
-		setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
+		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Garage.png");
 	}
 
 	@Override

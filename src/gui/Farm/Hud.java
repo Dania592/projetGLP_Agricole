@@ -33,12 +33,8 @@ import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.ChoixGraine;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
-import gui.statistique.TestStat;
 import gui.statistique.Statistiques;
-import process.action.task.Task;
-import process.game.Game;
-import process.game.GameBuilder;
-import process.game.MapManager;
+import process.game.Jeu;
 import process.game.SaveFarm;
 
 public class Hud implements Serializable {
@@ -57,7 +53,7 @@ public class Hud implements Serializable {
 	private JLabel soldeBg;
 	private JLabel timeBg;
 	private JLabel waterBg;
-	private JLabel music ;
+	private JLabel music = new JLabel();
 	private static JLabel message;
 	private static JLabel statistique;
 	private static ChoixPanel choixScroll;
@@ -65,7 +61,6 @@ public class Hud implements Serializable {
 	private ChoixGraine graines;
 	private static MessageriePanel messagerie; 
 	private static AlertPane alert = new AlertPane();
-	
 		
 	private JLabel solde = new JLabel();
 	private JLabel time = new JLabel();
@@ -114,12 +109,29 @@ public class Hud implements Serializable {
 			save();
 			
 			water();
+			
+			addMusic();
 		}
 		time();
 		solde();
 
 	}
 
+	public void addMusic() {
+		music.setBounds( GameConfiguration.WINDOW_WIDTH-70,GameConfiguration.Y_EXTEND_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
+		ImageIcon musicIcon ;
+		if(Jeu.music) {
+			 musicIcon = new ImageIcon(GameConfiguration.IMAGE_PATH+"withMusic.png");			
+		}
+		else {
+			 musicIcon = new ImageIcon(GameConfiguration.IMAGE_PATH+"withoutMusic.png");
+		}
+		music.setIcon(musicIcon);
+		component.add(music , JLayeredPane.DRAG_LAYER);
+		music.addMouseListener(new MouseMusic());
+	}
+	
+	
 	public void add_ADD() {
 		adding.setBounds( GameConfiguration.X_ADD_LABEL, GameConfiguration.y_ADD_LABEL,GameConfiguration.WIDHT_LABEL,GameConfiguration.HEIGHT_LABEL);
 		ImageIcon addIcon= new ImageIcon("src"+File.separator+"ressources"+File.separator+"ajouter.png");
@@ -459,6 +471,52 @@ public class Hud implements Serializable {
 
 		}
 
+	}
+	
+	private class MouseMusic implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+		ImageIcon musicIcon ;
+			if(Jeu.music) {
+				musicIcon = new ImageIcon(GameConfiguration.IMAGE_PATH+"withoutMusic.png");
+				Jeu.music=false ;
+				Jeu.stopMusique();
+			}
+			else {
+				musicIcon = new ImageIcon(GameConfiguration.IMAGE_PATH+"withMusic.png");
+				Jeu.music=true;
+				Jeu.playMusique();
+			}
+			music.setIcon(musicIcon);
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 
