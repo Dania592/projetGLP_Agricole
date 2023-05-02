@@ -5,12 +5,14 @@ import java.util.Iterator;
 
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
+import data.flore.terrains.Terrain;
 import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
 import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
+import gui.gestionnaire.keys.Graine;
 import process.action.exception.NotImplementYetException;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.TaskCompleteException;
@@ -21,6 +23,7 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.ConditionTester;
 import process.action.visitor.place.TaskGenerator;
 import process.time.TimeManager;
 
@@ -32,7 +35,7 @@ public class TaskManager{
     // private static TaskFactory taskFactory = TaskFactory.getInstance();
     private TimeManager timeManager = TimeManager.getInstance();
     private static TaskGenerator taskGenerator = new TaskGenerator();
-
+    private static ConditionTester conditionTester = new ConditionTester(); 
     private static TaskManager taskManager = new TaskManager();
     
     
@@ -49,17 +52,24 @@ public class TaskManager{
 
     public void addNewTask(int hour, Activity activity, Actionnable actionnable)
             throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
-        if(!isAnHourOfWork()){
-            throw new AskingToWorkAtIllegalHourException(currentHour);
-        }
         Task<?> generatedTask = actionnable.launchAction(taskGenerator, activity);
         taskToBeLaunched.add(generatedTask);
     }
 
-    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
-        addNewTask(currentHour,activity, actionnable);
+    public void addNewTask(Activity activity, Actionnable actionnable, Graine graine) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
+        Task<?> currentTask;
+        if(activity ==Activity.PLANT){
+            Terrain terrain = (Terrain)actionnable;
+            currentTask = terrain.launchAction(taskGenerator, activity, graine);
+        }else{
+            currentTask = actionnable.launchAction(taskGenerator, activity);       
+        }
+        addToTaskToBeLaunched(currentTask);
     }
 
+    public void addNewTask(Activity activity, Actionnable actionnable) throws UnableToGenerateNewTaskException, NotImplementYetException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
+        addNewTask(activity, actionnable, null);
+    }
     private void addToTaskToinProcess(){ 
         Iterator<Task<?>> taskIterator = taskToBeLaunched.iterator();
         Task<?> currentTaskToBeLaunched;
@@ -71,7 +81,7 @@ public class TaskManager{
     }
 
 
-    public void addToTaskToBeLaunched(Task<?> task){
+    private void addToTaskToBeLaunched(Task<?> task){
         taskToBeLaunched.add(task);
     }
 
@@ -125,25 +135,47 @@ public class TaskManager{
         taskCompleted.clear();
     }
 
-    public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable) throws AskingToWorkAtIllegalHourException{
-        if(!isAnHourOfWork()){
-            throw new AskingToWorkAtIllegalHourException(currentHour);
-        }
-        ArrayList<Task<?>> possibleTaskToPerform= new ArrayList<>();
+    // public ArrayList<Task<?>> getPossibleTaskToPerform(Actionnable actionnable) throws AskingToWorkAtIllegalHourException{
+    //     if(!isAnHourOfWork()){
+    //         throw new AskingToWorkAtIllegalHourException(currentHour);
+    //     }
+    //     ArrayList<Task<?>> possibleTaskToPerform= new ArrayList<>();
+    //     if(actionnable.isNeedToBeFixed()){
+    //         try {
+    //             possibleTaskToPerform.add(actionnable.launchAction(taskGenerator, Activity.FIX_STRUCTURE));
+    //         } catch (Exception e) {
+    //         }
+    //     }else{
+    //         ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
+    //         Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
+    //         Task<?> task;
+    //         while(activitiesIter.hasNext()){
+    //             try {
+                    
+    //                 task = actionnable.launchAction(taskGenerator, activitiesIter.next());
+    //                 possibleTaskToPerform.add(task);
+    //             } catch (Exception e) {
+    //             }
+    //         }
+    //     }
+    //     return possibleTaskToPerform;
+    // }
+
+
+    public ArrayList<Activity> getPossibleTaskToPerform(Actionnable actionnable) throws AskingToWorkAtIllegalHourException{
+        ArrayList<Activity> possibleTaskToPerform= new ArrayList<>();
         if(actionnable.isNeedToBeFixed()){
-            try {
-                possibleTaskToPerform.add(actionnable.launchAction(taskGenerator, Activity.FIX_STRUCTURE));
-            } catch (Exception e) {
-            }
+            possibleTaskToPerform.add(Activity.FIX_STRUCTURE);
         }else{
-            ArrayList<Activity> possibleActivityToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
-            Iterator<Activity>  activitiesIter = possibleActivityToPerform.iterator();
-            Task<?> task;
+            ArrayList<Activity> allPossibleActivitiesToPerform = Activity.getPossibleActivity(actionnable.getASetOfAllActionnableKey());
+            Iterator<Activity>  activitiesIter = allPossibleActivitiesToPerform.iterator();
+            Activity currentActivity;
             while(activitiesIter.hasNext()){
                 try {
-                    
-                    task = actionnable.launchAction(taskGenerator, activitiesIter.next());
-                    possibleTaskToPerform.add(task);
+                    currentActivity = activitiesIter.next();
+                    if(actionnable.launchAction(conditionTester, currentActivity)){
+                        possibleTaskToPerform.add(currentActivity);
+                    }
                 } catch (Exception e) {
                 }
             }
@@ -152,11 +184,6 @@ public class TaskManager{
     }
 
 
-
-    private boolean isAnHourOfWork(){
-        return true;
-        // return DailyPlanner.FIRST_HOUR_OF_WORK <= currentHour && currentHour <= DailyPlanner.LAST_HOUR_OF_WORK;
-    }
 
     public int getCurrentHour() {
         return currentHour;

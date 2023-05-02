@@ -128,19 +128,16 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+    public Void action(Terrain terrain) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, ProblemOccursInProductionException {
         switch(terrain.getEvolution()){
             case VIERGE : 
                 terrain.setEvolution(EvolutionTerrain.LABOURE);
                 break;
-            case LABOURE : 
-                terrain.setType(Graine.BLUEBERRY_SEED); 
-                terrain.setEvolution(EvolutionTerrain.PLANTE);
-                terrain.setProductifState(ProductifState.PRODUCING);
-                break;
             case POURRI:
                 terrain.setEvolution(EvolutionTerrain.VIERGE);
                 break;
+            case LABOURE : 
+                throw new ProblemOccursInProductionException(terrain);
             default : 
                 throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
         }
@@ -226,7 +223,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
     @Override
     public Void action(Terrain terrain, Activity activity)
-            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException {
+            throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, ProblemOccursInProductionException {
         return action(terrain);
     }
 
@@ -262,16 +259,26 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     @Override
     public Void action(Terrain terrain, Activity activity, Graine graine)
             throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException,
-            UnableToGenerateNewTaskException {
-        if(terrain.getEvolution() == EvolutionTerrain.LABOURE){
-            terrain.setType(graine); 
-            terrain.setEvolution(EvolutionTerrain.PLANTE);
-            terrain.setProductifState(ProductifState.PRODUCING);
-        }else{
-            throw new UnableToPerformSuchActionWithCurrentActionnable();
-        }
+            UnableToGenerateNewTaskException, ProblemOccursInProductionException {
+            switch(terrain.getEvolution()){
+                case LABOURE : 
+                    if(graine == null){
+                        graine = Graine.AMARANTH_SEED;
+                    }
+                    terrain.setType(graine);
+                    terrain.setEvolution(EvolutionTerrain.PLANTE);
+                    terrain.setProductifState(ProductifState.PRODUCING);
+                    break;
+                case VIERGE : 
+                case POURRI:
+                    action(terrain);
+                    break;
+                default : 
+                    throw new UnableToPerformSuchActionWithCurrentActionnable(terrain);
+            }
         return null;
+        
     }
 
-
+    
 }

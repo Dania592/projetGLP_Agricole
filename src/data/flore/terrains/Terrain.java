@@ -325,7 +325,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException {
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException, ProblemOccursInProductionException {
 		return visitor.action(this, activity, graine);
 	}
 
