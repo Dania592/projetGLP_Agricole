@@ -208,11 +208,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		return productifState == ProductifState.PRODUCING || productifState == ProductifState.HAVE_PRODUCE;
 	}
 
-	@Override()
-	public boolean haveProduced() {
-		return evolution ==  EvolutionTerrain.PLANTE_5;
-	}
-
 	@Override
 	public HashMap<Produits, Integer> getProduction() {
 		return production;

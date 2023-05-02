@@ -34,6 +34,7 @@ public interface Actionnable{
         GARAGE,
         GRANGE,
         MILK_PRODUCEUR_REFUGE,
+        PLACE_OF_ANIMAL_PRODUCTION,
         ;
     }
 

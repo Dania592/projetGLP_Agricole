@@ -63,11 +63,6 @@ public class Abatoire extends StructureAction implements Distributor<Slaughtable
 	}
 
 	@Override
-	public boolean readyToSend() {
-		return animaltoSlaughter.isEmpty();
-	}
-
-	@Override
 	public void addSpecialSenderElement(Slaughtable specialSenderElement) {
 		animaltoSlaughter.add(specialSenderElement);
 	}

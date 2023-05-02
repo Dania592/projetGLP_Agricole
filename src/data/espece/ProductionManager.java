@@ -41,7 +41,9 @@ public class ProductionManager {
             while(productifIter.hasNext()){
                 try {
                     currentProductif =  productifIter.next();
-                    currentProductif.launchAction(productionMaker);
+                    if(!(currentProductif.isNeedToBeFixed())){
+                        currentProductif.launchAction(productionMaker);
+                    }
                 } catch (NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException | 
                 HaveNotProducedYetException | BeingCannotPerformSuchActionException e) {
                     System.err.println(e.getMessage());

@@ -61,11 +61,6 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	}
 
 	@Override
-	public boolean readyToSend() {
-		return true;
-	}
-
-	@Override
 	public boolean canLaunchProduction() {
 		return true;
 	}

@@ -3,6 +3,7 @@ package process.action.visitor.being.transfert;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.espece.Produceur.ProductifState;
 import data.espece.faune.Chevre;
 import data.espece.faune.Chien;
 import data.espece.faune.Mouton;
@@ -32,14 +33,12 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
         ArrayList<Structure> potencielStructure =  GestionnaireStructures.getInstance().getStructures().get(structures);
         boolean isAvalable = false;
         Iterator<Structure> structureIter = potencielStructure.iterator();
-        int index=-1;
-        while(structureIter.hasNext() && isAvalable){
-            isAvalable = structureIter.next().isStatique(); //TODO prendreen compte la  capacité ???
-            index++;
-        }if(isAvalable){
-            return potencielStructure.get(index);
+        Structure currentStructure = structureIter.next();
+        while(structureIter.hasNext() && !isAvalable){
+            currentStructure = structureIter.next();
+            isAvalable = currentStructure.isStatique() && !(currentStructure.isNeedToBeFixed());
         }
-        throw new UnableToMakeTheTransfertException(" No free "+ structures); 
+        return currentStructure;
     }
 
     @Override
@@ -57,16 +56,22 @@ public class DomesticSpeciesSendToProductifPlace implements DomesticSpeciesVisit
     @Override
     public Void action(Vache vache) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
-        SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
-        avalableSalleDeTraite.addSpecialSenderElement(vache);
+        if(vache.getProductifState() == ProductifState.IN_WAIT_TO_BE_TRANSPORTED){
+            SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
+            avalableSalleDeTraite.addSpecialSenderElement(vache);
+            vache.setProductifState(ProductifState.HAVE_PRODUCE);
+        }
         return null;
     }
 
     @Override
     public Void action(Chevre chevre) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException,
             NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException {
-            SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
-            avalableSalleDeTraite.addSpecialSenderElement(chevre);
+            if(chevre.getProductifState() == ProductifState.IN_WAIT_TO_BE_TRANSPORTED){
+                SalleDeTraite avalableSalleDeTraite = (SalleDeTraite)getProductifPlace(Structures.SALLE_DE_TRAITE);
+                avalableSalleDeTraite.addSpecialSenderElement(chevre);
+                chevre.setProductifState(ProductifState.HAVE_PRODUCE);
+            }
             return null;
     }
 

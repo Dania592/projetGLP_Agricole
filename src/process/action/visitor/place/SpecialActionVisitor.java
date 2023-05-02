@@ -31,12 +31,16 @@ import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import gui.gestionnaire.keys.Graine;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
+import process.action.visitor.being.exception.HaveNotProducedYetException;
+import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
+import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.time.TimeManager;
 import process.action.exception.NotImplementYetException;
+import process.action.exception.being.BeingCannotPerformSuchActionException;
 public class SpecialActionVisitor implements PlaceVisitor<Void> {
     ProductionPerformer productionPerformer = new ProductionPerformer();
-
+    
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable();
@@ -54,11 +58,20 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         while(moutonIter.hasNext()){
             currentMouton = moutonIter.next();
             System.out.println(currentMouton);
-            if(currentMouton.haveProduced()){
-                System.out.println("C'est ça production :"+currentMouton.collectProduction());
-                GestionnaireStocks.getInstance().add(currentMouton.collectProduction(), currentMouton.getProcuedQuantity());
-                currentMouton.setProductifState(ProductifState.PRODUCING);
-                currentMouton.getProductionCycle().reset();
+            if(currentMouton.getProductifState()==ProductifState.IN_WAIT){
+                currentMouton.setProductifState(ProductifState.HAVE_PRODUCE);
+                try {
+                    Produits production = currentMouton.launchAction(productionPerformer.getProducer());
+                    GestionnaireStocks.getInstance().add(production, currentMouton.getProcuedQuantity());
+                    currentMouton.setProductifState(ProductifState.PRODUCING);
+                    currentMouton.getProductionCycle().reset();
+                } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
+                        | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
+                        | UnableToMakeTheTransfertException | NotImplementYetException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
         }
         System.out.println(GestionnaireStocks.getInstance().getProduits());
@@ -91,11 +104,18 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         MilkProduceur milkProduceur;
         while(milkProduceurIter.hasNext()){
             milkProduceur = milkProduceurIter.next();
-            System.out.println(milkProduceur);
-            if(milkProduceur.haveProduced()){
-                GestionnaireStocks.getInstance().add(milkProduceur.collectProduction(), 1);
-                milkProduceur.setProductifState(ProductifState.PRODUCING);
-                milkProduceur.getProductionCycle().reset();
+            if(milkProduceur.getProductifState() == ProductifState.HAVE_PRODUCE){
+                try {
+                    Produits production = milkProduceur.launchAction(productionPerformer.getProducer());
+                    GestionnaireStocks.getInstance().add(production, 1);
+                    milkProduceur.setProductifState(ProductifState.PRODUCING);
+                    milkProduceur.getProductionCycle().reset();
+                } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
+                        | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
+                        | UnableToMakeTheTransfertException | NotImplementYetException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
         System.out.println(GestionnaireStocks.getInstance().getProduits());

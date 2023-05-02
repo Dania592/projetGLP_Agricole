@@ -267,7 +267,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                     return new CollectTask(activity, salleDeTraite, collector);
                 case MILK:
                     return new SpecialTask(activity, salleDeTraite, specialTaskVisitor);
-                case SEND_TO_ENCLOSURE:
+                case SEND_TO_ENCLOSURE_FROM_PLACE_OF_ANIMAL_PRODUCTION:
                     return new SendToEnclosureTask(activity, salleDeTraite, enclosureSender);
                 default:
                     throw new UnableToPerformSuchActionWithCurrentActionnable(activity, salleDeTraite);
