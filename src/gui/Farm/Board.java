@@ -3,27 +3,21 @@ package gui.Farm;
 
 
 import java.awt.Graphics;
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import data.configuration.GameConfiguration;
 import data.espece.Produceur.ProductifState;
 import data.espece.WaterConsumer.HydrationLevel;
 import data.flore.terrains.Terrain;
 import data.structure.Enclos;
 import data.stucture_base.Element;
 import data.stucture_base.Farm;
-import data.stucture_base.Position;
-import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.Choix;
 import process.action.TaskManager;
-import process.action.task.Task;
 import process.evolution.FullLevel;
 import process.game.MapManager;
 
@@ -39,10 +33,12 @@ public class Board extends JLayeredPane implements Serializable{
 	private Choix choix ;
 	private Hud hud ;
 	private Farm farm;
+	private MainGuiTest frame ;
 
 	
-	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest ferme) {
+	public Board(Farm farm  , Element selected , TaskManager taskManager , MainGuiTest frame) {
 		this.farm = farm;
+		this.frame = frame ;
 		this.selected=selected;
 		this.taskManager = taskManager ;
 		keys = new KeyControls(farm.getManager() , selected); 
@@ -68,6 +64,9 @@ public class Board extends JLayeredPane implements Serializable{
 
 	public Farm getFarm() {
 		return farm;
+	}
+	public MainGuiTest getFrame() {
+		return frame ;
 	}
 	
 	public Hud getHud() {

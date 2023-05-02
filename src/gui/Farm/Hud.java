@@ -29,7 +29,7 @@ import gui.Farm.messagerie.AlertPane;
 import gui.Farm.messagerie.MessageriePanel;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
-import gui.statistique.TestStat;
+import gui.statistique.Statistiques;
 import process.action.task.Task;
 import process.game.Game;
 import process.game.GameBuilder;
@@ -314,12 +314,13 @@ public class Hud implements Serializable {
 				new PopupSave(component);
 			} else if(e.getSource().equals(farmer)) {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
-				frame.dispose();
+				frame.setVisible(false);
 				new FermierGui(frame , component.getFarm().getFermier());
+				
 			} else if(e.getSource().equals(statistique)) {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
 				frame.setVisible(false);
-				new TestStat(frame);
+				new Statistiques(frame);
 			} else {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
 

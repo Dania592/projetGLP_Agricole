@@ -183,16 +183,14 @@ public class FarmPaintStrategy implements Serializable {
 	public void paintLevelHeart(Enclos enclos , Graphics graphics ) {
 		Position position = enclos.getPosition();
 		int y = (position.getLigne_init() - 1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
-		int x = (position.getColonne_init() + enclos.getDimension()/2-1)*GameConfiguration.CASE_DIMENSION +map.getX();
+		int x = (position.getColonne_init() +1)*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar;
 		if(enclos.isNeedToBeFeed() || enclos.isNeedToBeHydrated()){
-			//TODO il faut afficher les deux pour faire la difference et voir ce qui manque 
-			//if(enclos.getNiveauNourriture().isLessThan(enclos.getNiveauEau())){
-				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHungerLevel()+".png");
-				graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
-			//}else{
-				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getAnimalsHydrationLevel()+".png");
-				graphics.drawImage(progressBar.getImage(), x, y -20, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"FOOD"+File.separator+ enclos.getAnimalsHungerLevel()+".png");
+				graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
+			
+				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"WATER"+File.separator+ enclos.getAnimalsHydrationLevel()+".png");
+				graphics.drawImage(progressBar.getImage(), x, y -30, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
 				
 		}
 	}
@@ -200,10 +198,10 @@ public class FarmPaintStrategy implements Serializable {
 
 	public void paintLevelHeart(Terrain terrain , Graphics graphics ) {
 		Position position = terrain.getPosition();
-		int y = (position.getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY() ;
+		int y = (position.getLigne_init()-1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"health"+File.separator+terrain.getHydrationLevel()+".png");
-		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*3, GameConfiguration.CASE_DIMENSION ,  null);
+		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*4, GameConfiguration.CASE_DIMENSION ,  null);
 	}
 	
 	public void paintNight( Map map ,Graphics graphics ) {

@@ -58,6 +58,7 @@ public class PiePanel extends StatPanel {
 		initPie();
 	}
 	
+	@Override
 	public void reelStat() {
 		if(getTitle().equals("Produits")) {
 			HashMap<Produits, Integer> produit = GestionnaireStocks.getInstance().getProduits();

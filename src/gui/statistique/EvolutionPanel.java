@@ -1,26 +1,29 @@
 package gui.statistique;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import data.gestion.GestionnaireFinancier;
 import gui.gestionnaire.GeneralPaintStrategy;
+import process.transaction.Achat;
+import process.transaction.Vente;
 
 public class EvolutionPanel extends StatPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private XYSeriesCollection dataset = new XYSeriesCollection();
 	private ArrayList<Integer> donnees = new ArrayList<>();
 	
@@ -61,4 +64,22 @@ public class EvolutionPanel extends StatPanel {
 		initEvolution();
 	}
 	
+	@Override
+	public void reelStat() {
+		if(getTitle().equals("Vente")) {
+			ArrayList<Vente> ventes = GestionnaireFinancier.getInstance().getVentes();
+			for(Vente vente : ventes) {
+				donnees.add(new Integer((int) vente.getTotalCost()));
+			}
+		}
+		else {
+			if(getTitle().equals("Achat")) {
+				ArrayList<Achat> achats = GestionnaireFinancier.getInstance().getAchats();
+				for(Achat achat : achats) {
+					donnees.add(new Integer((int) achat.getTotalCost()));
+				}
+			}
+		}
+		initEvolution();
+	}
 }

@@ -1,8 +1,5 @@
 package data.espece;
 
-import data.myExceptions.DyingOfHungerException;
-import data.notification.Messagerie;
-
 public interface FoodConsumer extends DomesticSpecie{
     public enum HungerLevel{
     	STARVING,

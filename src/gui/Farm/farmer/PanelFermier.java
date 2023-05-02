@@ -57,13 +57,7 @@ public class PanelFermier extends JPanel{
 		choisir.setFont(new Font(Font.SANS_SERIF , Font.PLAIN , 18));
 		choisir.setForeground(Color.white);
 		add(choisir);
-		
-//		JLabel retour = paintLabel("Retour au jeu", 380, 600,200, 40, "choisir_avatar.png");
-//		retour.addMouseListener(new Retour());
-//		retour.setFont(new Font(Font.SANS_SERIF , Font.PLAIN , 18));
-//		retour.setForeground(Color.white);
-//		add(retour);
-		
+				
 		addPersonnage();
 		addNom();
 		addAge();
@@ -107,7 +101,7 @@ public class PanelFermier extends JPanel{
 		int dx = 23;
 		for(int i = 0 ; i<personnages.length ; i++) {
 			PanelPersonnage personne =  new PanelPersonnage(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"personnage"+i);
-			personne.setBounds(dx, 380, 130, 200);
+			personne.setBounds(dx, 360, 130, 200);
 			personnages[i] = new JLabel(new ImageIcon(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"personnage"+i+File.separator+"stand.png"));
 			personnages[i].addMouseListener(new ChangeAvatarListner(GameConfiguration.IMAGE_PATH+"Fermier"+File.separator+"personnage"+i ));
 			personnages[i].setBounds(25,20 ,80,150);
@@ -188,37 +182,4 @@ public class PanelFermier extends JPanel{
 		
 	}
 	
-	private class Retour implements MouseListener{
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			new WindowDispose(PanelFermier.this.fermierGui, frame);
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 }
