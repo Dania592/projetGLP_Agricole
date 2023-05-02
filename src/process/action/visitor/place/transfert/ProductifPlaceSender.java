@@ -28,11 +28,13 @@ import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
+import process.action.visitor.place.ConditionTester;
 import process.action.visitor.place.PlaceVisitor;
 import process.action.visitor.being.transfert.DomesticSpeciesSendToProductifPlace;
 
 public class ProductifPlaceSender implements PlaceVisitor<Void>{
     DomesticSpeciesSendToProductifPlace productifPlaceSender = new DomesticSpeciesSendToProductifPlace();
+    ConditionTester conditionTester = new ConditionTester();
 
     private <T extends Distributor<E>, E extends Transportable> Void sendToProductifPlace(T distributor, Iterator<E> iterator){
         ArrayList<E> tranportableToRemove = new ArrayList<>(); 
@@ -45,9 +47,7 @@ public class ProductifPlaceSender implements PlaceVisitor<Void>{
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException e) {
-                e.printStackTrace();
             } catch (NotImplementYetException e) {
-                e.printStackTrace();
             }
         }
         distributor.removeAll(tranportableToRemove);

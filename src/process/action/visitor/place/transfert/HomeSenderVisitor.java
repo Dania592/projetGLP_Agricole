@@ -2,6 +2,7 @@ package process.action.visitor.place.transfert;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.locks.Condition;
 
 import data.espece.Transportable;
 import data.espece.faune.AnimalProducteur;
@@ -33,10 +34,13 @@ import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 import process.action.visitor.being.exception.HaveNotProducedYetException;
 import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPlaceException;
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
+import process.action.visitor.place.ConditionTester;
 import process.action.visitor.place.PlaceVisitor;
+import process.game.ElementManager;
 
 public class HomeSenderVisitor implements PlaceVisitor<Void>{
     DomesticSpeciesHomeSender homeSender = new DomesticSpeciesHomeSender();
+    ConditionTester conditionTester = new ConditionTester();
 
     private <T extends Distributor<E>, E extends Transportable> Void sendHome(T distributor, Iterator<E> iterator){
         ArrayList<E> tranportableToRemove = new ArrayList<>(); 
@@ -44,12 +48,13 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
         while(iterator.hasNext()){
             currentTransportable = iterator.next();
             try {
-                currentTransportable.launchAction(homeSender);
-                tranportableToRemove.add(currentTransportable);
+                if(conditionTester.isThereAvalableHomes(currentTransportable)){
+                    currentTransportable.launchAction(homeSender);
+                    tranportableToRemove.add(currentTransportable);
+                }
             } catch (HaveNotProducedYetException | BeingCannotPerformSuchActionException
                     | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                     | UnableToMakeTheTransfertException| NotImplementYetException e) {
-                e.printStackTrace();
             }
         }
         distributor.removeAll(tranportableToRemove);

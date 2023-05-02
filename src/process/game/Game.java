@@ -6,8 +6,6 @@ import data.espece.faune.Animal;
 import data.espece.faune.Mouton;
 import data.espece.faune.Vache;
 import data.finance.Banque;
-import data.flore.Culture;
-
 import data.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;

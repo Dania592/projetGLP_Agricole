@@ -19,7 +19,7 @@ import process.action.visitor.being.transfert.UnableToMakeTheTransfertException;
 public class ProductCollectorVisitor implements DomesticSpeciesVisitor<Produit>{
     
     public Produit getAnimalToProduce(AnimalProducteur animal) throws HaveNotProducedYetException{
-        if(animal.haveProduced()){
+        if(animal.getProductifState() == ProductifState.HAVE_PRODUCE){
                 animal.setProductifState(ProductifState.PRODUCING);
         }
         throw new HaveNotProducedYetException(animal);

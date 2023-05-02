@@ -97,6 +97,7 @@ public class EvolutionManager implements Serializable {
 
 			}	
 		}
+		//System.out.println(terrain);
 	}
 
 	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){
@@ -217,7 +218,7 @@ public class EvolutionManager implements Serializable {
 						}
 						if(nbAdult>=2) {
 							target = Animals.POULE ;
-							baby = new Poule(null, Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size());							
+							baby = new Poule(Clock.getInstance().getMinute().getValue(), null, null, null, ""+enclos.getAnimals().size());							
 						}
 					}
 					break;

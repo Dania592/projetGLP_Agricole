@@ -19,10 +19,13 @@ import data.configuration.GameConfiguration;
 import data.finance.Banque;
 import data.gestion.GestionnaireStocks;
 import data.notification.Messagerie;
+import data.planning.Activity;
 import data.production.Produits;
+import data.structure.hability.Actionnable;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
+import gui.Farm.actions.TachePane;
 import gui.Farm.choix.ChoixPanel;
 import gui.Farm.farmer.FermierGui;
 import gui.Farm.messagerie.AlertPane;
@@ -31,10 +34,6 @@ import gui.gestionnaire.ChoixGraine;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.Home;
 import gui.statistique.TestStat;
-import process.action.task.Task;
-import process.game.Game;
-import process.game.GameBuilder;
-import process.game.MapManager;
 import process.game.SaveFarm;
 
 public class Hud implements Serializable {
@@ -297,9 +296,9 @@ public class Hud implements Serializable {
 		}
 	}
 	// passer en parametre la structure pour recuperer
-	public void add_Actions(int x , int y , ArrayList<Task<?>> taches ) {
+	public void add_Actions(int x , int y , Actionnable actionnable, ArrayList<Activity> taches ) {
 		if(!Arrays.asList(component.getComponents()).contains(actions)) {
-			actions = new ActionsPane(taches, x , y , this);
+			actions = new ActionsPane(taches, actionnable, x , y , this);
 			component.add(actions);		
 		}
 		else {
@@ -313,9 +312,9 @@ public class Hud implements Serializable {
 		}
 	}
 	
-	public void addChoixGraine(int x, int y) {
+	public void addChoixGraine(int x, int y, TachePane tachePane) {
 		if(!Arrays.asList(component.getComponents()).contains(graines)) {
-			graines = new ChoixGraine(x,y,250,250);
+			graines = new ChoixGraine(x,y,250,250,tachePane, this);
 			component.add(graines);		
 		}
 		else {
@@ -367,6 +366,7 @@ public class Hud implements Serializable {
 				new TestStat(frame);
 			} else {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.component);
+
 				new ExtendPopup(frame, component.getFarm());
 			}
 		}

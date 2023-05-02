@@ -16,7 +16,6 @@ import java.net.URL;
 import java.text.AttributedCharacterIterator;
 import java.util.Random;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -115,11 +114,11 @@ public class Jeu implements Runnable{
 	
 	public boolean nightNotif() {
 		Clock clock =Clock.getInstance(); 
-		return clock.getHour().getValue()==9 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
+		return clock.getHour().getValue()==20 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
 	}
 	
 	public boolean isNight() {
-		return TimeManager.getInstance().getClock().getHour().getValue()>=10 
+		return TimeManager.getInstance().getClock().getHour().getValue()>=20 
 				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
 	}
 	

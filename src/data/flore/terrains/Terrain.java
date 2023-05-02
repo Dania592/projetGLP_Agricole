@@ -208,11 +208,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		return productifState == ProductifState.PRODUCING || productifState == ProductifState.HAVE_PRODUCE;
 	}
 
-	@Override()
-	public boolean haveProduced() {
-		return evolution ==  EvolutionTerrain.PLANTE_5;
-	}
-
 	@Override
 	public HashMap<Produits, Integer> getProduction() {
 		return production;
@@ -330,7 +325,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	}
 
 	@Override
-	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException {
+	public <T> T launchAction(PlaceVisitor<T> visitor, Activity activity, Graine graine) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException, ProblemOccursInProductionException {
 		return visitor.action(this, activity, graine);
 	}
 

@@ -60,10 +60,6 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 		return Structures.ETABLE;
 	}
 
-	@Override
-	public boolean readyToSend() {
-		return true; 
-	}
 
 	@Override
 	public void addSpecialSenderElement(Vache specialSenderElement) {

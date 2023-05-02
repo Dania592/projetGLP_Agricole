@@ -46,29 +46,33 @@ public class DomesticSpeciesHomeSender implements DomesticSpeciesVisitor<Void>{
     
     @Override
     public Void action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
-        BergerieMouton freeBergerieMouton = (BergerieMouton)getAvalableHome(mouton.getHomeLabel());
-        freeBergerieMouton.addInHabitant(mouton);
+        BergerieMouton freeBergerieMouton;
+            freeBergerieMouton = (BergerieMouton)getAvalableHome(mouton.getHomeLabel());
+            freeBergerieMouton.addInHabitant(mouton);
         return null;
     }
     
     @Override
     public Void action(Poule poule) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
-        Poulallier freePoulallier = (Poulallier)getAvalableHome(poule.getHomeLabel());
-        freePoulallier.addInHabitant(poule);
+        Poulallier freePoulallier;
+            freePoulallier = (Poulallier)getAvalableHome(poule.getHomeLabel());
+            freePoulallier.addInHabitant(poule);
         return null;
     }
     
     @Override
     public Void action(Vache vache) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
-        Etable freeEtable = (Etable)getAvalableHome(vache.getHomeLabel());
-        freeEtable.addInHabitant(vache);
+        Etable freeEtable;
+            freeEtable = (Etable)getAvalableHome(vache.getHomeLabel());
+            freeEtable.addInHabitant(vache);
         return null;
     }
 
     @Override
     public Void action(Chevre chevre) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException {
-        BergerieChevre freeBergerieChevre = (BergerieChevre)getAvalableHome(chevre.getHomeLabel());
-        freeBergerieChevre.addInHabitant(chevre);
+        BergerieChevre freeBergerieChevre;
+            freeBergerieChevre = (BergerieChevre)getAvalableHome(chevre.getHomeLabel());
+            freeBergerieChevre.addInHabitant(chevre);
         return null;
 
     }

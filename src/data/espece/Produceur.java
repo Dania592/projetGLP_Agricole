@@ -92,7 +92,6 @@ public interface Produceur extends DomesticSpecie{
 
 	}
 	
-    boolean haveProduced();
     Produits collectProduction();
     ProductifState getProductifState();
     Type getProduceurType();

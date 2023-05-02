@@ -45,6 +45,8 @@ import process.action.visitor.place.transfert.EnclosureSenderVisitor;
 
 public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     ProduceVisitor producer = new ProduceVisitor();
+
+    
     
     private <T extends AnimalProducteur> Void performProduction(ProductifPlace productifPlace, Iterator<T> produceurIter) throws NotImplementYetException{
         Produits production;
@@ -118,11 +120,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
         while(milkProduceurIter.hasNext()){
             currentMilkProduceur = milkProduceurIter.next();
             currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
-            if(currentMilkProduceur.haveProduced()){
-                addToProduction(salleDeTraite, currentMilkProduceur.collectProduction(), currentMilkProduceur.getProduceurType().getNumberOfProductPerProductifCycle());
-                currentMilkProduceur.setProductifState(ProductifState.PRODUCING);
-                
-            }
+            
         }
         return null;
     }
@@ -275,6 +273,11 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     @Override
     public Void action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable {
         return action(grange);
+    }
+
+
+    public ProduceVisitor getProducer() {
+        return producer;
     }
 
     

@@ -20,21 +20,27 @@ import javax.swing.SwingConstants;
 
 import data.configuration.GameConfiguration;
 import data.gestion.GestionnaireStocks;
+import gui.Farm.Hud;
+import gui.Farm.actions.TachePane;
 import gui.gestionnaire.UI.CustomizedScrollBar;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.keys.Graine;
 
 public class ChoixGraine extends RoundedPanel{
 
+	private Hud hud;
 	private static final long serialVersionUID = 1L;
 	public static Color MARKET_CARD_COLOR = GestionnaireStocksGUI.LIGHT_BROWN;
 	public final static Font LABEL_FONT = new Font("Monospaced", Font.PLAIN|Font.BOLD, 20);
 	private JPanel grainesPanel = new JPanel();
 	private BoxLayout boxLayout = new BoxLayout(grainesPanel, BoxLayout.Y_AXIS);
 	private ArrayList<Graine> graines;
+	private TachePane tachePane;
 	
-	public ChoixGraine(int x, int y, int w, int h) {
+	public ChoixGraine(int x, int y, int w, int h, TachePane tachePane, Hud hud) {
 		super(20,GeneralPaintStrategy.MEDIUM_BROWN, false);
+		this.tachePane = tachePane;
+		this.hud = hud;
 		graines = new ArrayList<Graine>(GestionnaireStocks.getInstance().getAvailableGraines());
 		setLayout(new BorderLayout());
 		setBounds(x, y, w, h);
@@ -92,11 +98,6 @@ public class ChoixGraine extends RoundedPanel{
 		return panel;
 	}
 	
-	public void lunchTask(Graine graine) {
-		System.out.println("ChoixGraine definir la méthode lunchTask(Graine)");
-		//TaskManager.getInstance().addToTaskToBeLaunched(task);
-	}
-	
 	private class Choix implements MouseListener{
 
 		private Graine graine;
@@ -107,7 +108,8 @@ public class ChoixGraine extends RoundedPanel{
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			lunchTask(graine);
+			tachePane.lunchTask(graine);
+			hud.removeChoixGraine();
 		}
 
 		@Override

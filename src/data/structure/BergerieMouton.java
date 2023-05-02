@@ -55,15 +55,6 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
         return getInHabitant().isEmpty();
     }
 
-    @Override
-    public boolean readyToSend() {
-        Iterator<Mouton> moutonIter = getInHabitant().iterator();
-        boolean isReady = false;
-        while(moutonIter.hasNext() && !isReady){
-            isReady = moutonIter.next().haveProduced();
-        }
-        return isReady;
-    }
 
     @Override
     public void addSpecialSenderElement(Mouton specialSenderElement) {

@@ -45,7 +45,7 @@ public class GestionnaireFactory {
 			case MOUTON:
 				return new Mouton(0, null, null, null, reference);
 			case POULE:
-				return new Poule(null, 0, null, null, null, reference);
+				return new Poule(0, null, null, null, reference);
 			case CHEVRE:
 				return new Chevre(0, null, null, null, reference);
 			default:

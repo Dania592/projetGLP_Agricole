@@ -1,11 +1,14 @@
 package process.game;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.crypto.AEADBadTagException;
 
 import data.configuration.GameConfiguration;
 import data.espece.ProductionManager;
+import data.espece.Transportable;
 import data.map.Case;
 import data.structure.Enclos;
 import data.structure.hability.Fixable.FixableState;
@@ -38,12 +41,8 @@ public class ElementManager implements Serializable{
 	}
 
 	public void add(Enclos enclos) {
-		enclos.setState(FixableState.DAMAGED);
 		mapManager.addEnclos(enclos);
-		System.out.println("On a ajouter l'enclos");
 		ProductionManager.getInstance().addToProductifList(enclos);
-		System.out.println("Or : "+ ProductionManager.getInstance().getProductifList().contains(enclos));
-
 	}
 	
 	
@@ -51,6 +50,7 @@ public class ElementManager implements Serializable{
 		element.freePosition();
 		mapManager.removeElement(element);
 	}
+
 
 	/**
 	 * try to move the element to the right if it's not on right border 
