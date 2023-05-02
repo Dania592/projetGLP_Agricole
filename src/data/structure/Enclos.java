@@ -275,11 +275,6 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 	}
 
 	@Override
-	public boolean readyToSend() {
-		return true;
-	}
-
-	@Override
 	public boolean canLaunchProduction() {
 		return true;
 	}
@@ -323,17 +318,25 @@ public class Enclos extends Element implements Fixable, Feedable, ProductifPlace
 		return niveauEau != FullLevel.FULL;
 	}
 
-	@Override
-	public String toString() {
-		return "Enclos [lastDecrementationNourriture=" + lastDecrementationNourriture + ", lastDecrementationEau="
-				+ lastDecrementationEau + ", niveauEau=" + niveauEau + ", niveauNourriture=" + niveauNourriture
-				+ ", animalsHungerLevel=" + animalsHungerLevel + ", animalsHydrationLevel=" + animalsHydrationLevel
-				+ "]";
-	}
+	// @Override
+	// public String toString() {
+	// 	return "Enclos [lastDecrementationNourriture=" + lastDecrementationNourriture + ", lastDecrementationEau="
+	// 			+ lastDecrementationEau + ", niveauEau=" + niveauEau + ", niveauNourriture=" + niveauNourriture
+	// 			+ ", animalsHungerLevel=" + animalsHungerLevel + ", animalsHydrationLevel=" + animalsHydrationLevel
+	// 			+ "]";
+	// }
+
+
+
 
     public static boolean isUsedForAnAction() {
         return usedForAnAction;
     }
+
+	@Override
+	public String toString() {
+		return "Enclos [state=" + state + "]";
+	}
 
 	@Override
 	public boolean isNeedToBeFixed() {

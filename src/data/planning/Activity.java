@@ -26,7 +26,7 @@ public enum Activity  implements Serializable{
     
     // ---------------------- SALLE DE TRAITE ---------------------- //
     COLLECT_MILK(3, "Récupérer le lait", Type.GET_PRODUCTION, ActionnableKey.SALLE_TRAITE, 1), 
-    MILK(3, "Traire", Type.SPECIAL, ActionnableKey.SALLE_TRAITE, 10),
+    MILK(3, "Traire", Type.SPECIAL, ActionnableKey.SALLE_TRAITE, 1),
     // ------------------------------------------------------------------- //
     
     
@@ -59,6 +59,7 @@ public enum Activity  implements Serializable{
     
     // ---------------------- REFUGE ---------------------- //
     SEND_TO_ENCLOSURE(1, "Envoyer à l'enclos", Type.SEND_TO_ENCLOSURE, ActionnableKey.REFUGE, 1),
+    SEND_TO_ENCLOSURE_FROM_PLACE_OF_ANIMAL_PRODUCTION(1, "Envoyer à l'enclos", Type.SEND_TO_ENCLOSURE, ActionnableKey.PLACE_OF_ANIMAL_PRODUCTION, 1),
     SEND_TO_SEND_TO_SLAUGHTERHOUSE(1, "Envoyer à l'abatoire", Type.SEND_TO_SLAUGHTERHOUSE, ActionnableKey.REFUGE, 1),  
     HEAL(1, "Soigner", Type.HEAL, ActionnableKey.REFUGE, 1),  
 

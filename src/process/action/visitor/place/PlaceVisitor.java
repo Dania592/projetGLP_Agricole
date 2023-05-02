@@ -33,7 +33,7 @@ public interface PlaceVisitor<T>{
     T action(Maison maison) throws UnableToPerformSuchActionWithCurrentActionnable;
     T action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Entrepot entrepot)throws UnableToPerformSuchActionWithCurrentActionnable;
-    T action(Terrain terrain)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException;
+    T action(Terrain terrain)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, ProblemOccursInProductionException;
     T action(BergerieChevre bergerieChevre) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException;
     T action(BergerieMouton bergerieMouton) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException;
     T action(Puit puit) throws UnableToPerformSuchActionWithCurrentActionnable;
@@ -47,14 +47,14 @@ public interface PlaceVisitor<T>{
     T action(Maison maison, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
     T action(SalleDeTraite salleDeTraite, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(Entrepot entrepot, Activity activity)throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
-    T action(Terrain terrain, Activity activity)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException;
+    T action(Terrain terrain, Activity activity)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException, ProblemOccursInProductionException;
     T action(BergerieChevre bergerieChevre, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(BergerieMouton bergerieMouton, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(Puit puit, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
     T action(Garage garage, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
     T action(Grange grange, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
 
-    T action(Terrain terrain, Activity activity, Graine graine)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException;
+    T action(Terrain terrain, Activity activity, Graine graine)throws UnableToPerformSuchActionWithCurrentActionnable, NotImplementYetException, UnableToGenerateNewTaskException, ProblemOccursInProductionException;
 
 
 

@@ -14,6 +14,7 @@ import data.configuration.GameConfiguration;
 import data.myExceptions.AskingToWorkAtIllegalHourException;
 import data.notification.Message;
 import data.notification.Messagerie;
+import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import data.stucture_base.Element;
@@ -100,10 +101,10 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				if(selected instanceof Actionnable) {
 					Actionnable actionnable = (Actionnable)element;
 					if(actionnable.isStatique() && !(actionnable.isCurrentlyUsedForAnotherTask())){
-						ArrayList<Task<?>> tasks;
+						ArrayList<Activity> activities;
 						try {
-							tasks = taskManager.getPossibleTaskToPerform(actionnable);
-							dashboard.getHud().add_Actions(x, y , tasks);					
+							activities = taskManager.getPossibleTaskToPerform(actionnable);
+							dashboard.getHud().add_Actions(x, y ,actionnable, activities);					
 						} catch (AskingToWorkAtIllegalHourException e1) {
 							Messagerie.getInstance().addMessage(new Message("Heures de travail légales \n"+DailyPlanner.FIRST_HOUR_OF_WORK+"  -  "+ DailyPlanner.LAST_HOUR_OF_WORK, TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
 						}

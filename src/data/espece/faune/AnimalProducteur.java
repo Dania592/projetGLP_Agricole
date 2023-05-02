@@ -96,13 +96,6 @@ public abstract class AnimalProducteur extends Animal implements Produceur, Slau
 		return produit.getType();
 	}
 	/**
-	 * vérifie si l'animal a produit 
-	 */
-	public boolean haveProduced(){
-		return productifState == ProductifState.IN_WAIT;
-	}
-
-	/**
 	 * modifie l'état de productivité de l'animal 
 	 */
 	public void setProductifState(ProductifState productifState) {

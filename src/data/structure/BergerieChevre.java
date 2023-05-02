@@ -52,18 +52,7 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     public boolean isEmpty() {
        return getInHabitant().isEmpty();
     }
-
-    @Override
-    public boolean readyToSend() {
-       boolean haveProduced = false;
-       int indexInhabitant = 0;
-       ArrayList<Chevre> chevres = getInHabitant();
-       while(indexInhabitant<chevres.size()){
-            haveProduced = chevres.get(indexInhabitant).haveProduced();
-       }
-       return haveProduced;
-    }
-
+    
     @Override
     public void addSpecialSenderElement(Chevre specialSenderElement) {
         getInHabitant().add(specialSenderElement);

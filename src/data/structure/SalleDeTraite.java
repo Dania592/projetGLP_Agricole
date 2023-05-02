@@ -42,6 +42,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	public ArrayList<ActionnableKey> getASetOfAllActionnableKey() {
 		ArrayList<ActionnableKey> actionnableKey = super.getASetOfAllActionnableKey();
 		actionnableKey.add(getSpecificActionnableKey());
+		actionnableKey.add(ActionnableKey.PLACE_OF_ANIMAL_PRODUCTION);
 		return actionnableKey;
 	}
 
@@ -71,20 +72,6 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 	public boolean isEmpty() {
 		return vaches.isEmpty() && chevres.isEmpty();
 	}
-
-	@Override
-	public boolean readyToSend() {
-		Iterator<Vache> vacheIter = vaches.iterator();
-		Iterator<Chevre> chevreIter = chevres.iterator();
-		boolean isReady = false; 
-		while(vacheIter.hasNext() && !isReady){
-			isReady = vacheIter.next().getProductifState() == ProductifState.PRODUCING ? true :false; 
-		}while(chevreIter.hasNext() && !isReady){
-			isReady = chevreIter.next().getProductifState() == ProductifState.PRODUCING ? true :false; 
-		}
-		return isReady;
-	}
-
 
 	@Override
 	public void removeAll(ArrayList<MilkProduceur> transportableToRemoveList) {

@@ -18,6 +18,8 @@ import javax.swing.SwingUtilities;
 import data.configuration.GameConfiguration;
 import data.finance.Banque;
 import data.notification.Messagerie;
+import data.planning.Activity;
+import data.structure.hability.Actionnable;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import gui.Farm.actions.ActionsPane;
@@ -265,9 +267,9 @@ public class Hud implements Serializable {
 		}
 	}
 	// passer en parametre la structure pour recuperer
-	public void add_Actions(int x , int y , ArrayList<Task<?>> taches ) {
+	public void add_Actions(int x , int y , Actionnable actionnable, ArrayList<Activity> taches ) {
 		if(!Arrays.asList(component.getComponents()).contains(actions)) {
-			actions = new ActionsPane(taches, x , y , this);
+			actions = new ActionsPane(taches, actionnable, x , y , this);
 			component.add(actions);		
 		}
 		else {
