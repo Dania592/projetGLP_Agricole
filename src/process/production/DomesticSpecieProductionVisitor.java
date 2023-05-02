@@ -1,7 +1,6 @@
 package process.production;
 
 import java.io.Serializable;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import data.espece.characteristic.Produceur;
 import data.espece.characteristic.Produceur.ProductifState;

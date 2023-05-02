@@ -1,14 +1,13 @@
 package process.time;
 import data.configuration.GameConfiguration;
+import data.notion.basic.Farm;
 import data.planning.WeeklyPlanner.DayOfWeek;
 import data.time.Clock;
 import process.gestion.transaction.FinanceManager;
 public class TimeManager extends Thread{
     private Clock clock = Clock.getInstance();
     private int dayCounter;
-    public DayOfWeek getDay() {
-        return day;
-    }
+    
 
     private boolean gameOver = false;
     private boolean isTimeRunning;
@@ -21,6 +20,10 @@ public class TimeManager extends Thread{
         dayCounter= 0;
         isTimeRunning = true;
         day = DayOfWeek.MONDAY;
+    }
+    
+    public DayOfWeek getDay() {
+        return day;
     }
     
     public static TimeManager getInstance() {
@@ -47,6 +50,7 @@ public class TimeManager extends Thread{
         	if (!gameOver) {
         		clock.increment();
         		if (clock.getHour().getValue() == 24) {
+        			Farm.incrementCptJour();
         			dayCounter++;
         			FinanceManager.getInstance().incrementCounter();
         			clock.getMinute().setValue(0);

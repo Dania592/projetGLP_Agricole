@@ -1,6 +1,5 @@
 package process.action.task.launcher.basic;
 
-import data.espece.characteristic.Produceur;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.ProductifPlace;

@@ -89,7 +89,7 @@ public class EvolutionManager implements Serializable {
 
 			}	
 		}
-		//System.out.println(terrain);
+		
 	}
 
 	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){

@@ -11,10 +11,6 @@ import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.GestionnairePaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.PaintKeys;
-import process.game.Game;
-import process.game.GameBuilder;
-import process.game.MapManager;
-import process.gestion.transaction.Achat;
 
 public class GestionnaireStocksGUI extends JFrame {
 	
@@ -44,7 +40,6 @@ public class GestionnaireStocksGUI extends JFrame {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(paint(tab));	
-		System.out.println("Mon affichage à moi ::::::: " +GestionnaireStocks.getInstance());
 		
 	    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -66,14 +61,5 @@ public class GestionnaireStocksGUI extends JFrame {
 		return paintStrategy.paintGestionnaire(width, height, MANAGER_ROW_COUNT, MANAGER_COLUMN_COUNT, MIN_SPACE_BETWEEN, MANAGER_CARD_WIDTH, MANAGER_CARD_HEIGHT, MANAGER_CARD_COLOR, PaintKeys.STOCK, null, null,tab);			
 	}
 	
-
-	public static void main(String[] args) {
-		
-		Game game = new Game();
-		MapManager manager = GameBuilder.MapBuilder();
-		game.acheter(manager.getMap());
-				
-		GestionnaireStocksGUI gestionnaire = new GestionnaireStocksGUI("Gestionnaire",null, 0);
-	}
 	
 }

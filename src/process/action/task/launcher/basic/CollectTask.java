@@ -1,6 +1,5 @@
 package process.action.task.launcher.basic;
 
-import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.ProductifPlace;

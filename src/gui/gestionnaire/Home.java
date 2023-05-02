@@ -16,9 +16,6 @@ import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
 import gui.gestionnaire.gestionnairesGUI.RHManagerGUI;
 import gui.gestionnaire.keys.PaintKeys;
-import process.game.Game;
-import process.game.GameBuilder;
-import process.game.MapManager;
 
 public class Home extends JFrame{
 	

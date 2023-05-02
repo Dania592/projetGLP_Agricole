@@ -76,6 +76,7 @@ public class Hud implements Serializable {
 		removeChoix();
 		removeMessagerie();
 		removeAlert();
+		removeChoixGraine();
 		if(!Arrays.asList(component.getComponents()).contains(statistique)) {
 			component.add(statistique ,JLayeredPane.DRAG_LAYER);
 		}

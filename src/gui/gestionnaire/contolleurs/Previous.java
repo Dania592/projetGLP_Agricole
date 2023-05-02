@@ -23,7 +23,6 @@ public class Previous implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		layout.previous(containers.get(container.getSelectedIndex()));
-		System.out.println("Previous clicked");
 	}
 
 	@Override

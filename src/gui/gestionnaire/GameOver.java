@@ -66,12 +66,9 @@ public class GameOver extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(nouvellePartie)) {
 				if (jeu != null) {
-					System.out.println("Nouvelle partie");
 					jeu.restart();
 					GameOver.this.dispose();
-				} else {
-					System.out.println("Le jeu est null ");
-				}
+				} 
 			} else {
 				System.exit(0);
 			}

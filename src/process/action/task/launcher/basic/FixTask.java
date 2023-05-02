@@ -1,6 +1,5 @@
 package process.action.task.launcher.basic;
 
-import data.acteur.Personne;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Fixable;

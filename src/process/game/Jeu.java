@@ -26,7 +26,6 @@ import process.time.TimeManager;
 
 public class Jeu implements Runnable{
 
-	int i = 0;
 
 	private MainGuiTest frame ; 
 	private TimeManager timeManager;
@@ -35,6 +34,7 @@ public class Jeu implements Runnable{
 	private boolean gameOver = false;
 	private static Clip clip ;
 	public static boolean music ; 
+	//private int i = 0;
 	
 	public Jeu(Farm farm,String title) {
 		financeManager.setJeu(this);

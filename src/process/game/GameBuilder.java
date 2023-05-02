@@ -12,8 +12,6 @@ import data.espece.flore.terrains.Terrain;
 import data.gestion.RessourcesManager;
 import data.map.Map;
 import data.notion.basic.Farm;
-import data.structure.BergerieChevre;
-import data.structure.BergerieMouton;
 import data.structure.Enclos;
 import data.structure.Entrepot;
 import data.structure.Garage;

@@ -32,7 +32,6 @@ public class GestionnaireStocks implements GestionnaireInterface, Serializable {
 	}
 	
 	public void reset() {
-		System.out.println("Reset");
 		graines.clear();
 		produits.clear();
 	}

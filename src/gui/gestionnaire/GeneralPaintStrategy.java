@@ -288,7 +288,6 @@ public class GeneralPaintStrategy {
 		ArrayList<?> elements = getElements(type, key);
 		if (elements != null) {
 			cardCount = elements.size();
-			System.out.println("Card count " + cardCount + " " + key.name());
 		}
 		counter = cardCount - 1;
 		JLayeredPane cardContainer = paintLayeredPane(x, y, w, h, cardLayout);
@@ -849,9 +848,6 @@ public class GeneralPaintStrategy {
 			frame.dispose();
 			new InfosTransaction("Charge payée", frame);
 
-			System.out.println(FinanceManager.getInstance().getCharges().size());
-			System.out.println(GestionnaireFinancier.getInstance().getCharges().size());
-			System.out.println(charge.isPaid());
 		}
 
 	}

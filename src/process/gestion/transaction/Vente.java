@@ -5,9 +5,7 @@ import java.util.HashMap;
 import data.finance.Banque;
 import data.gestion.GestionnaireFinancier;
 import gui.gestionnaire.keys.Keys;
-import process.gestion.visitor.AddKeyVisitor;
 import process.gestion.visitor.RemoveKeyVisitor;
-import process.gestion.visitor.RemoveVisitor;
 
 public class Vente extends Transaction {
 	
@@ -74,7 +72,6 @@ public class Vente extends Transaction {
 		if (cart!=null && cart.size()!=0) {
 			setValidated(true);
 			for (Keys key : cart.keySet()) {
-				System.out.println("enlever : " + key.name());
 				key.accept(removeVisitor,cart.get(key));
 			}
 			calculateTotalCost();

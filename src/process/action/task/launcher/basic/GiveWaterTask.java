@@ -1,10 +1,7 @@
 package process.action.task.launcher.basic;
 
-import data.espece.characteristic.WaterConsumer;
-import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.production.Produits;
 import data.structure.hability.Hydratable;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;

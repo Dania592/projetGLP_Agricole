@@ -41,7 +41,6 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     public Void action(Enclos enclos){
         enclos.setNiveauEau(FullLevel.FULL);
         enclos.setAnimalHydrationLevel(HydrationLevel.FULLY_HYDRATED);
-       // System.out.println("VISITOR EAU ==="+enclos.getAnimalsHydrationLevel());
         return null;
     }
 
@@ -54,7 +53,6 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
         if(hydratablePlace.getSpecificActionnableKey() == ActionnableKey.TERRAIN){
             needToBeHydrated = ((Terrain)hydratablePlace).getProductifState() == ProductifState.PRODUCING;
         }
-        System.out.println(needToBeHydrated +"&&"+ hydratablePlace.isNeedToBeHydrated() +"&&"+ haveWater());
         needToBeHydrated = needToBeHydrated && hydratablePlace.isNeedToBeHydrated() && haveWater();
         return needToBeHydrated;
     }

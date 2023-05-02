@@ -188,17 +188,6 @@ public class Board extends JLayeredPane implements Serializable{
 	}
 	
 	
-//	 public void paintProgressBar(Graphics g ) {
-//	 	ArrayList<Task<?>> tasks = TaskManager.getInstance().getinProcess();
-//	 	//g.drawLine(0, 0, 300, 300);
-//	 	for(Task<?> task : tasks) {
-//	 		Position position =task.getActionnableTarget().getPosition();
-//	 		int x = (position.getColonne_init()+2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getX() ; 
-//	 		int y = (position.getLigne_init()-2)*GameConfiguration.CASE_DIMENSION + farm.getManager().getMapManager().getMap().getY();
-//	 		ImageIcon bar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Taches"+File.separator+task.getState()+".png");
-//	 		g.drawImage(bar.getImage(), x, y, 100,20, null);
-//	 	}
-//	 }
 	
 
 	

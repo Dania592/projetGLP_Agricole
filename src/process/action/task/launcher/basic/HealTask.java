@@ -1,10 +1,8 @@
 package process.action.task.launcher.basic;
 
-import data.espece.characteristic.Healable;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.HealablePlace;
-import data.structure.hability.Hydratable;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
 import process.action.task.Task;
@@ -13,7 +11,6 @@ import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPla
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.HealerVisitor;
-import process.action.visitor.place.HydrationVisitor;
 
 public class HealTask extends Task<HealablePlace> {
     HealerVisitor visitor;

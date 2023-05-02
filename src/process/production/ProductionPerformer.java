@@ -2,7 +2,6 @@ package process.production;
 
 import java.io.Serializable;
 import java.util.HashMap;
-// import java.util.Iterator;
 import java.util.Iterator;
 
 import data.espece.characteristic.MilkProduceur;

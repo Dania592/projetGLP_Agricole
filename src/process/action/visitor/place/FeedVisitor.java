@@ -4,8 +4,6 @@ import data.espece.characteristic.FoodConsumer.HungerLevel;
 import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-// import data.espece.faune.Poule;
-// import data.espece.faune.Vache;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
@@ -30,7 +28,7 @@ import process.evolution.FullLevel;
 public class FeedVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable {
-        throw new UnableToPerformSuchActionWithCurrentActionnable(etable);
+    	throw new UnableToPerformSuchActionWithCurrentActionnable(etable);
     }    
 
     @Override

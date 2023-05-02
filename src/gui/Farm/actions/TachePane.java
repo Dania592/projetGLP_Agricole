@@ -126,7 +126,6 @@ public class TachePane extends JPanel{
 			if (activity == Activity.PLANT) {
 				ActionsPane actions = (ActionsPane) TachePane.this.getParent();
 					hud.removeActionPane();
-					System.out.println("ACTIONS X : " + actions.getX());
 					hud.addChoixGraine(actions.getX(), actions.getY(),TachePane.this);
 			} else {
 				lunchTask();	

@@ -28,9 +28,6 @@ import gui.gestionnaire.contolleurs.AddToCart;
 import gui.gestionnaire.contolleurs.WindowDispose;
 import gui.gestionnaire.keys.Keys;
 import gui.gestionnaire.keys.PaintKeys;
-import process.game.Game;
-import process.game.GameBuilder;
-import process.game.MapManager;
 import process.gestion.transaction.Achat;
 import process.gestion.transaction.Transaction;
 import process.gestion.transaction.Vente;
@@ -203,11 +200,6 @@ public class MarketGUI extends JFrame{
 		return frame;
 	}
 	
-	public static void main(String[] args) {
-		Game game = new Game();
-		MapManager manager = GameBuilder.MapBuilder();
-		game.acheter(manager.getMap());
-		MarketGUI market = new MarketGUI(null,PaintKeys.BUY,0);
-	}
+
 	
 }

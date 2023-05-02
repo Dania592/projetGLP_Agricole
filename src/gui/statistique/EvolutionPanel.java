@@ -1,6 +1,5 @@
 package gui.statistique;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
@@ -15,8 +14,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import data.gestion.GestionnaireFinancier;
 import gui.gestionnaire.GeneralPaintStrategy;
-import process.transaction.Achat;
-import process.transaction.Vente;
+import process.gestion.transaction.Achat;
+import process.gestion.transaction.Vente;
 
 public class EvolutionPanel extends StatPanel {
 

@@ -42,9 +42,6 @@ public class MapManager implements Serializable{
 			composants.put(element.getReference(), element );
 			reserve(element);			
 		}
-		else {
-			System.out.println("case non dispo");
-		}
 	}
 	
 	public void addEnclos(Enclos enclos ) {

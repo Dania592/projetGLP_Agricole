@@ -5,12 +5,10 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import data.gestion.GestionnaireRH;
 import gui.Farm.MainGuiTest;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.GestionnairePaintStrategy;
 import gui.gestionnaire.contolleurs.WindowDispose;
-import gui.gestionnaire.keys.Employees;
 import gui.gestionnaire.keys.PaintKeys;
 
 public class RHManagerGUI extends JFrame {

@@ -1,18 +1,9 @@
 package process.action.task.coordinator;
 
 
-import data.structure.Garage;
-import data.espece.characteristic.Produceur.ProductifState;
-import data.espece.characteristic.WaterConsumer.HydrationLevel;
-import data.espece.faune.Chevre;
-import data.espece.faune.Mouton;
-import data.espece.faune.Vache;
 import data.espece.flore.terrains.Terrain;
-import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
-import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
-import data.production.Produits;
 import data.structure.Abatoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
@@ -25,10 +16,6 @@ import data.structure.Maison;
 import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
-import data.structure.hability.Actionnable;
-import data.structure.hability.Fixable;
-import data.structure.hability.Hydratable;
-import data.structure.hability.ProductifPlace;
 import gui.gestionnaire.keys.Graine;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;

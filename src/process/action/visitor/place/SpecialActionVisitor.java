@@ -56,7 +56,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         Mouton currentMouton;
         while(moutonIter.hasNext()){
             currentMouton = moutonIter.next();
-            System.out.println(currentMouton);
+           
             if(currentMouton.getProductifState()==ProductifState.IN_WAIT){
                 currentMouton.setProductifState(ProductifState.HAVE_PRODUCE);
                 try {
@@ -71,7 +71,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
 
             }
         }
-        System.out.println(GestionnaireStocks.getInstance().getProduits());
         return null;
     }
 
@@ -112,7 +111,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                 }
             }
         }
-        System.out.println(GestionnaireStocks.getInstance().getProduits());
         return null;
     }
 
@@ -158,7 +156,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         }else{
             GestionnaireStocks.getInstance().getProduits().put(Produits.WATER, capaciteSeau);
         }
-        // .containsKey(Produits.WATER)? puit.getProduction().get(Produits.WATER) : 0;
+    
         puit.setQuantite(puit.getQuantite()-1);
         return null;
     }

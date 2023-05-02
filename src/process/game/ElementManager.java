@@ -1,17 +1,11 @@
 package process.game;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.crypto.AEADBadTagException;
 
 import data.configuration.GameConfiguration;
-import data.espece.characteristic.Transportable;
 import data.map.Case;
 import data.notion.basic.Element;
 import data.structure.Enclos;
-import data.structure.hability.Fixable.FixableState;
 import data.structure.hability.ProductifPlace;
 import process.production.ProductionManager;
 
@@ -119,8 +113,7 @@ public class ElementManager implements Serializable{
 		return elementMouse;
 
 	}
-
-	// à modifier 
+ 
 	public int nb_ligne_out_of_screen() {
 		return -mapManager.getMap().getY() / GameConfiguration.CASE_DIMENSION;
 	}
@@ -128,5 +121,7 @@ public class ElementManager implements Serializable{
 	public int nb_colonne_out_of_screen() {
 		return -mapManager.getMap().getX() / GameConfiguration.CASE_DIMENSION;
 	}
+
+	
 
 }

@@ -195,7 +195,7 @@ public class ElementCard extends RoundedPanel{
 					Element element = elements.get(nbE -1);
 
 					if(element instanceof AnimalProducteur) {
-						//System.out.println(element.getReference());
+					
 						AnimalProducteur animal = (AnimalProducteur)element;
 						try {
 							animal.setStatique();
@@ -221,7 +221,7 @@ public class ElementCard extends RoundedPanel{
 
 						//removeOneElement(element);	
 						component.setSelected(element);
-						//System.out.println(component.getSelected().getReference());
+					
 
 						component.getHud().removeChoix();
 						component.getHud().addValidation();

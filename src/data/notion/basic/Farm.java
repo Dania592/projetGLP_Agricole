@@ -1,13 +1,16 @@
 
 package data.notion.basic;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.espece.flore.Saison;
 import data.gestion.RessourcesManager;
 import data.notification.Messagerie;
+import data.structure.Structure;
 import data.time.Clock;
 import data.time.CyclicCounter;
 import process.action.task.coordinator.TaskManager;
@@ -21,7 +24,7 @@ public class Farm implements Serializable {
 
 	private int height = 22;
 	private int width = 38;
-	private int cptJour;
+	private static int cptJour;
 	public static Saison saisonActuelle ;
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
@@ -114,7 +117,7 @@ public class Farm implements Serializable {
 		return cptJour;
 	}
 
-	public void incrementCptJour() {
+	public  static void incrementCptJour() {
 		if (cptJour == 19) {
 			cptJour = 0;
 		} else {
@@ -128,9 +131,12 @@ public class Farm implements Serializable {
 		return saisonActuelle;
 	}
 
-	public void setSaisonActuelle() {
+	public static void setSaisonActuelle() {
+	
 		if (cptJour < 5) {
 			saisonActuelle = Saison.ETE;
+			
+			
 		} else {
 			if (cptJour < 10) {
 				saisonActuelle = Saison.HIVER;
@@ -142,6 +148,7 @@ public class Farm implements Serializable {
 				}
 			}
 		}
+		updateSaison();
 	}
 
 	public ElementManager getManager() {
@@ -187,6 +194,13 @@ public class Farm implements Serializable {
 					elementManager.getMapManager().getMap().getCase(ligneIndex, colonneIndex).setLibre(false);
 				}
 			}
+		}
+	}
+	
+	public static void updateSaison() {
+		for(ArrayList<Structure> structures : RessourcesManager.getInstance().getGestionnaireStructure().getStructures().values()) {
+			for(Structure structure : structures) {
+				structure.setImage(GameConfiguration.IMAGE_PATH+saisonActuelle+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
 		}
 	}
 

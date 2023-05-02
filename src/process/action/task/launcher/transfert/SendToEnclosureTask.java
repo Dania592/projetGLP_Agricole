@@ -1,7 +1,5 @@
 package process.action.task.launcher.transfert;
 
-import data.acteur.Personne;
-import data.espece.characteristic.Transportable;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
@@ -16,12 +14,6 @@ import process.action.visitor.place.transfert.EnclosureSenderVisitor;
 
 public class SendToEnclosureTask extends Task<Distributor<?>>{
     EnclosureSenderVisitor visitor;
-
-    // public SendToEnclosureTask(Activity activity, Distributor<?> transportable, EnclosureSenderVisitor enclosureSender, Personne personne)
-    //         throws UnableToGenerateNewTaskException {
-    //     super(activity, transportable, personne);
-    //     this.visitor = enclosureSender;
-    // }
 
     public SendToEnclosureTask(Activity activity, Distributor<?> transportable, EnclosureSenderVisitor enclosureSender)
     throws UnableToGenerateNewTaskException {

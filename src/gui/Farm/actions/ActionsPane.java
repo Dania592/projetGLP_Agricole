@@ -74,7 +74,7 @@ public class ActionsPane extends RoundedPanel {
 		int x = 5 ;
 		int y = 5 ;
 		for(Activity tache : taches) {
-			System.out.println("l'actionnable est null ? : "+ (actionnable==null));
+			
 			TachePane pane = new TachePane(tache, actionnable , hud );
 			pane.setBounds(x,y,190,50);
 			y+=55;

@@ -1,5 +1,6 @@
 package process.action.task.launcher.transfert;
 
+import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import data.structure.hability.Distributor;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
@@ -10,8 +11,6 @@ import process.action.visitor.being.exception.NeedToBeSendToSpecialProductionPla
 import process.action.visitor.being.exception.ProblemOccursInProductionException;
 import process.action.visitor.being.exception.UnableToMakeTheTransfertException;
 import process.action.visitor.place.transfert.HomeSenderVisitor;
-import data.acteur.Personne;
-import data.myExceptions.UnableToGenerateNewTaskException;
 
 public class SendBackHomeTask extends Task<Distributor<?>> {
     HomeSenderVisitor visitor;

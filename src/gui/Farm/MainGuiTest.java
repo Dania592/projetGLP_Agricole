@@ -20,8 +20,6 @@ import data.planning.Activity;
 import data.planning.DailyPlanner;
 import data.structure.hability.Actionnable;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
-import gui.gestionnaire.keys.Structures;
-import process.action.task.Task;
 import process.action.task.coordinator.TaskManager;
 import process.time.TimeManager;
 
@@ -95,7 +93,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			int y = e.getY();
 			Element element = farm.getManager().search(x, y);
 			if(element!=null) {
-				//System.out.println(element.getReference());
+				
 				selected = element ;
 				dashboard.setSelected(element);
 				if(selected instanceof Actionnable) {

@@ -1,7 +1,6 @@
 package gui.Farm;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import data.acteur.Fermier;
-import data.map.Map;
 import gui.Farm.farmer.FermierGui;
 public class Musique {
 
