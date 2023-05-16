@@ -5,6 +5,7 @@ import data.espece.characteristic.WaterConsumer.HydrationLevel;
 import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
+import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
 import data.structure.Abatoire;
@@ -88,6 +89,7 @@ public class HydrationVisitor implements PlaceVisitor<Void>{
     public Void action(Terrain terrain) {
         terrain.setHydrationLevel(HydrationLevel.FULLY_HYDRATED);
         terrain.getHydrationCounter().reset();
+        terrain.setEtatSante(EtatSante.BONNE_SANTE);
         return null;
     }
 

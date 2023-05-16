@@ -9,6 +9,8 @@ import process.game.ElementManager;
 
 public class KeyControls implements KeyListener,Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ElementManager manager ;
 	private Element selected ;
 	private Board board;
@@ -23,42 +25,35 @@ public class KeyControls implements KeyListener,Serializable {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		char code = e.getKeyChar();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int code = e.getKeyCode();
 		if(!selected.isStatique()) {
 			switch(code) {
-			case 'z':
+			case KeyEvent.VK_UP:
 				// ajouter un gestionnaire de mouvement des element dans le element manager 
 				manager.moveUp(selected);
 				break;
-			case 's':
+			case KeyEvent.VK_DOWN:
 				manager.moveDown(selected);			
 				break;
 
-			case 'q':
+			case KeyEvent.VK_LEFT:
 				manager.moveLeft(selected);
 				break;
-			case 'd':
+			case KeyEvent.VK_RIGHT:
 				manager.moveRight(selected);
 				break;
 			default:
 				break;
 			}		
 		}
-
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-//		int code = e.getKeyCode();
-//		if (board.getGameState() == board.optionState) {
-//			optionsState(code);
-//		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		//manager.stop(e.getKeyCode());		
-	}
+	public void keyReleased(KeyEvent e) {}
 
 
 	public Element getSelected() {
@@ -85,6 +80,5 @@ public class KeyControls implements KeyListener,Serializable {
 //			enterTouchPressed = true;
 //		}
 //	}
-
 
 }

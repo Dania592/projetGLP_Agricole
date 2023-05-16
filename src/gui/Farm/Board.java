@@ -10,15 +10,12 @@ import java.util.Iterator;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import data.configuration.GameConfiguration;
 import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.characteristic.WaterConsumer.HydrationLevel;
 import data.espece.flore.terrains.Terrain;
 import data.notion.basic.Element;
 import data.notion.basic.Farm;
-import data.notion.basic.Position;
 import data.structure.Enclos;
-import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.Choix;
 import gui.gestionnaire.gestionnairesGUI.UIGraph;
 import process.action.task.coordinator.TaskManager;
@@ -135,26 +132,24 @@ public class Board extends JLayeredPane implements Serializable{
 					
 					paintStrategy.paintLevelHeart(enclos, g);
 				}
-			}else if(element instanceof Terrain){
+			} else if(element instanceof Terrain){
 				Terrain terrain = (Terrain)element;
 				paintStrategy.paint(terrain, g);
 				if(terrain.getHydrationLevel()!= HydrationLevel.FULLY_HYDRATED && terrain.getProductifState()!= ProductifState.UNABLE_TO_PRODUCE && terrain.getHydrationLevel()!= HydrationLevel.DEAD_FROM_DESHYDRATION){
 					paintStrategy.paintLevelHeart(terrain, g);
 				}
-			}
-			else {
+			} else {
 				paintStrategy.paint(element, g);				
 			}
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
 				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
 				terrain.evoluer();	
-			}else {
+			} else {
 				if ( choixTerrain != null ) {
 					remove(choixTerrain);
 				}
 			}
-			
 		}
 		
 		hud.time();

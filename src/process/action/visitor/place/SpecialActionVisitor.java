@@ -68,7 +68,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                         | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                         | UnableToMakeTheTransfertException e) {
                 }
-
             }
         }
         return null;
@@ -254,7 +253,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
             switch(terrain.getEvolution()){
                 case LABOURE : 
                     if(graine == null){
-                        graine = Graine.GRAINE_AIL;
+                        graine = Graine.GRAINE_TOMATE;
                     }
                     terrain.setType(graine);
                     terrain.setEvolution(EvolutionTerrain.PLANTE);

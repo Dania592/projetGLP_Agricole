@@ -78,10 +78,11 @@ public class EvolutionManager implements Serializable {
 				&& terrain.getEvolution() != EvolutionTerrain.POURRI) {
 			if (!(ProductionManager.getInstance().getProductifList().contains(terrain))) {
 				ProductionManager.getInstance().addToProductifList(terrain);
-			}if(!(terrain.isCurrentlyUsedForAnotherTask())){
+			}
+			if(!(terrain.isCurrentlyUsedForAnotherTask())){
 				CyclicCounter hydrationCounter = terrain.getHydrationCounter();
 				hydrationCounter.increment();
-				if(hydrationCounter.getValue() == 0 &&(terrain.getEvolution()!=EvolutionTerrain.VIERGE || terrain.getEtatSante() != EtatSante.GRAVEMENT_MALADE)) {
+				if(hydrationCounter.getValue() == 0 &&(terrain.getEvolution()!=EvolutionTerrain.VIERGE )) {
 					updateHealthState(terrain);
 				}if(haveToUpdateProducingStateOfCurrentlyUnabledProduceur(terrain)){
 					terrain.setProductifState(ProductifState.PRODUCING);
@@ -89,7 +90,6 @@ public class EvolutionManager implements Serializable {
 
 			}	
 		}
-		
 	}
 
 	private boolean haveToUpdateProducingStateOfCurrentlyUnabledProduceur(Terrain terrain){

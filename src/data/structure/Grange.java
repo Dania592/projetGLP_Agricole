@@ -4,6 +4,7 @@ import java.io.File;
 
 import data.configuration.GameConfiguration;
 import data.espece.flore.Saison;
+import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
 import gui.gestionnaire.keys.Structures;

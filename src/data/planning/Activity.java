@@ -76,12 +76,7 @@ public enum Activity  implements Serializable{
     FERTILIZE_GROUND(2, "Mettre de l'engrais", Type.CARE, ActionnableKey.TERRAIN, 1),
     HARVEST(3, "Récolter", Type.GET_PRODUCTION, ActionnableKey.TERRAIN, 1),
     REMOVE_ROTTEN_PLANT(3, "Retirer plantes pourries", Type.SPECIAL, ActionnableKey.TERRAIN, 1),
-    HEAL_FIELD(3, "Soigner", Type.HEAL, ActionnableKey.TERRAIN, 1),
     // ------------------------------------------------------------------- //
-    
-
-
-    
     ;
 
     public enum Type{

@@ -27,6 +27,9 @@ public class TimeManager extends Thread{
         return day;
     }
     
+    public void setFarm(Farm farm) {
+    	this.farm = farm ;
+    }
     public static TimeManager getInstance() {
     	return timeManager;
     }
@@ -88,10 +91,6 @@ public class TimeManager extends Thread{
     
     public void setTimeSpeed(int coef) {
     	timeSpeed=coef;
-    }
-    
-    public void setFarm(Farm farm) {
-    	this.farm = farm;
     }
 
 }

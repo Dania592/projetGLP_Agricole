@@ -13,6 +13,7 @@ public class Engrais {
 	public float getPrixAchat() {
 		return prixAchat;
 	}
+	
 	public void setPrixAchat(float prixAchat) {
 		this.prixAchat = prixAchat;
 	}

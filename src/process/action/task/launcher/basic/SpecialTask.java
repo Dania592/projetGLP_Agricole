@@ -20,7 +20,7 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
     
     public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, SpecialActionVisitor visitor)
             throws UnableToGenerateNewTaskException {
-        this(activity, actionnableTarget, null, visitor);
+        this(activity, actionnableTarget, Graine.GRAINE_TOMATE, visitor);
     }
 
     public SpecialTask(Activity activity, SpecialActionPerformer actionnableTarget, Graine graine, SpecialActionVisitor visitor)
@@ -29,8 +29,6 @@ public class SpecialTask extends Task<SpecialActionPerformer> {
         this.visitor = visitor;
         this.graine = graine;
     }
-
-
 
     public Graine getGraine() {
         return graine;

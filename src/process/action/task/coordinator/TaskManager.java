@@ -51,8 +51,9 @@ public class TaskManager{
 
     public void addNewTask(Activity activity, Actionnable actionnable, Graine graine) throws UnableToGenerateNewTaskException, TaskNotNeededToBePerform, UnknownActivityException, AskingToWorkAtIllegalHourException, UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException{
         Task<?> currentTask;
-        if(activity ==Activity.PLANT){
+        if(activity == Activity.PLANT){
             Terrain terrain = (Terrain)actionnable;
+            terrain.setType(graine);
             currentTask = terrain.launchAction(taskGenerator, activity, graine);
         }else{
             currentTask = actionnable.launchAction(taskGenerator, activity);       

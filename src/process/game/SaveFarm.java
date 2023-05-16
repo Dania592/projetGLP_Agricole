@@ -59,7 +59,6 @@ public class SaveFarm {
 			 try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
 				line = (Farm)ois.readObject();
-				
 				ois.close();
 				
 				return line ;

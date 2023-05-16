@@ -301,8 +301,6 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
                         return new SpecialTask(activity, terrain, specialTaskVisitor);
                     case FERTILIZE_GROUND:
                         return new CareTask(activity, terrain, careVisitor);
-                    case HEAL_FIELD:
-                        return new HealTask(activity, terrain, healerVisitor);
                     default:
                         throw new UnableToPerformSuchActionWithCurrentActionnable(activity, terrain);
                     }

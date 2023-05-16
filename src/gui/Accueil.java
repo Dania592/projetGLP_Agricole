@@ -15,6 +15,7 @@ import process.game.GameBuilder;
 import process.game.Jeu;
 import process.game.SaveFarm;
 import process.time.TimeManager;
+import javax.swing.JEditorPane;
 
 public class Accueil extends JFrame{
 
@@ -24,27 +25,12 @@ public class Accueil extends JFrame{
 
 	public Accueil() {
 
-		setLayout(null);
-		JLayeredPane panel = new JLayeredPane();
-		panel.setBounds(0,0,1000,700);
-		panel.setLayout(null);
-		JLabel fond = GeneralPaintStrategy.printImageLabel("", 0, 0, panel.getWidth(), panel.getHeight(), GameConfiguration.IMAGE_PATH+"Accueil.png", getFont());
-		panel.add(fond, JLayeredPane.DEFAULT_LAYER);
-		File file = new File(GameConfiguration.FILE_NAME_SAVE);
-		int x = 400;
+			
+		JEditorPane editorPane = new JEditorPane();
 		
-		if(file.exists()) {
-			lastFarm = GeneralPaintStrategy.printImageLabel("", 150, 550, 200, 50, GameConfiguration.IMAGE_PATH+"lastFarm.png", getFont());	
-			lastFarm.addMouseListener(new ReadFarmAction());
-			panel.add(lastFarm, JLayeredPane.DRAG_LAYER);
-			x = 600;
-		}
 		
-		newFarm = GeneralPaintStrategy.printImageLabel("", x, 550, 200, 50, GameConfiguration.IMAGE_PATH+"newFarm.png", getFont());
-		newFarm.addMouseListener(new ReadFarmAction());
-		panel.add(newFarm, JLayeredPane.DRAG_LAYER);
-
-		add(panel);
+		editorPane.setBounds(192, 131, 493, 365);
+		getContentPane().add(editorPane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1000,700);
 		setVisible(true);

@@ -24,6 +24,7 @@ public class Entrepot extends Structure{
 	private ArrayList<Produit> produits ;
 	private int capacite =100  ; 
 	private boolean usedForAnAction = false;
+	
 	public Entrepot( String reference ) {
 		super( reference );
 		this.produits = new ArrayList<>();

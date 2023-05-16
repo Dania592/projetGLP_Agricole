@@ -110,5 +110,7 @@ public abstract class GameConfiguration {
 	 * fréquence d'apparition des catastrophes 
 	 */
 	public final static int FREQUENCE_CATASTROPHE = 10;
+	
+	public final static int SEASON_CYCLE = 1; // jours
 
 }

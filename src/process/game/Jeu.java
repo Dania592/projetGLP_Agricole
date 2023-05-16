@@ -51,6 +51,7 @@ public class Jeu implements Runnable{
 		music= true ;
 		timeManager = TimeManager.getInstance();	
 		TimeManager.getInstance().setClock(farm.getClock());
+		TimeManager.getInstance().setFarm(farm);
 		TimeManager.getInstance().start();
 		taskManager = TaskManager.getInstance();
 		frame = new MainGuiTest(title, farm , taskManager);

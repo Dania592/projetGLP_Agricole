@@ -8,6 +8,5 @@ public class Meat extends Produit {
     public Meat(){
         super(Produits.MEAT, PRIX_VENTE);
     }
-
     
 }

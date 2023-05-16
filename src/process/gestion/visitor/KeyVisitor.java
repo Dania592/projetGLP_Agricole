@@ -14,6 +14,7 @@ import gui.gestionnaire.keys.Terrains;
 
 public interface KeyVisitor<T> extends Serializable {
 
+
 	T visit(Animals animal, int quantity);
 
 	T visit(Graine graine, int quantity);

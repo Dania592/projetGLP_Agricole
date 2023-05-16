@@ -9,11 +9,9 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 
 import data.configuration.GameConfiguration;
 import data.notion.basic.Farm;
-import gui.gestionnaire.GeneralPaintStrategy;
 import process.game.GameBuilder;
 import process.game.Jeu;
 import process.game.SaveFarm;
@@ -25,9 +23,7 @@ import process.game.SaveFarm;
  *
  */
 public class ChoixFerme extends JFrame{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel lastFarme ;
 	private JLabel newFarme ;

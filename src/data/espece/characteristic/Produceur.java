@@ -4,7 +4,6 @@ import data.notion.Mortel.EtatSante;
 import data.production.Produits;
 import data.time.CyclicCounter;
 
-
 /**
  * Les espèces domestiquées implémentant cette interface seront générateurs de {@link Produceur}
  * Les {@link Produceur} sont caractérisés par un cycle de production de durée relative à leur espèce.
@@ -22,6 +21,7 @@ public interface Produceur extends DomesticSpecie{
     * indiquent si le {@link Produceur} produit actuellement, a produit, est en attente d'être 
     * transféré vers une {@link data.structure.hability.ProductifPlace} ou en attente de l'intervention du joueur.
     */
+	
     public enum ProductifState{
         UNABLE_TO_PRODUCE,
         PRODUCING,
@@ -30,6 +30,7 @@ public interface Produceur extends DomesticSpecie{
         IN_WAIT,
         ;
     }
+    
     /**
      * Le Type de {@link Produceur} permet de déterminer la quantité produite de {@link Produits}
      */
@@ -84,7 +85,6 @@ public interface Produceur extends DomesticSpecie{
 
             }
         }
-        
     }
 
     /**
@@ -96,7 +96,6 @@ public interface Produceur extends DomesticSpecie{
 		POULE(10, Type.AVERAGE_PRODUCEUR),
 		VACHE(50, Type.AVERAGE_PRODUCEUR),
         TERRAIN(100, Type.AVERAGE_PRODUCEUR),
-
         ;
         
 		private int timeInSeconde;

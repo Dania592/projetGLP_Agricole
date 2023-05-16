@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import data.configuration.GameConfiguration;
 import data.espece.characteristic.Healable;
 import data.espece.characteristic.Produceur;
 import data.espece.characteristic.WaterConsumer;
@@ -49,10 +50,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private ProductifState productifState = ProductifState.UNABLE_TO_PRODUCE; 
 	private HashMap<Produits, Integer> production = new HashMap<>();
 	private HydrationLevel hydrationLevel = HydrationLevel.FULLY_HYDRATED;
-	public void setEtatSante(EtatSante etatSante) {
-		this.etatSante = etatSante;
-	}
-
 	private Produceur.Type produceurType = Type.AVERAGE_PRODUCEUR;
 	private static Produceur.TimeItTakes timeItTakesToProduce = TimeItTakes.TERRAIN;
 	private CyclicCounter productifCycle = new CyclicCounter(timeItTakesToProduce.getTimeInSeconde());
@@ -60,6 +57,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private static int DEFAULT_PRODUCED_QUANTITY = 25;
 	private EvolutionTerrain evolution;
 	private Graine type;
+	private String imagesPath = GameConfiguration.IMAGE_PATH+"Terrain"+File.separator;
 	private HashMap<EvolutionTerrain, String> images = new HashMap<>();
 	private EtatSante etatSante = EtatSante.BONNE_SANTE;
 	public final static int DEFAUT_MAX_HYDRATION_COUNTER = timeItTakesToProduce.getTimeInSeconde()/3;
@@ -67,29 +65,23 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	private boolean isDoped = false;
 
 
-	public Terrain(String reference, boolean statique ,Graine type) {
+	public Terrain(String reference, boolean statique, Graine type) {
 		super(reference, statique, DIMENSION);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
-		if (type != null) {
-			images = ImagesTerrains.getInstance().getImages().get(type);
-			setImage(images.get(evolution));
-		} else {
-			images.put(EvolutionTerrain.VIERGE, "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
-			setImage("src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png");
-		}
-		// timeItTakesToProduce = 
-		// randomQuantity();
+		setImage(imagesPath + evolution.name() +".png");
 	}
 	
 	public void setType(Graine type) {
 		this.type = type;
 	}
 	
+	public void setEtatSante(EtatSante etatSante) {
+		this.etatSante = etatSante;
+	}
 
 	public void evoluer(){
 		evolution = evolution.evolue();
-		setImage(images.get(evolution));
 	}
 
 
@@ -109,7 +101,11 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	
 	public void setEvolution(EvolutionTerrain evolution) {
 		this.evolution = evolution;
-		setImage(images.get(evolution));
+		if (evolution != EvolutionTerrain.VIERGE && evolution != EvolutionTerrain.LABOURE ) {
+			imagesPath = GameConfiguration.IMAGE_PATH+"Terrain"+File.separator + type.name() + File.separator;	
+		}
+		System.out.println(imagesPath + evolution.name() + ".png");
+		setImage(imagesPath + evolution.name() + ".png");
 	}
 	
 	// public void randomQuantity() {

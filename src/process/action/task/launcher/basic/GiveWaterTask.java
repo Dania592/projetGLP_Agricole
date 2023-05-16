@@ -1,7 +1,9 @@
 package process.action.task.launcher.basic;
 
+import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
+import data.production.Produits;
 import data.structure.hability.Hydratable;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -36,6 +38,8 @@ public class GiveWaterTask extends Task<Hydratable>{
 
     @Override
     protected void performSpecialActionToTerminateTask(){
+    	Integer oldQuantity = GestionnaireStocks.getInstance().getProduits().get(Produits.WATER);
+        GestionnaireStocks.getInstance().getProduits().replace(Produits.WATER, oldQuantity, oldQuantity-1);
     }
 
     
