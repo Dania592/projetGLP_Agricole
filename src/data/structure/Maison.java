@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import data.acteur.Personne;
 import data.configuration.GameConfiguration;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -21,7 +22,7 @@ public class Maison extends Refuge<Personne>{
 
 	public Maison( String reference  ) {
 		super( reference  );
-			setImage(GameConfiguration.IMAGE_PATH+ data.notion.basic.Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Maison.png");
+			setImage(GameConfiguration.IMAGE_PATH+ Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Maison.png");
 	}
 	
 	

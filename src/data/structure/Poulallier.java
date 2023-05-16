@@ -8,6 +8,7 @@ import java.util.Iterator;
 import data.configuration.GameConfiguration;
 import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Poule;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.basic.Farm;
@@ -32,7 +33,7 @@ public class Poulallier extends Refuge<Poule> implements ProductifPlace, Distrib
 	
 	public Poulallier(String reference ) {
 		super( reference );
-		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Poulailler.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Poulailler.png");	
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package data.structure;
 import java.io.File;
 
 import data.configuration.GameConfiguration;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -20,7 +21,7 @@ public class Grange extends Structure{
 
 	public Grange( String reference) {
 		super( reference);
-		setImage(GameConfiguration.IMAGE_PATH + data.notion.basic.Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Grange.png");
+		setImage(GameConfiguration.IMAGE_PATH + Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Grange.png");
 
 	}
 

@@ -14,6 +14,7 @@ public class TimeManager extends Thread{
     private DayOfWeek day;
     private int timeSpeed = 1; 
     private static TimeManager timeManager = new TimeManager();
+    private Farm farm ;
 
     // doit etre modifier pour prendre en compte l'etat de la ferme == jour , semaine ...
     private  TimeManager(){ 
@@ -26,6 +27,9 @@ public class TimeManager extends Thread{
         return day;
     }
     
+    public void setFarm(Farm farm ) {
+    	this.farm = farm ;
+    }
     public static TimeManager getInstance() {
     	return timeManager;
     }
@@ -50,7 +54,7 @@ public class TimeManager extends Thread{
         	if (!gameOver) {
         		clock.increment();
         		if (clock.getHour().getValue() == 24) {
-        			Farm.incrementCptJour();
+        			farm.incrementCptJour();
         			dayCounter++;
         			FinanceManager.getInstance().incrementCounter();
         			clock.getMinute().setValue(0);

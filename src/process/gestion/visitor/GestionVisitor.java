@@ -1,5 +1,7 @@
 package process.gestion.visitor;
 
+import java.io.Serializable;
+
 import data.acteur.Employee;
 import data.espece.faune.Animal;
 import data.espece.flore.terrains.Terrain;
@@ -11,7 +13,7 @@ import data.structure.Structure;
 import gui.gestionnaire.keys.Graine;
 
 
-public interface GestionVisitor<T> {
+public interface GestionVisitor<T> extends Serializable {
 
 		T visit(Animal animal);
 

@@ -9,11 +9,8 @@ import data.acteur.Fermier;
 import data.configuration.GameConfiguration;
 import data.espece.flore.Saison;
 import data.gestion.RessourcesManager;
-import data.notification.Messagerie;
 import data.structure.Structure;
 import data.time.Clock;
-import data.time.CyclicCounter;
-import process.action.task.coordinator.TaskManager;
 import process.evolution.EvolutionManager;
 import process.game.ElementManager;
 import process.gestion.transaction.FinanceManager;
@@ -24,19 +21,19 @@ public class Farm implements Serializable {
 
 	private int height = 22;
 	private int width = 38;
-	private static int cptJour;
-	public static Saison saisonActuelle ;
+	private int cptJour;
+	public Saison saisonActuelle ;
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;
 	private ElementManager elementManager ;
 	private Clock clock ; 
 	private EvolutionManager evolutionManager ;
-	private Messagerie messagerie ;
 	private int ligne ; 
 	private int colonne ; 
 	private Boolean jour;
 	private int lastCatastroph;
+	
 	
 	public Farm( ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
@@ -117,7 +114,7 @@ public class Farm implements Serializable {
 		return cptJour;
 	}
 
-	public  static void incrementCptJour() {
+	public void incrementCptJour() {
 		if (cptJour == 19) {
 			cptJour = 0;
 		} else {
@@ -131,7 +128,7 @@ public class Farm implements Serializable {
 		return saisonActuelle;
 	}
 
-	public static void setSaisonActuelle() {
+	public void setSaisonActuelle() {
 	
 		if (cptJour < 5) {
 			saisonActuelle = Saison.ETE;
@@ -197,7 +194,7 @@ public class Farm implements Serializable {
 		}
 	}
 	
-	public static void updateSaison() {
+	public void updateSaison() {
 		for(ArrayList<Structure> structures : RessourcesManager.getInstance().getGestionnaireStructure().getStructures().values()) {
 			for(Structure structure : structures) {
 				structure.setImage(GameConfiguration.IMAGE_PATH+saisonActuelle+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}

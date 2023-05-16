@@ -1,5 +1,7 @@
 package process.gestion.visitor;
 
+import java.io.Serializable;
+
 import data.production.Produits;
 import gui.gestionnaire.keys.Animals;
 import gui.gestionnaire.keys.Employees;
@@ -10,7 +12,7 @@ import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
 import gui.gestionnaire.keys.Terrains;
 
-public interface KeyVisitor<T> {
+public interface KeyVisitor<T> extends Serializable{
 
 	T visit(Animals animal, int quantity);
 

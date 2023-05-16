@@ -2,7 +2,6 @@ package gui.Farm;
 
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -23,7 +21,6 @@ import data.configuration.GameConfiguration;
 import data.espece.flore.terrains.Terrain;
 import data.map.Case;
 import data.map.Map;
-import data.notion.Mortel.EtatSante;
 import data.notion.basic.Element;
 import data.notion.basic.Farm;
 import data.notion.basic.Position;
@@ -166,11 +163,12 @@ public class FarmPaintStrategy implements Serializable {
 
 	
 	public void paint(Farm farm ,Graphics graphics) {
-		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"buisson.png");
+		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+farm.getSaisonActuelle()+File.separator+"buisson.png");
 		
 		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getHeight()+farm.getLigne() ; ligneIndex ++) {
 			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getWidth()+farm.getColonne() ; colonneIndex ++) {
 				if(farm.isOnborderFarm(ligneIndex, colonneIndex)) {
+					//System.out.println(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"buisson.png");
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
 					graphics.drawImage(buisson.getImage(), x ,y ,GameConfiguration.CASE_DIMENSION ,GameConfiguration.CASE_DIMENSION, null);

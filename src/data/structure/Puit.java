@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.configuration.GameConfiguration;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
@@ -32,7 +33,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     
     public Puit(String reference  ) {
 		super( reference );
-		setImage(GameConfiguration.IMAGE_PATH+ Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Puit.png");	
+		setImage(GameConfiguration.IMAGE_PATH+ Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
     public Seau getSeau() {

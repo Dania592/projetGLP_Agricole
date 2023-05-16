@@ -10,15 +10,12 @@ import java.util.Iterator;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import data.configuration.GameConfiguration;
 import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.characteristic.WaterConsumer.HydrationLevel;
 import data.espece.flore.terrains.Terrain;
 import data.notion.basic.Element;
 import data.notion.basic.Farm;
-import data.notion.basic.Position;
 import data.structure.Enclos;
-import gui.Farm.actions.ActionsPane;
 import gui.Farm.choix.Choix;
 import gui.gestionnaire.gestionnairesGUI.UIGraph;
 import process.action.task.coordinator.TaskManager;
