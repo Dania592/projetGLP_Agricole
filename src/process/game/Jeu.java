@@ -24,6 +24,11 @@ import process.action.task.coordinator.TaskManager;
 import process.gestion.transaction.FinanceManager;
 import process.time.TimeManager;
 
+/**
+ * thread principal du jeu reponsable de l'évolution et du moteur du jeu 
+ * 
+ *
+ */
 public class Jeu implements Runnable{
 
 
@@ -36,6 +41,11 @@ public class Jeu implements Runnable{
 	public static boolean music ; 
 	//private int i = 0;
 	
+	/**
+	 * contructeur du jeu 
+	 * @param farm
+	 * @param title
+	 */
 	public Jeu(Farm farm,String title) {
 		financeManager.setJeu(this);
 		music= true ;
@@ -49,10 +59,17 @@ public class Jeu implements Runnable{
 		thread.start();
 	}
 
+	/**
+	 * verifie si le jeu tourne encore ou est arreté en gameOver
+	 * @return
+	 */
 	public boolean getGameOver() {
 		return gameOver;
 	}
-
+	
+	/**
+	 * reponsable du game over  
+	 */
 	public void GameOver() {
 		gameOver = true;
 		timeManager.gameOver(true);
@@ -60,6 +77,9 @@ public class Jeu implements Runnable{
 		new GameOver(this);
 	}
 	
+	/**
+	 * relancement d'une nouvelle partie 
+	 */
 	public void restart() {
 		RessourcesManager.getInstance().reset();
 		FinanceManager.getInstance().reset();
@@ -88,7 +108,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(1);
+				TimeManager.getInstance().setTimeSpeed(2);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}
@@ -97,17 +117,26 @@ public class Jeu implements Runnable{
 			}
 		}
 	}
-	
+	/**
+	 * vérifie si c'est le moment d'envoyer la notification pour la nuit 
+	 * @return
+	 */
 	public boolean nightNotif() {
 		Clock clock =Clock.getInstance(); 
 		return clock.getHour().getValue()==20 && clock.getMinute().getValue()==50 && clock.getSecond().getValue()==00;
 	}
-	
+	/**
+	 * vérifie si c'est la nuit 
+	 * @return
+	 */
 	public boolean isNight() {
 		return TimeManager.getInstance().getClock().getHour().getValue()>=21 
 				|| TimeManager.getInstance().getClock().getHour().getValue()<6 ;
 	}
 	
+	/**
+	 * change le jour en nuit pour la ferme 
+	 */
 	public void nightMode() {
 		if(isNight()) {
 			frame.getFarm().setJourMode(false);
@@ -115,7 +144,9 @@ public class Jeu implements Runnable{
 		}				
 	}
 	
-	
+	/**
+	 * responsable du lancement de la musique dans le jeu 
+	 */
 	public static void playMusique() {
 		  try {
 	           File file = new File("src/ressources/musique/EZ02.wav");	           
@@ -131,6 +162,9 @@ public class Jeu implements Runnable{
 			    
 	}
 	
+	/**
+	 * arrête la musique dans le jeu 
+	 */
 	public static void stopMusique() {
 		music = false ;
 		clip.stop();

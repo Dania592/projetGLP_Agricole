@@ -34,12 +34,19 @@ public class ElementManager implements Serializable{
 		}
 	}
 
+	/**
+	 * ajout de l'enclos sur la map 
+	 * @param enclos
+	 */
 	public void add(Enclos enclos) {
 		mapManager.addEnclos(enclos);
 		ProductionManager.getInstance().addToProductifList(enclos);
 	}
 	
-	
+	/**
+	 * suppression d'un element de sur la map
+	 * @param element
+	 */
 	public void remove(Element element ) {
 		element.freePosition();
 		mapManager.removeElement(element);
@@ -114,10 +121,18 @@ public class ElementManager implements Serializable{
 
 	}
  
+	/**
+	 * calcule du nombre de ligne de la map en dehors de l'ecran
+	 * @return
+	 */
 	public int nb_ligne_out_of_screen() {
 		return -mapManager.getMap().getY() / GameConfiguration.CASE_DIMENSION;
 	}
 
+	/**
+	 * calcule du nombre de colonne de la map en dehors de l'ecran 
+	 * @return
+	 */
 	public int nb_colonne_out_of_screen() {
 		return -mapManager.getMap().getX() / GameConfiguration.CASE_DIMENSION;
 	}

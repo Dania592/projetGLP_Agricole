@@ -10,8 +10,18 @@ import java.io.ObjectOutputStream;
 import data.notion.basic.Farm;
 import gui.Farm.choix.Choix;
 
+/**
+ * responsable de la sauvegarde de l'etat du jeu 
+ * @author dania
+ *
+ */
 public class SaveFarm {
 	
+	/**
+	 * enregistre l'etat de la ferme 
+	 * @param fileName
+	 * @param farm
+	 */
 	public void serializationSave(String fileName , Farm farm ) {
 		
 		try {
@@ -39,7 +49,11 @@ public class SaveFarm {
 		
 		 
 }
-	
+	/**
+	 * relie et reconstruit la ferme à partir d'un fichier binaire 
+	 * @param fileName
+	 * @return
+	 */
 	public Farm serializationRead(String fileName)  {
 		Farm line ;
 			 try {
@@ -63,6 +77,11 @@ public class SaveFarm {
 	}
 	
 
+	/**
+	 * enregistre les choix que l'utilisateur peut placer sur la map 
+	 * @param fileName
+	 * @param choix
+	 */
 	public void saveGui(String fileName , Choix choix ) {
 		
 		try {
@@ -81,7 +100,11 @@ public class SaveFarm {
 		e.printStackTrace();
 	}
 }
-	
+	/**
+	 * recupere les choix que l'utilisateur peut placer sur la map 
+	 * @param fileName
+	 * @return
+	 */
 	public Choix readGui(String fileName)  {
 		Choix line ;
 			 try {

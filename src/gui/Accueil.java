@@ -32,16 +32,18 @@ public class Accueil extends JFrame{
 		panel.add(fond, JLayeredPane.DEFAULT_LAYER);
 		File file = new File(GameConfiguration.FILE_NAME_SAVE);
 		if(file.exists()) {	
-			JLabel newFarm = GeneralPaintStrategy.printImageLabel("", 600, 550, 200, 50, GameConfiguration.IMAGE_PATH+"newFarm.png", getFont());
-			newFarm.addMouseListener(new ReadFarmAction());
+			//JLabel newFarm = GeneralPaintStrategy.printImageLabel("", 600, 550, 200, 50, GameConfiguration.IMAGE_PATH+"newFarm.png", getFont());
+			//newFarm.addMouseListener(new ReadFarmAction());
+			
 			JLabel lastFarm = GeneralPaintStrategy.printImageLabel("", 200, 550, 200, 50, GameConfiguration.IMAGE_PATH+"lastFarm.png", getFont());	
-			lastFarm.addMouseListener(new ReadFarmAction());
-			panel.add(newFarm, JLayeredPane.DRAG_LAYER);
-			panel.add(lastFarm, JLayeredPane.DRAG_LAYER);
+			//lastFarm.addMouseListener(new ReadFarmAction());
+			//panel.add(newFarm, JLayeredPane.DRAG_LAYER);
+			//panel.add(lastFarm, JLayeredPane.DRAG_LAYER);
+			
 		} else {
 			JLabel newFarm = GeneralPaintStrategy.printImageLabel("", 400, 550, 200, 50, GameConfiguration.IMAGE_PATH+"newFarm.png", getFont());
-			newFarm.addMouseListener(new ReadFarmAction());
-			panel.add(newFarm, JLayeredPane.DRAG_LAYER);
+			//newFarm.addMouseListener(new ReadFarmAction());
+			//panel.add(newFarm, JLayeredPane.DRAG_LAYER);
 		}
 
 		add(panel);
@@ -56,6 +58,7 @@ public class Accueil extends JFrame{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			System.out.println("new farm");
 			if(e.getSource().equals(lastFarm)) {
 				SaveFarm save = new SaveFarm();
 				Farm farm = save.serializationRead(GameConfiguration.FILE_NAME_SAVE);
@@ -71,7 +74,7 @@ public class Accueil extends JFrame{
 					game.start();						
 				}
 			}
-			Accueil.this.dispose();
+			//Accueil.this.dispose();
 
 		}
 

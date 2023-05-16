@@ -22,6 +22,11 @@ import gui.gestionnaire.keys.Graine;
 import gui.gestionnaire.keys.Structures;
 
 
+/**
+ * responsable de la construction initial de jeu 
+ * @author dania
+ *
+ */
 public class GameBuilder {
 	
 	/**
@@ -34,6 +39,10 @@ public class GameBuilder {
 		return manager ;
 	}
 	
+	/**
+	 * initialisation de la ferme avec la disposition des elements de l'état initial
+	 * @return
+	 */
 	public static Farm buildinFarm() {
 		
 		ElementManager elementManager = new ElementManager(MapBuilder());
@@ -134,31 +143,55 @@ public class GameBuilder {
 		stock.getGestionnaireStructure().add(entrepot);		
 	}
 	
+	/**
+	 * définition de la position de la maison à l'état initial 
+	 * @param farm
+	 * @param maison
+	 */
 	private static void sethousePosition(Farm farm , Structure maison ) {
 		int colonne = farm.getColonne()+1 + (farm.getWidth()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2 ;
 		int ligne = farm.getLigne()+1;
 		maison.setPosition(ligne, colonne);
 				
 	}
-	
+	/**
+	 * définition de la position de l'entrepot à l'état initial
+	 * @param farm
+	 * @param entrepot
+	 */
 	private static void setEntrepotPosition(Farm farm , Structure entrepot ) {
 		int colonne = farm.getColonne()+2 ;
 		int ligne = farm.getLigne()+1;
 		entrepot.setPosition(ligne, colonne);		
 	}
 
+	/**
+	 * définition de la position du garage à l'état initial
+	 * @param farm
+	 * @param garage
+	 */
 	private static void setGaragePosition(Farm farm , Structure garage ) {
 		int colonne = farm.getColonne()+6;
 		int ligne = farm.getLigne()+1;
 		garage.setPosition(ligne, colonne);		
 	}
 
+	/**
+	 * définition de la position du puit à l'état initial
+	 * @param farm
+	 * @param puit
+	 */
 	private static void setPuitPosition(Farm farm , Structure puit) {
 		int colonne = farm.getColonne()+farm.getWidth()-GameConfiguration.DIMENSION_STRUCUTRE-1  ;
 		int ligne = farm.getLigne()+1;
 		puit.setPosition(ligne, colonne);
 	}
 	
+	/**
+	 * définition de la position du fermier sur la map 
+	 * @param farm
+	 * @param farmer
+	 */
 	private static void initisaliseFarmerPosition(Farm farm , Fermier farmer) {
 		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
 		int colonne = farm.getColonne()-1 + farm.getWidth()/2;

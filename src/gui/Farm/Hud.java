@@ -313,7 +313,7 @@ public class Hud implements Serializable {
 			addingChoix();
 		}
 	}
-	// passer en parametre la structure pour recuperer
+	
 	public void add_Actions(int x , int y , Actionnable actionnable, ArrayList<Activity> taches ) {
 		if(!Arrays.asList(component.getComponents()).contains(actions)) {
 			actions = new ActionsPane(taches, actionnable, x , y , this);

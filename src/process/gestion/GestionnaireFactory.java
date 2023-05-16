@@ -30,6 +30,11 @@ import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
 import gui.gestionnaire.keys.Terrains;
 
+/**
+ * responsable de la construction et de l'initatiation des differents objets
+ * @author dania
+ *
+ */
 public class GestionnaireFactory {
 	
 	private static int counter = 0;

@@ -44,6 +44,10 @@ public class MapManager implements Serializable{
 		}
 	}
 	
+	/**
+	 * ajoute un enclos sur la map 
+	 * @param enclos
+	 */
 	public void addEnclos(Enclos enclos ) {
 		Case case_init= new Case(false,enclos.getPosition().getLigne_init(),enclos.getPosition().getColonne_init());
 		if(verificationLiberte(enclos, case_init)) {
@@ -52,12 +56,13 @@ public class MapManager implements Serializable{
 			for(Case block : enclos.bordEnclos()) {
 				map.getCase(block.getLigne(), block.getColonne()).setLibre(false);
 			}
-//			Case b = new Case(true , enclos.getPosition().getLigne_init()+1,enclos.getPosition().getColonne_init()+enclos.getDimension()/2 );
-//			map.getCase(b.getLigne(), b.getColonne()).setLibre(false);
-//			map.getCase(b.getLigne(), b.getColonne()+1).setLibre(false);
+
 		}
 	}
-	
+	/**
+	 * retire un element de la map 
+	 * @param element
+	 */
 	public void removeElement(Element element) {
 		if(composants.containsKey(element.getReference())) {
 			composants.remove(element.getReference());
@@ -158,6 +163,11 @@ public class MapManager implements Serializable{
 		return enclosOnMap;
 	}
 
+	/**
+	 * retrouve un element de la map avec la case de la map
+	 * @param block
+	 * @return
+	 */
 	public Element getElement(Case block) {
 		for(Element element : composants.values()) {
 			if(element.getPosition().contains(block)) {
@@ -167,6 +177,11 @@ public class MapManager implements Serializable{
 		return null ;
 	}
 	
+	/**
+	 * responsable du mouvement de la map 
+	 * @param dx
+	 * @param dy
+	 */
 	public void movingMap(int dx , int dy ) {
 		int xmap = map.getX();
 		
@@ -180,6 +195,11 @@ public class MapManager implements Serializable{
 		
 	}
 	
+	/**
+	 * calcule du decalage de la map 
+	 * @param dx
+	 * @return
+	 */
 	public int decalage(int dx) {
 		return dx - dx%GameConfiguration.CASE_DIMENSION;
 	}
