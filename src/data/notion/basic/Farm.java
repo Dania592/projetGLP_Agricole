@@ -24,8 +24,8 @@ public class Farm implements Serializable {
 
 	private int height = 22;
 	private int width = 38;
-	private static int cptJour;
-	public static Saison saisonActuelle ;
+	private int cptJour;
+	public Saison saisonActuelle ;
 	private Fermier fermier ; 
 	private RessourcesManager ressourcesManager ;	
 	private int nbEtoile ;
@@ -117,7 +117,7 @@ public class Farm implements Serializable {
 		return cptJour;
 	}
 
-	public  static void incrementCptJour() {
+	public void incrementCptJour() {
 		if (cptJour == 19) {
 			cptJour = 0;
 		} else {
@@ -131,7 +131,7 @@ public class Farm implements Serializable {
 		return saisonActuelle;
 	}
 
-	public static void setSaisonActuelle() {
+	public void setSaisonActuelle() {
 	
 		if (cptJour < 5) {
 			saisonActuelle = Saison.ETE;
@@ -200,7 +200,7 @@ public class Farm implements Serializable {
 	public static void updateSaison() {
 		for(ArrayList<Structure> structures : RessourcesManager.getInstance().getGestionnaireStructure().getStructures().values()) {
 			for(Structure structure : structures) {
-				structure.setImage(GameConfiguration.IMAGE_PATH+saisonActuelle+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
+				structure.setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
 		}
 	}
 

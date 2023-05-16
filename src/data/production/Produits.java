@@ -11,7 +11,7 @@ import process.gestion.visitor.KeyVisitor;
  */
 public enum Produits implements Keys{
 	LAIT, LAINE, OEUF,
-	RADISH, RED_CABBAGE, TOMATO,
+	RADIS, RED_CABBAGE, TOMATO,
 	WHEAT, AMARANTH, ARTICHOKE,
 	BEET, BOK_CHOY, BRUSSEL_SPROUTS,
 	CRANBERRIES, EGGPLANT, PUMPKIN, 

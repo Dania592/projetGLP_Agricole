@@ -8,7 +8,7 @@ import process.gestion.visitor.KeyVisitor;
 
 public enum Graine implements Buyable, Keys{
 	
-	GRAINE_RADIS_BLANC(Produits.RADISH),
+	GRAINE_RADIS_BLANC(Produits.RADIS),
 	GRAINE_RADIS_ROUGE(Produits.RED_CABBAGE),
 	GRAINE_TOMATE(Produits.TOMATO),
 	GRAINE_AUBERGINE(Produits.EGGPLANT),

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import data.espece.characteristic.Healable;
 import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Vache;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.basic.Farm;
@@ -28,7 +29,7 @@ public class Etable extends Refuge<Vache> implements SlaughterHouseSender, Distr
 	public Etable( String reference ) {
 		super( reference );
 		
-			setImage("src"+File.separator+"ressources"+File.separator+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Etable.png");
+			setImage("src"+File.separator+"ressources"+File.separator+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Etable.png");
 		
 	}
 	

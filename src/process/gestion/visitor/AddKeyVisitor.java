@@ -1,6 +1,7 @@
 package process.gestion.visitor;
 
 import java.io.File;
+import java.io.Serializable;
 
 import data.acteur.Employee;
 import data.configuration.GameConfiguration;
@@ -19,6 +20,9 @@ import gui.gestionnaire.keys.*;
 import process.gestion.GestionnaireFactory;
 
 public class AddKeyVisitor implements KeyVisitor<Void>{
+	
+
+	private static final long serialVersionUID = 1L;
 	
 	private Map map = Map.getInstance();
 	private AddVisitor addVisitor = new AddVisitor();

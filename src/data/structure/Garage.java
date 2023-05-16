@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import data.configuration.GameConfiguration;
+import data.espece.flore.Saison;
 import data.gestion.GestionnaireMateriel;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
@@ -26,7 +27,7 @@ public class Garage extends Structure{
 
 	public Garage( String reference) {
 		super(reference);
-		setImage(GameConfiguration.IMAGE_PATH+data.notion.basic.Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Garage.png");
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Garage.png");
 	}
 
 	@Override

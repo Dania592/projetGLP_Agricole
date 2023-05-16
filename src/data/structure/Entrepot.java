@@ -3,6 +3,7 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.basic.Farm;
@@ -27,7 +28,7 @@ public class Entrepot extends Structure{
 		super( reference );
 		this.produits = new ArrayList<>();
 		
-		setImage("src"+File.separator+"ressources"+File.separator+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Entrepot.png");
+		setImage("src"+File.separator+"ressources"+File.separator+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Entrepot.png");
 		
 	}
 

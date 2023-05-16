@@ -51,7 +51,6 @@ public class BillArticlePanel extends RoundedPanel{
 			quantitySpinner.setModel(new SpinnerNumberModel(0,0,100,1));
 		}
 		quantitySpinner.addChangeListener(new QuantityListener(quantitySpinner, key, market));   
-		//quantitySpinner.setValue(quantitySpinner.getNextValue());
 		quantitySpinner.setPreferredSize(new Dimension(w/2 - (4*GestionnaireStocksGUI.MIN_SPACE_BETWEEN),30));
 		add(nameLabel);
 		add(quantitySpinner);

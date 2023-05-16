@@ -33,7 +33,6 @@ public class QuantityListener implements ChangeListener{
 			if (newValue == 0) {
 				market.getBillPanel().remove(market.getBill().get(key));
 				market.getBill().remove(key);
-				market.getValidationPanel().resetTotalCost();
 				transaction.removeFromCart(key,(newValue-lastValue));
 				market.getBillPanel().revalidate();
 				market.getBillPanel().repaint();
@@ -42,7 +41,6 @@ public class QuantityListener implements ChangeListener{
 					if(type.equals("Achat")) {
 						if (Banque.getInstance().getCompte().getSolde() >= (market.getValidationPanel().getTotalCost()+((newValue-lastValue)*key.getPrixAchat()))) {
 							transaction.addToCart(key,(newValue-lastValue));
-							market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
 						} else {
 							new InfosTransaction("Solde insuffisant", market.getFrame());
 							market.dispose();
@@ -50,16 +48,15 @@ public class QuantityListener implements ChangeListener{
 						}
 					} else {
 						transaction.addToCart(key,(newValue-lastValue));
-						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixVente());
 					}
 				}else {
 					transaction.removeFromCart(key,(newValue-lastValue));
-					if(type.equals("Achat")) {
-						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
-					} else {
-						market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixVente());
-					}
 				}
+			}
+			if(type.equals("Achat")) {
+				market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixAchat());
+			} else {
+				market.getValidationPanel().updateTotalCost((newValue-lastValue)*key.getPrixVente());
 			}
 		}
 		lastValue = newValue;

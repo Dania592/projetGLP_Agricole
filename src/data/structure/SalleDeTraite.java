@@ -11,6 +11,7 @@ import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.faune.AnimalProducteur;
 import data.espece.faune.Chevre;
 import data.espece.faune.Vache;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.myExceptions.UnknownActivityException;
@@ -43,7 +44,7 @@ public class SalleDeTraite extends StructureAction implements Distributor<MilkPr
 
 	public SalleDeTraite( String reference) {
 		super( reference);
-		setImage(GameConfiguration.IMAGE_PATH+Farm.saisonActuelle+File.separator+"Structure"+File.separator+"Salle_De_Traite.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Salle_De_Traite.png");	
 		
 	}
 
