@@ -37,6 +37,7 @@ public class NewStockGUI extends JFrame{
 	    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 	    addWindowListener(new WindowDispose(this, container));
+	    
 		setBackground(GeneralPaintStrategy.LIGHT_BROWN);
 		setSize(910,560);
 		

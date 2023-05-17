@@ -169,6 +169,10 @@ public class Board extends JLayeredPane implements Serializable{
 			paintStrategy.paintNight(farm.getManager().getMapManager().getMap(), g);
 		}
 		
+		if(!frame.isEnabled()) {
+			paintStrategy.paintGrey(farm.getManager().getMapManager().getMap(), g);
+		}
+		
 	}
 
 	public void setChoixTerrain(JPanel choixTerrain) {

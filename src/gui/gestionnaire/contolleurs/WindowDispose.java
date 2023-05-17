@@ -18,6 +18,7 @@ public class WindowDispose extends WindowAdapter {
     public void windowClosing(WindowEvent e){
     	if (parent!=null) {
     		parent.setVisible(true);
+    		parent.setEnabled(true);
     		parent.revalidate();
     		parent.repaint();
     	}

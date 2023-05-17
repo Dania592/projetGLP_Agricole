@@ -45,6 +45,7 @@ import gui.gestionnaire.contolleurs.Next;
 import gui.gestionnaire.contolleurs.Previous;
 import gui.gestionnaire.gestionnairesGUI.GestionnaireStocksGUI;
 import gui.gestionnaire.gestionnairesGUI.MarketGUI;
+import gui.gestionnaire.gestionnairesGUI.RHManagerGUI;
 import gui.gestionnaire.keys.*;
 import process.gestion.transaction.Achat;
 import process.gestion.transaction.FinanceManager;
@@ -872,9 +873,10 @@ public class GeneralPaintStrategy {
 			int colonne = farm.getColonne()-1 + farm.getWidth()/2 + gestionnaireRH.getEmployees().size();
 			employe.setPosition(ligne, colonne);
 			frame.getFarm().getElementManager().add(employe);
-			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(button);
-			frame.dispose();
+			RHManagerGUI rhManagerGUI = (RHManagerGUI)SwingUtilities.getWindowAncestor(button);
+			Home frame = rhManagerGUI.getHome();
 			new InfosTransaction(employee.toString() + " recruté !", frame);
+			rhManagerGUI.dispose();
 		}
 
 	}

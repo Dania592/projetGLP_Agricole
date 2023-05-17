@@ -153,9 +153,9 @@ public class Jeu implements Runnable{
 	           File file = new File("src/ressources/musique/EZ02.wav");	           
 	           AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
 	           clip = AudioSystem.getClip();
-	           clip.open(audioIn);
-	           clip.start();
-	           clip.loop(clip.LOOP_CONTINUOUSLY);
+	           //clip.open(audioIn);
+	           //clip.start();
+	           //clip.loop(clip.LOOP_CONTINUOUSLY);
 	       }
 		catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
 			throw new RuntimeException(e);

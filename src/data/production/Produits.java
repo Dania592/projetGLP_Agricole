@@ -49,6 +49,6 @@ public enum Produits implements Keys{
 	@Override
 	public float getPrixVente() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 10;
 	}
 }

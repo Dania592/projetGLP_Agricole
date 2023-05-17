@@ -360,12 +360,12 @@ public class Hud implements Serializable {
 				MainGuiTest frame = (MainGuiTest) SwingUtilities.getWindowAncestor(Hud.component);
 				removeChoix();
 				new Home(frame);
-				frame.dispose();
+				frame.setEnabled(false);
+				
 			} else if(e.getSource().equals(validate)) {
 				component.getChoix().removeElement(component.getSelected());
 				component.getHud().build();
 				component.getSelected().setStatique(true);
-				component.setSelected(component.getFarm().getFermier());
 			} else if(e.getSource().equals(cancel)) {
 				component.getFarm().getManager().remove(component.getSelected());
 				component.setSelected(component.getFarm().getFermier());
@@ -376,16 +376,16 @@ public class Hud implements Serializable {
 				new PopupSave(component);
 			} else if(e.getSource().equals(farmer)) {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.this.component);
-				frame.setVisible(false);
+				frame.setEnabled(false);
 				new FermierGui(frame , component.getFarm().getFermier());
 				
 			} else if(e.getSource().equals(statistique)) {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.component);
-				frame.setVisible(false);
+				frame.setEnabled(false);
 				new Statistiques(frame);
 			} else {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Hud.component);
-
+				frame.setEnabled(false);
 				new ExtendPopup(frame, component.getFarm());
 			}
 		}

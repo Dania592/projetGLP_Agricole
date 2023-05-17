@@ -173,14 +173,12 @@ public class ExtendPopup extends JFrame {
 			if (e.getSource().equals(valider)) {
 				if (widthExtension != 0 || heightExtension != 0) {
 					String title = extendFarm();
-					if (title == null ) {
-						title = "Votre monde grandit!";
-					}
-					new InfosTransaction(title, frame);
 				}
+				frame.setEnabled(true);
 				ExtendPopup.this.dispose();
 			} else {
-				frame.setVisible(true);
+				//frame.setVisible(true);
+				frame.setEnabled(true);
 				ExtendPopup.this.dispose();
 			}
 		}

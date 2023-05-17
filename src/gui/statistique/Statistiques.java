@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 import gui.gestionnaire.GeneralPaintStrategy;
 import gui.gestionnaire.RoundedPanel;
 import gui.gestionnaire.UI.TabbedPaneUI;
+import gui.gestionnaire.contolleurs.WindowDispose;
 
 
 
@@ -29,7 +30,7 @@ public class Statistiques extends JFrame {
 	private JFrame source ;
 	
 	public Statistiques(JFrame source) {
-		super("stat");
+		super("statistiques");
 		this.source=source;
 		init();
 	}
@@ -69,7 +70,9 @@ public class Statistiques extends JFrame {
 		
 		contentPane.add(tabbed);
 			
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		addWindowListener(new WindowDispose(this, source));
 		pack();
 		setSize(900, 700);
 		setVisible(true);
@@ -154,7 +157,8 @@ public void statistiqueFinance() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(source!=null) {
-				source.setVisible(true);				
+				source.setVisible(true);
+				source.setEnabled(true);
 			}
 			Statistiques.this.dispose();
 			

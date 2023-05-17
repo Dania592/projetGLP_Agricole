@@ -39,47 +39,36 @@ import process.action.task.coordinator.TaskManager;
 public class FarmPaintStrategy implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Map map ;
-	
+
 	public void paint(Map map, Graphics graphics) {
 		this.map = map ;
 		Case[][] cases = map.getCases();
 		for (int lineIndex = 0; lineIndex < map.getNbLignes(); lineIndex++) {
 			for (int columnIndex = 0; columnIndex < map.getNbColones(); columnIndex++) {
-				 Case block = cases[lineIndex ][columnIndex ];
-				 graphics.setColor(new Color(000));
-					 ImageIcon herbe = new ImageIcon(GameConfiguration.IMAGE_PATH+"terre.png");
-					 int x = block.getColonne()*GameConfiguration.CASE_DIMENSION + map.getX();
-					 int y = block.getLigne()*GameConfiguration.CASE_DIMENSION + map.getY();		 
-					 graphics.drawImage(herbe.getImage(),x,y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);
-					 
-//						 graphics.setColor(Color.black);
-//						 graphics.drawLine(x, y, x, y+ GameConfiguration.CASE_DIMENSION);
-//						 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
-//						 graphics.drawLine(x, y, x+ GameConfiguration.CASE_DIMENSION, y);
-//						 graphics.drawLine(x+ GameConfiguration.CASE_DIMENSION, y, x+ GameConfiguration.CASE_DIMENSION, y+ GameConfiguration.CASE_DIMENSION);
-//						 graphics.drawLine(x, y+GameConfiguration.CASE_DIMENSION, x +GameConfiguration.CASE_DIMENSION, y+GameConfiguration.CASE_DIMENSION);
+				Case block = cases[lineIndex ][columnIndex ];
+				graphics.setColor(new Color(000));
+				ImageIcon herbe = new ImageIcon(GameConfiguration.IMAGE_PATH+"terre.png");
+				int x = block.getColonne()*GameConfiguration.CASE_DIMENSION + map.getX();
+				int y = block.getLigne()*GameConfiguration.CASE_DIMENSION + map.getY();		 
+				graphics.drawImage(herbe.getImage(),x,y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);
+
 			}
 		}
 	}
-	
-	
+
+
 	public void paint( Element element , Graphics graphics) {
 		Position position = element.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX();
 		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY();
-		BufferedImage image;
-		try {
-			image = ImageIO.read(new File(element.getImage()));
-			graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ImageIcon image = new ImageIcon(element.getImage());
+		graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
+
 	}
 
-		
+
 	public JPanel paint(Terrain terrain, HashMap<String, JLabel> actions, Map map) {
 		Position position = terrain.getPosition();
 		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX() + 50;
@@ -97,74 +86,66 @@ public class FarmPaintStrategy implements Serializable {
 		}
 		return panelChoixTerrain;
 	}
-	
-	
+
+
 	public void paint(Enclos enclos , Graphics graphics ) {
-		  
+
 		Position position = enclos.getPosition();
-		BufferedImage image ;
+		ImageIcon image ;
 		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {
 			for(int colonneIndex = position.getColonne_init() ; colonneIndex < enclos.getDimension()+position.getColonne_init(); colonneIndex ++) {
 				if(ligneIndex==position.getLigne_init() && colonneIndex== position.getColonne_init()) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					try {
-						image = ImageIO.read(new File(enclos.getImages().get("bas_gauche")));
-						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
+
+					image = new ImageIcon(enclos.getImages().get("bas_gauche"));
+					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+
+
 				}
 				if((ligneIndex==position.getLigne_init()|| ligneIndex == position.getLigne_init()+enclos.getDimension()-1) && colonneIndex < enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					try {
-						image = ImageIO.read(new File(enclos.getImages().get("bas_milieu")));
-						graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
+					image = new ImageIcon(enclos.getImages().get("bas_milieu"));
+					graphics.drawImage(image.getImage(), x, y,GameConfiguration.CASE_DIMENSION , GameConfiguration.CASE_DIMENSION, null);					
+
+
 				}
 				if(colonneIndex== position.getColonne_init() ||  colonneIndex==enclos.getDimension()+position.getColonne_init()-1) {
 					int x =  colonneIndex*GameConfiguration.CASE_DIMENSION + map.getX() ;
 					int y =  ligneIndex*GameConfiguration.CASE_DIMENSION + map.getY();
-					try {
-						image = ImageIO.read(new File(enclos.getImages().get("milieu")));
-						graphics.drawImage(image, x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					image = new ImageIcon(enclos.getImages().get("milieu"));
+					graphics.drawImage(image.getImage(), x, y,15 , GameConfiguration.CASE_DIMENSION, null);					
+
+
+
 				}
 
 			}
 		}
-		
+
 		String waterPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauEau()+"_W.png";
 		String foodPath = GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+enclos.getNiveauNourriture()+"_F.png";
-		Image images ;
-		try {
-			images = ImageIO.read(new File(waterPath));
-			int x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
-			int y = (enclos.getPosition().getColonne_init()+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
-			graphics.drawImage(images, y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
-			
-		
-			images = ImageIO.read(new File(foodPath));
-			 x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
-			 y = (enclos.getPosition().getColonne_init()+1+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
-			graphics.drawImage(images, y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
-		} catch (IOException e) {	
-			e.printStackTrace();
-		}
-		
+
+
+		ImageIcon images  = new ImageIcon(waterPath);
+		int x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
+		int y = (enclos.getPosition().getColonne_init()+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
+		graphics.drawImage(images.getImage(), y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
+
+
+		images = new ImageIcon(foodPath);
+		x = (enclos.getPosition().getLigne_init())*GameConfiguration.CASE_DIMENSION + map.getY()+10 ; 
+		y = (enclos.getPosition().getColonne_init()+1+ enclos.getDimension()/2)*GameConfiguration.CASE_DIMENSION + map.getX()-20;
+		graphics.drawImage(images.getImage(), y, x, GameConfiguration.CASE_DIMENSION, GameConfiguration.CASE_DIMENSION ,  null);
+
+
 	}
 
-	
+
 	public void paint(Farm farm ,Graphics graphics) {
 		ImageIcon buisson = new ImageIcon(GameConfiguration.IMAGE_PATH+farm.getSaisonActuelle()+File.separator+"buisson.png");
-		
+
 		for(int ligneIndex = farm.getLigne() ; ligneIndex < farm.getHeight()+farm.getLigne() ; ligneIndex ++) {
 			for(int colonneIndex = farm.getColonne() ; colonneIndex < farm.getWidth()+farm.getColonne() ; colonneIndex ++) {
 				if(farm.isOnborderFarm(ligneIndex, colonneIndex)) {
@@ -176,20 +157,20 @@ public class FarmPaintStrategy implements Serializable {
 			}
 		}
 	}
-	
-	
+
+
 	public void paintLevelHeart(Enclos enclos , Graphics graphics ) {
 		Position position = enclos.getPosition();
 		int y = (position.getLigne_init() - 1)*GameConfiguration.CASE_DIMENSION + map.getY() ;
 		int x = (position.getColonne_init() +1)*GameConfiguration.CASE_DIMENSION +map.getX();
 		ImageIcon progressBar;
 		if(enclos.isNeedToBeFeed() || enclos.isNeedToBeHydrated()){
-				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"FOOD"+File.separator+ enclos.getAnimalsHungerLevel()+".png");
-				graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
-			
-				progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"WATER"+File.separator+ enclos.getAnimalsHydrationLevel()+".png");
-				graphics.drawImage(progressBar.getImage(), x, y -30, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
-				
+			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"FOOD"+File.separator+ enclos.getAnimalsHungerLevel()+".png");
+			graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
+
+			progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Enclos"+File.separator+"WATER"+File.separator+ enclos.getAnimalsHydrationLevel()+".png");
+			graphics.drawImage(progressBar.getImage(), x, y -30, GameConfiguration.CASE_DIMENSION*5, GameConfiguration.CASE_DIMENSION ,  null);
+
 		}
 	}
 
@@ -201,22 +182,26 @@ public class FarmPaintStrategy implements Serializable {
 		ImageIcon progressBar = new ImageIcon(GameConfiguration.IMAGE_PATH+"Terrain"+File.separator+"health"+File.separator+terrain.getHydrationLevel()+".png");
 		graphics.drawImage(progressBar.getImage(), x, y, GameConfiguration.CASE_DIMENSION*4, GameConfiguration.CASE_DIMENSION ,  null);
 	}
-	
+
 	public void paintNight( Map map ,Graphics graphics ) {
+		paintGrey(map, graphics);
+
+		ImageIcon notif = new ImageIcon(GameConfiguration.IMAGE_PATH+"nightdraw.png");
+		graphics.drawImage(notif.getImage(), (GameConfiguration.WINDOW_WIDTH-300)/2, (GameConfiguration.WINDOW_HEIGHT-300)/2, 300, 300, null);
+	}
+	
+	public void paintGrey(Map map ,Graphics graphics) {
 		int x = map.getX();
 		int y = map.getY();
 		int dx = map.getNbColones()*GameConfiguration.CASE_DIMENSION;
 		int dy = map.getNbLignes()*GameConfiguration.CASE_DIMENSION;
 		ImageIcon night = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
 		graphics.drawImage(night.getImage(), x, y, dx, dy, null);
-		
-		ImageIcon notif = new ImageIcon(GameConfiguration.IMAGE_PATH+"nightdraw.png");
-		graphics.drawImage(notif.getImage(), (GameConfiguration.WINDOW_WIDTH-300)/2, (GameConfiguration.WINDOW_HEIGHT-300)/2, 300, 300, null);
 	}
-	
+
 	public void paintProgressBar(Graphics g  , TaskManager taskManager ) {
 		ArrayList<Task<?>> tasks = taskManager.getinProcess();
-		//g.drawLine(0, 0, 300, 300);
+		
 		for(Task<?> task : tasks) {
 			Position position =task.getActionnableTarget().getPosition();
 			int x = (position.getColonne_init())*GameConfiguration.CASE_DIMENSION + map.getX() ; 
@@ -225,7 +210,7 @@ public class FarmPaintStrategy implements Serializable {
 			g.drawImage(bar.getImage(), x, y, 150,30, null);
 		}
 	}
-	
+
 	public static void paintOverlay(Graphics graphics, JPanel panel, JLayeredPane frame) {
 		int x = Map.getInstance().getX();
 		int y = Map.getInstance().getY();
@@ -233,11 +218,11 @@ public class FarmPaintStrategy implements Serializable {
 		int dy = Map.getInstance().getNbLignes()*GameConfiguration.CASE_DIMENSION;
 		ImageIcon overlay = new ImageIcon(GameConfiguration.IMAGE_PATH+"noir.png");
 		graphics.drawImage(overlay.getImage(), x, y, dx, dy, null);
-		
+
 		panel.setLocation((frame.getHeight() - panel.getHeight()) / 2, (frame.getWidth() - panel.getWidth()) / 2);
 		frame.add(panel, JLayeredPane.DRAG_LAYER);
-		
+
 	}
-	
-	
+
+
 }

@@ -31,7 +31,6 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	private Board dashboard ;
 	private Element selected ;
 	private TaskManager taskManager ;
-	//private int index =0; 
 	private int x ;
 	private int y ;
 
@@ -46,9 +45,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 	public void init() {
 
 		Container contentPane = getContentPane();
-		contentPane.setLayout(new BorderLayout());
-
-		selected= farm.getManager().getMapManager().get("fermier");	
+		contentPane.setLayout(new BorderLayout());	
 
 		dashboard = new Board(farm, selected , taskManager, this);
 
@@ -92,8 +89,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 			int x = e.getX();
 			int y = e.getY();
 			Element element = farm.getManager().search(x, y);
-			if(element!=null) {
-				
+			if(element!=null) {				
 				selected = element ;
 				dashboard.setSelected(element);
 				if(selected instanceof Actionnable) {
@@ -112,7 +108,7 @@ public class MainGuiTest  extends JFrame implements Runnable{
 				if(selected.getClass().getSimpleName().equals("Entrepot")) {
 					
 					new GestionnaireStocksGUI("Gestionnaire Stock ", MainGuiTest.this,0);
-					MainGuiTest.this.dispose();
+					MainGuiTest.this.setEnabled(false);    
 				}
 
 			}
@@ -126,13 +122,18 @@ public class MainGuiTest  extends JFrame implements Runnable{
 		@Override
 		public void mousePressed(MouseEvent e) {
 			x = e.getX() ;
-			y = e.getY() ;	
+			y = e.getY() ;
+			Element element = farm.getManager().search(x, y);
+			if(element==null) {	
+				dashboard.getHud().remove_panels();
+			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			int dx = e.getX() ;
 			int dy = e.getY() ;
+			dashboard.getHud().remove_panels();
 			farm.getManager().getMapManager().movingMap(dx - x, dy - y );
 		}
 

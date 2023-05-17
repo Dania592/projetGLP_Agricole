@@ -196,7 +196,7 @@ public class GameBuilder {
 		int ligne = farm.getLigne()+ 1 + GameConfiguration.DIMENSION_STRUCUTRE;
 		int colonne = farm.getColonne()-1 + farm.getWidth()/2;
 		farmer.setPosition(ligne, colonne);
-	}
+		farmer.setStatique();	}
 	
 	
 	

@@ -37,6 +37,7 @@ public class Home extends JFrame{
 		generalPaintStrategy  = new GeneralPaintStrategy();
 		
 		getContentPane().setLayout(null);
+		 addWindowListener(new WindowDispose(this, frame));
 		
 		JLabel avatar = new JLabel();
 		avatar.setIcon(new ImageIcon("src"+File.separator+"ressources"+File.separator+"personnage2.png"));
@@ -95,11 +96,11 @@ public class Home extends JFrame{
 			}else if (e.getSource().equals(vendre)) {
 				new MarketGUI(Home.this, PaintKeys.SELL, 0);
 			} else if (e.getSource().equals(stocks)) {
-				new GestionnaireStocksGUI("teeeeeest", Home.this, 0);
+				new GestionnaireStocksGUI("Gestionnaire du Stock", Home.this, 0);
 			} else if (e.getSource().equals(finances)) {
 				new GestionnaireFinancierGUI(Home.this, 1);
 			} else {
-				new RHManagerGUI(frame, 1);
+				new RHManagerGUI(Home.this, frame, 1);
 			}
 			Home.this.dispose();
 		}

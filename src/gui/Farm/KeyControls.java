@@ -24,35 +24,52 @@ public class KeyControls implements KeyListener,Serializable {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		char code = e.getKeyChar();
-		if(!selected.isStatique()) {
+		if(selected!=null && !selected.isStatique()) {
 			switch(code) {
-			case 'z':
-				// ajouter un gestionnaire de mouvement des element dans le element manager 
+			case KeyEvent.VK_UP:
 				manager.moveUp(selected);
 				break;
-			case 's':
+			case KeyEvent.VK_DOWN :
 				manager.moveDown(selected);			
 				break;
 
-			case 'q':
+			case KeyEvent.VK_LEFT:
 				manager.moveLeft(selected);
 				break;
-			case 'd':
+			case KeyEvent.VK_RIGHT:
 				manager.moveRight(selected);
 				break;
 			default:
 				break;
 			}		
 		}
+		
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-//		int code = e.getKeyCode();
-//		if (board.getGameState() == board.optionState) {
-//			optionsState(code);
-//		}
+		int code = e.getKeyCode();
+		if(selected!=null && !selected.isStatique()) {
+			switch(code) {
+			case KeyEvent.VK_UP:
+				// ajouter un gestionnaire de mouvement des element dans le element manager
+				manager.moveUp(selected);
+				break;
+			case KeyEvent.VK_DOWN :
+				manager.moveDown(selected);			
+				break;
+
+			case KeyEvent.VK_LEFT:
+				manager.moveLeft(selected);
+				break;
+			case KeyEvent.VK_RIGHT:
+				manager.moveRight(selected);
+				break;
+			default:
+				break;
+			}		
+		}
 	}
 
 	@Override
@@ -69,22 +86,7 @@ public class KeyControls implements KeyListener,Serializable {
 	public void setSelected(Element selected) {
 		this.selected = selected;
 	}
-//
-//	public void setGameState(int code) {
-//		if (code == KeyEvent.VK_ESCAPE) {
-//			board.setGameState(board.optionState);
-//		} else if (code == KeyEvent.VK_P) {
-//			board.setGameState(board.pauseState);
-//		}
-//	}
-//
-//	public void optionsState(int code) {
-//		if (code == KeyEvent.VK_ESCAPE) {
-//			board.setGameState(board.playState);
-//		} else if (code == KeyEvent.VK_ENTER) {
-//			enterTouchPressed = true;
-//		}
-//	}
+
 
 
 }
