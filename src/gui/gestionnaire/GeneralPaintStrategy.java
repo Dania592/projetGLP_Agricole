@@ -545,18 +545,18 @@ public class GeneralPaintStrategy {
 		case "STRUCTURES":
 			Structures structure = (Structures)element;
 			infos[0] = getName(structure);
-			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+infos[0]+".png";
+			infos[1] = "src"+File.separator+"ressources"+File.separator+"Structure"+File.separator+structure.name()+".png";
 			infos[2] = String.valueOf(GestionnaireStructures.getInstance().getStructures().get(structure).size());	
 			break;
 		case "ANIMALS":
 			Animals animal = (Animals)element;
 			infos[0] = getName(animal);
-			infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"standAdulte.png";
+			infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"standJeune.png";
 			infos[2] = String.valueOf(GestionnaireAnimaux.getInstance().getAnimaux().get(animal).size());	
 			break;
 		case "TERRAINS":
 			infos[0] = "Terrain";
-			infos[1] = "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"terrain.png";
+			infos[1] = "src"+File.separator+"ressources"+File.separator+"Terrain"+File.separator+"Vierge.png";
 			infos[2] = String.valueOf(GestionnaireTerrains.getInstance().getSize());	
 			break;
 		case "ENCLOS":
@@ -637,7 +637,7 @@ public class GeneralPaintStrategy {
 		case "TERRAINS":
 			Terrains terrain = (Terrains)element;
 			infos[0] = "Terrain";
-			infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"terrain.png";
+			infos[1] = "src"+File.separator+"ressources"+File.separator+infos[0]+File.separator+"Vierge.png";
 			infos[2] = String.valueOf(terrain.getPrixAchat());
 			break;
 		case "ENCLOS":

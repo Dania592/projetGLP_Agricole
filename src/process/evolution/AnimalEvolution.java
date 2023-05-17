@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import data.configuration.GameConfiguration;
+import data.espece.characteristic.Produceur.ProductifState;
 import data.espece.faune.Animal;
 import data.espece.faune.AnimalProducteur;
+import data.espece.faune.Mouton;
 import data.myExceptions.MortException;
 import data.notification.Message;
 import data.notification.Messagerie;
@@ -68,8 +70,23 @@ public class AnimalEvolution implements Serializable{
 					if(animal.getEvolution() == EvolutionAnimal.ADULTE){
 						ProductionManager.getInstance().setToAbleProduceur(animal);
 					}
-					String imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
-							+File.separator+animal.getEvolution()+File.separator+"STAND.png";
+					String imagePath;
+					if(animal instanceof Mouton && (animal.getEvolution() == EvolutionAnimal.ADULTE || animal.getEvolution() == EvolutionAnimal.VIEUX)) {
+						if(animal.getProductifState().equals(ProductifState.HAVE_PRODUCE) || animal.getProductifState().equals(ProductifState.IN_WAIT )) {
+							imagePath = GameConfiguration.IMAGE_PATH+"Mouton"
+									+File.separator+animal.getEvolution()+File.separator+"HaveProduced"+File.separator+"STAND.png";
+						}
+						else {
+							imagePath = GameConfiguration.IMAGE_PATH+"Mouton"
+									+File.separator+animal.getEvolution()+File.separator+"IsProducing"+File.separator+"STAND.png";
+						
+						}
+						
+					}else {
+						imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
+								+File.separator+animal.getEvolution()+File.separator+"STAND.png";
+						
+					}
 					
 					animal.setImage(imagePath);
 				} catch (MortException e ) {
@@ -83,12 +100,27 @@ public class AnimalEvolution implements Serializable{
 	
 	public void randomMovement() {
 		if(index==GameConfiguration.ANIMAL_MOUVE_SPEED) {
-			for(Animal animal : animals) {
-				BufferedImage image;
+			for(AnimalProducteur animal : animals) {				
 				String imagePath;
-				animal.setDirection(animal.getDirection().avancer());		
-				imagePath =GameConfiguration.IMAGE_PATH +animal.getClass().getSimpleName()
-						+File.separator+animal.getEvolution()+File.separator+animal.getDirection()+".png";
+				animal.setDirection(animal.getDirection().avancer());
+				
+				if(animal instanceof Mouton && (animal.getEvolution() == EvolutionAnimal.ADULTE || animal.getEvolution() == EvolutionAnimal.VIEUX) ) {
+					if(animal.getProductifState().equals(ProductifState.HAVE_PRODUCE) || animal.getProductifState().equals(ProductifState.IN_WAIT )) {
+						imagePath = GameConfiguration.IMAGE_PATH+"Mouton"
+								+File.separator+animal.getEvolution()+File.separator+"HaveProduced"+File.separator+animal.getDirection()+".png";
+					}
+					else {
+						imagePath = GameConfiguration.IMAGE_PATH+"Mouton"
+								+File.separator+animal.getEvolution()+File.separator+"IsProducing"+File.separator+animal.getDirection()+".png";
+					
+					}
+					
+				}else {
+					imagePath = GameConfiguration.IMAGE_PATH+animal.getClass().getSimpleName()
+							+File.separator+animal.getEvolution()+File.separator+animal.getDirection()+".png";
+					
+				}
+				
 				animal.setImage(imagePath);
 				index =0;
 				switch(animal.getDirection()) {

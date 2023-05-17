@@ -192,7 +192,7 @@ public class Farm implements Serializable {
 	public void updateSaison() {
 		for(ArrayList<Structure> structures : RessourcesManager.getInstance().getGestionnaireStructure().getStructures().values()) {
 			for(Structure structure : structures) {
-				structure.setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
+				structure.setImage(GameConfiguration.IMAGE_PATH+saisonActuelle+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
 		}
 	}
 
