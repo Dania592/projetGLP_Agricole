@@ -69,7 +69,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		super(reference, statique, DIMENSION);
 		evolution = EvolutionTerrain.VIERGE;
 		this.type = type;
-		setImage(imagesPath + evolution.name() +".png");
+		setImage(GameConfiguration.IMAGE_PATH + "Arbre" + File.separator + "Cerisier" + File.separator + "ETAT_4.png");
 	}
 	
 	public void setType(Graine type) {

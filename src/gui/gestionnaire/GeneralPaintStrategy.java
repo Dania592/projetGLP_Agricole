@@ -664,7 +664,7 @@ public class GeneralPaintStrategy {
 				infos = null;
 				break;
 			}
-			infos[1] = "src"+File.separator+"ressources"+File.separator+"Employee"+File.separator+infos[0]+".png";
+			infos[1] = "src"+File.separator+"ressources"+File.separator+"Produits"+File.separator+infos[0]+".png";
 			infos[2] = String.valueOf(produit.getPrixVente());
 			break;
 		default:

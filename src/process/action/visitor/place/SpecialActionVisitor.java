@@ -79,7 +79,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         Slaughtable currentSlaughtable;
         while(slaughtableIter.hasNext()){
             currentSlaughtable = slaughtableIter.next();
-            GestionnaireStocks.getInstance().add(Produits.MEAT, 1);
+            GestionnaireStocks.getInstance().add(Produits.VIANDE, 1);
             GestionnaireAnimaux.getInstance().remove((Animal)currentSlaughtable);
         }
         abatoire.getAnimaltoSlaughter().clear();

@@ -308,7 +308,7 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
             case FIX_STRUCTURE:
                 return abatoire.isNeedToBeFixed();
             case COLLECT_MEAT:
-                return isInProductifPlaceProduction(abatoire, Produits.MEAT);
+                return isInProductifPlaceProduction(abatoire, Produits.VIANDE);
             case SLAUGHTER:
                 return isThereSlaughtableSpecies(abatoire);
             default:
