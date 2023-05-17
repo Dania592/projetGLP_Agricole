@@ -37,7 +37,7 @@ public interface Produceur extends DomesticSpecie{
     public enum Type{
         BAD_PRODUCEUR(1),
         AVERAGE_PRODUCEUR(2),
-        DOPED_PRODUCEUR(10),
+        DOPED_PRODUCEUR(5),
         ;
 
         private int numberOfProductPerProductifCycle;
@@ -95,7 +95,7 @@ public interface Produceur extends DomesticSpecie{
 		MOUTON(200, Type.AVERAGE_PRODUCEUR),
 		POULE(10, Type.AVERAGE_PRODUCEUR),
 		VACHE(50, Type.AVERAGE_PRODUCEUR),
-        TERRAIN(100, Type.AVERAGE_PRODUCEUR),
+        TERRAIN(300, Type.AVERAGE_PRODUCEUR),
         ;
         
 		private int timeInSeconde;

@@ -37,7 +37,7 @@ public abstract class GameConfiguration {
 	/**
 	 * vitesse du jeu 
 	 */
-	public final static int GAME_SPEED = 100;
+	public final static int GAME_SPEED = 50;
 	
 	public final static int TIME_SPEED = GAME_SPEED ;
 
@@ -92,9 +92,9 @@ public abstract class GameConfiguration {
 	 */
 	public final static int ANIMAL_MOUVE_SPEED = 5 ; // selon le thread 
 	
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 5 ; // 1 animal => 25 min (60)
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_NOURRITURE = 40 ; // 1 animal => 25 min (60)
 	
-	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 5 ; // 1 animal => 15 min (20)
+	public final static int FREQUENCE_DECREMENTATION_ENCLOS_EAU = 30 ; // 1 animal => 15 min (20)
 	
 	public final static int FREQUENCE_ANIMAL_BIRTH_ENCLOS = 5;
 	/*

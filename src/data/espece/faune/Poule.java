@@ -36,7 +36,7 @@ public class Poule extends AnimalProducteur{
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 1;
-	private final static int SPEED_GROWTH = 5 ; 
+	private final static int SPEED_GROWTH = 10 ; 
 	private static Oeuf oeuf = new Oeuf();
 	private static Meat equivalentInMeat = new Meat();
 	

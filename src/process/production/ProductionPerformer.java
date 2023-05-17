@@ -142,8 +142,10 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
         Produceur.Type produceurType = terrain.getProduceurType();
         if(terrain.isDoped()){
             produceurType  = Type.DOPED_PRODUCEUR;
+            terrain.setDoped(false);
         }
         addToProduction(terrain, produit, produceurType.getNumberOfProductPerProductifCycle()*terrain.getProcuedQuantity());
+        terrain.setProduceurType(Type.AVERAGE_PRODUCEUR);
     }
 
 

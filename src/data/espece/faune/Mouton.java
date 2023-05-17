@@ -36,7 +36,7 @@ public class Mouton extends AnimalProducteur{
 	private final static int FREQUENCE_PRODUCTION = 50 ;
 	private final static float POIDS = 50 ;
 	private final static int QUANTITE = 1 ;
-	private final static int SPEED_GROWTH = 2; 
+	private final static int SPEED_GROWTH = 12; 
 	private final static Laine laine = new Laine();
 	private final static Meat equivalentInMeat = new Meat();
 	

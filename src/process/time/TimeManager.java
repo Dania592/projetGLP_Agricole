@@ -12,7 +12,7 @@ public class TimeManager extends Thread{
     private boolean gameOver = false;
     private boolean isTimeRunning;
     private DayOfWeek day;
-    private int timeSpeed = 1; 
+    private int timeSpeed = 2; 
     private Farm farm;
     private static TimeManager timeManager = new TimeManager();
 

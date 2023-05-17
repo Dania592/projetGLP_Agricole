@@ -85,8 +85,6 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 		setEvolution(evolution);
 	}
 
-
-
 	
 	
 	public EvolutionTerrain getEvolution() {

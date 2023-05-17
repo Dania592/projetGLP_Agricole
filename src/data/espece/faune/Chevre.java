@@ -49,7 +49,7 @@ public class Chevre extends AnimalProducteur implements MilkProduceur{
 	/**
 	 * vitesse d'évolution de l'animal
 	 */
-	private final static int SPEED_GROWTH = 10; 
+	private final static int SPEED_GROWTH = 12; 
 	/**
 	 * produit de l'animal : lait 
 	 */
