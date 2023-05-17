@@ -4,6 +4,7 @@ package gui.Farm;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -66,16 +67,18 @@ public class FarmPaintStrategy implements Serializable {
 	
 	
 	public void paint( Element element , Graphics graphics) {
-		Position position = element.getPosition();
-		int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX();
-		int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY();
-		BufferedImage image;
-		try {
-			image = ImageIO.read(new File(element.getImage()));
-			
-			graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!element.isHidden()){
+			Position position = element.getPosition();
+			int x = position.getColonne_init()*GameConfiguration.CASE_DIMENSION +  map.getX();
+			int y = position.getLigne_init()*GameConfiguration.CASE_DIMENSION + map.getY();
+			BufferedImage image;
+			try {
+				image = ImageIO.read(new File(element.getImage()));
+				graphics.drawImage(image, x, y,GameConfiguration.CASE_DIMENSION*position.getNbColonne() , GameConfiguration.CASE_DIMENSION*position.getNbLigne(), null);	
+			} catch (IOException e) {
+				System.out.println("On essayais de print "+element.getImage());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -99,7 +102,6 @@ public class FarmPaintStrategy implements Serializable {
 	
 	
 	public void paint(Enclos enclos , Graphics graphics ) {
-		  
 		Position position = enclos.getPosition();
 		BufferedImage image ;
 		for(int ligneIndex = position.getLigne_init() ; ligneIndex < enclos.getDimension()+position.getLigne_init(); ligneIndex ++) {

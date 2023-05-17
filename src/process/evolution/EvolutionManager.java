@@ -65,7 +65,6 @@ public class EvolutionManager implements Serializable {
 		Terrain terrain;
 		for (Element element : elementManager.getMapManager().getElements().values()) {
 			if(element instanceof Terrain) {
-				// ((Terrain)element).evoluer();
 				terrain = (Terrain)element;
 				manageEvolutionTerrain(terrain);
 			}

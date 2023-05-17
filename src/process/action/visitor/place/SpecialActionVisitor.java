@@ -258,6 +258,8 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                     terrain.setType(graine);
                     terrain.setEvolution(EvolutionTerrain.PLANTE);
                     terrain.setProductifState(ProductifState.PRODUCING);
+                    Integer oldQauntity = GestionnaireStocks.getInstance().getGraines().get(graine);
+                    GestionnaireStocks.getInstance().getGraines().replace(graine, oldQauntity, oldQauntity-1);
                     break;
                 case VIERGE : 
                 case POURRI:

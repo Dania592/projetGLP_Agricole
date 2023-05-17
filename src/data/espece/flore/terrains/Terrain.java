@@ -82,6 +82,7 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 
 	public void evoluer(){
 		evolution = evolution.evolue();
+		setEvolution(evolution);
 	}
 
 
@@ -101,11 +102,10 @@ public class Terrain extends Element implements Buyable, Produceur, ProductifPla
 	
 	public void setEvolution(EvolutionTerrain evolution) {
 		this.evolution = evolution;
-		if (evolution != EvolutionTerrain.VIERGE && evolution != EvolutionTerrain.LABOURE ) {
+		if (this.evolution != EvolutionTerrain.VIERGE && this.evolution != EvolutionTerrain.LABOURE ) {
 			imagesPath = GameConfiguration.IMAGE_PATH+"Terrain"+File.separator + type.name() + File.separator;	
 		}
-		System.out.println(imagesPath + evolution.name() + ".png");
-		setImage(imagesPath + evolution.name() + ".png");
+		setImage(imagesPath + this.evolution + ".png");
 	}
 	
 	// public void randomQuantity() {

@@ -33,7 +33,7 @@ public class TaskManager{
     private static TaskManager taskManager = new TaskManager();
     
     
-    public  TaskManager(){
+    public TaskManager(){
         this.timeManager =TimeManager.getInstance();
         currentHour = timeManager.getClock().getHour().getValue();
 

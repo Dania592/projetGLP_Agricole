@@ -13,5 +13,8 @@ import gui.gestionnaire.keys.Structures;
  * @see data.structure.hability.ProductifPlace
  */
 public interface Transportable extends DomesticSpecie{
-    public Structures getHomeLabel();
+    Structures getHomeLabel();
+    void freePosition();
+    void setHidden(boolean hidden);
+    void reservePosition();
 }

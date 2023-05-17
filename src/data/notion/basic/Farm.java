@@ -35,7 +35,7 @@ public class Farm implements Serializable {
 	private int lastCatastroph;
 	
 	
-	public Farm( ElementManager manager, Fermier fermier ) {
+	public Farm(ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
 		this.fermier = fermier;
