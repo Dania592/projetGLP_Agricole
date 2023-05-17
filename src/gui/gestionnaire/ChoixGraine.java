@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import data.configuration.GameConfiguration;
+import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStocks;
 import gui.Farm.Hud;
 import gui.Farm.actions.TachePane;
@@ -108,7 +109,8 @@ public class ChoixGraine extends RoundedPanel{
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			tachePane.lunchTask(graine);
+			//terrain.setImage(TOOL_TIP_TEXT_KEY);
+			tachePane.lunchTask(graine);			
 			hud.removeChoixGraine();
 		}
 

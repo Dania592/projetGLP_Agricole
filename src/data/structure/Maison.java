@@ -22,7 +22,7 @@ public class Maison extends Refuge<Personne>{
 
 	public Maison( String reference  ) {
 		super( reference  );
-			setImage(GameConfiguration.IMAGE_PATH+ Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Maison.png");
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Maison.png");
 	}
 	
 	

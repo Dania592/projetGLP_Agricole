@@ -9,11 +9,12 @@ import process.game.ElementManager;
 
 public class KeyControls implements KeyListener,Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ElementManager manager ;
 	private Element selected ;
 	private Board board;
 	
-	private boolean enterTouchPressed = false;
 
 	public KeyControls(ElementManager manager , Element selected, Board board ) {
 		this.manager=manager;
@@ -23,7 +24,7 @@ public class KeyControls implements KeyListener,Serializable {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		char code = e.getKeyChar();
+		int code = e.getKeyCode();
 		if(selected!=null && !selected.isStatique()) {
 			switch(code) {
 			case KeyEvent.VK_UP:
@@ -39,12 +40,14 @@ public class KeyControls implements KeyListener,Serializable {
 			case KeyEvent.VK_RIGHT:
 				manager.moveRight(selected);
 				break;
+			case KeyEvent.VK_ENTER:
+				board.getHud().validatePosition();
+				break;
 			default:
 				break;
 			}		
 		}
 		
-
 	}
 
 	@Override
@@ -66,15 +69,13 @@ public class KeyControls implements KeyListener,Serializable {
 			case KeyEvent.VK_RIGHT:
 				manager.moveRight(selected);
 				break;
+			case KeyEvent.VK_ENTER:
+				board.getHud().validatePosition();
+				break;
 			default:
 				break;
 			}		
 		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		//manager.stop(e.getKeyCode());		
 	}
 
 
@@ -85,6 +86,12 @@ public class KeyControls implements KeyListener,Serializable {
 
 	public void setSelected(Element selected) {
 		this.selected = selected;
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

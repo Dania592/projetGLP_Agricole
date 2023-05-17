@@ -308,7 +308,7 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
             case FIX_STRUCTURE:
                 return abatoire.isNeedToBeFixed();
             case COLLECT_MEAT:
-                return isInProductifPlaceProduction(abatoire, Produits.MEAT);
+                return isInProductifPlaceProduction(abatoire, Produits.VIANDE);
             case SLAUGHTER:
                 return isThereSlaughtableSpecies(abatoire);
             default:
@@ -389,8 +389,6 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
                 return canRemoveRottenPlant(terrain);
             case FERTILIZE_GROUND:
                 return canFertilise(terrain);
-            case HEAL_FIELD:
-                return canHeal(terrain);
             default:
                 throw new UnableToPerformSuchActionWithCurrentActionnable(activity, terrain);
         }
@@ -399,11 +397,6 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
     private boolean needToHeal(Healable healable) {
         return healable.getEtatSante() == EtatSante.MALADE || healable.getEtatSante() == EtatSante.MOURANT ||
                 healable.getEtatSante() == EtatSante.GRAVEMENT_MALADE;
-    }
-
-    private boolean canHeal(Terrain terrain) {
-        return needToHeal(terrain) && terrain.getProductifState() != ProductifState.IN_WAIT
-                && terrain.getProductifState() != ProductifState.PRODUCING;
     }
 
     private <E extends AnimalProducteur> boolean canHeal(Iterator<E> animalProduceurIterator) {

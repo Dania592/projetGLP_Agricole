@@ -129,29 +129,26 @@ public class Board extends JLayeredPane implements Serializable{
 				Enclos enclos = (Enclos)element;
 				paintStrategy.paint(enclos, g);
 				if((enclos.getNiveauEau().equals(FullLevel.EMPTY) || enclos.getNiveauNourriture().equals(FullLevel.EMPTY)) && enclos.getAnimals().size()>0) {
-					
 					paintStrategy.paintLevelHeart(enclos, g);
 				}
-			}else if(element instanceof Terrain){
+			} else if(element instanceof Terrain){
 				Terrain terrain = (Terrain)element;
 				paintStrategy.paint(terrain, g);
 				if(terrain.getHydrationLevel()!= HydrationLevel.FULLY_HYDRATED && terrain.getProductifState()!= ProductifState.UNABLE_TO_PRODUCE && terrain.getHydrationLevel()!= HydrationLevel.DEAD_FROM_DESHYDRATION){
 					paintStrategy.paintLevelHeart(terrain, g);
 				}
-			}
-			else {
+			} else {
 				paintStrategy.paint(element, g);				
 			}
 			if (clicked != null && clicked instanceof Terrain ) {
 				Terrain terrain = (Terrain)clicked;
 				//add(choixTerrain, JLayeredPane.DEFAULT_LAYER);
 				terrain.evoluer();	
-			}else {
+			} else {
 				if ( choixTerrain != null ) {
 					remove(choixTerrain);
 				}
 			}
-			
 		}
 		
 		hud.time();

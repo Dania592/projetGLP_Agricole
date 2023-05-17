@@ -30,6 +30,9 @@ public  abstract class Element implements Serializable {
 	 */
 	private int nbCase ;
 	
+
+	private boolean hidden = false;
+
 	/**
 	 * la reference d'un objet une fois instancier est unique 
 	 */
@@ -98,7 +101,6 @@ public  abstract class Element implements Serializable {
 	 * @param new_colonne : nouvelle colonne initiale 
 	 */
 	public void setPosition(int new_ligne , int new_colonne) {
-		
 		position.setTabCase(new_ligne, new_colonne);
 	}
 	
@@ -168,8 +170,25 @@ public  abstract class Element implements Serializable {
 		  for(int indexColone=0 ; indexColone < position.getNbColonne(); indexColone++ ) {
 			  cases[indexligne][indexColone].setLibre(true); 
 			  } 
+		} 
+	}
+
+	public void reservePosition() {
+		Case[][] cases = getPosition().getTabCase();
+		for(int indexligne =0 ;indexligne < position.getNbLigne() ;indexligne++) { 
+			for(int indexColone=0 ; indexColone < position.getNbColonne(); indexColone++ ) {
+				cases[indexligne][indexColone].setLibre(false); 
+				} 
 		  } 
 	}
-	
-		
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+
 }

@@ -72,10 +72,11 @@ public class Choix implements Serializable {
 		ArrayList<Element> cardlisteT = new ArrayList<>();
 		for( ArrayList<Terrain> terrains : farm.getRessourcesManager().getGestionnaireTerrains().getTerrains().values()) {	
 			for(Terrain terrain : terrains) {
-				if(!terrain.isStatique()) {					
+				if(!terrain.isStatique()) {						
 					cardlisteT.add(terrain);
 				}
-			}			
+			}
+			
 		}
 		if(cardlisteT.size()>0) {
 			ElementCard newCard = new ElementCard(cardlisteT, farm, component);

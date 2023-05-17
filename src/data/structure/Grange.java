@@ -21,8 +21,7 @@ public class Grange extends Structure{
 
 	public Grange( String reference) {
 		super( reference);
-		setImage(GameConfiguration.IMAGE_PATH + Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Grange.png");
-
+		setImage(GameConfiguration.IMAGE_PATH +Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Grange.png");
 	}
 
 	@Override

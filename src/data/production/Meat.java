@@ -6,8 +6,7 @@ public class Meat extends Produit {
     private final static float PRIX_VENTE = 100;
 
     public Meat(){
-        super(Produits.MEAT, PRIX_VENTE);
+        super(Produits.VIANDE, PRIX_VENTE);
     }
-
     
 }

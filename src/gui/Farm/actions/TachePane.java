@@ -110,14 +110,11 @@ public class TachePane extends JPanel{
 				| BeingCannotPerformSuchActionException | NeedToBeSendToSpecialProductionPlaceException
 				| ProblemOccursInProductionException | UnableToMakeTheTransfertException e) {
 			Messagerie.getInstance().addMessage(new Message("Impossible d'initer la tâche", TimeManager.getInstance().getClock().getHour().getValue(), TimeManager.getInstance().getClock().getMinute().getValue()));
-			
 		}
 	}
 
-	/***
-	 * 
+	/**
 	 * MouseListener adpater au lancement des tâches 
-	 *
 	 */
 	private class MouseTask implements MouseListener{
 

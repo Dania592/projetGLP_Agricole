@@ -140,7 +140,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
 
     private void addToProductionAccordingToProduceurType(Terrain terrain, Produits produit){
         Produceur.Type produceurType = terrain.getProduceurType();
-        if(terrain.isDoped() && terrain.getEtatSante() == EtatSante.BONNE_SANTE){
+        if(terrain.isDoped()){
             produceurType  = Type.DOPED_PRODUCEUR;
         }
         addToProduction(terrain, produit, produceurType.getNumberOfProductPerProductifCycle()*terrain.getProcuedQuantity());

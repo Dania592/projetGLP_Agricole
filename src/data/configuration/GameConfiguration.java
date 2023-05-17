@@ -28,12 +28,12 @@ public abstract class GameConfiguration {
 	/**
 	 * nombre de ligne de la map
 	 */
-	public final static int NB_LIGNE = 60;
+	public final static int NB_LIGNE = 50;
 	
 	/**
 	 * nombre de colonne de la map 	
 	 */
-	public final static int NB_COLONNE = 60;
+	public final static int NB_COLONNE = 50;
 	/**
 	 * vitesse du jeu 
 	 */
@@ -110,5 +110,7 @@ public abstract class GameConfiguration {
 	 * fréquence d'apparition des catastrophes 
 	 */
 	public final static int FREQUENCE_CATASTROPHE = 10;
+	
+	public final static int SEASON_CYCLE = 1; // jours
 
 }

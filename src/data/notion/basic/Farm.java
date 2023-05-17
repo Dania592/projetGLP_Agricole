@@ -35,7 +35,7 @@ public class Farm implements Serializable {
 	private int lastCatastroph;
 	
 	
-	public Farm( ElementManager manager, Fermier fermier ) {
+	public Farm(ElementManager manager, Fermier fermier ) {
 		this.clock= Clock.getInstance();
 		elementManager = manager;
 		this.fermier = fermier;
@@ -115,7 +115,7 @@ public class Farm implements Serializable {
 	}
 
 	public void incrementCptJour() {
-		if (cptJour == 19) {
+		if (cptJour == 4) {
 			cptJour = 0;
 		} else {
 			cptJour++;
@@ -130,21 +130,16 @@ public class Farm implements Serializable {
 
 	public void setSaisonActuelle() {
 	
-		if (cptJour < 5) {
+		if (cptJour < 1) {
+			saisonActuelle = Saison.PRINTEMPS;
+		} else if (cptJour < 2) {
 			saisonActuelle = Saison.ETE;
-			
-			
+		} else if (cptJour < 3) {
+			saisonActuelle = Saison.AUTOMNE;
 		} else {
-			if (cptJour < 10) {
-				saisonActuelle = Saison.HIVER;
-			} else {
-				if (cptJour < 15) {
-					saisonActuelle = Saison.AUTOMNE;
-				} else {
-					saisonActuelle = Saison.PRINTEMPS;
-				}
-			}
+			saisonActuelle = Saison.HIVER;
 		}
+			
 		updateSaison();
 	}
 
@@ -197,7 +192,7 @@ public class Farm implements Serializable {
 	public void updateSaison() {
 		for(ArrayList<Structure> structures : RessourcesManager.getInstance().getGestionnaireStructure().getStructures().values()) {
 			for(Structure structure : structures) {
-				structure.setImage(GameConfiguration.IMAGE_PATH+saisonActuelle+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
+				structure.setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+structure.getKey()+".png");			}
 		}
 	}
 

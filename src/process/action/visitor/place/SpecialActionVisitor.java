@@ -68,7 +68,6 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
                         | NeedToBeSendToSpecialProductionPlaceException | ProblemOccursInProductionException
                         | UnableToMakeTheTransfertException e) {
                 }
-
             }
         }
         return null;
@@ -80,7 +79,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
         Slaughtable currentSlaughtable;
         while(slaughtableIter.hasNext()){
             currentSlaughtable = slaughtableIter.next();
-            GestionnaireStocks.getInstance().add(Produits.MEAT, 1);
+            GestionnaireStocks.getInstance().add(Produits.VIANDE, 1);
             GestionnaireAnimaux.getInstance().remove((Animal)currentSlaughtable);
         }
         abatoire.getAnimaltoSlaughter().clear();
@@ -254,11 +253,13 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
             switch(terrain.getEvolution()){
                 case LABOURE : 
                     if(graine == null){
-                        graine = Graine.GRAINE_AIL;
+                        graine = Graine.GRAINE_TOMATE;
                     }
                     terrain.setType(graine);
                     terrain.setEvolution(EvolutionTerrain.PLANTE);
                     terrain.setProductifState(ProductifState.PRODUCING);
+                    Integer oldQauntity = GestionnaireStocks.getInstance().getGraines().get(graine);
+                    GestionnaireStocks.getInstance().getGraines().replace(graine, oldQauntity, oldQauntity-1);
                     break;
                 case VIERGE : 
                 case POURRI:

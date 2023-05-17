@@ -13,8 +13,8 @@ public class TimeManager extends Thread{
     private boolean isTimeRunning;
     private DayOfWeek day;
     private int timeSpeed = 1; 
+    private Farm farm;
     private static TimeManager timeManager = new TimeManager();
-    private Farm farm ;
 
     // doit etre modifier pour prendre en compte l'etat de la ferme == jour , semaine ...
     private  TimeManager(){ 
@@ -27,7 +27,7 @@ public class TimeManager extends Thread{
         return day;
     }
     
-    public void setFarm(Farm farm ) {
+    public void setFarm(Farm farm) {
     	this.farm = farm ;
     }
     public static TimeManager getInstance() {

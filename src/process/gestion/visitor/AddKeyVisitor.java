@@ -20,11 +20,9 @@ import gui.gestionnaire.keys.*;
 import process.gestion.GestionnaireFactory;
 
 public class AddKeyVisitor implements KeyVisitor<Void> , Serializable{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+
 	private Map map = Map.getInstance();
 	private AddVisitor addVisitor = new AddVisitor();
 

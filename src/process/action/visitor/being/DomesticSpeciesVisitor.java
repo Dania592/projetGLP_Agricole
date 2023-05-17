@@ -23,3 +23,4 @@ public interface DomesticSpeciesVisitor<T>{
     T action(Chevre chevre) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Mouton mouton) throws HaveNotProducedYetException, BeingCannotPerformSuchActionException, UnableToMakeTheTransfertException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException;
 }
+ 

@@ -68,6 +68,8 @@ public class EnclosureSenderVisitor implements PlaceVisitor<Void>{
         int indexEnclosure = 0;
         while(iterator.hasNext() && indexEnclosure<enclosureIter.size()){
             currentTransportable = iterator.next();
+            currentTransportable.reservePosition();
+            currentTransportable.setHidden(false);
             tranportableToRemove.add(currentTransportable);
             currentEnclosure = enclosureIter.get(indexEnclosure);
             currentEnclosure.addSpecialSenderElement(currentTransportable);;

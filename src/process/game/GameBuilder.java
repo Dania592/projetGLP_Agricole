@@ -70,12 +70,10 @@ public class GameBuilder {
 		setPuitPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0));
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0).setStatique();
 
-		
 		// positionnement du puit sur la map
 		setPuitPosition(farm, farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0));
 		farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.PUIT).get(0).setStatique();
 
-		
 		// ajout de la maison et du fermier sur la map 
 		farm.getManager().add(farmer);
 		farm.getManager().add(farm.getRessourcesManager().getGestionnaireStructure().getStructures().get(Structures.MAISON).get(0));
@@ -105,36 +103,26 @@ public class GameBuilder {
 		Poule poule = new Poule(0, "Poupou1", null, null, "p1");
 		stock.getGestionnaireAnimaux().add(poule);
 
-
-		// sera remplacer par une instance de terrain 
 		Terrain terrainInitial = new Terrain("t0",false, Graine.GRAINE_TOMATE);
 		
 		stock.getGestionnaireTerrains().add(terrainInitial);
 
-		//Terrain terrain3 = new Terrain("t3",false, 0, 0,map, Graine.AMARANTH_SEED);
-		Terrain terrain4 = new Terrain("t4",false, Graine.GRAINE_CACTUS);
+		Terrain terrain4 = new Terrain("t4",false, Graine.GRAINE_TOMATE);
 
-		
-		//stock.getGestionnaireTerrains().add(terrain3);
 		stock.getGestionnaireTerrains().add(terrain4);
 
 		Chevre chevre1 = new Chevre(0,"sheshe1",null,null,"jd");
 		stock.getGestionnaireAnimaux().add(chevre1);
 
-		stock.getGestionnaireTerrains().add(terrainInitial);
 
-		
 		Maison maison = new Maison("maison");
 		stock.getGestionnaireStructure().add(maison);
 	
-
 		Enclos enclos1 = new Enclos("enclos1");
 		stock.getGestionnaireEnclos().add(enclos1);
-
-		 			
+		
 		Puit puit = new Puit("puit");
 		stock.getGestionnaireStructure().add(puit);
-
 
 		Garage garage = new Garage("garage");
 		stock.getGestionnaireStructure().add(garage);
@@ -171,7 +159,7 @@ public class GameBuilder {
 	 * @param garage
 	 */
 	private static void setGaragePosition(Farm farm , Structure garage ) {
-		int colonne = farm.getColonne()+6;
+		int colonne = farm.getColonne() + 1 + ((farm.getWidth()-2 - GameConfiguration.DIMENSION_STRUCUTRE)/2) + 4;
 		int ligne = farm.getLigne()+1;
 		garage.setPosition(ligne, colonne);		
 	}

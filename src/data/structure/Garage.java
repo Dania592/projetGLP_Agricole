@@ -27,7 +27,7 @@ public class Garage extends Structure{
 
 	public Garage( String reference) {
 		super(reference);
-		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Garage.png");
+		setImage(GameConfiguration.IMAGE_PATH+"Structure"+File.separator+"Garage.png");
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import data.structure.Poulallier;
 import data.structure.Puit;
 import data.structure.SalleDeTraite;
 import data.structure.hability.Distributor;
+import data.structure.hability.Actionnable.ActionnableKey;
 import gui.gestionnaire.keys.Graine;
 import process.action.exception.being.BeingCannotPerformSuchActionException;
 import process.action.exception.structure.UnableToPerformSuchActionWithCurrentActionnable;
@@ -57,7 +58,23 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
             }
         }
         distributor.removeAll(tranportableToRemove);
+        if(distributor.getSpecificActionnableKey()== ActionnableKey.ENCLOS){
+            suppressFromGraphicEnclosure((Enclos)distributor, tranportableToRemove);
+        }
         return null;
+    }
+
+
+
+    private <E extends Transportable> Void suppressFromGraphicEnclosure(Enclos enclos, ArrayList<E> transportable){
+        Iterator<E> transportableIter = transportable.iterator();
+        E currentTransportable;
+        while(transportableIter.hasNext()){
+            currentTransportable = transportableIter.next();
+            currentTransportable.freePosition();
+            currentTransportable.setHidden(true);
+        }
+        return null; 
     }
 
     @Override
@@ -80,6 +97,7 @@ public class HomeSenderVisitor implements PlaceVisitor<Void>{
     @Override
     public Void action(Enclos enclos){
         Iterator<AnimalProducteur> animalProducteurIter = enclos.getAnimalStorage().getAnimals().iterator();
+
         return sendHome(enclos , animalProducteurIter);
     }
 

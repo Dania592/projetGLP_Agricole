@@ -77,7 +77,7 @@ public class Hud implements Serializable {
 		removeMessagerie();
 		removeAlert();
 		removeChoixGraine();
-		if(!Arrays.asList(component.getComponents()).contains(statistique)) {
+		if(!Arrays.asList(component.getComponents()).contains(validate) &&!Arrays.asList(component.getComponents()).contains(statistique)) {
 			component.add(statistique ,JLayeredPane.DRAG_LAYER);
 		}
 	}
@@ -363,9 +363,8 @@ public class Hud implements Serializable {
 				frame.setEnabled(false);
 				
 			} else if(e.getSource().equals(validate)) {
-				component.getChoix().removeElement(component.getSelected());
-				component.getHud().build();
-				component.getSelected().setStatique(true);
+				validatePosition();
+				
 			} else if(e.getSource().equals(cancel)) {
 				component.getFarm().getManager().remove(component.getSelected());
 				component.setSelected(component.getFarm().getFermier());
@@ -414,6 +413,12 @@ public class Hud implements Serializable {
 
 		}
 
+	}
+	
+	public void validatePosition() {
+		component.getChoix().removeElement(component.getSelected());
+		component.getHud().build();
+		component.getSelected().setStatique(true);
 	}
 
 	public  void removeMessagerie() {

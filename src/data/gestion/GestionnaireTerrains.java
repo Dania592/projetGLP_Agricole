@@ -64,15 +64,5 @@ public class GestionnaireTerrains implements GestionnaireInterface, Serializable
 		terrains.clear();
 	}
 	
-	public String toString() {
-		StringBuffer gestionnaire = new StringBuffer("\t"+ this.getClass().getSimpleName());
-		gestionnaire.append("\n\t\t Terrains :");
-		for (ArrayList<Terrain> terrains : terrains.values()) {
-			for (Terrain terrain : terrains ) {
-				gestionnaire.append("\n\t\t\t"+ terrain.toString());
-			}
-		}
-		gestionnaire.append(terrains.size());
-		return gestionnaire.toString();
-	}
+	
 }

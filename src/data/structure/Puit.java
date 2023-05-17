@@ -33,7 +33,7 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     
     public Puit(String reference  ) {
 		super( reference );
-		setImage(GameConfiguration.IMAGE_PATH+ Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Puit.png");	
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"Puit.png");	
 	}
 
     public Seau getSeau() {
@@ -53,10 +53,10 @@ public class Puit extends Structure implements SpecialActionPerformer, Buyable{
     }
 
     public enum Seau{
-        SEAU_BOIS(50),
-        SEAU_TERRE_CUITE(80),
-        SEAU_ARGENT(150),
-        SEAU_OR(30);
+        SEAU_BOIS(10),
+        SEAU_TERRE_CUITE(20),
+        SEAU_ARGENT(50),
+        SEAU_OR(80);
 
         int capacite;
         private Seau(int capacite){

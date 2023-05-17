@@ -12,7 +12,8 @@ import gui.gestionnaire.keys.Outils;
 import gui.gestionnaire.keys.Structures;
 import gui.gestionnaire.keys.Terrains;
 
-public interface KeyVisitor<T> extends Serializable{
+public interface KeyVisitor<T> extends Serializable {
+
 
 	T visit(Animals animal, int quantity);
 
