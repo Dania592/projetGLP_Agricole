@@ -1,7 +1,6 @@
 package data.structure;
 
-import data.map.Map;
-import data.structure.hability.Distributor;
+import data.structure.hability.Actionnable;
 import data.structure.hability.ProductifPlace;
 import data.structure.hability.SpecialActionPerformer;
 

@@ -4,7 +4,7 @@ package process.action.visitor.place;
 import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -32,7 +32,7 @@ public interface PlaceVisitor<T>{
     T action(Etable etable) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Poulallier poulallier) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Enclos enclos) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
-    T action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException;
+    T action(Abattoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException;
     T action(Maison maison) throws UnableToPerformSuchActionWithCurrentActionnable;
     T action(SalleDeTraite salleDeTraite) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException;
     T action(Entrepot entrepot)throws UnableToPerformSuchActionWithCurrentActionnable;
@@ -46,7 +46,7 @@ public interface PlaceVisitor<T>{
     T action(Etable etable, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(Poulallier poulallier, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(Enclos enclos, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
-    T action(Abatoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, UnableToGenerateNewTaskException;
+    T action(Abattoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, UnableToGenerateNewTaskException;
     T action(Maison maison, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;
     T action(SalleDeTraite salleDeTraite, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, BeingCannotPerformSuchActionException, NeedToBeSendToSpecialProductionPlaceException, ProblemOccursInProductionException, UnableToMakeTheTransfertException, UnableToGenerateNewTaskException;
     T action(Entrepot entrepot, Activity activity)throws UnableToPerformSuchActionWithCurrentActionnable, UnableToGenerateNewTaskException;

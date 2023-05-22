@@ -4,7 +4,7 @@ package process.action.task.coordinator;
 import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -81,7 +81,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
     }
 
     @Override
-    public Task<?> action(Abatoire abatoire)
+    public Task<?> action(Abattoire abatoire)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         throw new IllegalArgumentException("Les conditions doivent être vérifié en passant l'activité.");
     }
@@ -218,7 +218,7 @@ public class TaskGenerator implements PlaceVisitor<Task<?>> {
     }
 
     @Override
-    public Task<?> action(Abatoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, UnableToGenerateNewTaskException{
+    public Task<?> action(Abattoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException, UnableToGenerateNewTaskException{
         if(conditionTester.action(abatoire, activity)){
             switch(activity){
             case FIX_STRUCTURE:

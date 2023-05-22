@@ -16,7 +16,7 @@ import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
 import data.production.Produits;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -89,7 +89,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     }
 
     @Override
-    public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
+    public Void action(Abattoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
         Iterator<Slaughtable> slaughtablesIter = abatoire.getAnimaltoSlaughter().iterator(); 
         Slaughtable currentSlaughtable;
         while(slaughtablesIter.hasNext()){
@@ -211,7 +211,7 @@ public class ProductionPerformer implements PlaceVisitor<Void>, Serializable{
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity)
+    public Void action(Abattoire abatoire, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
             return action(abatoire);
     }

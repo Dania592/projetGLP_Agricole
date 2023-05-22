@@ -9,7 +9,7 @@ import data.espece.flore.terrains.Terrain;
 import data.map.Map;
 import data.materiel.Engin;
 import data.materiel.Outil;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -62,7 +62,7 @@ public class GestionnaireFactory {
 		String reference = generateReference(key);
 		switch (key) {
 			case ABATTOIRE:
-				return new Abatoire(reference);
+				return new Abattoire(reference);
 			case ENTREPOT:
 				return new Entrepot(reference);
 			case ETABLE:

@@ -130,11 +130,11 @@ public class Farm implements Serializable {
 
 	public void setSaisonActuelle() {
 	
-		if (cptJour < 1) {
+		if (cptJour < 2) {
 			saisonActuelle = Saison.PRINTEMPS;
-		} else if (cptJour < 2) {
-			saisonActuelle = Saison.ETE;
 		} else if (cptJour < 3) {
+			saisonActuelle = Saison.ETE;
+		} else if (cptJour < 4) {
 			saisonActuelle = Saison.AUTOMNE;
 		} else {
 			saisonActuelle = Saison.HIVER;

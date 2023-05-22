@@ -8,7 +8,7 @@ import data.espece.flore.terrains.Terrain;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.Mortel.EtatSante;
 import data.planning.Activity;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -63,7 +63,7 @@ public class HealerVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire)
+    public Void action(Abattoire abatoire)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         throw new UnableToPerformSuchActionWithCurrentActionnable(abatoire);
     }
@@ -143,7 +143,7 @@ public class HealerVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable,
+    public Void action(Abattoire abatoire, Activity activity) throws UnableToPerformSuchActionWithCurrentActionnable,
             HaveNotProducedYetException, UnableToGenerateNewTaskException {
         return action(abatoire);
     }

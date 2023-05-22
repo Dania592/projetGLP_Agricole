@@ -9,7 +9,7 @@ import data.espece.flore.terrains.Terrain;
 import data.gestion.GestionnaireStructures;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -31,7 +31,7 @@ import process.action.visitor.place.PlaceVisitor;
 
 public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
 
-    private Abatoire getAvalablAbatoire() throws UnableToMakeTheTransfertException{
+    private Abattoire getAvalablAbatoire() throws UnableToMakeTheTransfertException{
         ArrayList<Structure> abatoirePossible = GestionnaireStructures.getInstance().getStructures().get(Structures.ABATTOIRE);
         boolean isAvalable = false;
         Iterator<Structure> abatoireIter = abatoirePossible.iterator();
@@ -40,7 +40,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
             structure = abatoireIter.next();
             isAvalable = structure.isStatique();
         }
-        return (Abatoire)structure; 
+        return (Abattoire)structure; 
     } 
     
     
@@ -55,7 +55,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     private <T extends AnimalProducteur> Void sendToSlaugtherHouse(SlaughterHouseSender structure, Iterator<T> iterator) throws UnableToMakeTheTransfertException{
         ArrayList<Slaughtable> slaughtablesToRemove = new ArrayList<>(); 
         Slaughtable currentSlaughtable;
-        Abatoire abatoire = getAvalablAbatoire();
+        Abattoire abatoire = getAvalablAbatoire();
         while(iterator.hasNext()){
             currentSlaughtable = iterator.next();
             abatoire.addSpecialSenderElement(currentSlaughtable);
@@ -83,7 +83,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
+    public Void action(Abattoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
         throw new UnableToPerformSuchActionWithCurrentActionnable(abatoire);
     }
 
@@ -155,7 +155,7 @@ public class SendToSlaughterHouseVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity)
+    public Void action(Abattoire abatoire, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable {
             return action(abatoire);
     }

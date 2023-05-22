@@ -12,7 +12,7 @@ public class TimeManager extends Thread{
     private boolean gameOver = false;
     private boolean isTimeRunning;
     private DayOfWeek day;
-    private int timeSpeed = 2; 
+    private int timeSpeed = 1; 
     private Farm farm;
     private static TimeManager timeManager = new TimeManager();
 
@@ -53,7 +53,7 @@ public class TimeManager extends Thread{
         while (isTimeRunning){
         	if (!gameOver) {
         		clock.increment();
-        		if (clock.getHour().getValue() == 24) {
+        		if (clock.getHour().getValue() == 23 && clock.getMinute().getValue() == 59 && clock.getSecond().getValue() == 59 ) {
         			farm.incrementCptJour();
         			dayCounter++;
         			FinanceManager.getInstance().incrementCounter();

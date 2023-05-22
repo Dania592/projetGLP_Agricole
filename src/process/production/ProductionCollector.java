@@ -10,7 +10,7 @@ import data.gestion.GestionnaireStocks;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -86,7 +86,7 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
+    public Void action(Abattoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         return collectProduction(abatoire);
     }
 
@@ -169,7 +169,7 @@ public class ProductionCollector implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity)
+    public Void action(Abattoire abatoire, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
             return action(abatoire);
     }

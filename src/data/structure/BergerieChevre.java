@@ -3,9 +3,11 @@ package data.structure;
 import java.io.File;
 import java.util.ArrayList;
 
+import data.configuration.GameConfiguration;
 import data.espece.characteristic.Healable;
 import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Chevre;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -28,7 +30,8 @@ public class BergerieChevre extends Refuge<Chevre> implements  Distributor<Chevr
     public BergerieChevre( String reference  ) {
 		super( reference);
 		
-			setImage("src"+File.separator+"ressources"+File.separator+"minimoulin.png");
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"BergerieChevre.png");	
+		
 		
 	}
 

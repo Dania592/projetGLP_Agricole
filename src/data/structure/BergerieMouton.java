@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import data.configuration.GameConfiguration;
 import data.espece.characteristic.Slaughtable;
 import data.espece.faune.Mouton;
+import data.espece.flore.Saison;
 import data.map.Map;
 import data.myExceptions.UnableToGenerateNewTaskException;
 import data.planning.Activity;
@@ -29,7 +31,8 @@ public class BergerieMouton extends Refuge<Mouton> implements  Distributor<Mouto
     public BergerieMouton( String reference ) {
 		super( reference  );
 		
-			setImage("src"+File.separator+"ressources"+File.separator+"minietable.png");
+		setImage(GameConfiguration.IMAGE_PATH+Saison.PRINTEMPS+File.separator+"Structure"+File.separator+"BergerieMouton.png");	
+		
 		
 	}
 

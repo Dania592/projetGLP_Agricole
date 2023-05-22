@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Compte implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	public static float CAPITAL_INITIAL = 2000;
+	public static float CAPITAL_INITIAL = 200000;
 	
 	private float solde = CAPITAL_INITIAL;
 	

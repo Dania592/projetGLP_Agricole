@@ -109,7 +109,7 @@ public class Jeu implements Runnable{
 			}
 			if(!isNight()) {
 				frame.getFarm().setJourMode(true);
-				TimeManager.getInstance().setTimeSpeed(5);
+				TimeManager.getInstance().setTimeSpeed(1);
 				frame.getFarm().getEvolutionManager().UpdateEvolution();
 				taskManager.managingTask();				
 			}
@@ -153,9 +153,9 @@ public class Jeu implements Runnable{
 	           File file = new File("src/ressources/musique/EZ02.wav");	           
 	           AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
 	           clip = AudioSystem.getClip();
-	           //clip.open(audioIn);
-	           //clip.start();
-	           //clip.loop(clip.LOOP_CONTINUOUSLY);
+	           clip.open(audioIn);
+	           clip.start();
+	           clip.loop(clip.LOOP_CONTINUOUSLY);
 	       }
 		catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
 			throw new RuntimeException(e);

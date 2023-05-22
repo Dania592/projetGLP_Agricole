@@ -15,7 +15,7 @@ import data.myExceptions.UnableToGenerateNewTaskException;
 import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
 import data.production.Produits;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -74,7 +74,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
+    public Void action(Abattoire abatoire) throws UnableToPerformSuchActionWithCurrentActionnable {
         Iterator<Slaughtable> slaughtableIter = abatoire.getAnimaltoSlaughter().iterator();
         Slaughtable currentSlaughtable;
         while(slaughtableIter.hasNext()){
@@ -189,7 +189,7 @@ public class SpecialActionVisitor implements PlaceVisitor<Void> {
     }
 
     @Override
-    public Void action(Abatoire abatoire, Activity activity)
+    public Void action(Abattoire abatoire, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable{
             return action(abatoire);
     }

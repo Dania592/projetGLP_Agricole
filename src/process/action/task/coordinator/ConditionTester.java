@@ -20,7 +20,7 @@ import data.notion.Mortel.EtatSante;
 import data.notion.evolution.EvolutionTerrain;
 import data.planning.Activity;
 import data.production.Produits;
-import data.structure.Abatoire;
+import data.structure.Abattoire;
 import data.structure.BergerieChevre;
 import data.structure.BergerieMouton;
 import data.structure.Enclos;
@@ -65,7 +65,7 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
     }
 
     @Override
-    public Boolean action(Abatoire abatoire)
+    public Boolean action(Abattoire abatoire)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         throw new IllegalArgumentException("Les conditions doivent être vérifié en passant l'activité.");
     }
@@ -302,7 +302,7 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
     }
 
     @Override
-    public Boolean action(Abatoire abatoire, Activity activity)
+    public Boolean action(Abattoire abatoire, Activity activity)
             throws UnableToPerformSuchActionWithCurrentActionnable, HaveNotProducedYetException {
         switch (activity) {
             case FIX_STRUCTURE:
@@ -316,7 +316,7 @@ public class ConditionTester implements PlaceVisitor<Boolean> {
         }
     }
 
-    private boolean isThereSlaughtableSpecies(Abatoire abatoire) {
+    private boolean isThereSlaughtableSpecies(Abattoire abatoire) {
         return abatoire.getAnimaltoSlaughter().size() > 0;
     }
 
